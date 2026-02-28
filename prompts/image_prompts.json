@@ -1,0 +1,48 @@
+{
+  "hero_1920x1080": {
+    "description": "Base scene: a lone silhouette walking along a winding dim path at night, cinematic composition.",
+    "mood": "introspective, minimal, quiet depth.",
+    "palette": ["#0A0A0A", "#0D1117", "#C28F2C"],
+    "symbols": [
+      "fractal_net (LLM Agents) -> glowing golden lattice in the sky_center, prominent, high intensity.",
+      "layered_blocks (System Architecture) -> faint translucent stacked blocks emerging from the path near the figure.",
+      "dendritic_branches (Neuroscience) -> branching thin golden lines left_mid, medium intensity.",
+      "branching_rays (Teaching) -> soft golden rays above_path, medium intensity.",
+      "grain_texture (Old Projects) -> subtle background grain, low intensity."
+    ],
+    "constraints": "no text, no logos, keep silhouette intact, new elements closer/brighter.",
+    "output_size": "1920x1080",
+    "style": "high detail, painterly texture, digital painting, cinematic"
+  },
+  "hero_2560x1440": {
+    "description": "Base scene: a lone silhouette walking along a winding dim path at night, cinematic composition.",
+    "mood": "introspective, minimal, quiet depth.",
+    "palette": ["#0A0A0A", "#0D1117", "#C28F2C"],
+    "symbols": [
+      "fractal_net (LLM Agents) -> glowing golden lattice in the sky_center, prominent, high intensity.",
+      "layered_blocks (System Architecture) -> faint translucent stacked blocks emerging from the path near the figure.",
+      "dendritic_branches (Neuroscience) -> branching thin golden lines left_mid, medium intensity.",
+      "branching_rays (Teaching) -> soft golden rays above_path, medium intensity.",
+      "grain_texture (Old Projects) -> subtle background grain, low intensity."
+    ],
+    "constraints": "no text, no logos, keep silhouette intact, new elements closer/brighter.",
+    "output_size": "2560x1440",
+    "style": "high detail, painterly texture, digital painting, cinematic"
+  },
+  "wallpaper_3840x2160": {
+    "description": "Base scene: a lone silhouette walking along a winding dim path at night, cinematic composition.",
+    "mood": "introspective, minimal, quiet depth.",
+    "palette": ["#0A0A0A", "#0D1117", "#C28F2C"],
+    "symbols": [
+      "fractal_net (LLM Agents) -> glowing golden lattice in the sky_center, prominent, high intensity.",
+      "layered_blocks (System Architecture) -> faint translucent stacked blocks emerging from the path near the figure.",
+      "dendritic_branches (Neuroscience) -> branching thin golden lines left_mid, medium intensity.",
+      "branching_rays (Teaching) -> soft golden rays above_path, medium intensity.",
+      "grain_texture (Old Projects) -> subtle background grain, low intensity."
+    ],
+    "constraints": "no text, no logos, keep silhouette intact, new elements closer/brighter.",
+    "output_size": "3840x2160",
+    "style": "high detail, painterly texture, digital painting, cinematic"
+  }
+}
+

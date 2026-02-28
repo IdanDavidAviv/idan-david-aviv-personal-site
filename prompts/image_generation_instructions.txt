@@ -1,0 +1,69 @@
+Image Generation Instructions
+=============================
+
+If you don't have direct API access, use these instructions to generate images manually.
+
+REQUIRED IMAGES:
+1. hero_2560x1440.jpg (or .png) - Main hero image
+2. hero_1920x1080.jpg - Fallback for smaller screens  
+3. wallpaper_3840x2160.webp (optional) - High-res wallpaper
+
+PROMPT TEMPLATE:
+----------------
+Base scene: a lone silhouette walking along a winding dim path at night, cinematic composition.
+Mood: introspective, minimal, quiet depth.
+Palette: #0A0A0A, #0D1117, #C28F2C.
+
+Symbols:
+- fractal_net (LLM Agents) -> glowing golden lattice in the sky_center, prominent, high intensity.
+- layered_blocks (System Architecture) -> faint translucent stacked blocks emerging from the path near the figure.
+- dendritic_branches (Neuroscience) -> branching thin golden lines left_mid, medium intensity.
+- branching_rays (Teaching) -> soft golden rays above_path, medium intensity.
+- grain_texture (Old Projects) -> subtle background grain, low intensity.
+
+Constraints: no text, no logos, keep silhouette intact, new elements closer/brighter.
+
+DALL·E 3:
+---------
+Use the full prompt description from prompts/image_prompts.json. 
+Set aspect ratio to match target size (16:9 for 1920x1080 and 2560x1440).
+
+Stable Diffusion:
+-----------------
+Use the description + symbols + constraints. Recommended model: SDXL or similar.
+Negative prompt: "text, words, logos, labels, watermarks"
+
+Midjourney:
+-----------
+/imagine prompt: [Base scene description] [Symbols list] [Constraints] --ar 16:9 --style raw
+
+IMAGEMAGICK COMPOSITION (if you have Image A):
+----------------------------------------------
+If you have the original Image A and generated Image B:
+
+# Basic overlay
+convert ImageA.png ImageB.png -compose Screen -composite hero_out.png
+
+# With color correction
+convert ImageA.png ImageB.png -compose Screen -composite -colorspace RGB -modulate 100,100,100 -sharpen 0x0.5 hero_out.png
+
+# Resize to target
+convert hero_out.png -resize 2560x1440! hero_2560x1440.jpg
+
+PHOTOSHOP/GIMP:
+---------------
+1. Open Image A as base layer
+2. Place Image B as overlay layer
+3. Set blend mode to "Screen" or "Linear Dodge"
+4. Adjust opacity (30-50%)
+5. Create mask to preserve path from Image A
+6. Export as JPG (quality 85-90%)
+
+FILE NAMING:
+-----------
+- hero_2560x1440.jpg (or .png)
+- hero_1920x1080.jpg
+- wallpaper_3840x2160.webp
+
+Place all generated images in: website/public/assets/
+

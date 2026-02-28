@@ -1,0 +1,33 @@
+{
+  "LLM Agents": {
+    "shape": "fractal_net",
+    "intensity": "high",
+    "position": "sky_center"
+  },
+  "System Architecture": {
+    "shape": "layered_blocks",
+    "intensity": "high",
+    "position": "path_near"
+  },
+  "Neuroscience": {
+    "shape": "dendritic_branches",
+    "intensity": "medium",
+    "position": "left_mid"
+  },
+  "Teaching": {
+    "shape": "branching_rays",
+    "intensity": "medium",
+    "position": "above_path"
+  },
+  "Signal Processing": {
+    "shape": "radiology_halo",
+    "intensity": "medium",
+    "position": "right_mid"
+  },
+  "Old Projects": {
+    "shape": "grain_texture",
+    "intensity": "low",
+    "position": "background"
+  }
+}
+
