@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "jsx": "react-jsx",
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ],
+            "@components/*": [
+                "src/components/*"
+            ],
+            "@sections/*": [
+                "src/components/sections/*"
+            ],
+            "@ui/*": [
+                "src/components/ui/*"
+            ],
+            "@hooks/*": [
+                "src/hooks/*"
+            ],
+            "@data/*": [
+                "src/data/*"
+            ]
+        }
+    },
+    "include": [
+        "src"
+    ]
+}
