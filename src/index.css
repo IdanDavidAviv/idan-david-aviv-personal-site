@@ -5,14 +5,29 @@
 @layer base {
   :root {
     --accent: 194 143 44;
-    /* #C28F2C as RGB with spaces for modern syntax */
+    /* #C28F2C */
+    --secondary-accent: 139 92 246;
+    /* Spirit Lab Violet default */
     --base-bg: 13 17 23;
-    /* #0D1117 */
+    --text-base: 255 255 255;
+    --text-muted: 156 163 175;
   }
 
   body {
-    @apply bg-basebg text-gray-200 antialiased;
+    background-color: rgb(var(--base-bg));
+    color: rgb(var(--text-base));
+    @apply antialiased;
     font-family: 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-base-content {
+    color: rgb(var(--text-base));
+  }
+
+  .text-muted-content {
+    color: rgb(var(--text-muted));
   }
 }
 
@@ -27,6 +42,23 @@
 
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-white/80 to-white/60;
+  }
+
+  /* Fusion Utilities */
+  .border-secondary {
+    border-color: rgb(var(--secondary-accent) / 0.2);
+  }
+
+  .bg-secondary-soft {
+    background-color: rgb(var(--secondary-accent) / 0.1);
+  }
+
+  .text-secondary {
+    color: rgb(var(--secondary-accent));
+  }
+
+  .glow-secondary {
+    box-shadow: 0 0 20px rgb(var(--secondary-accent) / 0.3);
   }
 }
 

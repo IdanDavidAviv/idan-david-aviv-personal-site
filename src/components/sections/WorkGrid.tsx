@@ -34,10 +34,10 @@ export default function WorkGrid() {
                     item.rank === 'medium' ? "text-amber-400" : "text-blue-400"
                 )} />
               </div>
-              <h3 className="text-xl font-bold mb-3 group-hover:text-accent transition-colors">
+              <h3 className="text-xl font-bold mb-3 group-hover:text-accent transition-colors text-base-content">
                 {item.section}
               </h3>
-              <p className="text-white/60 text-sm leading-relaxed">
+              <p className="text-muted-content text-sm leading-relaxed">
                 {item.text}
               </p>
             </GlassCard>
