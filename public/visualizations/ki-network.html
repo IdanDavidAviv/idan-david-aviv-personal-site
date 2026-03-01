@@ -99,6 +99,7 @@
             font-size: 0.8rem;
             backdrop-filter: blur(4px);
             z-index: 5;
+            transition: all 0.3s ease;
         }
 
         #overlay-title {
@@ -107,6 +108,39 @@
             margin-bottom: 5px;
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        /* Fullscreen styles */
+        body.is-fullscreen #header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5, 5, 16, 0.95);
+        }
+
+        body.is-fullscreen #container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 100;
+        }
+
+        #exit-fullscreen {
+            display: none;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+        }
+
+        body.is-fullscreen #exit-fullscreen {
+            display: inline-block;
+        }
+
+        body.is-fullscreen #enter-fullscreen {
+            display: none;
         }
     </style>
 </head>
@@ -119,6 +153,8 @@
             <p style="margin:5px 0 0 0; color: #94a3b8; font-size: 0.75rem;">Interactive KI Persistence Mapping</p>
         </div>
         <div id="controls">
+            <button id="exit-fullscreen" class="btn" onclick="toggleFullscreen()">Back to Site</button>
+            <button id="enter-fullscreen" class="btn" onclick="toggleFullscreen()">Full Screen</button>
             <button class="btn active" onclick="switchView(this, '3d')">3D Network</button>
             <button class="btn" onclick="switchView(this, '2d')">2D Physics</button>
         </div>
@@ -375,11 +411,12 @@
         // Removal of pseudo-3D logic
 
         function switchView(btn, view) {
+            currentView = view;
             document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
 
             document.getElementById('view-' + view).classList.add('active');
-            btn.classList.add('active');
+            if (btn) btn.classList.add('active');
 
             const title = document.getElementById('overlay-title');
             const desc = document.getElementById('overlay-desc');
@@ -394,6 +431,40 @@
                 network.fit();
             }
         }
+
+        let isFullscreen = false;
+        let currentView = '3d';
+
+        function toggleFullscreen() {
+            isFullscreen = !isFullscreen;
+            document.body.classList.toggle('is-fullscreen', isFullscreen);
+
+            // Allow CSS to apply
+            setTimeout(() => {
+                const width = isFullscreen ? window.innerWidth : document.getElementById('container').clientWidth;
+                const height = isFullscreen ? window.innerHeight : document.getElementById('container').clientHeight;
+
+                // Sync 3D Graph
+                Graph3D.width(width);
+                Graph3D.height(height);
+                if (isFullscreen) Graph3D.zoomToFit(400);
+
+                // Sync 2D Graph
+                network.setSize(width + 'px', height + 'px');
+                network.redraw();
+                if (isFullscreen) network.fit();
+            }, 50);
+        }
+
+        window.addEventListener('resize', () => {
+            if (isFullscreen) {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                Graph3D.width(width);
+                Graph3D.height(height);
+                network.setSize(width + 'px', height + 'px');
+            }
+        });
     </script>
 </body>
 
