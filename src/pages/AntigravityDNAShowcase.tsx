@@ -43,21 +43,74 @@ export default function AntigravityDNAShowcase() {
                             <Brain className="w-8 h-8 md:w-12 md:h-12 text-cyan-400 animate-pulse" />
                         </div>
                         <p className="max-w-2xl mx-auto text-purple-100/70 text-lg md:text-xl font-light leading-relaxed">
-                            Architecting Persistent Intelligence. <br className="hidden md:block" />
-                            A living ecosystem of behavioral protocols and memory synthesis.
+                            The Foundation of Agent Reliability. <br className="hidden md:block" />
+                            A path-orchestrated ecosystem for 100X deterministic performance.
                         </p>
 
                         <div className="mt-8 flex flex-wrap justify-center gap-4">
                             <span className="px-4 py-1.5 rounded-full bg-purple-500/20 border border-purple-500/30 text-purple-200 text-xs font-mono uppercase tracking-widest">
-                                persistence v2.4
+                                stabilization protocol
                             </span>
                             <span className="px-4 py-1.5 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-200 text-xs font-mono uppercase tracking-widest">
-                                neural-ki-hybrid
+                                path-orchestration
+                            </span>
+                            <span className="px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-200 text-xs font-mono uppercase tracking-widest">
+                                self-maintainability
                             </span>
                         </div>
                     </motion.div>
                 </div>
             </motion.div>
+
+            {/* section: The DNA Philosophy */}
+            <Section id="dna-philosophy">
+                <div className="text-center mb-16">
+                    <motion.h2
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        className="text-4xl md:text-6xl font-bold text-white mb-6 uppercase tracking-tighter"
+                    >
+                        The DNA <span className="text-purple-400">Philosophy</span>
+                    </motion.h2>
+                    <p className="max-w-3xl mx-auto text-purple-100/40 text-lg md:text-xl font-light">
+                        Engineering 100X efficiency by cleaning the noise from the agent runtime.
+                        Stabilizing behavior through orchestrated paths and persistent memory.
+                    </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <PhilosophyCard
+                        title="Behavioral Stabilization"
+                        description="Shifting from probabilistic guessing to deterministic execution. Codifying identity to eliminate erratic agent behavior."
+                        icon={<Activity className="text-purple-400" />}
+                    />
+                    <PhilosophyCard
+                        title="Path Orchestration"
+                        description="Designing success through proactive workflows and skills. The agent follows high-integrity roadmaps, not trial-and-error."
+                        icon={<Network className="text-cyan-400" />}
+                    />
+                    <PhilosophyCard
+                        title="Noise Reduction"
+                        description="Automating 'repetitive nonsense' via code. Freeing the cognitive runtime to focus purely on high-level thinking."
+                        icon={<Cpu className="text-amber-400" />}
+                    />
+                    <PhilosophyCard
+                        title="SSOT Consensus"
+                        description="Thinking based on a Source of Truth. The agent audits historical data instead of hallucinating from transient logs."
+                        icon={<Database className="text-purple-400" />}
+                    />
+                    <PhilosophyCard
+                        title="Self-Maintainability"
+                        description="A system that audits and improves itself. Zero contextual leakage through crystalline architectural memory."
+                        icon={<Sparkles className="text-cyan-400" />}
+                    />
+                    <PhilosophyCard
+                        title="100X Performance"
+                        description="Saving time, money, and developer frustration by solving problems once and locking them at the SSOT baseline."
+                        icon={<Zap className="text-amber-400" />}
+                    />
+                </div>
+            </Section>
 
             {/* Content Sections */}
             <div className="w-full max-w-6xl mt-24 space-y-32">
@@ -264,6 +317,21 @@ export default function AntigravityDNAShowcase() {
                 <p className="text-white/20 font-mono text-sm tracking-[0.5em] uppercase">Persistent Agent Module // Antigravity</p>
             </div>
         </div>
+    )
+}
+
+function PhilosophyCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
+    return (
+        <motion.div
+            whileHover={{ y: -5 }}
+            className="p-8 rounded-[2rem] bg-gradient-to-br from-white/10 to-transparent border border-white/10 hover:border-purple-500/40 transition-all group"
+        >
+            <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                {icon}
+            </div>
+            <h4 className="text-xl font-bold text-white mb-3 tracking-tight">{title}</h4>
+            <p className="text-purple-100/50 text-sm leading-relaxed">{description}</p>
+        </motion.div>
     )
 }
 
