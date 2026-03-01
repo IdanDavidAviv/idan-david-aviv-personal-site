@@ -292,15 +292,32 @@
         }, 1200);
 
         // Initialize 2D View
-        const visNodes = new vis.DataSet(kiData.nodes.map(n => ({
-            id: n.id,
-            label: n.id,
-            color: {
-                background: n.group === 0 ? '#00008b' : (isTerminal(n.id) ? '#fbbf24' : (n.group === 1 ? '#a855f7' : '#22d3ee')),
-                border: '#1e293b'
-            },
-            font: { color: n.group === 0 || !isTerminal(n.id) ? 'white' : '#1e293b', size: 12, face: 'Inter' }
-        })));
+        const visNodes = new vis.DataSet(kiData.nodes.map(n => {
+            const isTerm = isTerminal(n.id);
+            const label = n.id.replace(/_/g, ' ');
+            let bgColor, textColor;
+
+            if (n.id === 'GEMINI.md') {
+                bgColor = '#00008b';
+                textColor = '#ffffff';
+            } else if (isTerm) {
+                bgColor = '#fbbf24';
+                textColor = '#0f172a'; // Deep dark for gold contrast
+            } else if (n.group === 1) {
+                bgColor = '#a855f7';
+                textColor = '#ffffff';
+            } else {
+                bgColor = '#22d3ee';
+                textColor = '#0f172a'; // Deep dark for cyan contrast
+            }
+
+            return {
+                id: n.id,
+                label: label,
+                color: { background: bgColor, border: '#1e293b' },
+                font: { color: textColor, size: 12, face: 'Inter', weight: '500' }
+            };
+        }));
         const visEdges = new vis.DataSet(kiData.links.map(l => ({ from: l.source, to: l.target })));
         const network = new vis.Network(
             document.getElementById('view-2d'),
