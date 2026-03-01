@@ -11,13 +11,19 @@
     --base-bg: 13 17 23;
     --text-base: 255 255 255;
     --text-muted: 156 163 175;
+
+    /* Spirit Lab Mystic Tokens */
+    --mystic-bg: 46 16 101;
+    /* #2e1065 in RGB */
+    --mystic-text: 237 233 254;
+    /* #ede9fe in RGB */
   }
 
   body {
     background-color: rgb(var(--base-bg));
     color: rgb(var(--text-base));
     @apply antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Rubik', 'Inter', system-ui, sans-serif;
   }
 }
 
@@ -29,9 +35,70 @@
   .text-muted-content {
     color: rgb(var(--text-muted));
   }
+
+  /* Starry Background Effect from Spirit Lab */
+  .mystical-bg {
+    background-color: #1a0b2e;
+    background-image: url("/assets/bg-stars.png");
+    background-size: 1024px 1024px;
+    background-repeat: repeat;
+    animation: stars-move 60s linear infinite;
+    position: relative;
+  }
+
+  @keyframes stars-move {
+    from {
+      background-position: 0 0;
+    }
+
+    to {
+      background-position: 1024px 1024px;
+    }
+  }
 }
 
 @layer components {
+
+  /* Spirit Lab Glassmorphism */
+  .glass-card {
+    background: rgba(30, 10, 60, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 20px 25px -5px rgba(20, 10, 40, 0.2);
+    border-radius: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-card:hover {
+    border-color: rgba(234, 179, 8, 0.2);
+    box-shadow: 0 25px 50px -12px rgba(20, 10, 40, 0.3);
+  }
+
+  /* Celestial Amber Glass - Minimalist & Deep */
+  .amber-glass {
+    background: rgba(217, 119, 6, 0.03);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(251, 191, 36, 0.1);
+    box-shadow: 
+      inset 0 1px 1px rgba(255, 255, 255, 0.03),
+      0 10px 30px -10px rgba(0, 0, 0, 0.4);
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .amber-glass:hover {
+    background: rgba(217, 119, 6, 0.08);
+    border-color: rgba(251, 191, 36, 0.3);
+    box-shadow: 
+      inset 0 1px 1px rgba(255, 255, 255, 0.05),
+      0 20px 40px -15px rgba(217, 119, 6, 0.15);
+  }
+
+  .premium-glow {
+    box-shadow: 0 0 20px rgba(180, 83, 9, 0.3), 0 0 40px rgba(180, 83, 9, 0.1);
+  }
+
   .glass-panel {
     @apply bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl transition-all duration-300;
   }
@@ -42,23 +109,6 @@
 
   .text-gradient {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-white/80 to-white/60;
-  }
-
-  /* Fusion Utilities */
-  .border-secondary {
-    border-color: rgb(var(--secondary-accent) / 0.2);
-  }
-
-  .bg-secondary-soft {
-    background-color: rgb(var(--secondary-accent) / 0.1);
-  }
-
-  .text-secondary {
-    color: rgb(var(--secondary-accent));
-  }
-
-  .glow-secondary {
-    box-shadow: 0 0 20px rgb(var(--secondary-accent) / 0.3);
   }
 }
 
