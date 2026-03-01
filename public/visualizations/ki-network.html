@@ -1,18 +1,40 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Antigravity DNA: Neural Explorer</title>
-    <!-- Three.js (UMD Build) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
-    <!-- SpriteText for 3D Labels -->
-    <script src="https://unpkg.com/three-spritetext@1.8.2/dist/three-spritetext.min.js"></script>
-    <!-- 3D Force Graph Library -->
-    <script src="https://unpkg.com/3d-force-graph@1.73.0/dist/3d-force-graph.min.js"></script>
-    <!-- Vis.js (2D Baseline) -->
-    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <!-- Dev: forward console â†’ Vite terminal via /__log -->
+    <script>
+        (function () {
+            if (!window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1')) return;
+            var LOG_URL = window.location.origin + '/__log';
+            var orig = { log: console.log, info: console.info, warn: console.warn, error: console.error };
+            function fwd(level, args) {
+                var msg = Array.from(args).map(function (a) {
+                    try { return typeof a === 'object' ? JSON.stringify(a) : String(a); } catch (e) { return '[unserializable]'; }
+                }).join(' ');
+                fetch(LOG_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ level: level, message: '[ki-network] ' + msg, args: [] }) }).catch(function () { });
+            }
+            console.log = function () { orig.log.apply(console, arguments); fwd('INFO', arguments); };
+            console.info = function () { orig.info.apply(console, arguments); fwd('INFO', arguments); };
+            console.warn = function () { orig.warn.apply(console, arguments); fwd('WARN', arguments); };
+            console.error = function () { orig.error.apply(console, arguments); fwd('ERROR', arguments); };
+            window.addEventListener('error', function (e) {
+                var detail = e.message;
+                if (e.error && e.error.stack) detail += '\n' + e.error.stack;
+                else detail += ' (' + e.filename + ':' + e.lineno + ':' + e.colno + ')';
+                fwd('ERROR', [detail]);
+            });
+            window.addEventListener('unhandledrejection', function (e) {
+                var reason = e.reason && e.reason.stack ? e.reason.stack : String(e.reason);
+                fwd('ERROR', ['Unhandled Promise: ' + reason]);
+            });
+        })();
+    </script>
+    <!-- ESM module: all libs bundled by Vite, single shared THREE instance -->
+    <script type="module" src="/src/visualizations/ki-network.ts"></script>
 
     <style>
         body {
@@ -117,6 +139,8 @@
             left: 0;
             right: 0;
             background: rgba(5, 5, 16, 0.95);
+            z-index: 110;
+            /* Ensure it's above the container */
         }
 
         body.is-fullscreen #container {
@@ -128,22 +152,22 @@
             z-index: 100;
         }
 
-        #exit-fullscreen {
-            display: none;
-            background: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            color: #ef4444;
-        }
-
-        body.is-fullscreen #exit-fullscreen {
-            display: inline-block;
-        }
 
         body.is-fullscreen #enter-fullscreen {
             display: none;
         }
-    </style>
-</head>
+
+        .close-x {
+            display: none;
+            font-size: 1.2rem;
+            line-height: 1;
+            padding: 4px 10px;
+        }
+
+        body.is-fullscreen .close-x {
+            display: block;
+        }
+    </style>&#x2715;</head>
 
 <body>
 
@@ -153,10 +177,10 @@
             <p style="margin:5px 0 0 0; color: #94a3b8; font-size: 0.75rem;">Interactive KI Persistence Mapping</p>
         </div>
         <div id="controls">
-            <button id="exit-fullscreen" class="btn" onclick="toggleFullscreen()">Back to Site</button>
-            <button id="enter-fullscreen" class="btn" onclick="toggleFullscreen()">Full Screen</button>
             <button class="btn active" onclick="switchView(this, '3d')">3D Network</button>
             <button class="btn" onclick="switchView(this, '2d')">2D Physics</button>
+            <button id="enter-fullscreen" class="btn" onclick="toggleFullscreen()" title="Full Screen">&#x26F6;</button>
+            <button class="btn close-x" onclick="toggleFullscreen()" title="Exit Fullscreen">&#x2715;</button>
         </div>
     </div>
 
@@ -174,298 +198,6 @@
             persistent Knowledge Item network. Interconnects are verified SSOT bridges.</p>
     </div>
 
-    <script>
-        const kiData = {
-            nodes: [
-                // Root
-                { id: 'GEMINI.md', name: 'GEMINI.md (Root)', group: 0 },
-
-                // Core
-                { id: 'session_lifecycle', name: 'session_lifecycle', group: 1 },
-                { id: 'operation_commander', name: 'operation_commander', group: 1 },
-                { id: 'git_strategy', name: 'git_strategy', group: 1 },
-
-                // Global
-                { id: 'github_project_manager', name: 'github_project_manager', group: 2 },
-                { id: 'context_planning', name: 'context_planning', group: 2 },
-                { id: 'windows_protocol', name: 'windows_protocol', group: 2 },
-                { id: 'quality_gates', name: 'quality_gates', group: 2 },
-                { id: 'verification_integrity', name: 'verification_integrity', group: 2 },
-                { id: 'testing_governance', name: 'testing_governance', group: 2 },
-                { id: 'supabase_governance', name: 'supabase_governance', group: 2 },
-                { id: 'state_management_governance', name: 'state_management_governance', group: 2 },
-                { id: 'seo_governance', name: 'seo_governance', group: 2 },
-                { id: 'rtl_guardian', name: 'rtl_guardian', group: 2 },
-                { id: 'resilient_fetching', name: 'resilient_fetching', group: 2 },
-                { id: 'premium_ui_dna', name: 'premium_ui_dna', group: 2 },
-                { id: 'privacy_shield', name: 'privacy_shield', group: 2 },
-                { id: 'asset_governance', name: 'asset_governance', group: 2 },
-                { id: 'guided_audit_protocol', name: 'guided_audit_protocol', group: 2 },
-                { id: 'emergency_divergence', name: 'emergency_divergence', group: 2 },
-                { id: 'dna_philosophy', name: 'dna_philosophy', group: 1 },
-
-                // Supplemental (Reference Targets)
-                { id: 'domain_schema_guardian', name: 'domain_schema_guardian', group: 2 },
-                { id: 'observability_telemetry', name: 'observability_telemetry', group: 2 },
-                { id: 'graceful_error_ui', name: 'graceful_error_ui', group: 2 },
-                { id: 'linguistic_curator', name: 'linguistic_curator', group: 2 },
-                { id: 'premium_form_architect', name: 'premium_form_architect', group: 2 },
-                { id: 'astro_time_lord', name: 'astro_time_lord', group: 2 },
-                { id: 'performance_memoizer', name: 'performance_memoizer', group: 2 },
-                { id: 'react_component_splitter', name: 'react_component_splitter', group: 2 }
-            ],
-            links: [
-                // GEMINI.md Referrals
-                { source: 'GEMINI.md', target: 'operation_commander' },
-                { source: 'GEMINI.md', target: 'context_planning' },
-                { source: 'GEMINI.md', target: 'windows_protocol' },
-                { source: 'GEMINI.md', target: 'verification_integrity' },
-                { source: 'GEMINI.md', target: 'quality_gates' },
-                { source: 'GEMINI.md', target: 'privacy_shield' },
-                { source: 'GEMINI.md', target: 'rtl_guardian' },
-                { source: 'GEMINI.md', target: 'premium_ui_dna' },
-                { source: 'GEMINI.md', target: 'domain_schema_guardian' },
-                { source: 'GEMINI.md', target: 'asset_governance' },
-                { source: 'GEMINI.md', target: 'git_strategy' },
-                { source: 'GEMINI.md', target: 'dna_philosophy' },
-
-                // Core Orchestration
-                { source: 'session_lifecycle', target: 'operation_commander' },
-                { source: 'session_lifecycle', target: 'git_strategy' },
-                { source: 'session_lifecycle', target: 'asset_governance' },
-                { source: 'operation_commander', target: 'windows_protocol' },
-                { source: 'operation_commander', target: 'session_lifecycle' },
-                { source: 'operation_commander', target: 'context_planning' },
-                { source: 'operation_commander', target: 'emergency_divergence' },
-                { source: 'operation_commander', target: 'guided_audit_protocol' },
-                { source: 'operation_commander', target: 'git_strategy' },
-                { source: 'operation_commander', target: 'github_project_manager' },
-                { source: 'operation_commander', target: 'supabase_governance' },
-                { source: 'operation_commander', target: 'state_management_governance' },
-                { source: 'context_planning', target: 'operation_commander' },
-                { source: 'guided_audit_protocol', target: 'emergency_divergence' },
-                { source: 'emergency_divergence', target: 'testing_governance' },
-
-                // CI/CD
-                { source: 'git_strategy', target: 'quality_gates' },
-                { source: 'git_strategy', target: 'verification_integrity' },
-                { source: 'git_strategy', target: 'github_project_manager' },
-                { source: 'git_strategy', target: 'windows_protocol' },
-                { source: 'github_project_manager', target: 'git_strategy' },
-                { source: 'quality_gates', target: 'git_strategy' },
-                { source: 'quality_gates', target: 'guided_audit_protocol' },
-                { source: 'quality_gates', target: 'verification_integrity' },
-                { source: 'testing_governance', target: 'git_strategy' },
-                { source: 'testing_governance', target: 'quality_gates' },
-
-                // Backend & Data
-                { source: 'supabase_governance', target: 'privacy_shield' },
-                { source: 'privacy_shield', target: 'supabase_governance' },
-                { source: 'privacy_shield', target: 'observability_telemetry' },
-                { source: 'state_management_governance', target: 'resilient_fetching' },
-                { source: 'resilient_fetching', target: 'asset_governance' },
-                { source: 'resilient_fetching', target: 'graceful_error_ui' },
-                { source: 'observability_telemetry', target: 'privacy_shield' },
-                { source: 'observability_telemetry', target: 'graceful_error_ui' },
-
-                // Frontend & UI
-                { source: 'premium_ui_dna', target: 'rtl_guardian' },
-                { source: 'premium_ui_dna', target: 'asset_governance' },
-                { source: 'rtl_guardian', target: 'linguistic_curator' },
-                { source: 'linguistic_curator', target: 'rtl_guardian' },
-                { source: 'graceful_error_ui', target: 'premium_ui_dna' },
-                { source: 'graceful_error_ui', target: 'premium_form_architect' },
-                { source: 'premium_form_architect', target: 'premium_ui_dna' },
-                { source: 'premium_form_architect', target: 'linguistic_curator' },
-                { source: 'premium_form_architect', target: 'astro_time_lord' },
-                { source: 'react_component_splitter', target: 'performance_memoizer' },
-                { source: 'react_component_splitter', target: 'state_management_governance' }
-            ]
-        };
-
-        // Terminal Node Logic
-        const outDeg = {};
-        kiData.links.forEach(l => {
-            const sid = typeof l.source === 'object' ? l.source.id : l.source;
-            outDeg[sid] = (outDeg[sid] || 0) + 1;
-        });
-        const isTerminal = (id) => !outDeg[id];
-
-        // Initialize 3D View
-        const Graph3D = ForceGraph3D()
-            (document.getElementById('view-3d'))
-            .backgroundColor('#050510')
-            .nodeThreeObject(node => {
-                const group = new THREE.Group();
-
-                // Node Sphere
-                const color = node.id === 'GEMINI.md' ? '#00008b' :
-                    (isTerminal(node.id) ? '#fbbf24' :
-                        (node.group === 1 ? '#a855f7' : '#22d3ee'));
-
-                const size = node.group === 0 ? 14 :
-                    (isTerminal(node.id) ? 4 :
-                        (node.group === 1 ? 8 : 6));
-
-                const sphere = new THREE.Mesh(
-                    new THREE.SphereGeometry(size, 24, 24),
-                    new THREE.MeshLambertMaterial({ color: color, transparent: true, opacity: 0.9 })
-                );
-                group.add(sphere);
-
-                // Node Label (SpriteText)
-                const sprite = new SpriteText(node.id.replace(/_/g, ' '));
-                sprite.color = '#ffffff';
-                sprite.textHeight = 4;
-                sprite.padding = 2;
-                sprite.backgroundColor = 'rgba(0,0,0,0.4)';
-                sprite.borderRadius = 2;
-                sprite.position.y = size + 6; // Position above sphere
-                group.add(sprite);
-
-                return group;
-            })
-            .linkWidth(1.5)
-            .linkOpacity(0.4)
-            .linkColor(() => '#6366f1')
-            .linkDirectionalArrowLength(4)
-            .linkDirectionalArrowRelPos(1)
-            .linkCurvature(0.25)
-            .graphData(kiData)
-            .onNodeClick(node => {
-                const distance = 60;
-                const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
-                Graph3D.cameraPosition(
-                    { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio },
-                    node,
-                    2000
-                );
-            });
-
-        // Forced center at startup
-        setTimeout(() => {
-            Graph3D.zoomToFit(1000, 150);
-        }, 1200);
-
-        // Initialize 2D View
-        const visNodes = new vis.DataSet(kiData.nodes.map(n => {
-            const isTerm = isTerminal(n.id);
-            const label = n.id.replace(/_/g, ' ');
-            let bgColor, textColor;
-
-            if (n.id === 'GEMINI.md') {
-                bgColor = '#00008b';
-                textColor = '#ffffff';
-            } else if (isTerm) {
-                bgColor = '#fbbf24';
-                textColor = '#0f172a'; // Deep dark for gold contrast
-            } else if (n.group === 1) {
-                bgColor = '#a855f7';
-                textColor = '#ffffff';
-            } else {
-                bgColor = '#22d3ee';
-                textColor = '#0f172a'; // Deep dark for cyan contrast
-            }
-
-            return {
-                id: n.id,
-                label: label.split(' ').join('\n'), // Stack vertically word by word
-                shape: 'circle',                     // Text inside round nodes
-                margin: 10,
-                widthConstraint: { minimum: 50, maximum: 100 },
-                color: {
-                    background: bgColor,
-                    border: '#1e293b',
-                    highlight: { background: bgColor, border: '#ffffff' }
-                },
-                font: {
-                    color: textColor,
-                    size: 11,
-                    face: 'Inter',
-                    weight: '600',
-                    vadjust: 0 // Center text
-                }
-            };
-        }));
-        const visEdges = new vis.DataSet(kiData.links.map(l => ({ from: l.source, to: l.target })));
-        const network = new vis.Network(
-            document.getElementById('view-2d'),
-            { nodes: visNodes, edges: visEdges },
-            {
-                physics: {
-                    enabled: true,
-                    solver: 'forceAtlas2Based',
-                    forceAtlas2Based: {
-                        gravitationalConstant: -100,
-                        centralGravity: 0.015,
-                        springConstant: 0.1,
-                        springLength: 120
-                    }
-                },
-                interaction: { hover: true, dragNodes: true, tooltipDelay: 200 },
-                edges: { color: 'rgba(168, 85, 247, 0.4)', arrows: { to: { enabled: true, scaleFactor: 0.5 } }, width: 1 }
-            }
-        );
-        setTimeout(() => network.fit(), 1000);
-
-        // Removal of pseudo-3D logic
-
-        function switchView(btn, view) {
-            currentView = view;
-            document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
-
-            document.getElementById('view-' + view).classList.add('active');
-            if (btn) btn.classList.add('active');
-
-            const title = document.getElementById('overlay-title');
-            const desc = document.getElementById('overlay-desc');
-
-            if (view === '3d') {
-                title.innerText = 'Immersive Neural Graph';
-                desc.innerText = 'Explore the high-dimensional dependency mapping of the agent\'s memory. Drag to rotate, Scroll to zoom.';
-                setTimeout(() => Graph3D.zoomToFit(800, 100), 50);
-            } else if (view === '2d') {
-                title.innerText = 'Kinetic Physics Map';
-                desc.innerText = 'Flat relational mapping with force-directed stabilization. Direct SSOT verification.';
-                network.fit();
-            }
-        }
-
-        let isFullscreen = false;
-        let currentView = '3d';
-
-        function toggleFullscreen() {
-            isFullscreen = !isFullscreen;
-            document.body.classList.toggle('is-fullscreen', isFullscreen);
-
-            // Allow CSS to apply
-            setTimeout(() => {
-                const width = isFullscreen ? window.innerWidth : document.getElementById('container').clientWidth;
-                const height = isFullscreen ? window.innerHeight : document.getElementById('container').clientHeight;
-
-                // Sync 3D Graph
-                Graph3D.width(width);
-                Graph3D.height(height);
-                if (isFullscreen) Graph3D.zoomToFit(400);
-
-                // Sync 2D Graph
-                network.setSize(width + 'px', height + 'px');
-                network.redraw();
-                if (isFullscreen) network.fit();
-            }, 50);
-        }
-
-        window.addEventListener('resize', () => {
-            if (isFullscreen) {
-                const width = window.innerWidth;
-                const height = window.innerHeight;
-                Graph3D.width(width);
-                Graph3D.height(height);
-                network.setSize(width + 'px', height + 'px');
-            }
-        });
-    </script>
 </body>
 
 </html>

@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Dna, Brain, Cpu, Database, Shield, Zap, Sparkles, Binary, Network, Activity, Boxes, Layers } from 'lucide-react'
 import Section from '@/components/ui/Section'
@@ -7,6 +8,20 @@ import Section from '@/components/ui/Section'
  * A technical deep-dive into the AI agent's evolutionary architecture and persistence protocols.
  */
 export default function AntigravityDNAShowcase() {
+    const [isGraphFullscreen, setIsGraphFullscreen] = useState(false)
+
+    useEffect(() => {
+        const handleMessage = (event: MessageEvent) => {
+            if (event.data.type === 'toggle-fullscreen') {
+                setIsGraphFullscreen(event.data.isFullscreen)
+                // Lock body scroll when fullscreen
+                document.body.style.overflow = event.data.isFullscreen ? 'hidden' : ''
+            }
+        }
+        window.addEventListener('message', handleMessage)
+        return () => window.removeEventListener('message', handleMessage)
+    }, [])
+
     return (
         <div className="min-h-screen w-full bg-[#050510] py-20 px-4 md:px-8 lg:px-12 flex flex-col items-center">
             {/* The "Box" containing the DNA World */}
@@ -262,20 +277,16 @@ export default function AntigravityDNAShowcase() {
                         <p className="text-purple-100/40 text-lg uppercase tracking-widest font-mono">Interactive KI Persistence Mapping</p>
                     </div>
 
-                    <div className="relative group rounded-[2.5rem] overflow-hidden border border-purple-500/20 bg-[#050510] shadow-[0_0_50px_-12px_rgba(168,85,247,0.3)]">
-                        <div className="aspect-video w-full min-h-[500px] relative">
+                    <div className={isGraphFullscreen
+                        ? "fixed inset-0 z-[150] bg-[#050510]"
+                        : "relative group rounded-[2.5rem] overflow-hidden border border-purple-500/20 bg-[#050510] shadow-[0_0_50px_-12px_rgba(168,85,247,0.3)] transition-all duration-500"
+                    }>
+                        <div className={`${isGraphFullscreen ? 'w-screen h-screen' : 'aspect-video w-full min-h-[500px]'} relative`}>
                             <iframe
                                 src="/visualizations/ki-network.html"
                                 className="w-full h-full border-none"
                                 title="KI Network 3D Visualization"
                             />
-                            {/* Glass overlay hint */}
-                            <div className="absolute top-6 left-6 p-4 rounded-2xl bg-white/5 backdrop-blur-md border border-white/10 pointer-events-none">
-                                <div className="flex items-center gap-3">
-                                    <Activity className="w-4 h-4 text-purple-400 animate-pulse" />
-                                    <span className="text-xs font-mono text-purple-200 uppercase tracking-tighter">Live Neural Feed</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
