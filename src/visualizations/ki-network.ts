@@ -42,7 +42,7 @@ const kiData: { nodes: KiNode[]; links: KiLink[] } = {
         { id: 'testing_governance', name: 'testing_governance', group: 2 },
         { id: 'supabase_governance', name: 'supabase_governance', group: 2 },
         { id: 'state_management_governance', name: 'state_management_governance', group: 2 },
-        { id: 'seo_governance', name: 'seo_governance', group: 2 },
+        { id: 'seo_governance', name: 'seo_governance', group: 1 },
         { id: 'rtl_guardian', name: 'rtl_guardian', group: 2 },
         { id: 'resilient_fetching', name: 'resilient_fetching', group: 2 },
         { id: 'premium_ui_dna', name: 'premium_ui_dna', group: 2 },
@@ -54,9 +54,9 @@ const kiData: { nodes: KiNode[]; links: KiLink[] } = {
 
         // Supplemental
         { id: 'domain_schema_guardian', name: 'domain_schema_guardian', group: 2 },
-        { id: 'observability_telemetry', name: 'observability_telemetry', group: 2 },
-        { id: 'graceful_error_ui', name: 'graceful_error_ui', group: 2 },
-        { id: 'linguistic_curator', name: 'linguistic_curator', group: 2 },
+        { id: 'observability_telemetry', name: 'observability_telemetry', group: 1 },
+        { id: 'graceful_error_ui', name: 'graceful_error_ui', group: 1 },
+        { id: 'linguistic_curator', name: 'linguistic_curator', group: 1 },
         { id: 'premium_form_architect', name: 'premium_form_architect', group: 2 },
         { id: 'astro_time_lord', name: 'astro_time_lord', group: 2 },
         { id: 'performance_memoizer', name: 'performance_memoizer', group: 2 },
@@ -71,11 +71,15 @@ const kiData: { nodes: KiNode[]; links: KiLink[] } = {
         { source: 'GEMINI.md', target: 'quality_gates' },
         { source: 'GEMINI.md', target: 'privacy_shield' },
         { source: 'GEMINI.md', target: 'rtl_guardian' },
+        { source: 'GEMINI.md', target: 'seo_governance' },
         { source: 'GEMINI.md', target: 'premium_ui_dna' },
         { source: 'GEMINI.md', target: 'domain_schema_guardian' },
         { source: 'GEMINI.md', target: 'asset_governance' },
         { source: 'GEMINI.md', target: 'git_strategy' },
         { source: 'GEMINI.md', target: 'dna_philosophy' },
+        { source: 'GEMINI.md', target: 'linguistic_curator' },
+        { source: 'GEMINI.md', target: 'observability_telemetry' },
+        { source: 'GEMINI.md', target: 'graceful_error_ui' },
 
         // Core Orchestration
         { source: 'session_lifecycle', target: 'operation_commander' },
@@ -88,6 +92,9 @@ const kiData: { nodes: KiNode[]; links: KiLink[] } = {
         { source: 'operation_commander', target: 'verification_integrity' },
         { source: 'operation_commander', target: 'emergency_divergence' },
         { source: 'operation_commander', target: 'guided_audit_protocol' },
+        { source: 'operation_commander', target: 'seo_governance' },
+        { source: 'operation_commander', target: 'observability_telemetry' },
+        { source: 'operation_commander', target: 'graceful_error_ui' },
         { source: 'git_strategy', target: 'quality_gates' },
         { source: 'context_planning', target: 'operation_commander' },
 
@@ -108,6 +115,9 @@ const kiData: { nodes: KiNode[]; links: KiLink[] } = {
         { source: 'resilient_fetching', target: 'graceful_error_ui' },
         { source: 'observability_telemetry', target: 'privacy_shield' },
         { source: 'observability_telemetry', target: 'graceful_error_ui' },
+        { source: 'asset_governance', target: 'seo_governance' },
+        { source: 'asset_governance', target: 'linguistic_curator' },
+        { source: 'observability_telemetry', target: 'operation_commander' },
 
         // Frontend & UI
         { source: 'premium_ui_dna', target: 'rtl_guardian' },
