@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Home from '@/pages/Home'
 import DesignLab from '@/pages/DesignLab'
-import SpiritLabShowcase from '@/pages/SpiritLabShowcase'
+import SpiritResearchLabShowcase from '@/pages/SpiritResearchLabShowcase'
+import AntigravityDNAShowcase from '@/pages/AntigravityDNAShowcase'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
@@ -20,7 +21,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/design-lab" element={<DesignLab />} />
-          <Route path="/spirit-lab" element={<SpiritLabShowcase />} />
+          <Route path="/spirit-research-lab" element={<SpiritResearchLabShowcase />} />
+          <Route path="/antigravity-dna" element={<AntigravityDNAShowcase />} />
         </Routes>
 
         <Footer />

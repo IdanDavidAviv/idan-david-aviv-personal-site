@@ -116,13 +116,13 @@ const ECOSYSTEM = {
 }
 
 /**
- * Spirit Lab Showcase Page - Technical Teaser Upgrade
+ * Spirit Research Lab Showcase Page - Technical Teaser Upgrade
  * A high-impact engineering showcase designed to attract high-tier opportunities.
  */
-export default function SpiritLabShowcase() {
+export default function SpiritResearchLabShowcase() {
     return (
         <div className="min-h-screen w-full bg-[#0a0514] py-20 px-4 md:px-8 lg:px-12 flex flex-col items-center">
-            {/* The "Box" containing the Spirit Lab World */}
+            {/* The "Box" containing the Spirit Research Lab World */}
             <motion.div
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -149,7 +149,7 @@ export default function SpiritLabShowcase() {
                                 animate={{ scale: 1, rotate: 0 }}
                                 transition={{ duration: 1.5, type: "spring", bounce: 0.4 }}
                                 src="/assets/flask-only-no-bg.png"
-                                alt="Spirit Lab Flask"
+                                alt="Spirit Research Lab Flask"
                                 className="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-[0_0_50px_rgba(255,215,0,0.5)] cursor-pointer hover:scale-110 transition-transform"
                             />
                             <div className="space-y-4">

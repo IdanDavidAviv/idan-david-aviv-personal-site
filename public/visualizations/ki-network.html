@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity DNA: Neural Explorer</title>
+    <!-- 3D Force Graph Library (Three.js based) -->
+    <script src="https://unpkg.com/3d-force-graph"></script>
+    <!-- Vis.js (Current 2D Baseline) -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background: transparent;
+            /* Changed to transparent for embedding */
+            color: #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #header {
+            padding: 15px 20px;
+            background: rgba(5, 5, 16, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        #controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            background: rgba(168, 85, 247, 0.05);
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: rgba(168, 85, 247, 0.15);
+            border-color: rgba(168, 85, 247, 0.4);
+        }
+
+        .btn.active {
+            background: rgba(168, 85, 247, 0.3);
+            border-color: #a855f7;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+        }
+
+        #container {
+            flex: 1;
+            position: relative;
+        }
+
+        .view-panel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        .view-panel.active {
+            display: block;
+        }
+
+        #info-overlay {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(5, 5, 16, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+            max-width: 250px;
+            pointer-events: none;
+            font-size: 0.8rem;
+            backdrop-filter: blur(4px);
+            z-index: 5;
+        }
+
+        #overlay-title {
+            color: #a855f7;
+            display: block;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="header">
+        <div>
+            <h2 style="margin:0; font-size: 1.2rem; color: #fff; letter-spacing: 1px;">NEURAL EXPLORER</h2>
+            <p style="margin:5px 0 0 0; color: #94a3b8; font-size: 0.75rem;">Interactive KI Persistence Mapping</p>
+        </div>
+        <div id="controls">
+            <button class="btn active" onclick="switchView('3d')">3D Network</button>
+            <button class="btn" onclick="switchView('2d')">2D Physics</button>
+            <button class="btn" onclick="switchView('pseudo')">Layered Stack</button>
+        </div>
+    </div>
+
+    <div id="container">
+        <!-- View 1: 3D Force Graph -->
+        <div id="view-3d" class="view-panel active"></div>
+
+        <!-- View 2: Vis.js -->
+        <div id="view-2d" class="view-panel"></div>
+
+        <!-- View 3: Pseudo-3D (Layered) -->
+        <div id="view-pseudo" class="view-panel">
+            <div id="scene-3d"
+                style="width: 100%; height: 100%; perspective: 1200px; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at center, #0f172a 0%, #050510 100%);">
+                <div id="stack-3d"
+                    style="width: 400px; height: 400px; position: relative; transform-style: preserve-3d; transition: transform 0.1s ease-out; transform: rotateX(60deg) rotateZ(45deg);">
+                    <!-- Layers will be injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="info-overlay">
+        <strong id="overlay-title">Immersive Neural Graph</strong>
+        <p id="overlay-desc" style="margin:0; line-height: 1.4; color: #cbd5e1;">A 3D projection of the agent's
+            persistent Knowledge Item network. Interconnects are verified SSOT bridges.</p>
+    </div>
+
+    <script>
+        const kiData = {
+            nodes: [
+                // Root
+                { id: 'GEMINI.md', name: 'GEMINI.md (Root)', group: 0 },
+
+                // Core
+                { id: 'session_lifecycle', name: 'session_lifecycle', group: 1 },
+                { id: 'operation_commander', name: 'operation_commander', group: 1 },
+                { id: 'git_strategy', name: 'git_strategy', group: 1 },
+
+                // Global
+                { id: 'github_project_manager', name: 'github_project_manager', group: 2 },
+                { id: 'context_planning', name: 'context_planning', group: 2 },
+                { id: 'windows_protocol', name: 'windows_protocol', group: 2 },
+                { id: 'quality_gates', name: 'quality_gates', group: 2 },
+                { id: 'verification_integrity', name: 'verification_integrity', group: 2 },
+                { id: 'testing_governance', name: 'testing_governance', group: 2 },
+                { id: 'supabase_governance', name: 'supabase_governance', group: 2 },
+                { id: 'state_management_governance', name: 'state_management_governance', group: 2 },
+                { id: 'seo_governance', name: 'seo_governance', group: 2 },
+                { id: 'rtl_guardian', name: 'rtl_guardian', group: 2 },
+                { id: 'resilient_fetching', name: 'resilient_fetching', group: 2 },
+                { id: 'premium_ui_dna', name: 'premium_ui_dna', group: 2 },
+                { id: 'privacy_shield', name: 'privacy_shield', group: 2 },
+                { id: 'asset_governance', name: 'asset_governance', group: 2 },
+                { id: 'guided_audit_protocol', name: 'guided_audit_protocol', group: 2 },
+                { id: 'emergency_divergence', name: 'emergency_divergence', group: 2 },
+
+                // Supplemental (Reference Targets)
+                { id: 'domain_schema_guardian', name: 'domain_schema_guardian', group: 2 },
+                { id: 'observability_telemetry', name: 'observability_telemetry', group: 2 },
+                { id: 'graceful_error_ui', name: 'graceful_error_ui', group: 2 },
+                { id: 'linguistic_curator', name: 'linguistic_curator', group: 2 },
+                { id: 'premium_form_architect', name: 'premium_form_architect', group: 2 },
+                { id: 'astro_time_lord', name: 'astro_time_lord', group: 2 },
+                { id: 'performance_memoizer', name: 'performance_memoizer', group: 2 },
+                { id: 'react_component_splitter', name: 'react_component_splitter', group: 2 }
+            ],
+            links: [
+                // GEMINI.md Referrals
+                { source: 'GEMINI.md', target: 'operation_commander' },
+                { source: 'GEMINI.md', target: 'context_planning' },
+                { source: 'GEMINI.md', target: 'windows_protocol' },
+                { source: 'GEMINI.md', target: 'verification_integrity' },
+                { source: 'GEMINI.md', target: 'quality_gates' },
+                { source: 'GEMINI.md', target: 'privacy_shield' },
+                { source: 'GEMINI.md', target: 'rtl_guardian' },
+                { source: 'GEMINI.md', target: 'premium_ui_dna' },
+                { source: 'GEMINI.md', target: 'domain_schema_guardian' },
+                { source: 'GEMINI.md', target: 'asset_governance' },
+                { source: 'GEMINI.md', target: 'git_strategy' },
+
+                // Core Orchestration
+                { source: 'session_lifecycle', target: 'operation_commander' },
+                { source: 'session_lifecycle', target: 'git_strategy' },
+                { source: 'session_lifecycle', target: 'asset_governance' },
+                { source: 'operation_commander', target: 'windows_protocol' },
+                { source: 'operation_commander', target: 'session_lifecycle' },
+                { source: 'operation_commander', target: 'context_planning' },
+                { source: 'operation_commander', target: 'emergency_divergence' },
+                { source: 'operation_commander', target: 'guided_audit_protocol' },
+                { source: 'operation_commander', target: 'git_strategy' },
+                { source: 'operation_commander', target: 'github_project_manager' },
+                { source: 'operation_commander', target: 'supabase_governance' },
+                { source: 'operation_commander', target: 'state_management_governance' },
+                { source: 'context_planning', target: 'operation_commander' },
+                { source: 'guided_audit_protocol', target: 'emergency_divergence' },
+                { source: 'emergency_divergence', target: 'testing_governance' },
+
+                // CI/CD
+                { source: 'git_strategy', target: 'quality_gates' },
+                { source: 'git_strategy', target: 'verification_integrity' },
+                { source: 'git_strategy', target: 'github_project_manager' },
+                { source: 'git_strategy', target: 'windows_protocol' },
+                { source: 'github_project_manager', target: 'git_strategy' },
+                { source: 'quality_gates', target: 'git_strategy' },
+                { source: 'quality_gates', target: 'guided_audit_protocol' },
+                { source: 'quality_gates', target: 'verification_integrity' },
+                { source: 'testing_governance', target: 'git_strategy' },
+                { source: 'testing_governance', target: 'quality_gates' },
+
+                // Backend & Data
+                { source: 'supabase_governance', target: 'privacy_shield' },
+                { source: 'privacy_shield', target: 'supabase_governance' },
+                { source: 'privacy_shield', target: 'observability_telemetry' },
+                { source: 'state_management_governance', target: 'resilient_fetching' },
+                { source: 'resilient_fetching', target: 'asset_governance' },
+                { source: 'resilient_fetching', target: 'graceful_error_ui' },
+                { source: 'observability_telemetry', target: 'privacy_shield' },
+                { source: 'observability_telemetry', target: 'graceful_error_ui' },
+
+                // Frontend & UI
+                { source: 'premium_ui_dna', target: 'rtl_guardian' },
+                { source: 'premium_ui_dna', target: 'asset_governance' },
+                { source: 'rtl_guardian', target: 'linguistic_curator' },
+                { source: 'linguistic_curator', target: 'rtl_guardian' },
+                { source: 'graceful_error_ui', target: 'premium_ui_dna' },
+                { source: 'graceful_error_ui', target: 'premium_form_architect' },
+                { source: 'premium_form_architect', target: 'premium_ui_dna' },
+                { source: 'premium_form_architect', target: 'linguistic_curator' },
+                { source: 'premium_form_architect', target: 'astro_time_lord' },
+                { source: 'react_component_splitter', target: 'performance_memoizer' },
+                { source: 'react_component_splitter', target: 'state_management_governance' }
+            ]
+        };
+
+        // Terminal Node Logic
+        const outDeg = {};
+        kiData.links.forEach(l => {
+            const sid = typeof l.source === 'object' ? l.source.id : l.source;
+            outDeg[sid] = (outDeg[sid] || 0) + 1;
+        });
+        const isTerminal = (id) => !outDeg[id];
+
+        // Initialize 3D View
+        const Graph3D = ForceGraph3D()
+            (document.getElementById('view-3d'))
+            .backgroundColor('#050510')
+            .nodeLabel('name')
+            .nodeColor(node => {
+                if (node.id === 'GEMINI.md') return '#00008b'; // Root
+                if (isTerminal(node.id)) return '#fbbf24'; // Terminal Node (Amber)
+                if (node.group === 1) return '#a855f7'; // Purple (Core)
+                if (node.group === 2) return '#22d3ee'; // Cyan (Global)
+                return '#94a3b8';
+            })
+            .nodeResolution(24)
+            .nodeVal(node => {
+                if (node.group === 0) return 14; // Root is largest
+                if (isTerminal(node.id)) return 4;
+                if (node.group === 1) return 8;
+                if (node.group === 2) return 6;
+                return 4;
+            })
+            .linkWidth(1.5)
+            .linkOpacity(0.4)
+            .linkColor(() => '#6366f1')
+            .linkDirectionalArrowLength(4)
+            .linkDirectionalArrowRelPos(1)
+            .linkCurvature(0.25)
+            .graphData(kiData)
+            .onNodeClick(node => {
+                const distance = 60;
+                const distRatio = 1 + distance / Math.hypot(node.x, node.y, node.z);
+                Graph3D.cameraPosition(
+                    { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio },
+                    node,
+                    2000
+                );
+            });
+
+        // Forced center at startup
+        setTimeout(() => {
+            Graph3D.zoomToFit(1000, 150);
+        }, 1200);
+
+        // Initialize 2D View
+        const visNodes = new vis.DataSet(kiData.nodes.map(n => ({
+            id: n.id,
+            label: n.id,
+            color: {
+                background: n.group === 0 ? '#00008b' : (isTerminal(n.id) ? '#fbbf24' : (n.group === 1 ? '#a855f7' : '#22d3ee')),
+                border: '#1e293b'
+            },
+            font: { color: n.group === 0 || !isTerminal(n.id) ? 'white' : '#1e293b', size: 12, face: 'Inter' }
+        })));
+        const visEdges = new vis.DataSet(kiData.links.map(l => ({ from: l.source, to: l.target })));
+        const network = new vis.Network(
+            document.getElementById('view-2d'),
+            { nodes: visNodes, edges: visEdges },
+            {
+                physics: {
+                    enabled: true,
+                    solver: 'forceAtlas2Based',
+                    forceAtlas2Based: {
+                        gravitationalConstant: -100,
+                        centralGravity: 0.015,
+                        springConstant: 0.1,
+                        springLength: 120
+                    }
+                },
+                interaction: { hover: true, dragNodes: true, tooltipDelay: 200 },
+                edges: { color: 'rgba(168, 85, 247, 0.4)', arrows: { to: { enabled: true, scaleFactor: 0.5 } }, width: 1 }
+            }
+        );
+        setTimeout(() => network.fit(), 1000);
+
+        // Initialize 2.5D (CSS Stack)
+        const pseudoContainer = document.getElementById('view-pseudo');
+        const layers = [
+            { name: 'Root Protocol', color: 'rgba(0, 0, 139, 0.4)', z: 180, items: ['GEMINI.md'] },
+            { name: 'Architecture', color: 'rgba(168, 85, 247, 0.2)', z: 60, items: ['commander', 'lifecycle', 'planning'] },
+            {
+                name: 'Governance', color: 'rgba(34, 211, 238, 0.15)', z: -60, items: ['supabase', 'git', 'quality', 'windows',
+                    'github', 'asset']
+            }
+        ];
+
+        document.getElementById('stack-3d').innerHTML = layers.map(layer => `
+    <div class="layer"
+        style="position: absolute; top:0; left:0; width:100%; height:100%; background: ${layer.color}; border: 1px solid rgba(168, 85, 247, 0.3); transform: translateZ(${layer.z}px); display: flex; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); border-radius: 12px; box-shadow: 0 0 40px rgba(0,0,0,0.8);">
+        <span
+            style="font-weight: bold; font-size: 1.1rem; color: #fff; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9;">${layer.name}</span>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; max-width: 80%;">
+            ${layer.items.map(i => `<div
+                style="background: rgba(168, 85, 247, 0.1); padding: 4px 8px; border-radius: 4px; font-size: 0.65rem; border: 1px solid rgba(168, 85, 247, 0.3); color: #d8b4fe; font-family: monospace;">
+                ${i}</div>`).join('')}
+        </div>
+    </div>
+    `).join('');
+
+        document.addEventListener('mousemove', (e) => {
+            const panel = document.getElementById('view-pseudo');
+            if (!panel.classList.contains('active')) return;
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            document.getElementById('stack-3d').style.transform = `rotateX(${60 + yAxis}deg) rotateZ(${45 + xAxis}deg)`;
+        });
+
+        function switchView(view) {
+            document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+
+            document.getElementById('view-' + view).classList.add('active');
+            event.target.classList.add('active');
+
+            const title = document.getElementById('overlay-title');
+            const desc = document.getElementById('overlay-desc');
+
+            if (view === '3d') {
+                title.innerText = 'Immersive Neural Graph';
+                desc.innerText = 'Explore the high-dimensional dependency mapping of the agent\'s memory. Drag to rotate, Scroll to zoom.';
+                setTimeout(() => Graph3D.zoomToFit(800, 100), 50);
+            } else if (view === '2d') {
+                title.innerText = 'Kinetic Physics Map';
+                desc.innerText = 'Flat relational mapping with force-directed stabilization. Direct SSOT verification.';
+                network.fit();
+            } else {
+                title.innerText = 'Architectural Stack';
+                desc.innerText = 'Strategic layers of governance from core axioms to operational strategy. Move mouse to tilt.';
+            }
+        }
+    </script>
+</body>
+
+</html>

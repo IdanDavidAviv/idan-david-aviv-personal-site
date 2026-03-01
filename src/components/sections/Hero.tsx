@@ -38,7 +38,7 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* Spirit Lab visual accent */}
+      {/* Spirit Research Lab visual accent */}
       <div className="absolute bottom-12 w-full flex justify-center z-20">
         <div className="h-1.5 w-32 bg-gradient-to-r from-transparent via-accent to-transparent rounded-full opacity-50"></div>
       </div>

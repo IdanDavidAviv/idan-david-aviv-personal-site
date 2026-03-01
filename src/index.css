@@ -7,12 +7,15 @@
     --accent: 194 143 44;
     /* #C28F2C */
     --secondary-accent: 139 92 246;
-    /* Spirit Lab Violet default */
+    /* Spirit Research Lab Violet default */
+    --spirit-violet: #8b5cf6;
+    --spirit-violet-hover: #7c3aed;
+    --spirit-violet-glow: rgba(139, 92, 246, 0.4);
     --base-bg: 13 17 23;
     --text-base: 255 255 255;
     --text-muted: 156 163 175;
 
-    /* Spirit Lab Mystic Tokens */
+    /* Spirit Research Lab Mystic Tokens */
     --mystic-bg: 46 16 101;
     /* #2e1065 in RGB */
     --mystic-text: 237 233 254;
@@ -36,7 +39,7 @@
     color: rgb(var(--text-muted));
   }
 
-  /* Starry Background Effect from Spirit Lab */
+  /* Starry Background Effect from Spirit Research Lab */
   .mystical-bg {
     background-color: #1a0b2e;
     background-image: url("/assets/bg-stars.png");
@@ -59,7 +62,7 @@
 
 @layer components {
 
-  /* Spirit Lab Glassmorphism */
+  /* Spirit Research Lab Glassmorphism */
   .glass-card {
     background: rgba(30, 10, 60, 0.4);
     backdrop-filter: blur(12px);

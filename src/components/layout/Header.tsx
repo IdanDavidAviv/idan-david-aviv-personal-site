@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
+import { Dna } from 'lucide-react'
 
 /**
  * Global Header - Minimalist, floating navigation.
@@ -34,7 +35,7 @@ export default function Header() {
                     Design Lab
                 </Link>
                 <Link
-                    to="/spirit-lab"
+                    to="/spirit-research-lab"
                     className={cn(
                         "px-4 py-2 rounded-full border border-gold-500/20 bg-gold-500/10",
                         "text-sm font-medium text-gold-100 hover:bg-gold-500/20 transition-all",
@@ -42,6 +43,17 @@ export default function Header() {
                     )}
                 >
                     Spirit Research Lab
+                </Link>
+                <Link
+                    to="/antigravity-dna"
+                    className={cn(
+                        "px-4 py-2 rounded-full border border-purple-500/20 bg-purple-500/10",
+                        "text-sm font-medium text-purple-100 hover:bg-purple-500/20 transition-all",
+                        "backdrop-blur-md flex items-center gap-2 group shadow-[0_0_15px_-3px_rgba(168,85,247,0.3)]"
+                    )}
+                >
+                    <Dna className="w-4 h-4 text-purple-400 group-hover:rotate-12 transition-transform" />
+                    Antigravity DNA
                 </Link>
             </nav>
         </motion.header>
