@@ -313,9 +313,22 @@
 
             return {
                 id: n.id,
-                label: label,
-                color: { background: bgColor, border: '#1e293b' },
-                font: { color: textColor, size: 12, face: 'Inter', weight: '500' }
+                label: label.split(' ').join('\n'), // Stack vertically word by word
+                shape: 'dot',                        // Round nodes
+                size: 20,                            // Consistent size for dot shape
+                color: {
+                    background: bgColor,
+                    border: '#1e293b',
+                    highlight: { background: bgColor, border: '#ffffff' }
+                },
+                font: {
+                    color: textColor,
+                    size: 11,
+                    face: 'Inter',
+                    weight: '600',
+                    vadjust: 0 // Center text
+                },
+                margin: 10
             };
         }));
         const visEdges = new vis.DataSet(kiData.links.map(l => ({ from: l.source, to: l.target })));
