@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Antigravity DNA: Neural Explorer</title>
-    <!-- 3D Force Graph Library (Three.js based) -->
+    <!-- Three.js (UMD Build Required for non-module environment) -->
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+    <!-- SpriteText for 3D Labels (Depends on THREE) -->
+    <script src="https://unpkg.com/three-spritetext"></script>
+    <!-- 3D Force Graph Library (Depends on THREE) -->
     <script src="https://unpkg.com/3d-force-graph"></script>
     <!-- Vis.js (Current 2D Baseline) -->
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
@@ -115,8 +119,8 @@
             <p style="margin:5px 0 0 0; color: #94a3b8; font-size: 0.75rem;">Interactive KI Persistence Mapping</p>
         </div>
         <div id="controls">
-            <button class="btn active" onclick="switchView('3d')">3D Network</button>
-            <button class="btn" onclick="switchView('2d')">2D Physics</button>
+            <button class="btn active" onclick="switchView(this, '3d')">3D Network</button>
+            <button class="btn" onclick="switchView(this, '2d')">2D Physics</button>
         </div>
     </div>
 
@@ -162,6 +166,7 @@
                 { id: 'asset_governance', name: 'asset_governance', group: 2 },
                 { id: 'guided_audit_protocol', name: 'guided_audit_protocol', group: 2 },
                 { id: 'emergency_divergence', name: 'emergency_divergence', group: 2 },
+                { id: 'dna_philosophy', name: 'dna_philosophy', group: 1 },
 
                 // Supplemental (Reference Targets)
                 { id: 'domain_schema_guardian', name: 'domain_schema_guardian', group: 2 },
@@ -186,6 +191,7 @@
                 { source: 'GEMINI.md', target: 'domain_schema_guardian' },
                 { source: 'GEMINI.md', target: 'asset_governance' },
                 { source: 'GEMINI.md', target: 'git_strategy' },
+                { source: 'GEMINI.md', target: 'dna_philosophy' },
 
                 // Core Orchestration
                 { source: 'session_lifecycle', target: 'operation_commander' },
@@ -253,21 +259,35 @@
         const Graph3D = ForceGraph3D()
             (document.getElementById('view-3d'))
             .backgroundColor('#050510')
-            .nodeLabel('name')
-            .nodeColor(node => {
-                if (node.id === 'GEMINI.md') return '#00008b'; // Root
-                if (isTerminal(node.id)) return '#fbbf24'; // Terminal Node (Amber)
-                if (node.group === 1) return '#a855f7'; // Purple (Core)
-                if (node.group === 2) return '#22d3ee'; // Cyan (Global)
-                return '#94a3b8';
-            })
-            .nodeResolution(24)
-            .nodeVal(node => {
-                if (node.group === 0) return 14; // Root is largest
-                if (isTerminal(node.id)) return 4;
-                if (node.group === 1) return 8;
-                if (node.group === 2) return 6;
-                return 4;
+            .nodeThreeObject(node => {
+                const group = new THREE.Group();
+
+                // Node Sphere
+                const color = node.id === 'GEMINI.md' ? '#00008b' :
+                    (isTerminal(node.id) ? '#fbbf24' :
+                        (node.group === 1 ? '#a855f7' : '#22d3ee'));
+
+                const size = node.group === 0 ? 14 :
+                    (isTerminal(node.id) ? 4 :
+                        (node.group === 1 ? 8 : 6));
+
+                const sphere = new THREE.Mesh(
+                    new THREE.SphereGeometry(size, 24, 24),
+                    new THREE.MeshLambertMaterial({ color: color, transparent: true, opacity: 0.9 })
+                );
+                group.add(sphere);
+
+                // Node Label (SpriteText)
+                const sprite = new SpriteText(node.id.replace(/_/g, ' '));
+                sprite.color = '#ffffff';
+                sprite.textHeight = 4;
+                sprite.padding = 2;
+                sprite.backgroundColor = 'rgba(0,0,0,0.4)';
+                sprite.borderRadius = 2;
+                sprite.position.y = size + 6; // Position above sphere
+                group.add(sprite);
+
+                return group;
             })
             .linkWidth(1.5)
             .linkOpacity(0.4)
@@ -354,12 +374,12 @@
 
         // Removal of pseudo-3D logic
 
-        function switchView(view) {
+        function switchView(btn, view) {
             document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
 
             document.getElementById('view-' + view).classList.add('active');
-            event.target.classList.add('active');
+            btn.classList.add('active');
 
             const title = document.getElementById('overlay-title');
             const desc = document.getElementById('overlay-desc');
