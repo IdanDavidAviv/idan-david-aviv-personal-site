@@ -117,7 +117,6 @@
         <div id="controls">
             <button class="btn active" onclick="switchView('3d')">3D Network</button>
             <button class="btn" onclick="switchView('2d')">2D Physics</button>
-            <button class="btn" onclick="switchView('pseudo')">Layered Stack</button>
         </div>
     </div>
 
@@ -127,17 +126,6 @@
 
         <!-- View 2: Vis.js -->
         <div id="view-2d" class="view-panel"></div>
-
-        <!-- View 3: Pseudo-3D (Layered) -->
-        <div id="view-pseudo" class="view-panel">
-            <div id="scene-3d"
-                style="width: 100%; height: 100%; perspective: 1200px; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at center, #0f172a 0%, #050510 100%);">
-                <div id="stack-3d"
-                    style="width: 400px; height: 400px; position: relative; transform-style: preserve-3d; transition: transform 0.1s ease-out; transform: rotateX(60deg) rotateZ(45deg);">
-                    <!-- Layers will be injected here -->
-                </div>
-            </div>
-        </div>
     </div>
 
     <div id="info-overlay">
@@ -334,37 +322,7 @@
         );
         setTimeout(() => network.fit(), 1000);
 
-        // Initialize 2.5D (CSS Stack)
-        const pseudoContainer = document.getElementById('view-pseudo');
-        const layers = [
-            { name: 'Root Protocol', color: 'rgba(0, 0, 139, 0.4)', z: 180, items: ['GEMINI.md'] },
-            { name: 'Architecture', color: 'rgba(168, 85, 247, 0.2)', z: 60, items: ['commander', 'lifecycle', 'planning'] },
-            {
-                name: 'Governance', color: 'rgba(34, 211, 238, 0.15)', z: -60, items: ['supabase', 'git', 'quality', 'windows',
-                    'github', 'asset']
-            }
-        ];
-
-        document.getElementById('stack-3d').innerHTML = layers.map(layer => `
-    <div class="layer"
-        style="position: absolute; top:0; left:0; width:100%; height:100%; background: ${layer.color}; border: 1px solid rgba(168, 85, 247, 0.3); transform: translateZ(${layer.z}px); display: flex; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(8px); border-radius: 12px; box-shadow: 0 0 40px rgba(0,0,0,0.8);">
-        <span
-            style="font-weight: bold; font-size: 1.1rem; color: #fff; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.9;">${layer.name}</span>
-        <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; max-width: 80%;">
-            ${layer.items.map(i => `<div
-                style="background: rgba(168, 85, 247, 0.1); padding: 4px 8px; border-radius: 4px; font-size: 0.65rem; border: 1px solid rgba(168, 85, 247, 0.3); color: #d8b4fe; font-family: monospace;">
-                ${i}</div>`).join('')}
-        </div>
-    </div>
-    `).join('');
-
-        document.addEventListener('mousemove', (e) => {
-            const panel = document.getElementById('view-pseudo');
-            if (!panel.classList.contains('active')) return;
-            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-            document.getElementById('stack-3d').style.transform = `rotateX(${60 + yAxis}deg) rotateZ(${45 + xAxis}deg)`;
-        });
+        // Removal of pseudo-3D logic
 
         function switchView(view) {
             document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
@@ -384,9 +342,6 @@
                 title.innerText = 'Kinetic Physics Map';
                 desc.innerText = 'Flat relational mapping with force-directed stabilization. Direct SSOT verification.';
                 network.fit();
-            } else {
-                title.innerText = 'Architectural Stack';
-                desc.innerText = 'Strategic layers of governance from core axioms to operational strategy. Move mouse to tilt.';
             }
         }
     </script>
