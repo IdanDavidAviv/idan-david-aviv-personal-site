@@ -55,8 +55,8 @@ const kiData: { nodes: KiNode[]; links: KiLink[] } = {
         // Supplemental
         { id: 'domain_schema_guardian', name: 'domain_schema_guardian', group: 2 },
         { id: 'observability_telemetry', name: 'observability_telemetry', group: 1 },
-        { id: 'graceful_error_ui', name: 'graceful_error_ui', group: 1 },
-        { id: 'linguistic_curator', name: 'linguistic_curator', group: 1 },
+        { id: 'graceful_error_ui', name: 'graceful_error_ui', group: 2 },
+        { id: 'linguistic_curator', name: 'linguistic_curator', group: 2 },
         { id: 'premium_form_architect', name: 'premium_form_architect', group: 2 },
         { id: 'astro_time_lord', name: 'astro_time_lord', group: 2 },
         { id: 'performance_memoizer', name: 'performance_memoizer', group: 2 },
@@ -199,6 +199,57 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
             { x: n.x ?? 0, y: n.y ?? 0, z: n.z ?? 0 },
             2000
         );
+    })
+    .onEngineStop(() => {
+        // --- PCA-based Horizontal Alignment ---
+        const nodes = Graph3D.graphData().nodes as KiNode[];
+        if (nodes.length < 3) return;
+
+        // 1. Calculate Mean
+        let mx = 0, my = 0, mz = 0;
+        nodes.forEach(n => { mx += n.x || 0; my += n.y || 0; mz += n.z || 0; });
+        mx /= nodes.length; my /= nodes.length; mz /= nodes.length;
+
+        // 2. Covariance Matrix (3x3)
+        let cxx = 0, cxy = 0, cxz = 0, cyy = 0, cyz = 0, czz = 0;
+        nodes.forEach(n => {
+            const dx = (n.x || 0) - mx;
+            const dy = (n.y || 0) - my;
+            const dz = (n.z || 0) - mz;
+            cxx += dx * dx; cxy += dx * dy; cxz += dx * dz;
+            cyy += dy * dy; cyz += dy * dz; czz += dz * dz;
+        });
+
+        // 3. Find Largest Eigenvector (via Power Iteration)
+        let vx = 1, vy = 1, vz = 1; // initial guess
+        for (let i = 0; i < 10; i++) {
+            const nx = cxx * vx + cxy * vy + cxz * vz;
+            const ny = cxy * vx + cyy * vy + cyz * vz;
+            const nz = cxz * vx + cyz * vy + czz * vz;
+            const mag = Math.hypot(nx, ny, nz);
+            vx = nx / mag; vy = ny / mag; vz = nz / mag;
+        }
+
+        // vx, vy, vz is now the principal axis (PC1).
+        // 4. Calculate Rotation to align PC1 with X-axis [1, 0, 0]
+        const pc1 = new THREE.Vector3(vx, vy, vz).normalize();
+        const xAxis = new THREE.Vector3(1, 0, 0);
+
+        if (pc1.angleTo(xAxis) < 0.01) return; // Already aligned
+
+        const quaternion = new THREE.Quaternion().setFromUnitVectors(pc1, xAxis);
+
+        // 5. Apply Rotation to all nodes
+        nodes.forEach(n => {
+            const pos = new THREE.Vector3(n.x, n.y, n.z);
+            pos.sub(new THREE.Vector3(mx, my, mz)); // Center
+            pos.applyQuaternion(quaternion); // Rotate
+            pos.add(new THREE.Vector3(mx, my, mz)); // Restore
+            n.x = pos.x; n.y = pos.y; n.z = pos.z;
+        });
+
+        Graph3D.graphData({ nodes, links: Graph3D.graphData().links }); // Refresh positions
+        Graph3D.zoomToFit(1000, 50);
     });
 
 // ─── Per-frame: keep sprite on node→camera vector ────────────────────────────
