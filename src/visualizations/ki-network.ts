@@ -25,8 +25,6 @@ interface KiLink {
 
 const kiData: { nodes: KiNode[]; links: KiLink[] } = {
     nodes: [
-        // Root & Synchronized DNA Nodes
-        // Convention: 999=Root, 0=Ghosts (Untriaged)
         { id: 'asset_governance', name: 'asset_governance', group: 2 },
         { id: 'context_planning', name: 'context_planning', group: 2 },
         { id: 'dna_philosophy', name: 'dna_philosophy', group: 1 },
@@ -53,7 +51,6 @@ const kiData: { nodes: KiNode[]; links: KiLink[] } = {
         { id: 'windows_protocol', name: 'windows_protocol', group: 2 },
     ],
     links: [
-        // Automated Bridges
         { source: 'GEMINI.md', target: 'asset_governance' },
         { source: 'GEMINI.md', target: 'context_planning' },
         { source: 'GEMINI.md', target: 'git_strategy' },
@@ -126,6 +123,8 @@ const isTerminal = (id: string) => !outDeg[id];
 // Registry for per-frame sprite projection
 const nodeSprites: Array<{ sprite: InstanceType<typeof SpriteText>, node: KiNode, size: number }> = [];
 
+let hasAligned = false;
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HTMLElement)
     .backgroundColor('#050510')
@@ -181,9 +180,14 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
         );
     })
     .onEngineStop(() => {
+        if (hasAligned) return;
+
         // --- PCA-based Horizontal Alignment ---
         const nodes = Graph3D.graphData().nodes as KiNode[];
         if (nodes.length < 3) return;
+
+        console.log('[PCA] Starting alignment for', nodes.length, 'nodes');
+        console.log('[PCA] First 3 nodes positions:', nodes.slice(0, 3).map(n => ({ id: n.id, x: n.x?.toFixed(2), y: n.y?.toFixed(2), z: n.z?.toFixed(2) })));
 
         // 1. Calculate Mean
         let mx = 0, my = 0, mz = 0;
@@ -200,35 +204,86 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
             cyy += dy * dy; cyz += dy * dz; czz += dz * dz;
         });
 
-        // 3. Find Largest Eigenvector (via Power Iteration)
-        let vx = 1, vy = 1, vz = 1; // initial guess
-        for (let i = 0; i < 10; i++) {
-            const nx = cxx * vx + cxy * vy + cxz * vz;
-            const ny = cxy * vx + cyy * vy + cyz * vz;
-            const nz = cxz * vx + cyz * vy + czz * vz;
-            const mag = Math.hypot(nx, ny, nz);
-            vx = nx / mag; vy = ny / mag; vz = nz / mag;
+        console.log('[PCA] Variance:', { cxx: cxx.toFixed(0), cyy: cyy.toFixed(0), czz: czz.toFixed(0) });
+
+        // 3. Jacobi Eigenvalue Solver (3x3 symmetric matrix)
+        const A = [
+            [cxx, cxy, cxz],
+            [cxy, cyy, cyz],
+            [cxz, cyz, czz]
+        ];
+        const V = [
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1]
+        ];
+
+        for (let iter = 0; iter < 10; iter++) {
+            // Find largest off-diagonal
+            let p = 0, q = 1;
+            if (Math.abs(A[0][2]) > Math.abs(A[p][q])) { p = 0; q = 2; }
+            if (Math.abs(A[1][2]) > Math.abs(A[p][q])) { p = 1; q = 2; }
+
+            if (Math.abs(A[p][q]) < 1e-9) break;
+
+            const theta = 0.5 * Math.atan2(2 * A[p][q], A[q][q] - A[p][p]);
+            const cos = Math.cos(theta);
+            const sin = Math.sin(theta);
+
+            // Rotate A
+            const App = A[p][p], Aqq = A[q][q], Apq = A[p][q];
+            A[p][p] = cos * cos * App - 2 * sin * cos * Apq + sin * sin * Aqq;
+            A[q][q] = sin * sin * App + 2 * sin * cos * Apq + cos * cos * Aqq;
+            A[p][q] = A[q][p] = 0;
+
+            for (let i = 0; i < 3; i++) {
+                if (i !== p && i !== q) {
+                    const Aip = A[i][p], Aiq = A[i][q];
+                    A[i][p] = A[p][i] = cos * Aip - sin * Aiq;
+                    A[i][q] = A[q][i] = sin * Aip + cos * Aiq;
+                }
+                // Rotate V
+                const Vip = V[i][p], Viq = V[i][q];
+                V[i][p] = cos * Vip - sin * Viq;
+                V[i][q] = sin * Vip + cos * Viq;
+            }
         }
 
-        // vx, vy, vz is now the principal axis (PC1).
-        // 4. Calculate Rotation to align PC1 with X-axis [1, 0, 0]
-        const pc1 = new THREE.Vector3(vx, vy, vz).normalize();
-        const xAxis = new THREE.Vector3(1, 0, 0);
+        // Extract Eigenvectors and Eigenvalues
+        const eigs = [
+            { val: A[0][0], vec: new THREE.Vector3(V[0][0], V[1][0], V[2][0]) },
+            { val: A[1][1], vec: new THREE.Vector3(V[0][1], V[1][1], V[2][1]) },
+            { val: A[2][2], vec: new THREE.Vector3(V[0][2], V[1][2], V[2][2]) }
+        ].sort((a, b) => b.val - a.val);
 
-        if (pc1.angleTo(xAxis) < 0.01) return; // Already aligned
+        const pc1 = eigs[0].vec.normalize(); // Long axis
+        const pc3 = eigs[2].vec.normalize(); // Short axis (normal)
+        const pc2 = new THREE.Vector3().crossVectors(pc3, pc1).normalize();
 
-        const quaternion = new THREE.Quaternion().setFromUnitVectors(pc1, xAxis);
+        console.log('[PCA] Eigenvalues:', eigs.map(e => e.val.toFixed(0)));
+        console.log('[PCA] PC1 (Long):', pc1);
+        console.log('[PCA] PC3 (Normal):', pc3);
+
+        // 4. Construct Rotation Matrix
+        // Goal: PC1 -> World X [1,0,0], PC3 -> World Y [0,1,0], PC2 -> World Z [0,0,1]
+        const rotMat = new THREE.Matrix4().set(
+            pc1.x, pc1.y, pc1.z, 0,
+            pc3.x, pc3.y, pc3.z, 0,
+            pc2.x, pc2.y, pc2.z, 0,
+            0, 0, 0, 1
+        );
 
         // 5. Apply Rotation to all nodes
         nodes.forEach(n => {
             const pos = new THREE.Vector3(n.x, n.y, n.z);
             pos.sub(new THREE.Vector3(mx, my, mz)); // Center
-            pos.applyQuaternion(quaternion); // Rotate
+            pos.applyMatrix4(rotMat); // Exact 3-axis alignment
             pos.add(new THREE.Vector3(mx, my, mz)); // Restore
             n.x = pos.x; n.y = pos.y; n.z = pos.z;
         });
 
-        Graph3D.graphData({ nodes, links: Graph3D.graphData().links }); // Refresh positions
+        hasAligned = true;
+        Graph3D.graphData({ nodes, links: Graph3D.graphData().links });
         Graph3D.zoomToFit(1000, 50);
     });
 
