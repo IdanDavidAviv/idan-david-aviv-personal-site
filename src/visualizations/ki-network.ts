@@ -23,8 +23,20 @@ interface KiLink {
     target: string | KiNode;
 }
 
+export interface KiDelta {
+    nodes: { added: KiNode[]; removed: string[] };
+    links: { added: KiLink[]; removed: KiLink[] };
+}
+
+export interface KiDiff {
+    timestamp: string;
+    label: string;
+    delta: KiDelta;
+}
+
 const kiData: { nodes: KiNode[]; links: KiLink[] } = {
     nodes: [
+        // Root & Synchronized DNA Nodes
         { id: 'asset_governance', name: 'asset_governance', group: 2 },
         { id: 'context_planning', name: 'context_planning', group: 2 },
         { id: 'dna_philosophy', name: 'dna_philosophy', group: 1 },
@@ -51,6 +63,7 @@ const kiData: { nodes: KiNode[]; links: KiLink[] } = {
         { id: 'windows_protocol', name: 'windows_protocol', group: 2 },
     ],
     links: [
+        // Automated Bridges
         { source: 'GEMINI.md', target: 'asset_governance' },
         { source: 'GEMINI.md', target: 'context_planning' },
         { source: 'GEMINI.md', target: 'git_strategy' },
@@ -68,6 +81,8 @@ const kiData: { nodes: KiNode[]; links: KiLink[] } = {
         { source: 'dna_philosophy', target: 'quality_gates' },
         { source: 'dna_philosophy', target: 'session_lifecycle' },
         { source: 'dna_philosophy', target: 'windows_protocol' },
+        { source: 'emergency_divergence', target: 'guided_audit_protocol' },
+        { source: 'emergency_divergence', target: 'quality_gates' },
         { source: 'emergency_divergence', target: 'testing_governance' },
         { source: 'git_strategy', target: 'github_project_manager' },
         { source: 'git_strategy', target: 'quality_gates' },
@@ -79,13 +94,16 @@ const kiData: { nodes: KiNode[]; links: KiLink[] } = {
         { source: 'observability_telemetry', target: 'premium_ui_dna' },
         { source: 'observability_telemetry', target: 'privacy_shield' },
         { source: 'operation_commander', target: 'dna_philosophy' },
+        { source: 'operation_commander', target: 'emergency_divergence' },
         { source: 'operation_commander', target: 'git_strategy' },
         { source: 'operation_commander', target: 'github_project_manager' },
+        { source: 'operation_commander', target: 'guided_audit_protocol' },
         { source: 'operation_commander', target: 'ki_integrity_governor' },
         { source: 'operation_commander', target: 'quality_gates' },
         { source: 'operation_commander', target: 'session_lifecycle' },
         { source: 'operation_commander', target: 'state_management_governance' },
         { source: 'operation_commander', target: 'supabase_governance' },
+        { source: 'operation_commander', target: 'testing_governance' },
         { source: 'operation_commander', target: 'windows_protocol' },
         { source: 'premium_ui_dna', target: 'asset_governance' },
         { source: 'premium_ui_dna', target: 'rtl_guardian' },
@@ -105,9 +123,129 @@ const kiData: { nodes: KiNode[]; links: KiLink[] } = {
         { source: 'session_lifecycle', target: 'windows_protocol' },
         { source: 'state_management_governance', target: 'resilient_fetching' },
         { source: 'supabase_governance', target: 'privacy_shield' },
+        { source: 'testing_governance', target: 'emergency_divergence' },
         { source: 'testing_governance', target: 'quality_gates' },
     ],
 };
+
+// --- Temporal Engine: Delta View ---
+
+// Always extract only primitive properties from kiData to avoid
+// mutation pollution from 3d-force-graph (which adds x, y, z, vx, vy to nodes/links)
+function getCleanBase(): { nodes: KiNode[]; links: KiLink[] } {
+    return {
+        nodes: kiData.nodes.map(n => ({ id: n.id, name: n.name, group: n.group })),
+        links: kiData.links.map(l => ({
+            source: typeof l.source === 'object' ? (l.source as KiNode).id : l.source as string,
+            target: typeof l.target === 'object' ? (l.target as KiNode).id : l.target as string,
+        })),
+    };
+}
+
+function reconstructState(targetTimestamp: string | null) {
+    const base = getCleanBase(); // Full latest state
+
+    // Live State: No undos needed, just return the full aggregated data
+    if (targetTimestamp === null) return base;
+
+    let targetIdx: number;
+    if (targetTimestamp === 'baseline') {
+        // Baseline: Undo EVERYTHING in history to see the original ground truth
+        targetIdx = -1;
+    } else {
+        // Epoch: Undo everything AFTER this entry to show cumulative state AT this entry
+        targetIdx = kiHistory.findIndex(h => h.timestamp === targetTimestamp);
+        if (targetIdx === -1) return base;
+    }
+
+    // Walk BACKWARD from latest to reconstruct historical state
+    for (let i = kiHistory.length - 1; i > targetIdx; i--) {
+        const { delta } = kiHistory[i];
+
+        // Undo node additions (remove them)
+        delta.nodes.added.forEach(node => {
+            base.nodes = base.nodes.filter(n => n.id !== node.id);
+        });
+        // Undo node removals (re-add them)
+        delta.nodes.removed.forEach(nodeId => {
+            base.nodes.push({ id: nodeId, name: nodeId, group: 0 });
+        });
+
+        // Undo link additions (remove them)
+        delta.links.added.forEach(link => {
+            const ts = typeof link.source === 'object' ? (link.source as KiNode).id : link.source as string;
+            const tt = typeof link.target === 'object' ? (link.target as KiNode).id : link.target as string;
+            base.links = base.links.filter(l => {
+                const s = typeof l.source === 'object' ? (l.source as KiNode).id : l.source as string;
+                const t = typeof l.target === 'object' ? (l.target as KiNode).id : l.target as string;
+                return !(s === ts && t === tt);
+            });
+        });
+        // Undo link removals (re-add them)
+        delta.links.removed.forEach(link => {
+            const ts = typeof link.source === 'object' ? (link.source as KiNode).id : link.source as string;
+            const tt = typeof link.target === 'object' ? (link.target as KiNode).id : link.target as string;
+            base.links.push({ source: ts, target: tt });
+        });
+    }
+
+    return base;
+}
+
+function updateGraph(data: { nodes: KiNode[]; links: KiLink[] }) {
+    Graph3D.graphData(data);
+    // Re-center camera after force simulation re-initializes
+    setTimeout(() => Graph3D.zoomToFit(600, 60), 800);
+
+    if (visNodes && visEdges) {
+        visNodes.clear();
+        visNodes.add(data.nodes.map(n => {
+            const label = n.id.replace(/_/g, ' ');
+            let bgColor: string, textColor: string;
+            if (n.id === 'GEMINI.md') { bgColor = '#00008b'; textColor = '#ffffff'; }
+            else if (n.group === 1) { bgColor = '#a855f7'; textColor = '#ffffff'; }
+            else { bgColor = '#22d3ee'; textColor = '#0f172a'; }
+
+            return {
+                id: n.id,
+                label: label.split(' ').join('\n'),
+                shape: 'circle' as const,
+                margin: 10,
+                color: { background: bgColor, border: '#1e293b' },
+                font: { color: textColor, size: 11, face: 'Inter' },
+            };
+        }));
+
+        visEdges.clear();
+        visEdges.add(data.links.map(l => ({
+            from: typeof l.source === 'object' ? l.source.id : l.source,
+            to: typeof l.target === 'object' ? l.target.id : l.target,
+        })));
+    }
+}
+
+window.addEventListener('message', (event) => {
+    if (event.data.type === 'SET_EPOCH') {
+        const ts: string | null = event.data.timestamp ?? null;
+        console.warn(`🌀 Switching to Epoch: ${ts ?? 'LIVE'}`);
+        const state = reconstructState(ts);
+        updateGraph(state);
+    }
+    if (event.data.type === 'SET_VIEW') {
+        console.warn(`🖥ï¸ Switching View Mode: ${event.data.view}`);
+        switchView(null, event.data.view);
+    }
+    if (event.data.type === 'GET_HISTORY') {
+        window.parent.postMessage({ type: 'HISTORY_DATA', history: kiHistory }, '*');
+    }
+});
+
+// Broadcast history on init
+setTimeout(() => {
+    if (window.parent !== window) {
+        window.parent.postMessage({ type: 'HISTORY_DATA', history: kiHistory }, '*');
+    }
+}, 500);
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -342,3 +480,27 @@ Object.defineProperty(window, 'currentView', {
     get: () => currentView,
     set: (v: string) => { currentView = v; },
 });
+
+export const kiHistory: KiDiff[] = [
+    {
+        "timestamp": "2026-03-02 16:06:11",
+        "label": "Auto-Sync: Initial Batch",
+        "delta": {
+            "nodes": {
+                "added": [],
+                "removed": []
+            },
+            "links": {
+                "added": [
+                    { "source": "emergency_divergence", "target": "guided_audit_protocol" },
+                    { "source": "emergency_divergence", "target": "quality_gates" },
+                    { "source": "operation_commander", "target": "testing_governance" },
+                    { "source": "operation_commander", "target": "emergency_divergence" },
+                    { "source": "operation_commander", "target": "guided_audit_protocol" },
+                    { "source": "testing_governance", "target": "emergency_divergence" }
+                ],
+                "removed": []
+            }
+        }
+    },
+];

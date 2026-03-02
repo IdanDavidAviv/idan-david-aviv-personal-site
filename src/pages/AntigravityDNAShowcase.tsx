@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
-import { Dna, Brain, Cpu, Database, Shield, Zap, Sparkles, Binary, Network, Activity, Boxes, Layers } from 'lucide-react'
+import { Dna, Brain, Cpu, Database, Shield, Zap, Sparkles, Binary, Network, Activity, Boxes, Layers, ChevronRight, Maximize, Minimize, Menu, X } from 'lucide-react'
 import Section from '@/components/ui/Section'
 
 /**
@@ -10,15 +10,66 @@ import Section from '@/components/ui/Section'
 export default function AntigravityDNAShowcase() {
     const [isGraphFullscreen, setIsGraphFullscreen] = useState(false)
 
+    interface KiNode {
+        id: string;
+        name: string;
+        group: number;
+    }
+
+    interface KiLink {
+        source: string | KiNode;
+        target: string | KiNode;
+    }
+
+    interface KiHistoryEntry {
+        timestamp: string;
+        label: string;
+        delta: {
+            nodes: { added: KiNode[]; removed: string[] };
+            links: { added: KiLink[]; removed: KiLink[] };
+        };
+    }
+
+    const [history, setHistory] = useState<KiHistoryEntry[]>([])
+    const [activeEpochTimestamp, setActiveEpochTimestamp] = useState<string | null>(null)
+    const [currentView, setCurrentView] = useState<'3d' | '2d'>('3d')
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+
+    // Compute cumulative totals per epoch (history is oldest-first from iframe)
+    const cumulativeMap = useMemo(() => {
+        const map = new Map<string, { nodes: number; links: number }>();
+        let totalNodes = 0;
+        let totalLinks = 0;
+        history.forEach(entry => {
+            totalNodes += entry.delta.nodes.added.length;
+            totalLinks += entry.delta.links.added.length;
+            map.set(entry.timestamp, { nodes: totalNodes, links: totalLinks });
+        });
+        return map;
+    }, [history])
+
+    const switchView = (view: '3d' | '2d') => {
+        setCurrentView(view)
+        const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement
+        iframe?.contentWindow?.postMessage({ type: 'SET_VIEW', view }, '*')
+    }
+
     useEffect(() => {
         const handleMessage = (event: MessageEvent) => {
             if (event.data.type === 'toggle-fullscreen') {
                 setIsGraphFullscreen(event.data.isFullscreen)
-                // Lock body scroll when fullscreen
                 document.body.style.overflow = event.data.isFullscreen ? 'hidden' : ''
+            }
+            if (event.data.type === 'HISTORY_DATA') {
+                setHistory(event.data.history as KiHistoryEntry[])
             }
         }
         window.addEventListener('message', handleMessage)
+
+        // Request history if already loaded
+        const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement
+        iframe?.contentWindow?.postMessage({ type: 'GET_HISTORY' }, '*')
+
         return () => window.removeEventListener('message', handleMessage)
     }, [])
 
@@ -272,21 +323,230 @@ export default function AntigravityDNAShowcase() {
 
                 {/* section: The Neural Explorer (3D Graph) */}
                 <Section id="neural-explorer">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">The Neural Explorer</h2>
-                        <p className="text-purple-100/40 text-lg uppercase tracking-widest font-mono">Interactive KI Persistence Mapping</p>
-                    </div>
 
                     <div className={isGraphFullscreen
-                        ? "fixed inset-0 z-[150] bg-[#050510]"
-                        : "relative group rounded-[2.5rem] overflow-hidden border border-purple-500/20 bg-[#050510] shadow-[0_0_50px_-12px_rgba(168,85,247,0.3)] transition-all duration-500"
+                        ? "fixed inset-0 z-[150] bg-[#050510] flex flex-col"
+                        : "relative group rounded-[3rem] overflow-hidden border border-purple-500/20 bg-[#050510] shadow-[0_0_80px_-20px_rgba(168,85,247,0.4)] transition-all duration-700 flex flex-col h-[850px]"
                     }>
-                        <div className={`${isGraphFullscreen ? 'w-screen h-screen' : 'aspect-video w-full min-h-[500px]'} relative`}>
-                            <iframe
-                                src="/visualizations/ki-network.html"
-                                className="w-full h-full border-none"
-                                title="KI Network 3D Visualization"
-                            />
+                        {/* Integrated Top Head */}
+                        <div className="p-8 border-b border-white/5 bg-gradient-to-r from-purple-500/5 to-transparent flex items-center justify-between">
+                            <div className="flex items-center gap-6">
+                                <div className="relative">
+                                    <div className="absolute inset-0 bg-purple-500/20 blur-xl rounded-full" />
+                                    <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500/20 to-purple-900/40 flex items-center justify-center border border-purple-500/30">
+                                        <Network className="w-7 h-7 text-purple-400" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <h2 className="text-2xl font-bold text-white tracking-tight flex items-center gap-3">
+                                        Neural Explorer
+                                        <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-mono border border-emerald-500/20 animate-pulse">LIVE NODE</span>
+                                    </h2>
+                                    <p className="text-purple-100/40 text-xs uppercase tracking-[0.2em] font-mono mt-1">Direct Brain-to-Baseline Synchronization</p>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-1 p-1 rounded-xl bg-white/5 border border-white/10">
+                                    <button
+                                        onClick={() => switchView('3d')}
+                                        className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${currentView === '3d'
+                                            ? 'bg-purple-500/20 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.3)] border border-purple-500/30'
+                                            : 'text-white/40 hover:text-white/60'
+                                            }`}
+                                    >
+                                        3D Network
+                                    </button>
+                                    <button
+                                        onClick={() => switchView('2d')}
+                                        className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${currentView === '2d'
+                                            ? 'bg-cyan-500/20 text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.3)] border border-cyan-500/30'
+                                            : 'text-white/40 hover:text-white/60'
+                                            }`}
+                                    >
+                                        2D Physics
+                                    </button>
+                                </div>
+
+                                <button
+                                    onClick={() => {
+                                        setIsGraphFullscreen(!isGraphFullscreen);
+                                        const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
+                                        iframe?.contentWindow?.postMessage({ type: 'toggle-fullscreen', isFullscreen: !isGraphFullscreen }, '*');
+                                    }}
+                                    className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 hover:bg-purple-500/20 transition-all shadow-lg shadow-purple-500/5 group"
+                                    title={isGraphFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+                                >
+                                    {isGraphFullscreen ? (
+                                        <Minimize className="w-5 h-5" />
+                                    ) : (
+                                        <Maximize className="w-5 h-5" />
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Explorer Workspace: Sidebar + Graph */}
+                        <div className="flex-1 flex overflow-hidden">
+                            {/* DNA Ledger Sidebar */}
+                            <motion.div
+                                animate={{
+                                    width: isSidebarCollapsed ? 0 : 320,
+                                    opacity: isSidebarCollapsed ? 0 : 1,
+                                    marginRight: isSidebarCollapsed ? 0 : 0
+                                }}
+                                transition={{ duration: 0.4, ease: "circOut" }}
+                                className="border-r border-white/5 bg-white/[0.02] backdrop-blur-3xl flex flex-col overflow-hidden relative"
+                            >
+                                <div className="p-6 border-b border-white/5 bg-gradient-to-b from-purple-500/5 to-transparent flex items-center justify-between">
+                                    <div>
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <Activity className="w-3.5 h-3.5 text-emerald-400" />
+                                            <span className="text-[10px] font-bold text-white uppercase tracking-widest">DNA Ledger</span>
+                                        </div>
+                                        <span className="text-[9px] text-emerald-100/30 uppercase tracking-tighter italic">Temporal Axis</span>
+                                    </div>
+                                    <button
+                                        onClick={() => setIsSidebarCollapsed(true)}
+                                        className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/40 hover:text-white/70 transition-colors"
+                                        title="Collapse Sidebar"
+                                    >
+                                        <X className="w-4 h-4" />
+                                    </button>
+                                </div>
+
+                                <div className="flex-1 overflow-y-auto no-scrollbar p-4 space-y-3 min-w-[320px]">
+                                    {/* Live DNA State (Full Aggregation) */}
+                                    <button
+                                        onClick={() => {
+                                            setActiveEpochTimestamp(null);
+                                            const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
+                                            iframe?.contentWindow?.postMessage({ type: 'SET_EPOCH', timestamp: null }, '*');
+                                        }}
+                                        className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all border ${activeEpochTimestamp === null
+                                            ? 'bg-emerald-500/20 border-emerald-500/50 shadow-[0_0_20px_-5px_rgba(16,185,129,0.3)]'
+                                            : 'bg-white/5 border-transparent hover:bg-white/10 hover:border-white/10'
+                                            }`}
+                                    >
+                                        <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)] animate-pulse" />
+                                        <div className="text-left">
+                                            <div className="text-[9px] text-emerald-400 font-mono uppercase tracking-[0.2em]">Latest</div>
+                                            <div className="text-sm font-bold text-white">Full Live DNA State</div>
+                                        </div>
+                                    </button>
+
+                                    <div className="h-px w-full bg-white/5 my-4" />
+
+                                    {history.length > 0 ? (
+                                        [...history].reverse().map((diff, idx) => (
+                                            <motion.button
+                                                key={diff.timestamp}
+                                                initial={{ opacity: 0, x: -20 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                transition={{ delay: idx * 0.05 }}
+                                                whileHover={{ scale: 1.02 }}
+                                                whileTap={{ scale: 0.98 }}
+                                                onClick={() => {
+                                                    setActiveEpochTimestamp(diff.timestamp);
+                                                    const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
+                                                    iframe?.contentWindow?.postMessage({ type: 'SET_EPOCH', timestamp: diff.timestamp }, '*');
+                                                }}
+                                                className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all border ${activeEpochTimestamp === diff.timestamp
+                                                    ? 'bg-purple-500/20 border-purple-500/50 shadow-[0_0_20px_-5px_rgba(168,85,247,0.3)]'
+                                                    : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/20'
+                                                    }`}
+                                            >
+                                                <div className="text-left">
+                                                    <div className="flex items-center gap-2 mb-1">
+                                                        <span className="text-[8px] text-purple-400 font-mono tracking-widest uppercase opacity-70">{diff.timestamp}</span>
+                                                        {activeEpochTimestamp === diff.timestamp && <div className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />}
+                                                    </div>
+                                                    <div className="text-[11px] font-bold text-white leading-tight mb-2">{diff.label}</div>
+                                                    {(() => {
+                                                        const cum = cumulativeMap.get(diff.timestamp);
+                                                        return cum ? (
+                                                            <div className="flex gap-2">
+                                                                {cum.nodes > 0 && (
+                                                                    <span className="px-1.5 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-[8px] font-mono text-emerald-400">
+                                                                        +{cum.nodes} nodes
+                                                                    </span>
+                                                                )}
+                                                                {cum.links > 0 && (
+                                                                    <span className="px-1.5 py-0.5 rounded-md bg-blue-500/10 border border-blue-500/20 text-[8px] font-mono text-blue-400">
+                                                                        +{cum.links} links
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                        ) : null;
+                                                    })()}
+                                                </div>
+                                                <ChevronRight className={`w-4 h-4 transition-transform ${activeEpochTimestamp === diff.timestamp ? 'text-purple-400 rotate-90' : 'text-white/10'}`} />
+                                            </motion.button>
+                                        ))
+                                    ) : (
+                                        <div className="flex items-center gap-3 p-4 rounded-xl bg-white/5 animate-pulse">
+                                            <div className="w-4 h-4 border-2 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin" />
+                                            <span className="text-[10px] text-white/20 uppercase tracking-[0.2em] font-mono">Syncing Ledger...</span>
+                                        </div>
+                                    )}
+
+                                    <div className="h-px w-full bg-white/5 my-4" />
+
+                                    {/* Baseline State Button (Initial State) */}
+                                    <button
+                                        onClick={() => {
+                                            setActiveEpochTimestamp('baseline');
+                                            const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
+                                            iframe?.contentWindow?.postMessage({ type: 'SET_EPOCH', timestamp: 'baseline' }, '*');
+                                        }}
+                                        className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all border ${activeEpochTimestamp === 'baseline'
+                                            ? 'bg-amber-500/20 border-amber-500/50 shadow-[0_0_20px_-5px_rgba(245,158,11,0.3)]'
+                                            : 'bg-white/5 border-transparent hover:bg-white/10 hover:border-white/10'
+                                            }`}
+                                    >
+                                        <div className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.8)] animate-pulse" />
+                                        <div className="text-left">
+                                            <div className="text-[9px] text-amber-400 font-mono uppercase tracking-[0.2em]">Baseline</div>
+                                            <div className="text-sm font-bold text-white">Initial State</div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </motion.div>
+
+                            {/* Graph Workspace */}
+                            < div className="flex-1 relative bg-[#050510]" >
+                                {isSidebarCollapsed && (
+                                    <motion.button
+                                        initial={{ opacity: 0, x: -20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        onClick={() => setIsSidebarCollapsed(false)}
+                                        className="absolute top-6 left-6 z-20 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 hover:bg-purple-500/20 transition-all shadow-lg shadow-purple-500/5 backdrop-blur-md group"
+                                        title="Open DNA Ledger"
+                                    >
+                                        <Menu className="w-5 h-5" />
+                                    </motion.button>
+                                )}
+
+                                <iframe
+                                    id="dna-visualizer"
+                                    src="/visualizations/ki-network.html?minimal=true"
+                                    className="w-full h-full border-none opacity-90 transition-opacity duration-1000"
+                                    title="KI Network 3D Visualization"
+                                    onLoad={(e) => {
+                                        (e.currentTarget as HTMLIFrameElement).style.opacity = '1';
+                                        // Update view mode if it was changed before load
+                                        const iframe = e.currentTarget as HTMLIFrameElement;
+                                        iframe?.contentWindow?.postMessage({ type: 'SET_VIEW', view: currentView }, '*');
+                                    }}
+                                />
+
+                                {/* Floating Stats */}
+                                <div className="absolute bottom-6 right-6 flex items-center gap-4">
+                                    <div className="px-4 py-2 rounded-lg bg-black/60 backdrop-blur-md border border-white/5 text-[10px] font-mono text-purple-400/60 uppercase tracking-widest">
+                                        Nodes: <span className="text-white">64</span> {' // '} Links: <span className="text-white">128</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
