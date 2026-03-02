@@ -148,7 +148,7 @@ function performSurgicalUpdate(groundTruthNodes: KINode[], dry: boolean) {
         const tempPath = SITE_DATA_PATH + '.tmp';
         fs.writeFileSync(tempPath, updatedContent);
 
-        console.warn(`✅ GEMINI.md promotion to 999: ${nodesArray.find(l => l.includes("'GEMINI.md'"))?.includes('group: 999') ? 'VERIFIED' : 'FAILED'}`);
+        console.warn(`✅ GEMINI.md existing: ${nodesArray.find(l => l.includes("'GEMINI.md'"))?.includes('group: 999') ? 'VERIFIED' : 'FAILED'}`);
         console.warn(`💡 Temporary file saved: ${tempPath}`);
 
         console.warn('\n--- FULL SURGICAL DIFF ---');
