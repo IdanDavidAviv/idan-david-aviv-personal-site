@@ -184,5 +184,8 @@ if (isFill) {
 } else {
     // Default report
     console.warn(`Total Knowledge Items: ${groundTruth.length}`);
-    groundTruth.forEach(n => console.warn(`- ${n.id} (${n.links.length} links)`));
+    groundTruth.forEach(n => {
+        console.warn(`- ${n.id} (${n.links.length} links)`);
+        n.links.forEach(link => console.warn(`    -> ${link}`));
+    });
 }
