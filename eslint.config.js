@@ -50,5 +50,11 @@ export default tseslint.config(
                 version: 'detect',
             },
         },
+    },
+    {
+        files: ['scripts/**/*.{js,jsx,ts,tsx}'],
+        rules: {
+            'no-console': 'off',
+        },
     }
 );

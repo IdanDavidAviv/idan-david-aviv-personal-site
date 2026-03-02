@@ -252,20 +252,20 @@ function performSurgicalUpdate(groundTruthNodes: KINode[], dry: boolean) {
     }
 
     if (dry) {
-        console.warn('\n--- DNA Connectivity DRY RUN (with History) ---');
+        console.log('\n--- DNA Connectivity DRY RUN (with History) ---');
         const tempPath = SITE_DATA_PATH + '.tmp';
         fs.writeFileSync(tempPath, updatedContent);
-        console.warn(`💡 Temporary file saved: ${tempPath}`);
-        console.warn(`📊 Changes Detected: ${hasChanges ? 'YES' : 'NO'}`);
+        console.log(`💡 Temporary file saved: ${tempPath}`);
+        console.log(`📊 Changes Detected: ${hasChanges ? 'YES' : 'NO'}`);
         if (hasChanges) {
-            console.warn(`   + Nodes: ${addedNodeIds.join(', ')}`);
-            console.warn(`   - Nodes: ${removedNodes.join(', ')}`);
-            console.warn(`   + Edges: ${addedLinks.length}`);
-            console.warn(`   - Edges: ${removedLinks.length}`);
+            console.log(`   + Nodes: ${addedNodeIds.join(', ')}`);
+            console.log(`   - Nodes: ${removedNodes.join(', ')}`);
+            console.log(`   + Edges: ${addedLinks.length}`);
+            console.log(`   - Edges: ${removedLinks.length}`);
         }
     } else {
         fs.writeFileSync(SITE_DATA_PATH, updatedContent);
-        console.warn('✅ kiData and kiHistory synchronized.');
+        console.log('✅ kiData and kiHistory synchronized.');
     }
 }
 
@@ -276,9 +276,9 @@ if (isFill) {
     performSurgicalUpdate(groundTruth, true);
 } else {
     // Default report
-    console.warn(`Total Knowledge Items: ${groundTruth.length}`);
+    console.log(`Total Knowledge Items: ${groundTruth.length}`);
     groundTruth.forEach(n => {
-        console.warn(`- ${n.id} (${n.links.length} links)`);
-        n.links.forEach(link => console.warn(`    -> ${link}`));
+        console.log(`- ${n.id} (${n.links.length} links)`);
+        n.links.forEach(link => console.log(`    -> ${link}`));
     });
 }
