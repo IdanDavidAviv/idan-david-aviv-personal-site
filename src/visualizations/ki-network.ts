@@ -282,6 +282,50 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
             n.x = pos.x; n.y = pos.y; n.z = pos.z;
         });
 
+        // 6. Optimal Orientation Scan (Minimize Overlap)
+        // Scan 360 degrees around Y-axis to find the angle with least 2D overlap (X, Z plane)
+        let bestAngle = 0;
+        let minEnergy = Infinity;
+
+        const steps = 72; // 5 degrees each
+        for (let i = 0; i < steps; i++) {
+            const angle = (i * 2 * Math.PI) / steps;
+            const cos = Math.cos(angle);
+            const sin = Math.sin(angle);
+
+            let energy = 0;
+            // Project and calculate "repulsion energy" (1/dist^2)
+            for (let a = 0; a < nodes.length; a++) {
+                const nx = (nodes[a].x! - mx) * cos - (nodes[a].z! - mz) * sin;
+                const nz = (nodes[a].x! - mx) * sin + (nodes[a].z! - mz) * cos;
+
+                for (let b = a + 1; b < nodes.length; b++) {
+                    const bx = (nodes[b].x! - mx) * cos - (nodes[b].z! - mz) * sin;
+                    const bz = (nodes[b].x! - mx) * sin + (nodes[b].z! - mz) * cos;
+
+                    const d2 = (nx - bx) * (nx - bx) + (nz - bz) * (nz - bz);
+                    energy += 1 / (d2 + 100); // 100 is a "soft" buffer for overlapping labels
+                }
+            }
+
+            if (energy < minEnergy) {
+                minEnergy = energy;
+                bestAngle = angle;
+            }
+        }
+
+        console.log('[PCA] Best Orientation Angle found (deg):', (bestAngle * 180 / Math.PI).toFixed(1));
+
+        // Apply final optimal rotation
+        const finalCos = Math.cos(bestAngle);
+        const finalSin = Math.sin(bestAngle);
+        nodes.forEach(n => {
+            const dx = n.x! - mx;
+            const dz = n.z! - mz;
+            n.x = mx + (dx * finalCos - dz * finalSin);
+            n.z = mz + (dx * finalSin + dz * finalCos);
+        });
+
         hasAligned = true;
         Graph3D.graphData({ nodes, links: Graph3D.graphData().links });
         Graph3D.zoomToFit(1000, 50);
