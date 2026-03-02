@@ -115,13 +115,20 @@ const ECOSYSTEM = {
     ]
 }
 
+import { useEffect } from 'react'
+
 /**
  * Spirit Research Lab Showcase Page - Technical Teaser Upgrade
  * A high-impact engineering showcase designed to attract high-tier opportunities.
  */
 export default function SpiritResearchLabShowcase() {
+    useEffect(() => {
+        // SEO & Metadata Tuning
+        document.title = "Spirit Research Lab — Engineering the Ineffable | Idan David-Aviv";
+    }, [])
+
     return (
-        <div className="min-h-screen w-full bg-[#0a0514] py-20 px-4 md:px-8 lg:px-12 flex flex-col items-center">
+        <main className="min-h-screen w-full bg-[#0a0514] py-20 px-4 md:px-8 lg:px-12 flex flex-col items-center">
             {/* The "Box" containing the Spirit Research Lab World */}
             <motion.div
                 initial={{ opacity: 0, scale: 0.98 }}
@@ -182,10 +189,16 @@ export default function SpiritResearchLabShowcase() {
                             transition={{ delay: 1, duration: 0.8 }}
                             className="flex flex-wrap justify-center gap-8 pt-10"
                         >
-                            <button className="amber-glass premium-glow px-12 py-5 rounded-full text-gold-50 font-bold text-lg transition-all hover:scale-105 hover:brightness-110 active:scale-95 shadow-[0_0_30px_rgba(217,119,6,0.2)]">
+                            <button
+                                className="amber-glass premium-glow px-12 py-5 rounded-full text-gold-50 font-bold text-lg transition-all hover:scale-105 hover:brightness-110 active:scale-95 shadow-[0_0_30px_rgba(217,119,6,0.2)]"
+                                aria-label="Experience the Calculator"
+                            >
                                 Experience the Calculator
                             </button>
-                            <button className="glass-card px-12 py-5 rounded-full text-white/90 font-semibold text-lg hover:bg-white/15 transition-all active:scale-95 border-white/20">
+                            <button
+                                className="glass-card px-12 py-5 rounded-full text-white/90 font-semibold text-lg hover:bg-white/15 transition-all active:scale-95 border-white/20"
+                                aria-label="View Technical Documentation"
+                            >
                                 View Technical Docs
                             </button>
                         </motion.div>
@@ -386,7 +399,7 @@ export default function SpiritResearchLabShowcase() {
                 {/* Bottom Frame Polish */}
                 <div className="h-1 w-2/3 mx-auto bg-gradient-to-r from-transparent via-gold-500/30 to-transparent blur-sm rounded-full absolute bottom-8 left-1/2 -translate-x-1/2" />
             </motion.div>
-        </div>
+        </main>
     )
 }
 

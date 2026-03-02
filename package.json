@@ -16,7 +16,9 @@
     "prepush": "npm run lint && npm run typecheck && npm run test",
     "dna:connectivity": "tsx scripts/dna-connectivity.ts",
     "dna:fillsite:dry": "tsx scripts/dna-connectivity.ts --dry",
-    "dna:fillsite": "tsx scripts/dna-connectivity.ts --fill"
+    "dna:fillsite": "tsx scripts/dna-connectivity.ts --fill",
+    "seo:health": "npx -y playbook-seo scan http://localhost:5173",
+    "seo:health:dry": "npx -y playbook-seo scan --dry-run"
   },
   "dependencies": {
     "3d-force-graph": "^1.79.1",

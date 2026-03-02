@@ -70,11 +70,13 @@ export default function AntigravityDNAShowcase() {
         const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement
         iframe?.contentWindow?.postMessage({ type: 'GET_HISTORY' }, '*')
 
+        // SEO & Metadata Tuning
+        document.title = "Antigravity DNA — Unified Neural Network | Idan David-Aviv";
+
         return () => window.removeEventListener('message', handleMessage)
     }, [])
-
     return (
-        <div className="min-h-screen w-full bg-[#050510] py-20 px-4 md:px-8 lg:px-12 flex flex-col items-center">
+        <main className="min-h-screen w-full bg-[#050510] py-20 px-4 md:px-8 lg:px-12 flex flex-col items-center">
             {/* The "Box" containing the DNA World */}
             <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
@@ -376,6 +378,7 @@ export default function AntigravityDNAShowcase() {
                                     }}
                                     className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 hover:bg-purple-500/20 transition-all shadow-lg shadow-purple-500/5 group"
                                     title={isGraphFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+                                    aria-label={isGraphFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
                                 >
                                     {isGraphFullscreen ? (
                                         <Minimize className="w-5 h-5" />
@@ -587,7 +590,7 @@ export default function AntigravityDNAShowcase() {
             <div className="mt-40 mb-20 text-center">
                 <p className="text-white/20 font-mono text-sm tracking-[0.5em] uppercase">Persistent Agent Module // Antigravity</p>
             </div>
-        </div>
+        </main>
     )
 }
 

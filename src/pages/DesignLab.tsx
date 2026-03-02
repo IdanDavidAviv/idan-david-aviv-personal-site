@@ -99,13 +99,16 @@ export default function DesignLab() {
 
     // Restore default scheme on unmount
     useEffect(() => {
+        // SEO & Metadata Tuning
+        document.title = "Design Lab — Visual Identity Evolution | Idan David-Aviv";
+
         return () => {
             applyScheme(COLOR_SCHEMES[0])
         }
     }, [])
 
     return (
-        <div className="pt-24 pb-20 w-full max-w-6xl mx-auto px-6">
+        <main className="pt-24 pb-20 w-full max-w-6xl mx-auto px-6">
             <header className="mb-16 text-center">
                 <h1 className="text-4xl md:text-6xl font-bold text-gradient mb-4">Design Lab</h1>
                 <p className="text-white/60 text-lg">Exploring the next evolution of your visual identity.</p>
@@ -151,6 +154,8 @@ export default function DesignLab() {
                                 ? 'border-accent bg-accent/10 shadow-[0_0_20px_rgba(var(--accent),0.1)]'
                                 : 'border-white/10 bg-white/2 hover:bg-white/5'
                                 }`}
+                            aria-label={`Apply ${scheme.name} color scheme`}
+                            aria-pressed={activeScheme === scheme.name}
                         >
                             <div className="flex gap-2 mb-6">
                                 <div
@@ -226,10 +231,16 @@ export default function DesignLab() {
                             </p>
 
                             <div className="flex flex-wrap gap-4">
-                                <button className="px-8 py-3 bg-accent text-base-content font-bold rounded-full hover:scale-105 transition-transform shadow-lg shadow-accent/20">
+                                <button
+                                    className="px-8 py-3 bg-accent text-base-content font-bold rounded-full hover:scale-105 transition-transform shadow-lg shadow-accent/20"
+                                    aria-label="Deploy core infrastructure"
+                                >
                                     Deploy Core
                                 </button>
-                                <button className="px-8 py-3 border border-secondary text-secondary font-medium rounded-full hover:bg-secondary/5 transition-all">
+                                <button
+                                    className="px-8 py-3 border border-secondary text-secondary font-medium rounded-full hover:bg-secondary/5 transition-all"
+                                    aria-label="View technical protocol"
+                                >
                                     View Protocol
                                 </button>
                             </div>
@@ -246,15 +257,21 @@ export default function DesignLab() {
                         &quot;Clicking a scheme above will live-apply the colors to the entire site infrastructure.&quot;
                     </p>
                     <div className="flex justify-center flex-wrap gap-6">
-                        <button className="px-10 py-3.5 bg-accent text-base-content font-bold rounded-2xl hover:brightness-110 active:scale-95 transition-all shadow-xl shadow-accent/10">
+                        <button
+                            className="px-10 py-3.5 bg-accent text-base-content font-bold rounded-2xl hover:brightness-110 active:scale-95 transition-all shadow-xl shadow-accent/10"
+                            aria-label="Example primary action"
+                        >
                             Primary Action
                         </button>
-                        <button className="px-10 py-3.5 border border-secondary text-secondary font-bold rounded-2xl hover:bg-secondary/5 transition-all">
+                        <button
+                            className="px-10 py-3.5 border border-secondary text-secondary font-bold rounded-2xl hover:bg-secondary/5 transition-all"
+                            aria-label="Example secondary action"
+                        >
                             Secondary Action
                         </button>
                     </div>
                 </div>
             </Section>
-        </div>
+        </main>
     )
 }

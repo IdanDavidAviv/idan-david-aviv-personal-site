@@ -88,7 +88,7 @@ async function runArchaeology() {
 
     const latest = getLatestLedger();
     let startHash: string | null = null;
-    let liveRegistry = new Set<string>();
+    const liveRegistry = new Set<string>();
     let history: KiDiff[] = [];
     let prevGraph = { nodes: new Set<string>(), links: new Set<string>() };
 
