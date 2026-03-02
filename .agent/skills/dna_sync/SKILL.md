@@ -54,15 +54,18 @@ npm run dna:fillsite
 - **Forces** `GEMINI.md` to Group 999 regardless of existing value.
 - Deletes `ki-network.ts.tmp` automatically on success.
 
-## When to Run This Skill
+## Archaeological Protocol (Flag Economy)
 
-- After **adding a new KI** to the knowledge base.
-- After **modifying links** in a KI's `SKILL.md`.
-- After **updating `GEMINI.md`** references.
-- When the **visualization feels stale** or mismatched vs the actual KI graph.
+`dna-archaeology.ts` maintains the temporal ledger. Use flags to control provenance:
+
+- **`--fresh`**: Full reconstruction. Wipes data and crawls from Genesis. Use for major logic shifts.
+- **`--sync`**: Incremental update. Extracts hash from existing ledger (v8+) and fetches only missing epochs.
+- **`--partial <n>`**: Windowed crawl. Only processes the most recent `<n>` commits.
+
+### Root Node Governance
+`GEMINI.md` is the absolute root (Group 999). It is included in the **default scope** of all archaeological and connectivity scans. Any change to `GEMINI.md` links automatically triggers an archaeology epoch.
 
 ## Post-Sync Checklist
-- [ ] Verify diff only touches the `kiData` block.
-- [ ] New KIs appear as Ghost nodes (Group 0) in the visualization.
-- [ ] `GEMINI.md` renders as the large root hub (Group 999).
-- [ ] No group assignments for existing KIs were accidentally reset to `0`.
+- [ ] Verify `GEMINI.md` is present in the latest archaeology epoch.
+- [ ] Ensure hashes are correctly pinned in ledger labels.
+- [ ] Check for duplicate nodes in `--sync` mode.
