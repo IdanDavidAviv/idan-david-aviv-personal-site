@@ -194,92 +194,54 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
         nodes.forEach(n => { mx += n.x || 0; my += n.y || 0; mz += n.z || 0; });
         mx /= nodes.length; my /= nodes.length; mz /= nodes.length;
 
-        // 2. Covariance Matrix (3x3)
-        let cxx = 0, cxy = 0, cxz = 0, cyy = 0, cyz = 0, czz = 0;
-        nodes.forEach(n => {
-            const dx = (n.x || 0) - mx;
-            const dy = (n.y || 0) - my;
-            const dz = (n.z || 0) - mz;
-            cxx += dx * dx; cxy += dx * dy; cxz += dx * dz;
-            cyy += dy * dy; cyz += dy * dz; czz += dz * dz;
-        });
+        // 2. Optimal View Orientation Scan (Minimize Overlap Only)
+        // Scan 360 degrees around Y-axis to find the angle with least 2D overlap (X, Z plane)
+        let bestAngle = 0;
+        let minEnergy = Infinity;
 
-        console.log('[PCA] Variance:', { cxx: cxx.toFixed(0), cyy: cyy.toFixed(0), czz: czz.toFixed(0) });
+        const steps = 72; // 5 degrees each
+        for (let i = 0; i < steps; i++) {
+            const angle = (i * 2 * Math.PI) / steps;
+            const cos = Math.cos(angle);
+            const sin = Math.sin(angle);
 
-        // 3. Jacobi Eigenvalue Solver (3x3 symmetric matrix)
-        const A = [
-            [cxx, cxy, cxz],
-            [cxy, cyy, cyz],
-            [cxz, cyz, czz]
-        ];
-        const V = [
-            [1, 0, 0],
-            [0, 1, 0],
-            [0, 0, 1]
-        ];
+            let energy = 0;
+            // Project to 2D viewer plane (X, Y) and calculate proximity "repulsion"
+            for (let a = 0; a < nodes.length; a++) {
+                const nx = (nodes[a].x! - mx) * cos - (nodes[a].z! - mz) * sin;
+                // Note: ny is just nodes[a].y - my, stays constant for Y-axis rotation
 
-        for (let iter = 0; iter < 10; iter++) {
-            // Find largest off-diagonal
-            let p = 0, q = 1;
-            if (Math.abs(A[0][2]) > Math.abs(A[p][q])) { p = 0; q = 2; }
-            if (Math.abs(A[1][2]) > Math.abs(A[p][q])) { p = 1; q = 2; }
+                for (let b = a + 1; b < nodes.length; b++) {
+                    const bx = (nodes[b].x! - mx) * cos - (nodes[b].z! - mz) * sin;
 
-            if (Math.abs(A[p][q]) < 1e-9) break;
+                    const dx = nx - bx;
+                    const dy = (nodes[a].y! - nodes[b].y!);
+                    const d2 = dx * dx + dy * dy;
 
-            const theta = 0.5 * Math.atan2(2 * A[p][q], A[q][q] - A[p][p]);
-            const cos = Math.cos(theta);
-            const sin = Math.sin(theta);
-
-            // Rotate A
-            const App = A[p][p], Aqq = A[q][q], Apq = A[p][q];
-            A[p][p] = cos * cos * App - 2 * sin * cos * Apq + sin * sin * Aqq;
-            A[q][q] = sin * sin * App + 2 * sin * cos * Apq + cos * cos * Aqq;
-            A[p][q] = A[q][p] = 0;
-
-            for (let i = 0; i < 3; i++) {
-                if (i !== p && i !== q) {
-                    const Aip = A[i][p], Aiq = A[i][q];
-                    A[i][p] = A[p][i] = cos * Aip - sin * Aiq;
-                    A[i][q] = A[q][i] = sin * Aip + cos * Aiq;
+                    // Repulsion energy (1/dist^2) - favors angles with high node separation
+                    energy += 1 / (d2 + 100);
                 }
-                // Rotate V
-                const Vip = V[i][p], Viq = V[i][q];
-                V[i][p] = cos * Vip - sin * Viq;
-                V[i][q] = sin * Vip + cos * Viq;
+            }
+
+            if (energy < minEnergy) {
+                minEnergy = energy;
+                bestAngle = angle;
             }
         }
 
-        // Extract Eigenvectors and Eigenvalues
-        const eigs = [
-            { val: A[0][0], vec: new THREE.Vector3(V[0][0], V[1][0], V[2][0]) },
-            { val: A[1][1], vec: new THREE.Vector3(V[0][1], V[1][1], V[2][1]) },
-            { val: A[2][2], vec: new THREE.Vector3(V[0][2], V[1][2], V[2][2]) }
-        ].sort((a, b) => b.val - a.val);
+        console.log('[ViewScan] Best Overlap Orientation found (deg):', (bestAngle * 180 / Math.PI).toFixed(1));
 
-        const pc1 = eigs[0].vec.normalize(); // Long axis
-        const pc3 = eigs[2].vec.normalize(); // Short axis (normal)
-        const pc2 = new THREE.Vector3().crossVectors(pc3, pc1).normalize();
-
-        console.log('[PCA] Eigenvalues:', eigs.map(e => e.val.toFixed(0)));
-        console.log('[PCA] PC1 (Long):', pc1);
-        console.log('[PCA] PC3 (Normal):', pc3);
-
-        // 4. Construct Rotation Matrix
-        // Goal: PC1 -> World X [1,0,0], PC3 -> World Y [0,1,0], PC2 -> World Z [0,0,1]
-        const rotMat = new THREE.Matrix4().set(
-            pc1.x, pc1.y, pc1.z, 0,
-            pc3.x, pc3.y, pc3.z, 0,
-            pc2.x, pc2.y, pc2.z, 0,
-            0, 0, 0, 1
-        );
-
-        // 5. Apply Rotation to all nodes
+        // 3. Apply final optimal rotation
+        const finalCos = Math.cos(bestAngle);
+        const finalSin = Math.sin(bestAngle);
         nodes.forEach(n => {
-            const pos = new THREE.Vector3(n.x, n.y, n.z);
-            pos.sub(new THREE.Vector3(mx, my, mz)); // Center
-            pos.applyMatrix4(rotMat); // Exact 3-axis alignment
-            pos.add(new THREE.Vector3(mx, my, mz)); // Restore
-            n.x = pos.x; n.y = pos.y; n.z = pos.z;
+            const dx = n.x! - mx;
+            const dy = n.y! - my;
+            const dz = n.z! - mz;
+            // Rotate around Y
+            n.x = mx + (dx * finalCos - dz * finalSin);
+            n.y = my + dy; // Restoring relative position (no change, but uses 'my')
+            n.z = mz + (dx * finalSin + dz * finalCos);
         });
 
         hasAligned = true;
