@@ -25,112 +25,88 @@ interface KiLink {
 
 const kiData: { nodes: KiNode[]; links: KiLink[] } = {
     nodes: [
-        // Root
-        { id: 'GEMINI.md', name: 'GEMINI.md (Root)', group: 0 },
-
-        // Core
-        { id: 'session_lifecycle', name: 'session_lifecycle', group: 1 },
-        { id: 'operation_commander', name: 'operation_commander', group: 1 },
-        { id: 'git_strategy', name: 'git_strategy', group: 1 },
-
-        // Global
-        { id: 'github_project_manager', name: 'github_project_manager', group: 2 },
+        // Root & Synchronized DNA Nodes
+        // Convention: 999=Root, 0=Ghosts (Untriaged)
+        { id: 'asset_governance', name: 'asset_governance', group: 2 },
         { id: 'context_planning', name: 'context_planning', group: 2 },
-        { id: 'windows_protocol', name: 'windows_protocol', group: 2 },
-        { id: 'quality_gates', name: 'quality_gates', group: 2 },
-        { id: 'verification_integrity', name: 'verification_integrity', group: 2 },
-        { id: 'testing_governance', name: 'testing_governance', group: 2 },
-        { id: 'supabase_governance', name: 'supabase_governance', group: 2 },
-        { id: 'state_management_governance', name: 'state_management_governance', group: 2 },
-        { id: 'seo_governance', name: 'seo_governance', group: 1 },
-        { id: 'rtl_guardian', name: 'rtl_guardian', group: 2 },
-        { id: 'resilient_fetching', name: 'resilient_fetching', group: 2 },
+        { id: 'dna_philosophy', name: 'dna_philosophy', group: 1 },
+        { id: 'emergency_divergence', name: 'emergency_divergence', group: 2 },
+        { id: 'GEMINI.md', name: 'GEMINI.md', group: 999 },
+        { id: 'git_strategy', name: 'git_strategy', group: 1 },
+        { id: 'github_project_manager', name: 'github_project_manager', group: 2 },
+        { id: 'guided_audit_protocol', name: 'guided_audit_protocol', group: 2 },
+        { id: 'ki_integrity_governor', name: 'ki_integrity_governor', group: 0 },
+        { id: 'knowledge_center_hierarchy', name: 'knowledge_center_hierarchy', group: 0 },
+        { id: 'linguistic_curator', name: 'linguistic_curator', group: 2 },
+        { id: 'observability_telemetry', name: 'observability_telemetry', group: 1 },
+        { id: 'operation_commander', name: 'operation_commander', group: 1 },
         { id: 'premium_ui_dna', name: 'premium_ui_dna', group: 2 },
         { id: 'privacy_shield', name: 'privacy_shield', group: 2 },
-        { id: 'asset_governance', name: 'asset_governance', group: 2 },
-        { id: 'guided_audit_protocol', name: 'guided_audit_protocol', group: 2 },
-        { id: 'emergency_divergence', name: 'emergency_divergence', group: 2 },
-        { id: 'dna_philosophy', name: 'dna_philosophy', group: 1 },
-
-        // Supplemental
-        { id: 'domain_schema_guardian', name: 'domain_schema_guardian', group: 2 },
-        { id: 'observability_telemetry', name: 'observability_telemetry', group: 1 },
-        { id: 'graceful_error_ui', name: 'graceful_error_ui', group: 2 },
-        { id: 'linguistic_curator', name: 'linguistic_curator', group: 2 },
-        { id: 'premium_form_architect', name: 'premium_form_architect', group: 2 },
-        { id: 'astro_time_lord', name: 'astro_time_lord', group: 2 },
-        { id: 'performance_memoizer', name: 'performance_memoizer', group: 2 },
-        { id: 'react_component_splitter', name: 'react_component_splitter', group: 2 },
+        { id: 'quality_gates', name: 'quality_gates', group: 2 },
+        { id: 'resilient_fetching', name: 'resilient_fetching', group: 2 },
+        { id: 'rtl_guardian', name: 'rtl_guardian', group: 2 },
+        { id: 'seo_governance', name: 'seo_governance', group: 1 },
+        { id: 'session_lifecycle', name: 'session_lifecycle', group: 1 },
+        { id: 'state_management_governance', name: 'state_management_governance', group: 2 },
+        { id: 'supabase_governance', name: 'supabase_governance', group: 2 },
+        { id: 'testing_governance', name: 'testing_governance', group: 2 },
+        { id: 'windows_protocol', name: 'windows_protocol', group: 2 },
     ],
     links: [
-        // GEMINI.md Referrals
-        { source: 'GEMINI.md', target: 'operation_commander' },
-        { source: 'GEMINI.md', target: 'context_planning' },
-        { source: 'GEMINI.md', target: 'windows_protocol' },
-        { source: 'GEMINI.md', target: 'verification_integrity' },
-        { source: 'GEMINI.md', target: 'quality_gates' },
-        { source: 'GEMINI.md', target: 'privacy_shield' },
-        { source: 'GEMINI.md', target: 'rtl_guardian' },
-        { source: 'GEMINI.md', target: 'seo_governance' },
-        { source: 'GEMINI.md', target: 'premium_ui_dna' },
-        { source: 'GEMINI.md', target: 'domain_schema_guardian' },
+        // Automated Bridges
         { source: 'GEMINI.md', target: 'asset_governance' },
+        { source: 'GEMINI.md', target: 'context_planning' },
         { source: 'GEMINI.md', target: 'git_strategy' },
-        { source: 'GEMINI.md', target: 'dna_philosophy' },
-        { source: 'GEMINI.md', target: 'linguistic_curator' },
-        { source: 'GEMINI.md', target: 'observability_telemetry' },
-        { source: 'GEMINI.md', target: 'graceful_error_ui' },
-
-        // Core Orchestration
-        { source: 'session_lifecycle', target: 'operation_commander' },
-        { source: 'session_lifecycle', target: 'git_strategy' },
-        { source: 'session_lifecycle', target: 'asset_governance' },
-        { source: 'operation_commander', target: 'windows_protocol' },
-        { source: 'operation_commander', target: 'session_lifecycle' },
-        { source: 'operation_commander', target: 'context_planning' },
-        { source: 'operation_commander', target: 'quality_gates' },
-        { source: 'operation_commander', target: 'verification_integrity' },
-        { source: 'operation_commander', target: 'emergency_divergence' },
-        { source: 'operation_commander', target: 'guided_audit_protocol' },
-        { source: 'operation_commander', target: 'seo_governance' },
-        { source: 'operation_commander', target: 'observability_telemetry' },
-        { source: 'operation_commander', target: 'graceful_error_ui' },
+        { source: 'GEMINI.md', target: 'operation_commander' },
+        { source: 'GEMINI.md', target: 'premium_ui_dna' },
+        { source: 'GEMINI.md', target: 'privacy_shield' },
+        { source: 'GEMINI.md', target: 'quality_gates' },
+        { source: 'GEMINI.md', target: 'rtl_guardian' },
+        { source: 'GEMINI.md', target: 'windows_protocol' },
+        { source: 'asset_governance', target: 'ki_integrity_governor' },
+        { source: 'context_planning', target: 'asset_governance' },
+        { source: 'context_planning', target: 'ki_integrity_governor' },
+        { source: 'dna_philosophy', target: 'asset_governance' },
+        { source: 'dna_philosophy', target: 'operation_commander' },
+        { source: 'dna_philosophy', target: 'quality_gates' },
+        { source: 'dna_philosophy', target: 'session_lifecycle' },
+        { source: 'dna_philosophy', target: 'windows_protocol' },
+        { source: 'emergency_divergence', target: 'testing_governance' },
+        { source: 'git_strategy', target: 'github_project_manager' },
         { source: 'git_strategy', target: 'quality_gates' },
-        { source: 'context_planning', target: 'operation_commander' },
-
-        // Quality & Testing
-        { source: 'quality_gates', target: 'testing_governance' },
-        { source: 'quality_gates', target: 'verification_integrity' },
-        { source: 'quality_gates', target: 'git_strategy' },
-        { source: 'verification_integrity', target: 'testing_governance' },
-        { source: 'testing_governance', target: 'verification_integrity' },
-        { source: 'github_project_manager', target: 'git_strategy' },
-
-        // Backend & Data
-        { source: 'supabase_governance', target: 'privacy_shield' },
-        { source: 'privacy_shield', target: 'supabase_governance' },
-        { source: 'privacy_shield', target: 'observability_telemetry' },
-        { source: 'state_management_governance', target: 'resilient_fetching' },
-        { source: 'resilient_fetching', target: 'asset_governance' },
-        { source: 'resilient_fetching', target: 'graceful_error_ui' },
-        { source: 'observability_telemetry', target: 'privacy_shield' },
-        { source: 'observability_telemetry', target: 'graceful_error_ui' },
-        { source: 'asset_governance', target: 'seo_governance' },
-        { source: 'asset_governance', target: 'linguistic_curator' },
-        { source: 'observability_telemetry', target: 'operation_commander' },
-
-        // Frontend & UI
-        { source: 'premium_ui_dna', target: 'rtl_guardian' },
-        { source: 'premium_ui_dna', target: 'asset_governance' },
-        { source: 'rtl_guardian', target: 'linguistic_curator' },
+        { source: 'git_strategy', target: 'windows_protocol' },
+        { source: 'github_project_manager', target: 'quality_gates' },
+        { source: 'guided_audit_protocol', target: 'emergency_divergence' },
+        { source: 'knowledge_center_hierarchy', target: 'premium_ui_dna' },
         { source: 'linguistic_curator', target: 'rtl_guardian' },
-        { source: 'graceful_error_ui', target: 'premium_ui_dna' },
-        { source: 'graceful_error_ui', target: 'premium_form_architect' },
-        { source: 'premium_form_architect', target: 'premium_ui_dna' },
-        { source: 'premium_form_architect', target: 'linguistic_curator' },
-        { source: 'premium_form_architect', target: 'astro_time_lord' },
-        { source: 'react_component_splitter', target: 'performance_memoizer' },
-        { source: 'react_component_splitter', target: 'state_management_governance' },
+        { source: 'observability_telemetry', target: 'premium_ui_dna' },
+        { source: 'observability_telemetry', target: 'privacy_shield' },
+        { source: 'operation_commander', target: 'dna_philosophy' },
+        { source: 'operation_commander', target: 'git_strategy' },
+        { source: 'operation_commander', target: 'github_project_manager' },
+        { source: 'operation_commander', target: 'ki_integrity_governor' },
+        { source: 'operation_commander', target: 'quality_gates' },
+        { source: 'operation_commander', target: 'session_lifecycle' },
+        { source: 'operation_commander', target: 'state_management_governance' },
+        { source: 'operation_commander', target: 'supabase_governance' },
+        { source: 'operation_commander', target: 'windows_protocol' },
+        { source: 'premium_ui_dna', target: 'asset_governance' },
+        { source: 'premium_ui_dna', target: 'rtl_guardian' },
+        { source: 'premium_ui_dna', target: 'seo_governance' },
+        { source: 'privacy_shield', target: 'observability_telemetry' },
+        { source: 'privacy_shield', target: 'supabase_governance' },
+        { source: 'quality_gates', target: 'git_strategy' },
+        { source: 'quality_gates', target: 'github_project_manager' },
+        { source: 'resilient_fetching', target: 'premium_ui_dna' },
+        { source: 'rtl_guardian', target: 'linguistic_curator' },
+        { source: 'seo_governance', target: 'premium_ui_dna' },
+        { source: 'session_lifecycle', target: 'asset_governance' },
+        { source: 'session_lifecycle', target: 'git_strategy' },
+        { source: 'session_lifecycle', target: 'operation_commander' },
+        { source: 'session_lifecycle', target: 'quality_gates' },
+        { source: 'state_management_governance', target: 'resilient_fetching' },
+        { source: 'supabase_governance', target: 'privacy_shield' },
+        { source: 'testing_governance', target: 'quality_gates' },
     ],
 };
 
@@ -155,17 +131,19 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
         const n = node as KiNode;
         const group = new THREE.Group();
 
-        const color = n.id === 'GEMINI.md' ? '#00008b'
-            : (isTerminal(n.id) ? '#fbbf24'
-                : (n.group === 1 ? '#a855f7' : '#22d3ee'));
+        const color = n.group === 999 ? '#00008b'
+            : (n.group === 0 ? '#94a3b8'
+                : (isTerminal(n.id) ? '#fbbf24'
+                    : (n.group === 1 ? '#a855f7' : '#22d3ee')));
 
-        const size = n.group === 0 ? 14
-            : (isTerminal(n.id) ? 4
-                : (n.group === 1 ? 8 : 6));
+        const size = n.group === 999 ? 18
+            : (n.group === 0 ? 8
+                : (isTerminal(n.id) ? 4
+                    : (n.group === 1 ? 10 : 8)));
 
         const sphere = new THREE.Mesh(
             new THREE.SphereGeometry(size, 24, 24),
-            new THREE.MeshLambertMaterial({ color, transparent: true, opacity: 0.9 })
+            new THREE.MeshLambertMaterial({ color, transparent: true, opacity: n.group === 0 ? 0.3 : (n.group === 999 ? 1.0 : 0.9) })
         );
         group.add(sphere);
 
