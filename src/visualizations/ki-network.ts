@@ -123,7 +123,7 @@ const isTerminal = (id: string) => !outDeg[id];
 // Registry for per-frame sprite projection
 const nodeSprites: Array<{ sprite: InstanceType<typeof SpriteText>, node: KiNode, size: number }> = [];
 
-let hasAligned = false;
+
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HTMLElement)
@@ -178,75 +178,6 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
             { x: n.x ?? 0, y: n.y ?? 0, z: n.z ?? 0 },
             2000
         );
-    })
-    .onEngineStop(() => {
-        if (hasAligned) return;
-
-        // --- PCA-based Horizontal Alignment ---
-        const nodes = Graph3D.graphData().nodes as KiNode[];
-        if (nodes.length < 3) return;
-
-        console.log('[PCA] Starting alignment for', nodes.length, 'nodes');
-        console.log('[PCA] First 3 nodes positions:', nodes.slice(0, 3).map(n => ({ id: n.id, x: n.x?.toFixed(2), y: n.y?.toFixed(2), z: n.z?.toFixed(2) })));
-
-        // 1. Calculate Mean
-        let mx = 0, my = 0, mz = 0;
-        nodes.forEach(n => { mx += n.x || 0; my += n.y || 0; mz += n.z || 0; });
-        mx /= nodes.length; my /= nodes.length; mz /= nodes.length;
-
-        // 2. Optimal View Orientation Scan (Minimize Overlap Only)
-        // Scan 360 degrees around Y-axis to find the angle with least 2D overlap (X, Z plane)
-        let bestAngle = 0;
-        let minEnergy = Infinity;
-
-        const steps = 72; // 5 degrees each
-        for (let i = 0; i < steps; i++) {
-            const angle = (i * 2 * Math.PI) / steps;
-            const cos = Math.cos(angle);
-            const sin = Math.sin(angle);
-
-            let energy = 0;
-            // Project to 2D viewer plane (X, Y) and calculate proximity "repulsion"
-            for (let a = 0; a < nodes.length; a++) {
-                const nx = (nodes[a].x! - mx) * cos - (nodes[a].z! - mz) * sin;
-                // Note: ny is just nodes[a].y - my, stays constant for Y-axis rotation
-
-                for (let b = a + 1; b < nodes.length; b++) {
-                    const bx = (nodes[b].x! - mx) * cos - (nodes[b].z! - mz) * sin;
-
-                    const dx = nx - bx;
-                    const dy = (nodes[a].y! - nodes[b].y!);
-                    const d2 = dx * dx + dy * dy;
-
-                    // Repulsion energy (1/dist^2) - favors angles with high node separation
-                    energy += 1 / (d2 + 100);
-                }
-            }
-
-            if (energy < minEnergy) {
-                minEnergy = energy;
-                bestAngle = angle;
-            }
-        }
-
-        console.log('[ViewScan] Best Overlap Orientation found (deg):', (bestAngle * 180 / Math.PI).toFixed(1));
-
-        // 3. Apply final optimal rotation
-        const finalCos = Math.cos(bestAngle);
-        const finalSin = Math.sin(bestAngle);
-        nodes.forEach(n => {
-            const dx = n.x! - mx;
-            const dy = n.y! - my;
-            const dz = n.z! - mz;
-            // Rotate around Y
-            n.x = mx + (dx * finalCos - dz * finalSin);
-            n.y = my + dy; // Restoring relative position (no change, but uses 'my')
-            n.z = mz + (dx * finalSin + dz * finalCos);
-        });
-
-        hasAligned = true;
-        Graph3D.graphData({ nodes, links: Graph3D.graphData().links });
-        Graph3D.zoomToFit(1000, 50);
     });
 
 // ─── Per-frame: keep sprite on node→camera vector ────────────────────────────
