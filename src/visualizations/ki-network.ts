@@ -282,8 +282,9 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
             n.x = pos.x; n.y = pos.y; n.z = pos.z;
         });
 
-        // 6. Optimal Orientation Scan (Minimize Overlap)
+        // 6. Optimal Orientation Scan (Minimize Overlap + Root Visibility)
         // Scan 360 degrees around Y-axis to find the angle with least 2D overlap (X, Z plane)
+        const rootNode = nodes.find(n => n.group === 999);
         let bestAngle = 0;
         let minEnergy = Infinity;
 
@@ -294,19 +295,38 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
             const sin = Math.sin(angle);
 
             let energy = 0;
-            // Project and calculate "repulsion energy" (1/dist^2)
+            let rootOccluded = false;
+
+            // Project root if it exists
+            const rx = rootNode ? (rootNode.x! - mx) * cos - (rootNode.z! - mz) * sin : 0;
+            const rz = rootNode ? (rootNode.x! - mx) * sin + (rootNode.z! - mz) * cos : 0;
+            const ry = rootNode?.y || 0;
+
             for (let a = 0; a < nodes.length; a++) {
                 const nx = (nodes[a].x! - mx) * cos - (nodes[a].z! - mz) * sin;
                 const nz = (nodes[a].x! - mx) * sin + (nodes[a].z! - mz) * cos;
+                const ny = nodes[a].y || 0;
+
+                // Root Occlusion Check: Avoid nodes directly in front of root
+                if (rootNode && nodes[a] !== rootNode) {
+                    const dx = Math.abs(nx - rx);
+                    const dy = Math.abs(ny - ry);
+                    // threshold 20 accounts for label width; nz > rz means it is closer to camera
+                    if (dx < 20 && dy < 15 && nz > rz) {
+                        rootOccluded = true;
+                    }
+                }
 
                 for (let b = a + 1; b < nodes.length; b++) {
                     const bx = (nodes[b].x! - mx) * cos - (nodes[b].z! - mz) * sin;
                     const bz = (nodes[b].x! - mx) * sin + (nodes[b].z! - mz) * cos;
 
                     const d2 = (nx - bx) * (nx - bx) + (nz - bz) * (nz - bz);
-                    energy += 1 / (d2 + 100); // 100 is a "soft" buffer for overlapping labels
+                    energy += 1 / (d2 + 100);
                 }
             }
+
+            if (rootOccluded) energy += 100000; // Nuclear penalty for hiding the Root
 
             if (energy < minEnergy) {
                 minEnergy = energy;
