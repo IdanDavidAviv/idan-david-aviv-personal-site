@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { execSync } from 'child_process';
+// import { execSync } from 'child_process';
 
 const KNOWLEDGE_DIR = 'C:/Users/Idan4/.gemini/antigravity/knowledge';
 const GEMINI_PATH = 'C:/Users/Idan4/.gemini/GEMINI.md';
@@ -66,53 +66,122 @@ function scanKIs(): KINode[] {
     return nodes;
 }
 
+interface KiHistoryNode {
+    id: string;
+    name: string;
+    group: number;
+}
+
+interface KiDelta {
+    nodes: { added: KiHistoryNode[]; removed: string[] };
+    links: { added: { source: string; target: string }[]; removed: { source: string; target: string }[] };
+}
+
+interface KiDiff {
+    timestamp: string;
+    label: string;
+    delta: KiDelta;
+}
+
 function performSurgicalUpdate(groundTruthNodes: KINode[], dry: boolean) {
     const rawContent = fs.readFileSync(SITE_DATA_PATH, 'utf8');
 
-    // Identify kiData block
-    const startMarker = 'const kiData: { nodes: KiNode[]; links: KiLink[] } = {';
-    const startIndex = rawContent.indexOf(startMarker);
-
-    if (startIndex === -1) {
+    // --- PART 1: Parse Existing kiData ---
+    const startDataMarker = 'const kiData: { nodes: KiNode[]; links: KiLink[] } = {';
+    const startDataIndex = rawContent.indexOf(startDataMarker);
+    if (startDataIndex === -1) {
         console.error('❌ Could not locate kiData declaration.');
         return;
     }
 
-    const searchFrom = startIndex + startMarker.length;
-    let bracketCount = 1;
-    let endIndex = -1;
+    // Logic to find the end of the ACTUAL data object block (ignoring type definition brackets)
+    const findEndOfDataBlock = (content: string, startIndex: number): number => {
+        if (startIndex === -1) return -1;
+        const afterAssignment = content.indexOf('=', startIndex) + 1;
+        if (afterAssignment === 0) return -1;
 
-    for (let i = searchFrom; i < rawContent.length; i++) {
-        if (rawContent[i] === '{') bracketCount++;
-        if (rawContent[i] === '}') {
-            bracketCount--;
-            if (bracketCount === 0) {
-                endIndex = i;
-                if (rawContent[i + 1] === ';') endIndex++;
-                break;
+        // Skip to the first structural character ( { or [ )
+        let i = afterAssignment;
+        while (i < content.length && content[i] !== '{' && content[i] !== '[') {
+            i++;
+        }
+        if (i >= content.length) return -1;
+
+        const opener = content[i];
+        const closer = opener === '{' ? '}' : ']';
+        let bracketCount = 0;
+        let started = false;
+
+        for (; i < content.length; i++) {
+            if (content[i] === opener) {
+                bracketCount++;
+                started = true;
+            }
+            if (content[i] === closer) {
+                bracketCount--;
+                if (started && bracketCount === 0) {
+                    let end = i;
+                    if (content[i + 1] === ';') end++;
+                    return end;
+                }
             }
         }
-    }
+        return -1;
+    };
 
-    if (endIndex === -1) {
+    const endDataIndex = findEndOfDataBlock(rawContent, startDataIndex);
+    if (endDataIndex === -1) {
         console.error('❌ Could not locate end of kiData block.');
         return;
     }
 
-    // Capture existing groups
-    const nodeDefRegex = /id:\s*'(.*?)',\s*name:\s*'.*?',\s*group:\s*(\d+)/g;
-    const existingGroups: Record<string, number> = {};
-    let match;
-    while ((match = nodeDefRegex.exec(rawContent)) !== null) {
-        existingGroups[match[1]] = parseInt(match[2], 10);
+    // Extract current nodes and links for delta comparison
+    const nodeDefRegex = /id:\s*'(.*?)'/g;
+    const linkDefRegex = /source:\s*'(.*?)',\s*target:\s*'(.*?)'/g;
+
+    const currentNodes: string[] = [];
+    const currentLinks: { source: string; target: string }[] = [];
+
+    const kiDataContent = rawContent.slice(startDataIndex, endDataIndex + 1);
+    let nMatch;
+    while ((nMatch = nodeDefRegex.exec(kiDataContent)) !== null) {
+        currentNodes.push(nMatch[1]);
+    }
+    let lMatch;
+    while ((lMatch = linkDefRegex.exec(kiDataContent)) !== null) {
+        currentLinks.push({ source: lMatch[1], target: lMatch[2] });
     }
 
-    // Generate new kiData lines
-    // Group 999: Root Hub (GEMINI.md)
-    // Group 0: Ghosts (Untriaged/New KIs)
-    // Group 1: Antigravity DNA (Core Protocols)
-    // Group 2: Personal Site (Visualization Sync)
-    // Group 3: Spirit Research Lab (Infra/Zero Proxy)
+    // Capture existing groups from the FULL file (to preserve manual triaging)
+    const groupDefRegex = /id:\s*'(.*?)',\s*name:\s*'.*?',\s*group:\s*(\d+)/g;
+    const existingGroups: Record<string, number> = {};
+    let gMatch;
+    while ((gMatch = groupDefRegex.exec(rawContent)) !== null) {
+        existingGroups[gMatch[1]] = parseInt(gMatch[2], 10);
+    }
+
+    // --- PART 2: Compute Delta ---
+    const newNodes = groundTruthNodes.map(n => n.id);
+    const newLinks = groundTruthNodes.flatMap(n => n.links.map(t => ({ source: n.id, target: t })));
+
+    const addedNodeIds = newNodes.filter(n => !currentNodes.includes(n));
+    const removedNodes = currentNodes.filter(n => !newNodes.includes(n));
+
+    const addedLinks = newLinks.filter(nl => !currentLinks.some(cl => cl.source === nl.source && cl.target === nl.target));
+    const removedLinks = currentLinks.filter(cl => !newLinks.some(nl => nl.source === cl.source && nl.target === cl.target));
+
+    // Construct full objects for additions
+    const addedNodesObjects = groundTruthNodes
+        .filter(n => addedNodeIds.includes(n.id))
+        .map(n => ({
+            id: n.id,
+            name: n.id,
+            group: n.id === 'GEMINI.md' ? 999 : (existingGroups[n.id] ?? 0)
+        }));
+
+    const hasChanges = addedNodeIds.length > 0 || removedNodes.length > 0 || addedLinks.length > 0 || removedLinks.length > 0;
+
+    // --- PART 3: Generate New kiData ---
     const nodesArray = groundTruthNodes
         .sort((a, b) => a.id.localeCompare(b.id))
         .map(n => {
@@ -121,58 +190,82 @@ function performSurgicalUpdate(groundTruthNodes: KINode[], dry: boolean) {
             return `        { id: '${n.id}', name: '${n.id}', group: ${group} },`;
         });
 
-    const linksArray = groundTruthNodes
-        .flatMap(node => node.links
-            .map(target => `        { source: '${node.id}', target: '${target}' },`)
-        )
-        .sort();
+    const linksArray = [...new Set(newLinks.map(l => `        { source: '${l.source}', target: '${l.target}' },`))].sort();
 
     const newKiDataLines = [
-        startMarker,
+        startDataMarker,
         '    nodes: [',
         '        // Root & Synchronized DNA Nodes',
-        '        // Convention: 999=Root, 0=Ghosts (Untriaged)',
         ...nodesArray,
         '    ],',
         '    links: [',
         '        // Automated Bridges',
-        ...[...new Set(linksArray)],
+        ...linksArray,
         '    ],',
         '};'
     ];
     const newKiDataContent = newKiDataLines.join('\n');
-    const updatedContent = rawContent.slice(0, startIndex) + newKiDataContent + rawContent.slice(endIndex + 1);
+
+    // --- PART 4: Update kiHistory ---
+    const historyStartMarker = 'export const kiHistory: KiDiff[] = [';
+    const historyStartIndex = rawContent.indexOf(historyStartMarker);
+    let existingHistoryContent = '';
+
+    if (historyStartIndex !== -1) {
+        const historyEndIndex = findEndOfDataBlock(rawContent, historyStartIndex);
+        existingHistoryContent = rawContent.slice(historyStartIndex + historyStartMarker.length, historyEndIndex).trim();
+    }
+
+    let newEntry = '';
+    if (hasChanges) {
+        const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
+        const deltaObj: KiDiff = {
+            timestamp,
+            label: `Auto-Sync: ${addedNodeIds.length} nodes, ${addedLinks.length} edges`,
+            delta: {
+                nodes: { added: addedNodesObjects, removed: removedNodes },
+                links: { added: addedLinks, removed: removedLinks }
+            }
+        };
+        newEntry = `    ${JSON.stringify(deltaObj, null, 4)},`.replace(/\n/g, '\n    ');
+    }
+
+    const finalHistoryContent = hasChanges
+        ? (existingHistoryContent ? `${existingHistoryContent}\n${newEntry}` : newEntry)
+        : existingHistoryContent;
+
+    const newHistoryBlock = `${historyStartMarker}\n${finalHistoryContent}\n];`;
+
+    // --- PART 5: Construct Final File ---
+    let updatedContent = rawContent.slice(0, startDataIndex) + newKiDataContent + rawContent.slice(endDataIndex + 1);
+
+    // Update or Append History
+    if (historyStartIndex !== -1) {
+        // Find fresh indices in the ALREADY updatedContent (since indices shifted)
+        const freshHistoryStart = updatedContent.indexOf(historyStartMarker);
+        const freshHistoryEnd = findEndOfDataBlock(updatedContent, freshHistoryStart);
+        updatedContent = updatedContent.slice(0, freshHistoryStart) + newHistoryBlock + updatedContent.slice(freshHistoryEnd + 1);
+    }
+    else {
+        // Append to end of file if not present
+        updatedContent = updatedContent.trim() + '\n\n' + newHistoryBlock + '\n';
+    }
 
     if (dry) {
-        console.warn('\n--- DNA Connectivity DRY RUN (Surgical) ---');
+        console.warn('\n--- DNA Connectivity DRY RUN (with History) ---');
         const tempPath = SITE_DATA_PATH + '.tmp';
         fs.writeFileSync(tempPath, updatedContent);
-
-        console.warn(`✅ GEMINI.md existing: ${nodesArray.find(l => l.includes("'GEMINI.md'"))?.includes('group: 999') ? 'VERIFIED' : 'FAILED'}`);
         console.warn(`💡 Temporary file saved: ${tempPath}`);
-
-        console.warn('\n--- FULL SURGICAL DIFF ---');
-        try {
-            // Note: --no-index allows diffing files outside of git tracking or comparing untracked files
-            const diff = execSync(`git diff --no-index --color "${SITE_DATA_PATH}" "${tempPath}"`).toString();
-            console.warn(diff);
-        } catch (e: unknown) {
-            // git diff returns exit 1 if there's a difference
-            const err = e as { stdout?: Buffer; stderr?: Buffer };
-            if (err.stdout) {
-                console.warn(err.stdout.toString());
-            } else if (err.stderr) {
-                console.error(`❌ Diff command failed: ${err.stderr.toString()}`);
-            }
+        console.warn(`📊 Changes Detected: ${hasChanges ? 'YES' : 'NO'}`);
+        if (hasChanges) {
+            console.warn(`   + Nodes: ${addedNodeIds.join(', ')}`);
+            console.warn(`   - Nodes: ${removedNodes.join(', ')}`);
+            console.warn(`   + Edges: ${addedLinks.length}`);
+            console.warn(`   - Edges: ${removedLinks.length}`);
         }
     } else {
         fs.writeFileSync(SITE_DATA_PATH, updatedContent);
-        const tempPath = SITE_DATA_PATH + '.tmp';
-        if (fs.existsSync(tempPath)) {
-            fs.unlinkSync(tempPath);
-            console.warn(`🧹 Cleaned up: ${tempPath}`);
-        }
-        console.warn('✅ kiData surgically synchronized.');
+        console.warn('✅ kiData and kiHistory synchronized.');
     }
 }
 
