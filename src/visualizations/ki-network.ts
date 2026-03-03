@@ -17,7 +17,20 @@ import {
     getTimelineBatches,
     TimelineBatch
 } from './dna-history-engine';
-import dnaHistoryData from './dna-history-backfill-v25.json';
+import dnaHistoryData from './dna-history-backfill-v26.json';
+import kiGroupsRegistry from './ki-groups.json';
+import externalNodeRegistry from './external-node-refs.json';
+
+// Combine registries for lookup
+const groupLookup: Record<string, number> = {
+    ...kiGroupsRegistry,
+    ...externalNodeRegistry
+};
+
+function getNodeGroup(id: string): number {
+    if (id === 'GEMINI.md') return 999;
+    return groupLookup[id] !== undefined ? groupLookup[id] : 0;
+}
 
 // Cast the imported JSON to KiDiff[]
 const kiHistory: KiDiff[] = dnaHistoryData as KiDiff[];
@@ -64,8 +77,7 @@ function updateGraph(data: { nodes: KiNode[]; links: KiLink[] }) {
     missingNodeIds.forEach(id => {
         finalNodes.push({
             id,
-            name: `Missing: ${id}`,
-            group: 404
+            name: `Missing: ${id}`
         });
         nodeIds.add(id);
     });
@@ -78,20 +90,24 @@ function updateGraph(data: { nodes: KiNode[]; links: KiLink[] }) {
         visNodes.clear();
         visNodes.add(finalNodes.map(n => {
             const label = n.id.replace(/_/g, ' ');
+            const group = getNodeGroup(n.id);
+            const isMissing = !groupLookup[n.id] && n.id !== 'GEMINI.md' && !n.id.includes('.md'); // Basic heuristic
+
             let bgColor: string, textColor: string;
             // Genesis/GEMINI styling
-            if (n.id === 'GEMINI.md') { bgColor = '#00008b'; textColor = '#ffffff'; }
-            else if (n.group === 1) { bgColor = '#fbbf24'; textColor = '#0f172a'; } // Core = Gold
-            else if (n.group === 404) { bgColor = '#ef4444'; textColor = '#ffffff'; } // Red for 404
-            else if (n.group === 0) { bgColor = '#94a3b8'; textColor = '#0f172a'; } // Secondary = Grey
-            else { bgColor = '#22d3ee'; textColor = '#0f172a'; } // Other = Cyan
+            if (group === 999) { bgColor = '#00008b'; textColor = '#ffffff'; }
+            else if (group === 1) { bgColor = '#fbbf24'; textColor = '#0f172a'; } // Core = Gold
+            else if (group === 3) { bgColor = '#a855f7'; textColor = '#ffffff'; } // SRL = Purple
+            else if (isMissing) { bgColor = '#ef4444'; textColor = '#ffffff'; } // Red for 404
+            else if (group === 0) { bgColor = '#94a3b8'; textColor = '#0f172a'; } // Secondary = Grey
+            else { bgColor = '#22d3ee'; textColor = '#0f172a'; } // Other/Group 2 = Cyan
 
             return {
                 id: n.id,
                 label: label.split(' ').join('\n'),
                 shape: 'circle' as const,
                 margin: 10,
-                color: { background: bgColor, border: n.group === 404 ? '#7f1d1d' : '#1e293b' },
+                color: { background: bgColor, border: isMissing ? '#7f1d1d' : '#1e293b' },
                 font: { color: textColor, size: 11, face: 'Inter' },
             };
         }));
@@ -100,15 +116,15 @@ function updateGraph(data: { nodes: KiNode[]; links: KiLink[] }) {
         visEdges.add(sanitizedLinks.map(l => {
             const width = l.ref_type === 'formal' ? 3 : (l.ref_type === 'bold' ? 1.5 : 0.6);
 
-            const targetNode = finalNodes.find(n => n.id === l.target);
-            const isGroup1 = targetNode?.group === 1;
+            const targetGroup = getNodeGroup(l.target);
+            const isGroup1 = targetGroup === 1;
 
             let color = 'rgba(239, 68, 68, 0.8)'; // FALLBACK (Red)
-            if (l.target_location === 'SRL') {
+            if (l.target_location === 'SRL' || targetGroup === 3) {
                 color = 'rgba(168, 85, 247, 0.6)'; // Purple SRL
             } else if (l.target_location === 'DNA') {
                 if (isGroup1) color = 'rgba(251, 191, 36, 0.8)'; // Core Links = Gold
-                else if (targetNode?.group === 0) color = 'rgba(148, 163, 184, 0.6)'; // Group 0 = Grey
+                else if (targetGroup === 0) color = 'rgba(148, 163, 184, 0.6)'; // Group 0 = Grey
                 else color = 'rgba(34, 211, 238, 0.6)'; // DNA / Group 2 = Cyan
             } else if (l.target_location === 'OTHER') {
                 color = 'rgba(148, 163, 184, 0.6)'; // OTHER/Fallback (Slate)
@@ -198,24 +214,25 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
         const n = node as KiNode;
         const group = new THREE.Group();
 
-        const color = n.group === 999 ? '#00008b'
-            : (n.group === 404 ? '#ef4444' // Red for 404
-                : (n.group === 0 ? '#94a3b8' // Grey for 0
+        const groupNum = getNodeGroup(n.id);
+        const color = groupNum === 999 ? '#00008b'
+            : (groupNum === 3 ? '#a855f7' // Purple for SRL
+                : (groupNum === 0 ? '#94a3b8' // Grey for 0
                     : (isTerminal(n.id) ? '#fbbf24'
-                        : (n.group === 1 ? '#fbbf24' : '#22d3ee')))); // Gold for 1, Cyan for 2
+                        : (groupNum === 1 ? '#fbbf24' : '#22d3ee')))); // Gold for 1, Cyan for 2
 
-        const size = n.group === 999 ? 18
-            : (n.group === 404 ? 6 // Smaller for 404
-                : (n.group === 0 ? 8
+        const size = groupNum === 999 ? 18
+            : (groupNum === 3 ? 10 // SRL size
+                : (groupNum === 0 ? 8
                     : (isTerminal(n.id) ? 4
-                        : (n.group === 1 ? 10 : 8))));
+                        : (groupNum === 1 ? 10 : 8))));
 
         const sphere = new THREE.Mesh(
             new THREE.SphereGeometry(size, 24, 24),
             new THREE.MeshLambertMaterial({
                 color,
                 transparent: true,
-                opacity: n.group === 404 ? 0.6 : (n.group === 0 ? 0.3 : (n.group === 999 ? 1.0 : 0.9))
+                opacity: groupNum === 3 ? 0.7 : (groupNum === 0 ? 0.3 : (groupNum === 999 ? 1.0 : 0.9))
             })
         );
         group.add(sphere);
@@ -243,21 +260,14 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
         const l = link as KiLink;
         const tid = typeof l.target === 'object' ? (l.target as KiNode).id : l.target as string;
 
-        const srlNodes = [
-            'operation_commander', 'git_strategy', 'session_lifecycle', 'dna_philosophy',
-            'quality_gates', 'context_planning', 'guided_audit_protocol', 'emergency_divergence',
-            'privacy_shield', 'rtl_guardian', 'premium_ui_dna', 'resilient_fetching',
-            'supabase_governance', 'linguistic_curator', 'graceful_error_ui'
-        ];
-        const isGroup1 = srlNodes.includes(tid);
-        const targetNode = kiHistory[kiHistory.length - 1].delta.nodes.added.find(n => n.id === tid);
+        const targetGroup = getNodeGroup(tid);
 
-        if (l.target_location === 'SRL') {
+        if (l.target_location === 'SRL' || targetGroup === 3) {
             return '#a855f7'; // Purple SRL External
         }
         if (l.target_location === 'DNA') {
-            if (targetNode?.group === 1 || isGroup1) return '#fbbf24'; // Core KIs = Gold
-            if (targetNode?.group === 0) return '#94a3b8'; // Meta/Secondary = Grey
+            if (targetGroup === 1) return '#fbbf24'; // Core KIs = Gold
+            if (targetGroup === 0) return '#94a3b8'; // Meta/Secondary = Grey
             return '#22d3ee'; // Group 2 / Standard = Cyan
         }
         if (l.target_location === 'OTHER') {
@@ -323,18 +333,24 @@ setTimeout(() => {
 // ─── 2D Graph (vis-network) ──────────────────────────────────────────────────
 
 const visNodes = new DataSet(kiData.nodes.map(n => {
-    const isTerm = isTerminal(n.id);
     const label = n.id.replace(/_/g, ' ');
+    const group = getNodeGroup(n.id);
+    const isMissing = !groupLookup[n.id] && n.id !== 'GEMINI.md' && !n.id.includes('.md');
+
     let bgColor: string, textColor: string;
 
-    if (n.id === 'GEMINI.md') {
+    if (group === 999) {
         bgColor = '#00008b'; textColor = '#ffffff';
-    } else if (isTerm) {
-        bgColor = '#fbbf24'; textColor = '#0f172a';
-    } else if (n.group === 1) {
-        bgColor = '#a855f7'; textColor = '#ffffff';
+    } else if (group === 1) {
+        bgColor = '#fbbf24'; textColor = '#0f172a'; // Gold
+    } else if (group === 3) {
+        bgColor = '#a855f7'; textColor = '#ffffff'; // Purple
+    } else if (isMissing) {
+        bgColor = '#ef4444'; textColor = '#ffffff'; // Red
+    } else if (group === 0) {
+        bgColor = '#94a3b8'; textColor = '#0f172a'; // Grey
     } else {
-        bgColor = '#22d3ee'; textColor = '#0f172a';
+        bgColor = '#22d3ee'; textColor = '#0f172a'; // Cyan
     }
 
     return {

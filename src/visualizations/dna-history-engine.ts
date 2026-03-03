@@ -6,7 +6,6 @@
 export interface KiNode {
     id: string;
     name: string;
-    group: number;
     // Visualization properties (optional)
     x?: number;
     y?: number;
