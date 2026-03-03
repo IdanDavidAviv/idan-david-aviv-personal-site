@@ -406,17 +406,16 @@ export default function AntigravityDNAShowcase() {
                             </div>
                         </div>
 
-                        {/* Explorer Workspace: Sidebar + Graph */}
-                        <div className="flex-1 flex overflow-hidden">
-                            {/* DNA Ledger Sidebar */}
+                        {/* Explorer Workspace: Sidebar Overlay + Graph */}
+                        <div className="flex-1 relative overflow-hidden">
                             <motion.div
+                                initial={false}
                                 animate={{
-                                    width: isSidebarCollapsed ? 0 : 320,
+                                    x: isSidebarCollapsed ? -320 : 0,
                                     opacity: isSidebarCollapsed ? 0 : 1,
-                                    marginRight: isSidebarCollapsed ? 0 : 0
                                 }}
                                 transition={{ duration: 0.4, ease: "circOut" }}
-                                className="border-r border-white/5 bg-white/[0.02] backdrop-blur-3xl flex flex-col overflow-hidden relative"
+                                className="absolute top-0 left-0 h-full w-[320px] z-30 border-r border-white/5 bg-slate-900/40 backdrop-blur-3xl flex flex-col overflow-hidden"
                             >
                                 <div className="p-6 border-b border-white/5 bg-gradient-to-b from-purple-500/5 to-transparent flex items-center justify-between">
                                     <div>
@@ -553,8 +552,8 @@ export default function AntigravityDNAShowcase() {
                                 </div>
                             </motion.div>
 
-                            {/* Graph Workspace */}
-                            < div className="flex-1 relative bg-[#050510]" >
+                            {/* Graph Workspace (Full Container) */}
+                            <div className="absolute inset-0 z-10 bg-[#050510]">
                                 {isSidebarCollapsed && (
                                     <motion.button
                                         initial={{ opacity: 0, x: -20 }}
