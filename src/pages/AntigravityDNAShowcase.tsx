@@ -361,7 +361,7 @@ export default function AntigravityDNAShowcase() {
                         layout
                         initial={false}
                         animate={{
-                            height: isGraphFullscreen ? '100vh' : 760,
+                            height: isGraphFullscreen ? '100vh' : 700,
                             width: '100%',
                             borderRadius: isGraphFullscreen ? 0 : '3rem',
                         }}
@@ -380,7 +380,7 @@ export default function AntigravityDNAShowcase() {
                         }
                     >
                         {/* Integrated Top Head */}
-                        <div className="p-8 border-b border-white/5 bg-gradient-to-r from-purple-500/5 to-transparent flex items-center justify-between">
+                        <div className="px-8 py-5 border-b border-white/5 bg-gradient-to-r from-purple-500/5 to-transparent flex items-center justify-between">
                             <div className="flex items-center gap-6">
                                 <div className="relative">
                                     <div className="absolute inset-0 bg-purple-500/20 blur-xl rounded-full" />
