@@ -21,31 +21,20 @@ const MAX_EPOCHS = partialIdx !== -1 ? parseInt(args[partialIdx + 1], 10) : null
 const scopeIdx = args.indexOf('--scope');
 const SCOPE_PATHS = scopeIdx !== -1 ? args[scopeIdx + 1].split(',') : [KI_ROOT, GEMINI_RELATIVE];
 
-// --- CONSTANTS ---
-const NODE_GROUPS: Record<string, number> = {
-    'GEMINI.md': 999,
-    'git_strategy': 1,
-    'operation_commander': 1,
-    'session_lifecycle': 1,
-    'seo_governance': 1,
-    'ki_integrity_governor': 0,
-    'knowledge_center_hierarchy': 0,
-    'testing_governance': 1,
-    'dna_philosophy': 1,
-    'observability_telemetry': 1,
-    'quality_gates': 1,
-    'context_planning': 1,
-    'guided_audit_protocol': 1,
-    'emergency_divergence': 1,
-    'privacy_shield': 1,
-    'rtl_guardian': 1,
-    'premium_ui_dna': 1,
-    'resilient_fetching': 1,
-    'supabase_governance': 1,
-    'linguistic_curator': 1,
-    'graceful_error_ui': 1,
-    // Default for others is 2 (Tactical Enforcement)
-};
+// Import the centralized KI group definitions
+const kiGroupsPath = path.join(OUTPUT_DIR, 'ki-groups.json');
+let NODE_GROUPS: Record<string, number> = {};
+try {
+    if (fs.existsSync(kiGroupsPath)) {
+        const fileContent = fs.readFileSync(kiGroupsPath, 'utf8');
+        NODE_GROUPS = JSON.parse(fileContent);
+        console.log(`✅ Loaded KI group definitions from ki-groups.json (${Object.keys(NODE_GROUPS).length} entries)`);
+    } else {
+        console.warn(`⚠️ ki-groups.json not found at ${kiGroupsPath}. Using empty group mappings.`);
+    }
+} catch (e) {
+    console.warn(`⚠️ Failed to parse ki-groups.json: ${e}`);
+}
 
 // --- TYPES ---
 interface KiNode {

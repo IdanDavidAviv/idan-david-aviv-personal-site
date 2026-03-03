@@ -17,7 +17,7 @@ import {
     getTimelineBatches,
     TimelineBatch
 } from './dna-history-engine';
-import dnaHistoryData from './dna-history-backfill-v24.json';
+import dnaHistoryData from './dna-history-backfill-v25.json';
 
 // Cast the imported JSON to KiDiff[]
 const kiHistory: KiDiff[] = dnaHistoryData as KiDiff[];
