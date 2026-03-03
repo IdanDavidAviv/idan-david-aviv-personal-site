@@ -21,6 +21,32 @@ const MAX_EPOCHS = partialIdx !== -1 ? parseInt(args[partialIdx + 1], 10) : null
 const scopeIdx = args.indexOf('--scope');
 const SCOPE_PATHS = scopeIdx !== -1 ? args[scopeIdx + 1].split(',') : [KI_ROOT, GEMINI_RELATIVE];
 
+// --- CONSTANTS ---
+const NODE_GROUPS: Record<string, number> = {
+    'GEMINI.md': 999,
+    'git_strategy': 1,
+    'operation_commander': 1,
+    'session_lifecycle': 1,
+    'seo_governance': 1,
+    'ki_integrity_governor': 0,
+    'knowledge_center_hierarchy': 0,
+    'testing_governance': 1,
+    'dna_philosophy': 1,
+    'observability_telemetry': 1,
+    'quality_gates': 1,
+    'context_planning': 1,
+    'guided_audit_protocol': 1,
+    'emergency_divergence': 1,
+    'privacy_shield': 1,
+    'rtl_guardian': 1,
+    'premium_ui_dna': 1,
+    'resilient_fetching': 1,
+    'supabase_governance': 1,
+    'linguistic_curator': 1,
+    'graceful_error_ui': 1,
+    // Default for others is 2 (Tactical Enforcement)
+};
+
 // --- TYPES ---
 interface KiNode {
     id: string;
@@ -78,6 +104,16 @@ function extractHashFromLabel(label: string): string | null {
     return match ? match[1] : null;
 }
 
+function canonicalKey(link: KiLink): string {
+    return `${link.source}|${link.target}|${link.label || ''}|${link.ref_type}|${link.target_location || 'DNA'}`;
+}
+
+function getLinkLocation(targetId: string, targetPath?: string): 'DNA' | 'SRL' | 'OTHER' {
+    if (targetPath && targetPath.includes('spirit-research-lab')) return 'SRL';
+    if (NODE_GROUPS[targetId] !== undefined) return 'DNA'; // All internal KIs belong in DNA
+    return 'OTHER'; // External/Unknown fallback
+}
+
 /**
  * DNA Archaeology Protocol v0.4
  * Stateful Walk + Intent-Aware Extraction
@@ -98,11 +134,29 @@ async function runArchaeology() {
         startHash = extractHashFromLabel(lastEpoch.label);
         console.log(`🔄 Sync active. Resuming from commit [${startHash}]...`);
 
-        // Reconstruct LiveRegistry from existing ledger
+        // Reconstruct LiveRegistry and State from existing ledger
         latest.data.forEach(epoch => {
-            epoch.delta.nodes.added.forEach(n => liveRegistry.add(n.id));
-            epoch.delta.nodes.added.forEach(n => prevGraph.nodes.add(n.id));
-            epoch.delta.links.added.forEach(l => prevGraph.links.add(JSON.stringify(l)));
+            // Apply Additions
+            epoch.delta.nodes.added.forEach(n => {
+                liveRegistry.add(n.id);
+                prevGraph.nodes.add(n.id);
+            });
+            epoch.delta.links.added.forEach(l => {
+                prevGraph.links.add(canonicalKey(l));
+            });
+
+            // Apply Removals
+            if (epoch.delta.nodes.removed) {
+                epoch.delta.nodes.removed.forEach(id => {
+                    liveRegistry.delete(id);
+                    prevGraph.nodes.delete(id);
+                });
+            }
+            if (epoch.delta.links.removed) {
+                epoch.delta.links.removed.forEach(l => {
+                    prevGraph.links.delete(canonicalKey(l));
+                });
+            }
         });
         history = latest.data;
     }
@@ -130,8 +184,11 @@ async function runArchaeology() {
     console.log(`📊 Processing ${commitList.length} new epochs...`);
 
     // --- THE WALK ---
+    let count = 0;
+    const total = commitList.length;
     for (const commit of commitList) {
-        console.log(`🔍 Epoch ${commit.hash} [${commit.date}]`);
+        count++;
+        console.log(`🔍 Epoch [${count}/${total}] ${commit.hash} [${commit.date}]`);
 
         // 1. Identify all files changed in this commit within scope
         const changedFiles = execSync(`git show --name-only --pretty="" ${commit.hash} -- ${scopeStr}`)
@@ -190,12 +247,18 @@ async function extractGraphAtCommit(hash: string, registry: Set<string>) {
     for (const line of files) {
         const filePath = line.split('\t')[1];
         const id = extractIdFromFilePath(filePath);
-        if (!id) continue;
 
-        nodes.add(id);
+        // Always extract links if it's a markdown file, even if it's not a "Node"
+        if (!filePath.endsWith('.md')) continue;
+
+        if (id) nodes.add(id);
 
         // Read content
         const content = execSync(`git show ${hash}:${filePath}`).toString();
+
+        // Effective source for links: if file isn't a node, attribute to parent dir node or ignore
+        const sourceId = id || path.basename(path.dirname(filePath));
+        if (!sourceId || sourceId === '.') continue;
 
         // --- PHASE 1: Explicit MD Links ---
         const mdRegex = /\[(.*?)\]\((.*?)\)/g;
@@ -203,13 +266,9 @@ async function extractGraphAtCommit(hash: string, registry: Set<string>) {
         while ((mMatch = mdRegex.exec(content)) !== null) {
             const rawLabel = mMatch[1];
             const targetPath = mMatch[2];
-            if (targetPath.includes('SKILL.md')) {
-                const target_location = targetPath.includes('spirit-research-lab') ? 'SRL' : 'DNA';
-
-                // Clean label
-                const label = rawLabel.replace(/[*#`[\]]/g, '').trim();
-
+            if (targetPath.includes('SKILL.md') || targetPath.includes('GEMINI.md')) {
                 // Advanced ID Extraction
+                const label = rawLabel.replace(/[*#`[\]]/g, '').trim();
                 let targetId: string;
 
                 // Detection: Is the label a clean ID and the target a path? (Flipped Link)
@@ -219,7 +278,6 @@ async function extractGraphAtCommit(hash: string, registry: Set<string>) {
                 if (isPathLink && isLabelId) {
                     targetId = label;
                 } else {
-                    // Extract from path: handle both forward and backslashes
                     const normalizedPath = targetPath.replace(/\\/g, '/');
                     const parts = normalizedPath.split('/');
                     const artifactsIdx = parts.indexOf('artifacts');
@@ -227,34 +285,44 @@ async function extractGraphAtCommit(hash: string, registry: Set<string>) {
                     if (artifactsIdx > 0) {
                         targetId = parts[artifactsIdx - 1];
                     } else {
-                        // Fallback: parent dir of SKILL.md
                         const skillIdx = parts.indexOf('SKILL.md');
                         targetId = (skillIdx > 0) ? parts[skillIdx - 1] : targetPath.replace(/.*[/\\]/, '').replace(/\..*$/, '');
                     }
                 }
 
-                links.add(JSON.stringify({
-                    source: id,
-                    target: targetId,
-                    label: label,
-                    target_location,
-                    ref_type: 'formal'
-                }));
+                const target_location = getLinkLocation(targetId, targetPath);
+
+                // Final Guard: Only add if it's a known node or a core concept
+                if (registry.has(targetId) || targetId === 'GEMINI.md' || target_location === 'SRL') {
+                    links.add(canonicalKey({
+                        source: sourceId,
+                        target: targetId,
+                        label: label,
+                        target_location,
+                        ref_type: 'formal'
+                    }));
+                }
             }
         }
 
         // --- PHASE 2: Anchored Bolds (Tiered) ---
-        const anchoredRegex = /\*\*([a-z_]+)\*\*\s+(KI|workflow)/g;
+        const anchoredRegex = /\*\*([a-z_]+)\*\*\s+(KI|workflow|rule|protocol|skill)/g;
         let aMatch;
         while ((aMatch = anchoredRegex.exec(content)) !== null) {
             const targetId = aMatch[1];
-            const alreadyLinked = Array.from(links).some(l => JSON.parse(l).target === targetId);
+            // Tight Guard: Only link if it's in our registry
+            if (!registry.has(targetId) && targetId !== 'GEMINI.md') continue;
+
+            const alreadyLinked = Array.from(links).some(l => {
+                const lp = l.split('|');
+                return lp[0] === sourceId && lp[1] === targetId;
+            });
             if (!alreadyLinked) {
-                links.add(JSON.stringify({
-                    source: id,
+                links.add(canonicalKey({
+                    source: sourceId,
                     target: targetId,
                     label: targetId,
-                    target_location: 'DNA',
+                    target_location: getLinkLocation(targetId),
                     ref_type: 'bold'
                 }));
             }
@@ -264,16 +332,19 @@ async function extractGraphAtCommit(hash: string, registry: Set<string>) {
         // Mentions are now standard for core DNA nodes (GEMINI.md and Knowledge Items)
         const registryList = Array.from(registry);
         registryList.forEach(regId => {
-            if (regId === id) return;
+            if (regId === sourceId) return;
             const weakRegex = new RegExp(`\\b${regId}\\b`, 'g');
             if (weakRegex.test(content)) {
-                const alreadyLinked = Array.from(links).some(l => JSON.parse(l).target === regId);
+                const alreadyLinked = Array.from(links).some(l => {
+                    const lp = l.split('|');
+                    return lp[0] === sourceId && lp[1] === regId;
+                });
                 if (!alreadyLinked) {
-                    links.add(JSON.stringify({
-                        source: id,
+                    links.add(canonicalKey({
+                        source: sourceId,
                         target: regId,
                         label: regId,
-                        target_location: 'DNA',
+                        target_location: getLinkLocation(regId),
                         ref_type: 'mention'
                     }));
                 }
@@ -285,17 +356,23 @@ async function extractGraphAtCommit(hash: string, registry: Set<string>) {
     // Prune dangling links: Any link to a 'DNA' node must have its target in the current nodes set.
     const validLinks = new Set<string>();
     Array.from(links).forEach(lStr => {
-        const link = JSON.parse(lStr) as KiLink;
-        if (link.target_location === 'DNA') {
-            if (nodes.has(link.target)) {
-                validLinks.add(lStr);
-            } else {
-                // Orphaned link - target node was deleted
-                // console.warn(`✂️ Pruning dangling link: ${link.source} -> ${link.target}`);
-            }
-        } else {
-            // SRL or OTHER links are kept as they are out of local pruning scope
+        const lp = lStr.split('|');
+        const link = {
+            source: lp[0],
+            target: lp[1],
+            label: lp[2],
+            ref_type: lp[3] as KiLink['ref_type'],
+            target_location: (lp[4] || 'DNA') as KiLink['target_location']
+        };
+
+        // Only prune internal DNA links
+        if (nodes.has(link.target) || link.target === 'GEMINI.md' || nodes.has(link.source)) {
             validLinks.add(lStr);
+        } else {
+            // Check if target is a known DNA node from registry (even if not in current commit)
+            if (registry.has(link.target)) {
+                validLinks.add(lStr);
+            }
         }
     });
 
@@ -306,7 +383,14 @@ function extractIdFromFilePath(filePath: string): string | null {
     if (filePath === GEMINI_RELATIVE) return 'GEMINI.md';
     if (filePath.includes('SKILL.md')) {
         const parts = filePath.split('/');
-        return parts[parts.indexOf('artifacts') - 1] || null;
+        const artifactsIdx = parts.indexOf('artifacts');
+        return (artifactsIdx > 0) ? parts[artifactsIdx - 1] : null;
+    }
+    // Expanded Discovery: Any file named GEMINI.md or SKILL.md in any subfolder
+    if (filePath.endsWith('SKILL.md')) {
+        const parts = filePath.split(/[/\\]/);
+        const idx = parts.indexOf('SKILL.md');
+        return idx > 0 ? parts[idx - 1] : null;
     }
     return null;
 }
@@ -317,25 +401,45 @@ function computeDelta(prev: { nodes: Set<string>; links: Set<string> }, curr: { 
         .map(n => ({
             id: n,
             name: n,
-            group: n === 'GEMINI.md' ? 999 : 0
+            group: NODE_GROUPS[n] || 2
         }));
     const removedNodes = Array.from(prev.nodes).filter(n => !curr.nodes.has(n));
 
-    const currLinksList: KiLink[] = Array.from(curr.links).map(l => JSON.parse(l));
-    const prevLinksList: KiLink[] = Array.from(prev.links).map(l => JSON.parse(l));
+    const addedLinksRaw = Array.from(curr.links).filter(l => !prev.links.has(l));
+    const removedLinksRaw = Array.from(prev.links).filter(l => !curr.links.has(l));
 
-    const addedLinks = currLinksList.filter(l => !prevLinksList.some(p => p.source === l.source && p.target === l.target));
-    const removedLinks = prevLinksList.filter(l => !currLinksList.some(c => c.source === l.source && c.target === l.target));
+    const parseLink = (s: string): KiLink => {
+        const [source, target, label, ref_type, location] = s.split('|');
+        return {
+            source,
+            target,
+            label,
+            ref_type: ref_type as KiLink['ref_type'],
+            target_location: (location || 'DNA') as KiLink['target_location']
+        };
+    };
+
+    const addedLinks = addedLinksRaw.map(parseLink);
+    const removedLinks = removedLinksRaw.map(parseLink);
 
     return { addedNodes, removedNodes, addedLinks, removedLinks };
 }
 
 function compactGraphJson(json: string): string {
     return json
+        // Compact Node objects
         .replace(/\{\n\s+"id": "(.*?)",\n\s+"name": "(.*?)",\n\s+"group": (.*?)\n\s+\}/g, '{ "id": "$1", "name": "$2", "group": $3 }')
+        // Compact Link objects (handling both possible field orders)
         .replace(/\{\n\s+"source": "(.*?)",\n\s+"target": "(.*?)",\n\s+"label": "(.*?)",\n\s+"target_location": "(.*?)",\n\s+"ref_type": "(.*?)"\n\s+\}/g, '{ "source": "$1", "target": "$2", "label": "$3", "target_location": "$4", "ref_type": "$5" }')
-        .replace(/"removed": \[\s+\]/g, '"removed": []')
-        .replace(/"added": \[\s+\]/g, '"added": []');
+        .replace(/\{\n\s+"source": "(.*?)",\n\s+"target": "(.*?)",\n\s+"label": "(.*?)",\n\s+"ref_type": "(.*?)",\n\s+"target_location": "(.*?)"\n\s+\}/g, '{ "source": "$1", "target": "$2", "label": "$3", "ref_type": "$4", "target_location": "$5" }')
+        // Compact empty arrays
+        .replace(/\[\s+\]/g, '[]')
+        // Wrap added/removed arrays onto single lines if they are relatively short or have been compacted
+        .replace(/"added": \[\s+((?:\{.*?\}(?:,\s+)?)*)\s+\]/g, (m, content) => `"added": [ ${content.replace(/\s+/g, ' ').trim()} ]`)
+        .replace(/"removed": \[\s+((?:\{.*?\}(?:,\s+)?)*)\s+\]/g, (m, content) => `"removed": [ ${content.replace(/\s+/g, ' ').trim()} ]`)
+        // Compact delta structure
+        .replace(/"delta": \{\n\s+"nodes": \{\n\s+"added": (.*?),\n\s+"removed": (.*?)\n\s+\},\n\s+"links": \{\n\s+"added": (.*?),\n\s+"removed": (.*?)\n\s+\}\n\s+\}/gs,
+            '"delta": { "nodes": { "added": $1, "removed": $2 }, "links": { "added": $3, "removed": $4 } }');
 }
 
 runArchaeology().catch(console.error);
