@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
-import { Dna, Brain, Cpu, Database, Shield, Zap, Sparkles, Binary, Network, Activity, Boxes, Layers, ChevronRight, Maximize, Minimize, Menu, X } from 'lucide-react'
+import { Dna, Brain, Cpu, Database, Shield, Zap, Sparkles, Binary, Network, Activity, Boxes, Layers, ChevronRight, Maximize, Minimize, X, GitCompare, GitGraph } from 'lucide-react'
 import Section from '@/components/ui/Section'
 
 /**
@@ -42,6 +42,7 @@ export default function AntigravityDNAShowcase() {
     const [currentView, setCurrentView] = useState<'3d' | '2d'>('3d')
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
     const [graphStats, setGraphStats] = useState({ nodes: 0, links: 0 })
+
 
     // Compute cumulative totals per batch for the UI summary
     const cumulativeBatches = useMemo(() => {
@@ -446,13 +447,13 @@ export default function AntigravityDNAShowcase() {
                                 transition={{ duration: 0.4, ease: "circOut" }}
                                 className="absolute top-0 left-0 h-full w-[320px] z-30 border-r border-white/5 bg-slate-900/40 backdrop-blur-3xl flex flex-col overflow-hidden"
                             >
-                                <div className="p-6 border-b border-white/5 bg-gradient-to-b from-purple-500/5 to-transparent flex items-center justify-between">
-                                    <div>
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <Activity className="w-3.5 h-3.5 text-emerald-400" />
-                                            <span className="text-[10px] font-bold text-white uppercase tracking-widest">DNA Ledger</span>
+                                <div className="px-4 py-3 border-b border-white/5 bg-gradient-to-b from-purple-500/5 to-transparent flex items-center justify-between gap-2">
+                                    <div className="flex items-center gap-3">
+                                        <GitGraph className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                                        <div className="flex flex-col justify-center">
+                                            <span className="text-[10px] font-bold text-white uppercase tracking-wider leading-tight">DNA REFERENCE GRAPH EVOLUTION</span>
+                                            <span className="text-[8px] text-purple-100/40 uppercase tracking-[0.1em] italic mt-0.5">choose commit to see state</span>
                                         </div>
-                                        <span className="text-[9px] text-emerald-100/30 uppercase tracking-tighter italic">Temporal Axis</span>
                                     </div>
                                     <button
                                         onClick={() => setIsSidebarCollapsed(true)}
@@ -549,9 +550,9 @@ export default function AntigravityDNAShowcase() {
                                         animate={{ opacity: 1, x: 0 }}
                                         onClick={() => setIsSidebarCollapsed(false)}
                                         className="absolute top-6 left-6 z-20 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 hover:bg-purple-500/20 transition-all shadow-lg shadow-purple-500/5 backdrop-blur-md group"
-                                        title="Open DNA Ledger"
+                                        title="Open DNA REFERENCE GRAPH EVOLUTION"
                                     >
-                                        <Menu className="w-5 h-5" />
+                                        <GitCompare className="w-5 h-5" />
                                     </motion.button>
                                 )}
 
@@ -610,6 +611,7 @@ export default function AntigravityDNAShowcase() {
                 </Section>
 
             </div >
+
 
             {/* Final Footer Label */}
             < div className="mt-40 mb-20 text-center" >
