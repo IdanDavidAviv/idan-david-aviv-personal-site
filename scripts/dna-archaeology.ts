@@ -21,26 +21,10 @@ const MAX_EPOCHS = partialIdx !== -1 ? parseInt(args[partialIdx + 1], 10) : null
 const scopeIdx = args.indexOf('--scope');
 const SCOPE_PATHS = scopeIdx !== -1 ? args[scopeIdx + 1].split(',') : [KI_ROOT, GEMINI_RELATIVE];
 
-// Import the centralized KI group definitions
-const kiGroupsPath = path.join(OUTPUT_DIR, 'ki-groups.json');
-let NODE_GROUPS: Record<string, number> = {};
-try {
-    if (fs.existsSync(kiGroupsPath)) {
-        const fileContent = fs.readFileSync(kiGroupsPath, 'utf8');
-        NODE_GROUPS = JSON.parse(fileContent);
-        console.log(`✅ Loaded KI group definitions from ki-groups.json (${Object.keys(NODE_GROUPS).length} entries)`);
-    } else {
-        console.warn(`⚠️ ki-groups.json not found at ${kiGroupsPath}. Using empty group mappings.`);
-    }
-} catch (e) {
-    console.warn(`⚠️ Failed to parse ki-groups.json: ${e}`);
-}
-
 // --- TYPES ---
 interface KiNode {
     id: string;
     name: string;
-    group: number;
 }
 
 interface KiLink {
@@ -99,8 +83,9 @@ function canonicalKey(link: KiLink): string {
 
 function getLinkLocation(targetId: string, targetPath?: string): 'DNA' | 'SRL' | 'OTHER' {
     if (targetPath && targetPath.includes('spirit-research-lab')) return 'SRL';
-    if (NODE_GROUPS[targetId] !== undefined) return 'DNA'; // All internal KIs belong in DNA
-    return 'OTHER'; // External/Unknown fallback
+    // If it's not an external link and not in SRL, we treat it as internal DNA for now.
+    // The UI handles more granular fallback if the node is missing.
+    return 'DNA';
 }
 
 /**
@@ -389,8 +374,7 @@ function computeDelta(prev: { nodes: Set<string>; links: Set<string> }, curr: { 
         .filter(n => !prev.nodes.has(n))
         .map(n => ({
             id: n,
-            name: n,
-            group: NODE_GROUPS[n] || 2
+            name: n
         }));
     const removedNodes = Array.from(prev.nodes).filter(n => !curr.nodes.has(n));
 
