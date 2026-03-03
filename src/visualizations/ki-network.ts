@@ -55,8 +55,7 @@ function updateGraph(data: { nodes: KiNode[]; links: KiLink[] }) {
     const finalNodes = [...data.nodes];
     const missingNodeIds = new Set<string>();
 
-    // Clear registry to prevented leaked labels/ghosts
-    nodeSprites.length = 0;
+    // Registry tracking is now handled automatically via WeakMap in Graph3D engine
 
     // Sanitize links and find missing nodes
     const sanitizedLinks = data.links.map(l => {
@@ -200,8 +199,8 @@ const isTerminal = (id: string) => !outDeg[id];
 
 // ─── 3D Graph ─────────────────────────────────────────────────────────────────
 
-// Registry for per-frame sprite projection
-const nodeSprites: Array<{ sprite: InstanceType<typeof SpriteText>, node: KiNode, size: number }> = [];
+// Registry for per-frame sprite projection - using WeakMap to survive history transitions
+const nodeSprites = new WeakMap<object, { sprite: THREE.Object3D, size: number }>();
 
 
 
@@ -247,7 +246,7 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
         group.add(sprite);
 
         // Register for per-frame camera-facing projection
-        nodeSprites.push({ sprite, node: n, size });
+        nodeSprites.set(node, { sprite, size });
 
         return group;
     })
@@ -312,19 +311,29 @@ const _dir = new THREE.Vector3();
 
 (function updateSpritePositions() {
     const camera = Graph3D.camera();
-    nodeSprites.forEach(({ sprite, node, size }) => {
-        if (node.x == null) return;
-        // Calculate vector from node to observer (camera)
-        _dir
-            .set(camera.position.x - node.x, camera.position.y - (node.y ?? 0), camera.position.z - (node.z ?? 0))
-            .normalize();
+    const { nodes } = Graph3D.graphData();
 
-        // Scale vector to exactly 1.5 * node_radius (size)
-        const targetPos = _dir.clone().multiplyScalar(size * 1.5);
+    if (nodes) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        nodes.forEach((node: any) => {
+            if (node.x == null) return;
+            const entry = nodeSprites.get(node);
+            if (!entry) return;
 
-        // Position sprite on that vector relative to node center
-        sprite.position.set(targetPos.x, targetPos.y, targetPos.z);
-    });
+            const { sprite, size } = entry;
+
+            // Calculate vector from node to observer (camera)
+            _dir
+                .set(camera.position.x - node.x, camera.position.y - (node.y ?? 0), camera.position.z - (node.z ?? 0))
+                .normalize();
+
+            // Scale vector to exactly 1.5 * node_radius (size)
+            const targetPos = _dir.clone().multiplyScalar(size * 1.5);
+
+            // Position sprite on that vector relative to node center
+            sprite.position.set(targetPos.x, targetPos.y, targetPos.z);
+        });
+    }
     requestAnimationFrame(updateSpritePositions);
 }());
 
