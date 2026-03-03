@@ -345,7 +345,7 @@ export default function AntigravityDNAShowcase() {
 
                     <div className={isGraphFullscreen
                         ? "fixed inset-0 z-[150] bg-[#050510] flex flex-col"
-                        : "relative group rounded-[3rem] overflow-hidden border border-purple-500/20 bg-[#050510] shadow-[0_0_80px_-20px_rgba(168,85,247,0.4)] transition-all duration-700 flex flex-col h-[850px]"
+                        : "relative group rounded-[3rem] overflow-hidden border border-purple-500/20 bg-[#050510] shadow-[0_0_80px_-20px_rgba(168,85,247,0.4)] transition-all duration-700 flex flex-col h-[760px]"
                     }>
                         {/* Integrated Top Head */}
                         <div className="p-8 border-b border-white/5 bg-gradient-to-r from-purple-500/5 to-transparent flex items-center justify-between">
@@ -620,13 +620,13 @@ export default function AntigravityDNAShowcase() {
                     </div>
                 </Section>
 
-            </div>
+            </div >
 
             {/* Final Footer Label */}
-            <div className="mt-40 mb-20 text-center">
+            < div className="mt-40 mb-20 text-center" >
                 <p className="text-white/20 font-mono text-sm tracking-[0.5em] uppercase">Persistent Agent Module // Antigravity</p>
-            </div>
-        </main>
+            </div >
+        </main >
     )
 }
 
