@@ -71,7 +71,6 @@ export default function AntigravityDNAShowcase() {
         const handleMessage = (event: MessageEvent) => {
             if (event.data.type === 'toggle-fullscreen') {
                 setIsGraphFullscreen(event.data.isFullscreen)
-                document.body.style.overflow = event.data.isFullscreen ? 'hidden' : ''
             }
             if (event.data.type === 'TIMELINE_DATA') {
                 setTimeline(event.data.timeline as TimelineBatch[])
@@ -92,6 +91,18 @@ export default function AntigravityDNAShowcase() {
 
         return () => window.removeEventListener('message', handleMessage)
     }, [])
+
+    // Manage body overflow for fullscreen
+    useEffect(() => {
+        if (isGraphFullscreen) {
+            document.body.style.overflow = 'hidden'
+        } else {
+            document.body.style.overflow = ''
+        }
+        return () => {
+            document.body.style.overflow = ''
+        }
+    }, [isGraphFullscreen])
     return (
         <main className="min-h-screen w-full bg-[#050510] py-20 px-4 md:px-8 lg:px-12 flex flex-col items-center">
             {/* The "Box" containing the DNA World */}
@@ -453,26 +464,6 @@ export default function AntigravityDNAShowcase() {
                                 </div>
 
                                 <div className="flex-1 overflow-y-auto premium-scrollbar p-4 space-y-3 min-w-[320px]">
-                                    {/* Live DNA State (Full Aggregation) */}
-                                    <button
-                                        onClick={() => {
-                                            setActiveEpochTimestamp(null);
-                                            const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
-                                            iframe?.contentWindow?.postMessage({ type: 'SET_EPOCH', timestamp: null }, '*');
-                                        }}
-                                        className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all border ${activeEpochTimestamp === null
-                                            ? 'bg-emerald-500/20 border-emerald-500/50 shadow-[0_0_20px_-5px_rgba(16,185,129,0.3)]'
-                                            : 'bg-white/5 border-transparent hover:bg-white/10 hover:border-white/10'
-                                            }`}
-                                    >
-                                        <div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)] animate-pulse" />
-                                        <div className="text-left">
-                                            <div className="text-[9px] text-emerald-400 font-mono uppercase tracking-[0.2em]">Latest</div>
-                                            <div className="text-sm font-bold text-white">Full Live DNA State</div>
-                                        </div>
-                                    </button>
-
-                                    <div className="h-px w-full bg-white/5 my-4" />
 
                                     {timeline.length > 0 ? (
                                         [...timeline].reverse().map((batch, idx) => (
@@ -503,7 +494,7 @@ export default function AntigravityDNAShowcase() {
                                                         )}
                                                     </div>
                                                     <div className="text-[11px] font-bold text-white leading-tight mb-2 truncate pr-2">
-                                                        {batch.type === 'EMPTY_BATCH' ? 'Archaeological Batch' : batch.label}
+                                                        {batch.label}
                                                     </div>
 
                                                     {/* Internal Summary for Batch */}
@@ -547,26 +538,6 @@ export default function AntigravityDNAShowcase() {
                                         </div>
                                     )}
 
-                                    <div className="h-px w-full bg-white/5 my-4" />
-
-                                    {/* Baseline State Button (Initial State) */}
-                                    <button
-                                        onClick={() => {
-                                            setActiveEpochTimestamp('baseline');
-                                            const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
-                                            iframe?.contentWindow?.postMessage({ type: 'SET_EPOCH', timestamp: 'baseline' }, '*');
-                                        }}
-                                        className={`w-full flex items-center gap-4 px-5 py-4 rounded-2xl transition-all border ${activeEpochTimestamp === 'baseline'
-                                            ? 'bg-amber-500/20 border-amber-500/50 shadow-[0_0_20px_-5px_rgba(245,158,11,0.3)]'
-                                            : 'bg-white/5 border-transparent hover:bg-white/10 hover:border-white/10'
-                                            }`}
-                                    >
-                                        <div className="w-2 h-2 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.8)] animate-pulse" />
-                                        <div className="text-left">
-                                            <div className="text-[9px] text-amber-400 font-mono uppercase tracking-[0.2em]">Baseline</div>
-                                            <div className="text-sm font-bold text-white">Initial State</div>
-                                        </div>
-                                    </button>
                                 </div>
                             </motion.div>
 
