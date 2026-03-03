@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Dna, Brain, Cpu, Database, Shield, Zap, Sparkles, Binary, Network, Activity, Boxes, Layers, ChevronRight, Maximize, Minimize, X, GitCompare, GitGraph } from 'lucide-react'
 import Section from '@/components/ui/Section'
 
@@ -7,40 +7,42 @@ import Section from '@/components/ui/Section'
  * Antigravity DNA Showcase Page
  * A technical deep-dive into the AI agent's evolutionary architecture and persistence protocols.
  */
+
+interface KiNode {
+    id: string;
+    name: string;
+    group: number;
+}
+
+interface KiLink {
+    source: string | KiNode;
+    target: string | KiNode;
+}
+
+interface KiDiff {
+    timestamp: string;
+    label: string;
+    delta: {
+        nodes: { added: KiNode[]; removed: string[] };
+        links: { added: KiLink[]; removed: KiLink[] };
+    };
+}
+
+interface TimelineBatch {
+    id: string; // Latest timestamp in batch
+    type: 'SIGNIFICANT' | 'EMPTY_BATCH';
+    label: string;     // Representative label
+    items: KiDiff[]; // All commits in this batch
+}
+
 export default function AntigravityDNAShowcase() {
     const [isGraphFullscreen, setIsGraphFullscreen] = useState(false)
-
-    interface KiNode {
-        id: string;
-        name: string;
-        group: number;
-    }
-
-    interface KiLink {
-        source: string | KiNode;
-        target: string | KiNode;
-    }
-
-    interface KiDiff {
-        timestamp: string;
-        label: string;
-        delta: {
-            nodes: { added: KiNode[]; removed: string[] };
-            links: { added: KiLink[]; removed: KiLink[] };
-        };
-    }
-
-    interface TimelineBatch {
-        id: string; // Latest timestamp in batch
-        type: 'SIGNIFICANT' | 'EMPTY_BATCH';
-        label: string;     // Representative label
-        items: KiDiff[]; // All commits in this batch
-    }
 
     const [timeline, setTimeline] = useState<TimelineBatch[]>([])
     const [activeEpochTimestamp, setActiveEpochTimestamp] = useState<string | null>(null)
     const [currentView, setCurrentView] = useState<'3d' | '2d'>('3d')
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+    const [openFlyoutBatchId, setOpenFlyoutBatchId] = useState<string | null>(null)
     const [graphStats, setGraphStats] = useState({ nodes: 0, links: 0 })
 
 
@@ -467,71 +469,98 @@ export default function AntigravityDNAShowcase() {
                                 <div className="flex-1 overflow-y-auto premium-scrollbar p-4 space-y-3 min-w-[320px]">
 
                                     {timeline.length > 0 ? (
-                                        [...timeline].reverse().map((batch, idx) => (
-                                            <motion.button
-                                                key={batch.id}
-                                                initial={{ opacity: 0, x: -20 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: idx * 0.05 }}
-                                                whileHover={{ scale: 1.02 }}
-                                                whileTap={{ scale: 0.98 }}
-                                                onClick={() => {
-                                                    setActiveEpochTimestamp(batch.id);
-                                                    const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
-                                                    iframe?.contentWindow?.postMessage({ type: 'SET_EPOCH', timestamp: batch.id }, '*');
-                                                }}
-                                                className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all border ${activeEpochTimestamp === batch.id
-                                                    ? 'bg-purple-500/20 border-purple-500/50 shadow-[0_0_20px_-5px_rgba(168,85,247,0.3)]'
-                                                    : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/20'
-                                                    }`}
-                                            >
-                                                <div className="text-left w-full">
-                                                    <div className="flex items-center justify-between mb-1">
-                                                        <span className="text-[8px] text-purple-400 font-mono tracking-widest uppercase opacity-70">{batch.id}</span>
-                                                        {batch.type === 'EMPTY_BATCH' && (
-                                                            <span className="px-1.5 py-0.5 rounded bg-white/5 text-[7px] text-white/30 uppercase font-mono">
-                                                                {batch.items.length} commits
-                                                            </span>
-                                                        )}
-                                                    </div>
-                                                    <div className="text-[11px] font-bold text-white leading-tight mb-2 truncate pr-2">
-                                                        {batch.label}
-                                                    </div>
+                                        [...timeline].reverse().map((batch, idx) => {
+                                            const isActive = activeEpochTimestamp === batch.id;
+                                            const isFlyoutOpen = openFlyoutBatchId === batch.id;
 
-                                                    {/* Internal Summary for Batch */}
-                                                    <div className="flex flex-wrap gap-1.5 opacity-80 scale-90 origin-left">
-                                                        {(() => {
-                                                            let addedNodes = 0, removedNodes = 0, addedLinks = 0, removedLinks = 0;
-                                                            batch.items.forEach(c => {
-                                                                addedNodes += c.delta.nodes.added.length;
-                                                                removedNodes += c.delta.nodes.removed.length;
-                                                                addedLinks += c.delta.links.added.length;
-                                                                removedLinks += c.delta.links.removed.length;
-                                                            });
-
-                                                            return (
-                                                                <>
-                                                                    {addedNodes > 0 && <span className="text-[8px] text-emerald-400 font-mono">+{addedNodes}N</span>}
-                                                                    {removedNodes > 0 && <span className="text-[8px] text-red-400 font-mono">-{removedNodes}N</span>}
-                                                                    {addedLinks > 0 && <span className="text-[8px] text-blue-400 font-mono">+{addedLinks}L</span>}
-                                                                    {removedLinks > 0 && <span className="text-[8px] text-orange-400 font-mono">-{removedLinks}L</span>}
-                                                                </>
-                                                            )
-                                                        })()}
-                                                    </div>
-                                                    {/* Total State at this point */}
-                                                    {(() => {
-                                                        const total = cumulativeBatches.get(batch.id);
-                                                        return total ? (
-                                                            <div className="flex gap-2 mt-2 pt-2 border-t border-white/5 opacity-40">
-                                                                <span className="text-[7px] font-mono text-purple-300 uppercase italic">Total: {total.nodes}N / {total.links}L</span>
+                                            if (batch.type === 'SIGNIFICANT') {
+                                                return (
+                                                    <motion.button
+                                                        key={batch.id}
+                                                        initial={{ opacity: 0, x: -20 }}
+                                                        animate={{ opacity: 1, x: 0 }}
+                                                        transition={{ delay: idx * 0.05 }}
+                                                        whileHover={{ scale: 1.02 }}
+                                                        whileTap={{ scale: 0.98 }}
+                                                        onClick={() => {
+                                                            setActiveEpochTimestamp(batch.id);
+                                                            setOpenFlyoutBatchId(null);
+                                                            const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
+                                                            iframe?.contentWindow?.postMessage({ type: 'SET_EPOCH', timestamp: batch.id }, '*');
+                                                        }}
+                                                        className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all border ${isActive
+                                                            ? 'bg-purple-500/20 border-purple-500/50 shadow-[0_0_20px_-5px_rgba(168,85,247,0.3)]'
+                                                            : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/20'
+                                                            }`}
+                                                    >
+                                                        <div className="text-left w-full">
+                                                            <div className="flex items-center justify-between mb-1">
+                                                                <span className="text-[8px] text-purple-400 font-mono tracking-widest uppercase opacity-70">{batch.id}</span>
                                                             </div>
-                                                        ) : null;
-                                                    })()}
-                                                </div>
-                                                <ChevronRight className={`flex-shrink-0 w-4 h-4 transition-transform ${activeEpochTimestamp === batch.id ? 'text-purple-400 rotate-90' : 'text-white/10'}`} />
-                                            </motion.button>
-                                        ))
+                                                            <div className="text-[11px] font-bold text-white leading-tight mb-2 truncate pr-2">
+                                                                {batch.label}
+                                                            </div>
+
+                                                            <div className="flex flex-wrap gap-1.5 opacity-80 scale-90 origin-left">
+                                                                {(() => {
+                                                                    let addedNodes = 0, removedNodes = 0, addedLinks = 0, removedLinks = 0;
+                                                                    batch.items.forEach(c => {
+                                                                        addedNodes += c.delta.nodes.added.length;
+                                                                        removedNodes += c.delta.nodes.removed.length;
+                                                                        addedLinks += c.delta.links.added.length;
+                                                                        removedLinks += c.delta.links.removed.length;
+                                                                    });
+
+                                                                    return (
+                                                                        <>
+                                                                            {addedNodes > 0 && <span className="text-[8px] text-emerald-400 font-mono">+{addedNodes}N</span>}
+                                                                            {removedNodes > 0 && <span className="text-[8px] text-red-400 font-mono">-{removedNodes}N</span>}
+                                                                            {addedLinks > 0 && <span className="text-[8px] text-blue-400 font-mono">+{addedLinks}L</span>}
+                                                                            {removedLinks > 0 && <span className="text-[8px] text-orange-400 font-mono">-{removedLinks}L</span>}
+                                                                        </>
+                                                                    )
+                                                                })()}
+                                                            </div>
+                                                            {(() => {
+                                                                const total = cumulativeBatches.get(batch.id);
+                                                                return total ? (
+                                                                    <div className="flex gap-2 mt-2 pt-2 border-t border-white/5 opacity-40">
+                                                                        <span className="text-[7px] font-mono text-purple-300 uppercase italic">Total: {total.nodes}N / {total.links}L</span>
+                                                                    </div>
+                                                                ) : null;
+                                                            })()}
+                                                        </div>
+                                                        <ChevronRight className={`flex-shrink-0 w-4 h-4 transition-transform ${isActive ? 'text-purple-400 rotate-90' : 'text-white/10'}`} />
+                                                    </motion.button>
+                                                )
+                                            }
+
+                                            // EMPTY_BATCH Compact Row
+                                            return (
+                                                <motion.button
+                                                    key={batch.id}
+                                                    initial={{ opacity: 0, x: -20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: idx * 0.05 }}
+                                                    whileHover={{ x: 5 }}
+                                                    onClick={() => {
+                                                        setOpenFlyoutBatchId(isFlyoutOpen ? null : batch.id);
+                                                    }}
+                                                    className={`w-full flex items-center justify-between px-5 py-2.5 rounded-xl transition-all border ${isFlyoutOpen
+                                                        ? 'bg-purple-500/10 border-purple-500/30'
+                                                        : 'bg-white/5 border-white/5 hover:bg-white/10'
+                                                        }`}
+                                                >
+                                                    <div className="flex items-center gap-3">
+                                                        <span className="text-[8px] text-purple-400/50 font-mono tracking-widest uppercase">{batch.id}</span>
+                                                        <span className="px-1.5 py-0.5 rounded bg-white/5 text-[7px] text-white/40 uppercase font-mono border border-white/5">
+                                                            {batch.items.length} ARCHIVED
+                                                        </span>
+                                                    </div>
+                                                    <ChevronRight className={`flex-shrink-0 w-3 h-3 transition-transform ${isFlyoutOpen ? 'text-purple-400 rotate-180' : 'text-white/10'}`} />
+                                                </motion.button>
+                                            )
+                                        })
                                     ) : (
                                         <div className="flex items-center gap-3 p-4 rounded-xl bg-white/5 animate-pulse">
                                             <div className="w-4 h-4 border-2 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin" />
@@ -541,6 +570,19 @@ export default function AntigravityDNAShowcase() {
 
                                 </div>
                             </motion.div>
+
+                            {/* Flyout Layer */}
+                            <AnimatePresence>
+                                {openFlyoutBatchId && (() => {
+                                    const batch = timeline.find(b => b.id === openFlyoutBatchId);
+                                    return batch ? (
+                                        <EmptyBatchFlyout
+                                            batch={batch}
+                                            onClose={() => setOpenFlyoutBatchId(null)}
+                                        />
+                                    ) : null;
+                                })()}
+                            </AnimatePresence>
 
                             {/* Graph Workspace (Full Container) */}
                             <div className="absolute inset-0 z-10 bg-[#050510]">
@@ -618,6 +660,48 @@ export default function AntigravityDNAShowcase() {
                 <p className="text-white/20 font-mono text-sm tracking-[0.5em] uppercase">Persistent Agent Module // Antigravity</p>
             </div >
         </main >
+    )
+}
+
+function EmptyBatchFlyout({ batch, onClose }: { batch: TimelineBatch, onClose: () => void }) {
+    return (
+        <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -10 }}
+            className="absolute top-0 left-[320px] h-full w-[360px] z-40 bg-slate-900/80 backdrop-blur-3xl border-r border-white/10 flex flex-col shadow-[20px_0_50px_-20px_rgba(0,0,0,0.5)]"
+        >
+            <div className="p-6 border-b border-white/10 bg-gradient-to-r from-purple-500/10 to-transparent flex items-center justify-between">
+                <div>
+                    <h4 className="text-xs font-bold text-white uppercase tracking-widest">{batch.items.length} ARCHIVED COMMITS</h4>
+                    <p className="text-[10px] text-purple-400/60 font-mono mt-1 uppercase">Batch {batch.id}</p>
+                </div>
+                <button
+                    onClick={onClose}
+                    className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/40 hover:text-white/70 transition-all"
+                >
+                    <X className="w-4 h-4" />
+                </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto premium-scrollbar p-6 space-y-6">
+                {batch.items.map((commit: KiDiff) => (
+                    <div key={commit.timestamp} className="relative pl-6 border-l border-purple-500/20 py-1">
+                        <div className="absolute top-2.5 -left-[4.5px] w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]" />
+                        <span className="block text-[9px] text-purple-400 font-mono tracking-tighter opacity-50 mb-1">{commit.timestamp}</span>
+                        <p className="text-sm text-white/80 leading-relaxed font-light italic">
+                            {commit.label}
+                        </p>
+                    </div>
+                ))}
+            </div>
+
+            <div className="p-6 border-t border-white/5 bg-black/20">
+                <p className="text-[9px] text-white/20 uppercase tracking-[0.2em] leading-relaxed">
+                    These commits contain no structural shifts in the KI Network but maintain the evolutionary history.
+                </p>
+            </div>
+        </motion.div>
     )
 }
 
