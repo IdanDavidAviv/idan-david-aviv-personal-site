@@ -343,10 +343,28 @@ export default function AntigravityDNAShowcase() {
                 {/* section: The Neural Explorer (3D Graph) */}
                 <Section id="neural-explorer">
 
-                    <div className={isGraphFullscreen
-                        ? "fixed inset-0 z-[150] bg-[#050510] flex flex-col"
-                        : "relative group rounded-[3rem] overflow-hidden border border-purple-500/20 bg-[#050510] shadow-[0_0_80px_-20px_rgba(168,85,247,0.4)] transition-all duration-700 flex flex-col h-[760px]"
-                    }>
+                    <motion.div
+                        layout
+                        initial={false}
+                        animate={{
+                            height: isGraphFullscreen ? '100vh' : 760,
+                            width: '100%',
+                            borderRadius: isGraphFullscreen ? 0 : '3rem',
+                        }}
+                        transition={{
+                            type: 'spring',
+                            damping: 25,
+                            stiffness: 120,
+                        }}
+                        onAnimationComplete={() => {
+                            const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
+                            iframe?.contentWindow?.postMessage({ type: 'RESYNC_SIZE' }, '*');
+                        }}
+                        className={isGraphFullscreen
+                            ? "fixed inset-0 z-[150] bg-[#050510] flex flex-col"
+                            : "relative group overflow-hidden border border-purple-500/20 bg-[#050510] shadow-[0_0_80px_-20px_rgba(168,85,247,0.4)] flex flex-col"
+                        }
+                    >
                         {/* Integrated Top Head */}
                         <div className="p-8 border-b border-white/5 bg-gradient-to-r from-purple-500/5 to-transparent flex items-center justify-between">
                             <div className="flex items-center gap-6">
@@ -587,7 +605,7 @@ export default function AntigravityDNAShowcase() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
                         <div className="p-6 rounded-2xl bg-white/5 border border-white/5 space-y-4">

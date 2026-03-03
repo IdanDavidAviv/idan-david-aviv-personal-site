@@ -179,6 +179,28 @@ window.addEventListener('message', (event) => {
             switchView(null, payload.view);
         }
     }
+
+    if (type === 'toggle-fullscreen') {
+        const targetState = payload?.isFullscreen ?? event.data.isFullscreen;
+        if (targetState !== isFullscreen) {
+            toggleFullscreen();
+        }
+    }
+
+    if (type === 'RESYNC_SIZE') {
+        const container = document.getElementById('container') as HTMLElement;
+        const width = isFullscreen ? window.innerWidth : container.clientWidth;
+        const height = isFullscreen ? window.innerHeight : container.clientHeight;
+
+        Graph3D.width(width).height(height);
+        network.setSize(width + 'px', height + 'px');
+        network.redraw();
+
+        if (isFullscreen) {
+            Graph3D.zoomToFit(400);
+            network.fit({ nodes: [], animation: true });
+        }
+    }
 });
 
 // Broadcast history on init
