@@ -17,10 +17,11 @@ import {
     getTimelineBatches,
     TimelineBatch
 } from './dna-history-engine';
-import dnaHistoryData from './dna-history-backfill-v14.json';
+import dnaHistoryData from './dna-history-backfill-v24.json';
 
 // Cast the imported JSON to KiDiff[]
 const kiHistory: KiDiff[] = dnaHistoryData as KiDiff[];
+
 
 // Pre-calculate timeline batches for the UI
 const timelineBatches: TimelineBatch[] = getTimelineBatches(kiHistory);
@@ -80,9 +81,10 @@ function updateGraph(data: { nodes: KiNode[]; links: KiLink[] }) {
             let bgColor: string, textColor: string;
             // Genesis/GEMINI styling
             if (n.id === 'GEMINI.md') { bgColor = '#00008b'; textColor = '#ffffff'; }
-            else if (n.group === 1) { bgColor = '#a855f7'; textColor = '#ffffff'; }
+            else if (n.group === 1) { bgColor = '#fbbf24'; textColor = '#0f172a'; } // Core = Gold
             else if (n.group === 404) { bgColor = '#ef4444'; textColor = '#ffffff'; } // Red for 404
-            else { bgColor = '#22d3ee'; textColor = '#0f172a'; }
+            else if (n.group === 0) { bgColor = '#94a3b8'; textColor = '#0f172a'; } // Secondary = Grey
+            else { bgColor = '#22d3ee'; textColor = '#0f172a'; } // Other = Cyan
 
             return {
                 id: n.id,
@@ -96,9 +98,27 @@ function updateGraph(data: { nodes: KiNode[]; links: KiLink[] }) {
 
         visEdges.clear();
         visEdges.add(sanitizedLinks.map(l => {
+            const width = l.ref_type === 'formal' ? 3 : (l.ref_type === 'bold' ? 1.5 : 0.6);
+
+            const targetNode = finalNodes.find(n => n.id === l.target);
+            const isGroup1 = targetNode?.group === 1;
+
+            let color = 'rgba(239, 68, 68, 0.8)'; // FALLBACK (Red)
+            if (l.target_location === 'SRL') {
+                color = 'rgba(168, 85, 247, 0.6)'; // Purple SRL
+            } else if (l.target_location === 'DNA') {
+                if (isGroup1) color = 'rgba(251, 191, 36, 0.8)'; // Core Links = Gold
+                else if (targetNode?.group === 0) color = 'rgba(148, 163, 184, 0.6)'; // Group 0 = Grey
+                else color = 'rgba(34, 211, 238, 0.6)'; // DNA / Group 2 = Cyan
+            } else if (l.target_location === 'OTHER') {
+                color = 'rgba(148, 163, 184, 0.6)'; // OTHER/Fallback (Slate)
+            }
+
             return {
                 from: l.source,
                 to: l.target,
+                width: width,
+                color: color
             };
         }));
     }
@@ -180,9 +200,9 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
 
         const color = n.group === 999 ? '#00008b'
             : (n.group === 404 ? '#ef4444' // Red for 404
-                : (n.group === 0 ? '#94a3b8'
+                : (n.group === 0 ? '#94a3b8' // Grey for 0
                     : (isTerminal(n.id) ? '#fbbf24'
-                        : (n.group === 1 ? '#a855f7' : '#22d3ee'))));
+                        : (n.group === 1 ? '#fbbf24' : '#22d3ee')))); // Gold for 1, Cyan for 2
 
         const size = n.group === 999 ? 18
             : (n.group === 404 ? 6 // Smaller for 404
@@ -214,13 +234,45 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
 
         return group;
     })
-    .linkWidth(1.5)
-    .linkOpacity(0.4)
-    .linkColor(() => '#6366f1')
+    .linkWidth((link: object) => {
+        const l = link as KiLink;
+        return l.ref_type === 'formal' ? 2.5 : (l.ref_type === 'bold' ? 1.2 : 0.4);
+    })
+    .linkOpacity(0.5)
+    .linkColor((link: object) => {
+        const l = link as KiLink;
+        const tid = typeof l.target === 'object' ? (l.target as KiNode).id : l.target as string;
+
+        const srlNodes = [
+            'operation_commander', 'git_strategy', 'session_lifecycle', 'dna_philosophy',
+            'quality_gates', 'context_planning', 'guided_audit_protocol', 'emergency_divergence',
+            'privacy_shield', 'rtl_guardian', 'premium_ui_dna', 'resilient_fetching',
+            'supabase_governance', 'linguistic_curator', 'graceful_error_ui'
+        ];
+        const isGroup1 = srlNodes.includes(tid);
+        const targetNode = kiHistory[kiHistory.length - 1].delta.nodes.added.find(n => n.id === tid);
+
+        if (l.target_location === 'SRL') {
+            return '#a855f7'; // Purple SRL External
+        }
+        if (l.target_location === 'DNA') {
+            if (targetNode?.group === 1 || isGroup1) return '#fbbf24'; // Core KIs = Gold
+            if (targetNode?.group === 0) return '#94a3b8'; // Meta/Secondary = Grey
+            return '#22d3ee'; // Group 2 / Standard = Cyan
+        }
+        if (l.target_location === 'OTHER') {
+            return '#94a3b8'; // OTHER/Fallback is Slate
+        }
+
+        return '#ef4444'; // Final Fallback Red (Catch-all for missing/wrong tags/404)
+    })
     .linkDirectionalArrowLength(4)
     .linkDirectionalArrowRelPos(1)
     .linkCurvature(0.25)
-    .linkDirectionalParticles(2)
+    .linkDirectionalParticles((link: object) => {
+        const l = link as KiLink;
+        return l.ref_type === 'formal' ? 3 : (l.ref_type === 'bold' ? 2 : 1);
+    })
     .linkDirectionalParticleSpeed(0.005)
     .graphData(kiData)
     .onNodeClick((node: object) => {
@@ -296,10 +348,15 @@ const visNodes = new DataSet(kiData.nodes.map(n => {
     };
 }));
 
-const visEdges = new DataSet(kiData.links.map(l => ({
-    from: typeof l.source === 'object' ? (l.source as KiNode).id : l.source,
-    to: typeof l.target === 'object' ? (l.target as KiNode).id : l.target,
-})));
+const visEdges = new DataSet(kiData.links.map(l => {
+    const width = l.ref_type === 'formal' ? 3 : (l.ref_type === 'bold' ? 1.5 : 0.6);
+    return {
+        from: typeof l.source === 'object' ? (l.source as KiNode).id : l.source,
+        to: typeof l.target === 'object' ? (l.target as KiNode).id : l.target,
+        width: width,
+        color: l.ref_type === 'formal' ? 'rgba(168, 85, 247, 0.8)' : 'rgba(168, 85, 247, 0.3)'
+    };
+}));
 
 const network = new Network(
     document.getElementById('view-2d') as HTMLElement,
