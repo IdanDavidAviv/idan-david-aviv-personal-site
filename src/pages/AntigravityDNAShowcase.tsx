@@ -361,7 +361,7 @@ export default function AntigravityDNAShowcase() {
                                         Neural Explorer
                                         <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-mono border border-emerald-500/20 animate-pulse">LIVE NODE</span>
                                     </h2>
-                                    <p className="text-purple-100/40 text-xs uppercase tracking-[0.2em] font-mono mt-1">Direct Brain-to-Baseline Synchronization</p>
+                                    <p className="text-purple-100/40 text-xs uppercase tracking-[0.2em] font-mono mt-1">Antigravity DNA KI Network Interactive Incremental Graph</p>
                                 </div>
                             </div>
 
@@ -434,7 +434,7 @@ export default function AntigravityDNAShowcase() {
                                     </button>
                                 </div>
 
-                                <div className="flex-1 overflow-y-auto no-scrollbar p-4 space-y-3 min-w-[320px]">
+                                <div className="flex-1 overflow-y-auto premium-scrollbar p-4 space-y-3 min-w-[320px]">
                                     {/* Live DNA State (Full Aggregation) */}
                                     <button
                                         onClick={() => {
