@@ -5,40 +5,186 @@
     "delta": {
       "nodes": {
         "added": [
-          { "id": "GEMINI.md", "name": "GEMINI.md", "group": 999 },
-          { "id": "asset_governance", "name": "asset_governance", "group": 0 },
-          { "id": "context_planning", "name": "context_planning", "group": 0 },
-          { "id": "git_strategy", "name": "git_strategy", "group": 0 },
-          { "id": "operation_commander", "name": "operation_commander", "group": 0 },
-          { "id": "premium_ui_dna", "name": "premium_ui_dna", "group": 0 },
-          { "id": "privacy_shield", "name": "privacy_shield", "group": 0 },
-          { "id": "quality_gates", "name": "quality_gates", "group": 0 },
-          { "id": "resilient_fetching", "name": "resilient_fetching", "group": 0 },
-          { "id": "rtl_guardian", "name": "rtl_guardian", "group": 0 },
-          { "id": "session_lifecycle", "name": "session_lifecycle", "group": 0 },
-          { "id": "supabase_governance", "name": "supabase_governance", "group": 0 },
-          { "id": "verification_integrity", "name": "verification_integrity", "group": 0 },
-          { "id": "windows_protocol", "name": "windows_protocol", "group": 0 }
+          {
+            "id": "GEMINI.md",
+            "name": "GEMINI.md",
+            "group": 999
+          },
+          {
+            "id": "asset_governance",
+            "name": "asset_governance",
+            "group": 2
+          },
+          {
+            "id": "context_planning",
+            "name": "context_planning",
+            "group": 2
+          },
+          {
+            "id": "git_strategy",
+            "name": "git_strategy",
+            "group": 1
+          },
+          {
+            "id": "operation_commander",
+            "name": "operation_commander",
+            "group": 1
+          },
+          {
+            "id": "premium_ui_dna",
+            "name": "premium_ui_dna",
+            "group": 2
+          },
+          {
+            "id": "privacy_shield",
+            "name": "privacy_shield",
+            "group": 2
+          },
+          {
+            "id": "quality_gates",
+            "name": "quality_gates",
+            "group": 2
+          },
+          {
+            "id": "resilient_fetching",
+            "name": "resilient_fetching",
+            "group": 2
+          },
+          {
+            "id": "rtl_guardian",
+            "name": "rtl_guardian",
+            "group": 2
+          },
+          {
+            "id": "session_lifecycle",
+            "name": "session_lifecycle",
+            "group": 1
+          },
+          {
+            "id": "supabase_governance",
+            "name": "supabase_governance",
+            "group": 2
+          },
+          {
+            "id": "verification_integrity",
+            "name": "verification_integrity",
+            "group": 2
+          },
+          {
+            "id": "windows_protocol",
+            "name": "windows_protocol",
+            "group": 2
+          }
         ],
         "removed": []
       },
       "links": {
         "added": [
-          { "source": "GEMINI.md", "target": "operation_commander", "label": "operation_commander", "target_location": "DNA", "ref_type": "bold" },
-          { "source": "GEMINI.md", "target": "context_planning", "label": "context_planning", "target_location": "DNA", "ref_type": "bold" },
-          { "source": "GEMINI.md", "target": "windows_protocol", "label": "windows_protocol", "target_location": "DNA", "ref_type": "bold" },
-          { "source": "GEMINI.md", "target": "verification_integrity", "label": "verification_integrity", "target_location": "DNA", "ref_type": "bold" },
-          { "source": "GEMINI.md", "target": "quality_gates", "label": "quality_gates", "target_location": "DNA", "ref_type": "bold" },
-          { "source": "GEMINI.md", "target": "asset_governance", "label": "asset_governance", "target_location": "DNA", "ref_type": "bold" },
-          { "source": "GEMINI.md", "target": "git_strategy", "label": "git_strategy", "target_location": "DNA", "ref_type": "bold" },
-          { "source": "operation_commander", "target": "windows_terminal_protocol", "label": "windows_terminal_protocol", "target_location": "SRL", "ref_type": "formal" },
-          { "source": "operation_commander", "target": "agent_content_harmonizer", "label": "agent_content_harmonizer", "target_location": "SRL", "ref_type": "formal" },
-          { "source": "operation_commander", "target": "context_planner", "label": "context_planner", "target_location": "SRL", "ref_type": "formal" },
-          { "source": "operation_commander", "target": "emergency_divergence", "label": "emergency_divergence", "target_location": "SRL", "ref_type": "formal" },
-          { "source": "premium_ui_dna", "target": "premium_ui_dna", "label": "premium_ui_dna", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "resilient_fetching", "target": "resilient_fetching", "label": "resilient_fetching", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "rtl_guardian", "target": "rtl_guardian", "label": "rtl_guardian", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "supabase_governance", "target": "supabase_governance", "label": "supabase_governance", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "GEMINI.md",
+            "target": "operation_commander",
+            "label": "operation_commander",
+            "target_location": "DNA",
+            "ref_type": "bold"
+          },
+          {
+            "source": "GEMINI.md",
+            "target": "context_planning",
+            "label": "context_planning",
+            "target_location": "DNA",
+            "ref_type": "bold"
+          },
+          {
+            "source": "GEMINI.md",
+            "target": "windows_protocol",
+            "label": "windows_protocol",
+            "target_location": "DNA",
+            "ref_type": "bold"
+          },
+          {
+            "source": "GEMINI.md",
+            "target": "verification_integrity",
+            "label": "verification_integrity",
+            "target_location": "DNA",
+            "ref_type": "bold"
+          },
+          {
+            "source": "GEMINI.md",
+            "target": "quality_gates",
+            "label": "quality_gates",
+            "target_location": "DNA",
+            "ref_type": "bold"
+          },
+          {
+            "source": "GEMINI.md",
+            "target": "asset_governance",
+            "label": "asset_governance",
+            "target_location": "DNA",
+            "ref_type": "bold"
+          },
+          {
+            "source": "GEMINI.md",
+            "target": "git_strategy",
+            "label": "git_strategy",
+            "target_location": "DNA",
+            "ref_type": "bold"
+          },
+          {
+            "source": "operation_commander",
+            "target": "windows_terminal_protocol",
+            "label": "windows_terminal_protocol",
+            "target_location": "SRL",
+            "ref_type": "formal"
+          },
+          {
+            "source": "operation_commander",
+            "target": "agent_content_harmonizer",
+            "label": "agent_content_harmonizer",
+            "target_location": "SRL",
+            "ref_type": "formal"
+          },
+          {
+            "source": "operation_commander",
+            "target": "context_planner",
+            "label": "context_planner",
+            "target_location": "SRL",
+            "ref_type": "formal"
+          },
+          {
+            "source": "operation_commander",
+            "target": "emergency_divergence",
+            "label": "emergency_divergence",
+            "target_location": "SRL",
+            "ref_type": "formal"
+          },
+          {
+            "source": "premium_ui_dna",
+            "target": "premium_ui_dna",
+            "label": "premium_ui_dna",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "resilient_fetching",
+            "target": "resilient_fetching",
+            "label": "resilient_fetching",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "rtl_guardian",
+            "target": "rtl_guardian",
+            "label": "rtl_guardian",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "supabase_governance",
+            "target": "supabase_governance",
+            "label": "supabase_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": []
       }
@@ -167,10 +313,34 @@
       "links": {
         "added": [],
         "removed": [
-          { "source": "premium_ui_dna", "target": "premium_ui_dna", "label": "premium_ui_dna", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "resilient_fetching", "target": "resilient_fetching", "label": "resilient_fetching", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "rtl_guardian", "target": "rtl_guardian", "label": "rtl_guardian", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "supabase_governance", "target": "supabase_governance", "label": "supabase_governance", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "premium_ui_dna",
+            "target": "premium_ui_dna",
+            "label": "premium_ui_dna",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "resilient_fetching",
+            "target": "resilient_fetching",
+            "label": "resilient_fetching",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "rtl_guardian",
+            "target": "rtl_guardian",
+            "label": "rtl_guardian",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "supabase_governance",
+            "target": "supabase_governance",
+            "label": "supabase_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ]
       }
     }
@@ -195,18 +365,58 @@
     "delta": {
       "nodes": {
         "added": [
-          { "id": "emergency_divergence", "name": "emergency_divergence", "group": 0 }
+          {
+            "id": "emergency_divergence",
+            "name": "emergency_divergence",
+            "group": 2
+          }
         ],
         "removed": []
       },
       "links": {
         "added": [
-          { "source": "context_planning", "target": "asset_governance", "label": "../../asset_governance/artifacts/SKILL.md", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "git_strategy", "target": "quality_gates", "label": "quality_gates", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "git_strategy", "target": "verification_integrity", "label": "verification_integrity", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "quality_gates", "target": "verification_integrity", "label": "verification_integrity", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "verification_integrity", "target": "git_strategy", "label": "git_strategy", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "verification_integrity", "target": "quality_gates", "label": "quality_gates", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "context_planning",
+            "target": "asset_governance",
+            "label": "../../asset_governance/artifacts/SKILL.md",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "git_strategy",
+            "target": "quality_gates",
+            "label": "quality_gates",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "git_strategy",
+            "target": "verification_integrity",
+            "label": "verification_integrity",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "quality_gates",
+            "target": "verification_integrity",
+            "label": "verification_integrity",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "verification_integrity",
+            "target": "git_strategy",
+            "label": "git_strategy",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "verification_integrity",
+            "target": "quality_gates",
+            "label": "quality_gates",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": []
       }
@@ -222,11 +432,41 @@
       },
       "links": {
         "added": [
-          { "source": "premium_ui_dna", "target": "rtl_guardian", "label": "rtl_guardian", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "premium_ui_dna", "target": "asset_governance", "label": "asset_governance", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "privacy_shield", "target": "supabase_governance", "label": "supabase_governance", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "resilient_fetching", "target": "asset_governance", "label": "asset_governance", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "rtl_guardian", "target": "asset_governance", "label": "asset_governance", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "premium_ui_dna",
+            "target": "rtl_guardian",
+            "label": "rtl_guardian",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "premium_ui_dna",
+            "target": "asset_governance",
+            "label": "asset_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "privacy_shield",
+            "target": "supabase_governance",
+            "label": "supabase_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "resilient_fetching",
+            "target": "asset_governance",
+            "label": "asset_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "rtl_guardian",
+            "target": "asset_governance",
+            "label": "asset_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": []
       }
@@ -242,7 +482,13 @@
       },
       "links": {
         "added": [
-          { "source": "asset_governance", "target": "operation_commander", "label": "operation_commander", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "asset_governance",
+            "target": "operation_commander",
+            "label": "operation_commander",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": []
       }
@@ -282,15 +528,37 @@
     "delta": {
       "nodes": {
         "added": [
-          { "id": "guided_audit_protocol", "name": "guided_audit_protocol", "group": 0 }
+          {
+            "id": "guided_audit_protocol",
+            "name": "guided_audit_protocol",
+            "group": 2
+          }
         ],
         "removed": []
       },
       "links": {
         "added": [
-          { "source": "guided_audit_protocol", "target": "emergency_divergence", "label": "emergency_divergence", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "operation_commander", "target": "guided_audit_protocol", "label": "guided_audit_protocol", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "quality_gates", "target": "guided_audit_protocol", "label": "guided_audit_protocol", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "guided_audit_protocol",
+            "target": "emergency_divergence",
+            "label": "emergency_divergence",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "operation_commander",
+            "target": "guided_audit_protocol",
+            "label": "guided_audit_protocol",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "quality_gates",
+            "target": "guided_audit_protocol",
+            "label": "guided_audit_protocol",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": []
       }
@@ -363,7 +631,13 @@
       "links": {
         "added": [],
         "removed": [
-          { "source": "operation_commander", "target": "agent_content_harmonizer", "label": "agent_content_harmonizer", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "operation_commander",
+            "target": "agent_content_harmonizer",
+            "label": "agent_content_harmonizer",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ]
       }
     }
@@ -420,10 +694,34 @@
       },
       "links": {
         "added": [
-          { "source": "GEMINI.md", "target": "privacy_shield", "label": "privacy_shield", "target_location": "DNA", "ref_type": "bold" },
-          { "source": "GEMINI.md", "target": "rtl_guardian", "label": "rtl_guardian", "target_location": "DNA", "ref_type": "bold" },
-          { "source": "GEMINI.md", "target": "premium_ui_dna", "label": "premium_ui_dna", "target_location": "DNA", "ref_type": "bold" },
-          { "source": "GEMINI.md", "target": "domain_schema_guardian", "label": "domain_schema_guardian", "target_location": "DNA", "ref_type": "bold" }
+          {
+            "source": "GEMINI.md",
+            "target": "privacy_shield",
+            "label": "privacy_shield",
+            "target_location": "DNA",
+            "ref_type": "bold"
+          },
+          {
+            "source": "GEMINI.md",
+            "target": "rtl_guardian",
+            "label": "rtl_guardian",
+            "target_location": "DNA",
+            "ref_type": "bold"
+          },
+          {
+            "source": "GEMINI.md",
+            "target": "premium_ui_dna",
+            "label": "premium_ui_dna",
+            "target_location": "DNA",
+            "ref_type": "bold"
+          },
+          {
+            "source": "GEMINI.md",
+            "target": "domain_schema_guardian",
+            "label": "domain_schema_guardian",
+            "target_location": "DNA",
+            "ref_type": "bold"
+          }
         ],
         "removed": []
       }
@@ -481,8 +779,20 @@
       },
       "links": {
         "added": [
-          { "source": "operation_commander", "target": "git_strategy", "label": "git_strategy", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "quality_gates", "target": "git_strategy", "label": "git_strategy", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "operation_commander",
+            "target": "git_strategy",
+            "label": "git_strategy",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "quality_gates",
+            "target": "git_strategy",
+            "label": "git_strategy",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": []
       }
@@ -494,13 +804,23 @@
     "delta": {
       "nodes": {
         "added": [
-          { "id": "github_project_manager", "name": "github_project_manager", "group": 0 }
+          {
+            "id": "github_project_manager",
+            "name": "github_project_manager",
+            "group": 2
+          }
         ],
         "removed": []
       },
       "links": {
         "added": [
-          { "source": "git_strategy", "target": "github_project_manager", "label": "github_project_manager", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "git_strategy",
+            "target": "github_project_manager",
+            "label": "github_project_manager",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": []
       }
@@ -516,8 +836,20 @@
       },
       "links": {
         "added": [
-          { "source": "operation_commander", "target": "github_project_manager", "label": "github_project_manager", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "operation_commander", "target": "supabase_governance", "label": "supabase_governance", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "operation_commander",
+            "target": "github_project_manager",
+            "label": "github_project_manager",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "operation_commander",
+            "target": "supabase_governance",
+            "label": "supabase_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": []
       }
@@ -543,9 +875,21 @@
     "delta": {
       "nodes": {
         "added": [
-          { "id": "seo_governance", "name": "seo_governance", "group": 0 },
-          { "id": "state_management_governance", "name": "state_management_governance", "group": 0 },
-          { "id": "testing_governance", "name": "testing_governance", "group": 0 }
+          {
+            "id": "seo_governance",
+            "name": "seo_governance",
+            "group": 1
+          },
+          {
+            "id": "state_management_governance",
+            "name": "state_management_governance",
+            "group": 2
+          },
+          {
+            "id": "testing_governance",
+            "name": "testing_governance",
+            "group": 2
+          }
         ],
         "removed": [
           "verification_integrity"
@@ -553,16 +897,64 @@
       },
       "links": {
         "added": [
-          { "source": "operation_commander", "target": "state_management_governance", "label": "state_management_governance", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "rtl_guardian", "target": "linguistic_curator", "label": "linguistic_curator", "target_location": "SRL", "ref_type": "formal" },
-          { "source": "state_management_governance", "target": "resilient_fetching", "label": "resilient_fetching", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "testing_governance", "target": "git_strategy", "label": "git_strategy", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "testing_governance", "target": "quality_gates", "label": "quality_gates", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "operation_commander",
+            "target": "state_management_governance",
+            "label": "state_management_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "rtl_guardian",
+            "target": "linguistic_curator",
+            "label": "linguistic_curator",
+            "target_location": "SRL",
+            "ref_type": "formal"
+          },
+          {
+            "source": "state_management_governance",
+            "target": "resilient_fetching",
+            "label": "resilient_fetching",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "testing_governance",
+            "target": "git_strategy",
+            "label": "git_strategy",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "testing_governance",
+            "target": "quality_gates",
+            "label": "quality_gates",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": [
-          { "source": "rtl_guardian", "target": "asset_governance", "label": "asset_governance", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "verification_integrity", "target": "git_strategy", "label": "git_strategy", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "verification_integrity", "target": "quality_gates", "label": "quality_gates", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "rtl_guardian",
+            "target": "asset_governance",
+            "label": "asset_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "verification_integrity",
+            "target": "git_strategy",
+            "label": "git_strategy",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "verification_integrity",
+            "target": "quality_gates",
+            "label": "quality_gates",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ]
       }
     }
@@ -577,11 +969,41 @@
       },
       "links": {
         "added": [
-          { "source": "emergency_divergence", "target": "testing_governance", "label": "Regression Testing: If a plan failed due to a bug, you MUST write a regression test for the failure before continuing. Consult testing_governance", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "git_strategy", "target": "windows_protocol", "label": "windows_protocol", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "privacy_shield", "target": "observability_telemetry", "label": "observability_telemetry", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "resilient_fetching", "target": "graceful_error_ui", "label": "graceful_error_ui", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "session_lifecycle", "target": "asset_governance", "label": "asset_governance", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "emergency_divergence",
+            "target": "testing_governance",
+            "label": "Regression Testing: If a plan failed due to a bug, you MUST write a regression test for the failure before continuing. Consult testing_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "git_strategy",
+            "target": "windows_protocol",
+            "label": "windows_protocol",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "privacy_shield",
+            "target": "observability_telemetry",
+            "label": "observability_telemetry",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "resilient_fetching",
+            "target": "graceful_error_ui",
+            "label": "graceful_error_ui",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "session_lifecycle",
+            "target": "asset_governance",
+            "label": "asset_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": []
       }
@@ -625,8 +1047,20 @@
       },
       "links": {
         "added": [
-          { "source": "premium_ui_dna", "target": "seo_governance", "label": "seo_governance", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "seo_governance", "target": "premium_ui_dna", "label": "premium_ui_dna", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "premium_ui_dna",
+            "target": "seo_governance",
+            "label": "seo_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "seo_governance",
+            "target": "premium_ui_dna",
+            "label": "premium_ui_dna",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": []
       }
@@ -657,8 +1091,20 @@
       "links": {
         "added": [],
         "removed": [
-          { "source": "quality_gates", "target": "guided_audit_protocol", "label": "guided_audit_protocol", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "quality_gates", "target": "verification_integrity", "label": "verification_integrity", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "quality_gates",
+            "target": "guided_audit_protocol",
+            "label": "guided_audit_protocol",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "quality_gates",
+            "target": "verification_integrity",
+            "label": "verification_integrity",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ]
       }
     }
@@ -673,11 +1119,29 @@
       },
       "links": {
         "added": [
-          { "source": "github_project_manager", "target": "quality_gates", "label": "quality_gates", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "quality_gates", "target": "testing_governance", "label": "testing_governance", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "github_project_manager",
+            "target": "quality_gates",
+            "label": "quality_gates",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "quality_gates",
+            "target": "testing_governance",
+            "label": "testing_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": [
-          { "source": "testing_governance", "target": "git_strategy", "label": "git_strategy", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "testing_governance",
+            "target": "git_strategy",
+            "label": "git_strategy",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ]
       }
     }
@@ -692,7 +1156,13 @@
       },
       "links": {
         "added": [
-          { "source": "operation_commander", "target": "session_lifecycle", "label": "session_lifecycle", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "operation_commander",
+            "target": "session_lifecycle",
+            "label": "session_lifecycle",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": []
       }
@@ -760,7 +1230,11 @@
     "delta": {
       "nodes": {
         "added": [
-          { "id": "dna_philosophy", "name": "dna_philosophy", "group": 0 }
+          {
+            "id": "dna_philosophy",
+            "name": "dna_philosophy",
+            "group": 1
+          }
         ],
         "removed": []
       },
@@ -804,19 +1278,61 @@
     "delta": {
       "nodes": {
         "added": [
-          { "id": "graceful_error_ui", "name": "graceful_error_ui", "group": 0 },
-          { "id": "linguistic_curator", "name": "linguistic_curator", "group": 0 },
-          { "id": "observability_telemetry", "name": "observability_telemetry", "group": 0 }
+          {
+            "id": "graceful_error_ui",
+            "name": "graceful_error_ui",
+            "group": 2
+          },
+          {
+            "id": "linguistic_curator",
+            "name": "linguistic_curator",
+            "group": 2
+          },
+          {
+            "id": "observability_telemetry",
+            "name": "observability_telemetry",
+            "group": 1
+          }
         ],
         "removed": []
       },
       "links": {
         "added": [
-          { "source": "graceful_error_ui", "target": "premium_ui_dna", "label": "premium_ui_dna", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "graceful_error_ui", "target": "premium_form_architect", "label": "premium_form_architect", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "linguistic_curator", "target": "rtl_guardian", "label": "rtl_guardian", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "observability_telemetry", "target": "privacy_shield", "label": "privacy_shield", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "observability_telemetry", "target": "graceful_error_ui", "label": "graceful_error_ui", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "graceful_error_ui",
+            "target": "premium_ui_dna",
+            "label": "premium_ui_dna",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "graceful_error_ui",
+            "target": "premium_form_architect",
+            "label": "premium_form_architect",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "linguistic_curator",
+            "target": "rtl_guardian",
+            "label": "rtl_guardian",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "observability_telemetry",
+            "target": "privacy_shield",
+            "label": "privacy_shield",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "observability_telemetry",
+            "target": "graceful_error_ui",
+            "label": "graceful_error_ui",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": []
       }
@@ -847,7 +1363,13 @@
       "links": {
         "added": [],
         "removed": [
-          { "source": "asset_governance", "target": "operation_commander", "label": "operation_commander", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "asset_governance",
+            "target": "operation_commander",
+            "label": "operation_commander",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ]
       }
     }
@@ -858,8 +1380,16 @@
     "delta": {
       "nodes": {
         "added": [
-          { "id": "ki_integrity_governor", "name": "ki_integrity_governor", "group": 0 },
-          { "id": "knowledge_center_hierarchy", "name": "knowledge_center_hierarchy", "group": 0 }
+          {
+            "id": "ki_integrity_governor",
+            "name": "ki_integrity_governor",
+            "group": 0
+          },
+          {
+            "id": "knowledge_center_hierarchy",
+            "name": "knowledge_center_hierarchy",
+            "group": 0
+          }
         ],
         "removed": [
           "graceful_error_ui"
@@ -867,29 +1397,155 @@
       },
       "links": {
         "added": [
-          { "source": "asset_governance", "target": "ki_integrity_governor", "label": "../../ki_integrity_governor/artifacts/SKILL.md", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "context_planning", "target": "ki_integrity_governor", "label": "../../ki_integrity_governor/artifacts/SKILL.md", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "knowledge_center_hierarchy", "target": "premium_ui_dna", "label": "premium_ui_dna", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "observability_telemetry", "target": "premium_ui_dna", "label": "premium_ui_dna", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "operation_commander", "target": "quality_gates", "label": "quality_gates", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "operation_commander", "target": "ki_integrity_governor", "label": "../../ki_integrity_governor/artifacts/SKILL.md", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "quality_gates", "target": "github_project_manager", "label": "github_project_manager", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "resilient_fetching", "target": "premium_ui_dna", "label": "premium_ui_dna", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "session_lifecycle", "target": "operation_commander", "label": "operation_commander", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "session_lifecycle", "target": "git_strategy", "label": "git_strategy", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "session_lifecycle", "target": "quality_gates", "label": "quality_gates", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "supabase_governance", "target": "privacy_shield", "label": "privacy_shield", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "asset_governance",
+            "target": "ki_integrity_governor",
+            "label": "../../ki_integrity_governor/artifacts/SKILL.md",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "context_planning",
+            "target": "ki_integrity_governor",
+            "label": "../../ki_integrity_governor/artifacts/SKILL.md",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "knowledge_center_hierarchy",
+            "target": "premium_ui_dna",
+            "label": "premium_ui_dna",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "observability_telemetry",
+            "target": "premium_ui_dna",
+            "label": "premium_ui_dna",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "operation_commander",
+            "target": "quality_gates",
+            "label": "quality_gates",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "operation_commander",
+            "target": "ki_integrity_governor",
+            "label": "../../ki_integrity_governor/artifacts/SKILL.md",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "quality_gates",
+            "target": "github_project_manager",
+            "label": "github_project_manager",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "resilient_fetching",
+            "target": "premium_ui_dna",
+            "label": "premium_ui_dna",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "session_lifecycle",
+            "target": "operation_commander",
+            "label": "operation_commander",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "session_lifecycle",
+            "target": "git_strategy",
+            "label": "git_strategy",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "session_lifecycle",
+            "target": "quality_gates",
+            "label": "quality_gates",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "supabase_governance",
+            "target": "privacy_shield",
+            "label": "privacy_shield",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": [
-          { "source": "graceful_error_ui", "target": "premium_ui_dna", "label": "premium_ui_dna", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "graceful_error_ui", "target": "premium_form_architect", "label": "premium_form_architect", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "observability_telemetry", "target": "graceful_error_ui", "label": "graceful_error_ui", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "operation_commander", "target": "context_planner", "label": "context_planner", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "operation_commander", "target": "emergency_divergence", "label": "emergency_divergence", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "operation_commander", "target": "guided_audit_protocol", "label": "guided_audit_protocol", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "quality_gates", "target": "testing_governance", "label": "testing_governance", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "resilient_fetching", "target": "graceful_error_ui", "label": "graceful_error_ui", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "resilient_fetching", "target": "asset_governance", "label": "asset_governance", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "graceful_error_ui",
+            "target": "premium_ui_dna",
+            "label": "premium_ui_dna",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "graceful_error_ui",
+            "target": "premium_form_architect",
+            "label": "premium_form_architect",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "observability_telemetry",
+            "target": "graceful_error_ui",
+            "label": "graceful_error_ui",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "operation_commander",
+            "target": "context_planner",
+            "label": "context_planner",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "operation_commander",
+            "target": "emergency_divergence",
+            "label": "emergency_divergence",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "operation_commander",
+            "target": "guided_audit_protocol",
+            "label": "guided_audit_protocol",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "quality_gates",
+            "target": "testing_governance",
+            "label": "testing_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "resilient_fetching",
+            "target": "graceful_error_ui",
+            "label": "graceful_error_ui",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "resilient_fetching",
+            "target": "asset_governance",
+            "label": "asset_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ]
       }
     }
@@ -904,12 +1560,48 @@
       },
       "links": {
         "added": [
-          { "source": "dna_philosophy", "target": "operation_commander", "label": "operation_commander", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "dna_philosophy", "target": "quality_gates", "label": "quality_gates", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "dna_philosophy", "target": "windows_protocol", "label": "windows_protocol", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "dna_philosophy", "target": "asset_governance", "label": "asset_governance", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "dna_philosophy", "target": "session_lifecycle", "label": "session_lifecycle", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "operation_commander", "target": "dna_philosophy", "label": "dna_philosophy", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "dna_philosophy",
+            "target": "operation_commander",
+            "label": "operation_commander",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "dna_philosophy",
+            "target": "quality_gates",
+            "label": "quality_gates",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "dna_philosophy",
+            "target": "windows_protocol",
+            "label": "windows_protocol",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "dna_philosophy",
+            "target": "asset_governance",
+            "label": "asset_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "dna_philosophy",
+            "target": "session_lifecycle",
+            "label": "session_lifecycle",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "operation_commander",
+            "target": "dna_philosophy",
+            "label": "dna_philosophy",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": []
       }
@@ -939,8 +1631,20 @@
       },
       "links": {
         "added": [
-          { "source": "quality_gates", "target": "windows_protocol", "label": "windows_protocol", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "session_lifecycle", "target": "windows_protocol", "label": "windows_protocol", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "quality_gates",
+            "target": "windows_protocol",
+            "label": "windows_protocol",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "session_lifecycle",
+            "target": "windows_protocol",
+            "label": "windows_protocol",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": []
       }
@@ -970,12 +1674,48 @@
       },
       "links": {
         "added": [
-          { "source": "emergency_divergence", "target": "guided_audit_protocol", "label": "Return Path: Explicitly state the step in the original plan to return to. If the return path is high-risk, pivot to guided_audit_protocol", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "emergency_divergence", "target": "quality_gates", "label": "quality_gates", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "operation_commander", "target": "testing_governance", "label": "testing_governance", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "operation_commander", "target": "emergency_divergence", "label": "emergency_divergence", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "operation_commander", "target": "guided_audit_protocol", "label": "guided_audit_protocol", "target_location": "DNA", "ref_type": "formal" },
-          { "source": "testing_governance", "target": "emergency_divergence", "label": "emergency_divergence", "target_location": "DNA", "ref_type": "formal" }
+          {
+            "source": "emergency_divergence",
+            "target": "guided_audit_protocol",
+            "label": "Return Path: Explicitly state the step in the original plan to return to. If the return path is high-risk, pivot to guided_audit_protocol",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "emergency_divergence",
+            "target": "quality_gates",
+            "label": "quality_gates",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "operation_commander",
+            "target": "testing_governance",
+            "label": "testing_governance",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "operation_commander",
+            "target": "emergency_divergence",
+            "label": "emergency_divergence",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "operation_commander",
+            "target": "guided_audit_protocol",
+            "label": "guided_audit_protocol",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          },
+          {
+            "source": "testing_governance",
+            "target": "emergency_divergence",
+            "label": "emergency_divergence",
+            "target_location": "DNA",
+            "ref_type": "formal"
+          }
         ],
         "removed": []
       }

@@ -13,7 +13,7 @@ const BASE_NAME = 'dna-history-backfill';
 const args = process.argv.slice(2);
 const IS_FRESH = args.includes('--fresh');
 const IS_SYNC = args.includes('--sync') && !IS_FRESH;
-const IS_DEEP = args.includes('--deep');
+// const IS_DEEP = args.includes('--deep'); // Deprecated v0.5
 
 const partialIdx = args.indexOf('--partial');
 const MAX_EPOCHS = partialIdx !== -1 ? parseInt(args[partialIdx + 1], 10) : null;
@@ -196,7 +196,6 @@ async function extractGraphAtCommit(hash: string, registry: Set<string>) {
 
         // Read content
         const content = execSync(`git show ${hash}:${filePath}`).toString();
-        const registryList = Array.from(registry);
 
         // --- PHASE 1: Explicit MD Links ---
         const mdRegex = /\[(.*?)\]\((.*?)\)/g;
@@ -262,28 +261,45 @@ async function extractGraphAtCommit(hash: string, registry: Set<string>) {
         }
 
         // --- PHASE 3: Weak Reference Discovery (Registry Context) ---
-        // Only if it's GEMINI.md OR --deep flag is on
-        if (id === 'GEMINI.md' || IS_DEEP) {
-            registryList.forEach(regId => {
-                if (regId === id) return;
-                const weakRegex = new RegExp(`\\b${regId}\\b`, 'g');
-                if (weakRegex.test(content)) {
-                    const alreadyLinked = Array.from(links).some(l => JSON.parse(l).target === regId);
-                    if (!alreadyLinked) {
-                        links.add(JSON.stringify({
-                            source: id,
-                            target: regId,
-                            label: regId,
-                            target_location: 'DNA',
-                            ref_type: 'mention'
-                        }));
-                    }
+        // Mentions are now standard for core DNA nodes (GEMINI.md and Knowledge Items)
+        const registryList = Array.from(registry);
+        registryList.forEach(regId => {
+            if (regId === id) return;
+            const weakRegex = new RegExp(`\\b${regId}\\b`, 'g');
+            if (weakRegex.test(content)) {
+                const alreadyLinked = Array.from(links).some(l => JSON.parse(l).target === regId);
+                if (!alreadyLinked) {
+                    links.add(JSON.stringify({
+                        source: id,
+                        target: regId,
+                        label: regId,
+                        target_location: 'DNA',
+                        ref_type: 'mention'
+                    }));
                 }
-            });
-        }
+            }
+        });
     }
 
-    return { nodes, links };
+    // --- PHASE 4: Link Integrity Check ---
+    // Prune dangling links: Any link to a 'DNA' node must have its target in the current nodes set.
+    const validLinks = new Set<string>();
+    Array.from(links).forEach(lStr => {
+        const link = JSON.parse(lStr) as KiLink;
+        if (link.target_location === 'DNA') {
+            if (nodes.has(link.target)) {
+                validLinks.add(lStr);
+            } else {
+                // Orphaned link - target node was deleted
+                // console.warn(`✂️ Pruning dangling link: ${link.source} -> ${link.target}`);
+            }
+        } else {
+            // SRL or OTHER links are kept as they are out of local pruning scope
+            validLinks.add(lStr);
+        }
+    });
+
+    return { nodes, links: validLinks };
 }
 
 function extractIdFromFilePath(filePath: string): string | null {

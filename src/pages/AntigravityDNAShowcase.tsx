@@ -21,7 +21,7 @@ export default function AntigravityDNAShowcase() {
         target: string | KiNode;
     }
 
-    interface KiHistoryEntry {
+    interface KiDiff {
         timestamp: string;
         label: string;
         delta: {
@@ -30,23 +30,36 @@ export default function AntigravityDNAShowcase() {
         };
     }
 
-    const [history, setHistory] = useState<KiHistoryEntry[]>([])
+    interface TimelineBatch {
+        id: string; // Latest timestamp in batch
+        type: 'SIGNIFICANT' | 'EMPTY_BATCH';
+        label: string;     // Representative label
+        items: KiDiff[]; // All commits in this batch
+    }
+
+    const [timeline, setTimeline] = useState<TimelineBatch[]>([])
     const [activeEpochTimestamp, setActiveEpochTimestamp] = useState<string | null>(null)
     const [currentView, setCurrentView] = useState<'3d' | '2d'>('3d')
     const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+    const [graphStats, setGraphStats] = useState({ nodes: 0, links: 0 })
 
-    // Compute cumulative totals per epoch (history is oldest-first from iframe)
-    const cumulativeMap = useMemo(() => {
-        const map = new Map<string, { nodes: number; links: number }>();
-        let totalNodes = 0;
-        let totalLinks = 0;
-        history.forEach(entry => {
-            totalNodes += entry.delta.nodes.added.length;
-            totalLinks += entry.delta.links.added.length;
-            map.set(entry.timestamp, { nodes: totalNodes, links: totalLinks });
+    // Compute cumulative totals per batch for the UI summary
+    const cumulativeBatches = useMemo(() => {
+        const result = new Map<string, { nodes: number; links: number }>();
+        let runningNodes = 0;
+        let runningLinks = 0;
+
+        timeline.forEach(batch => {
+            batch.items.forEach(commit => {
+                runningNodes += commit.delta.nodes.added.length;
+                runningNodes -= commit.delta.nodes.removed.length;
+                runningLinks += commit.delta.links.added.length;
+                runningLinks -= commit.delta.links.removed.length;
+            });
+            result.set(batch.id, { nodes: runningNodes, links: runningLinks });
         });
-        return map;
-    }, [history])
+        return result;
+    }, [timeline])
 
     const switchView = (view: '3d' | '2d') => {
         setCurrentView(view)
@@ -60,15 +73,19 @@ export default function AntigravityDNAShowcase() {
                 setIsGraphFullscreen(event.data.isFullscreen)
                 document.body.style.overflow = event.data.isFullscreen ? 'hidden' : ''
             }
-            if (event.data.type === 'HISTORY_DATA') {
-                setHistory(event.data.history as KiHistoryEntry[])
+            if (event.data.type === 'TIMELINE_DATA') {
+                setTimeline(event.data.timeline as TimelineBatch[])
+                if (event.data.currentEpoch) setActiveEpochTimestamp(event.data.currentEpoch);
+            }
+            if (event.data.type === 'EPOCH_UPDATED') {
+                setGraphStats({ nodes: event.data.nodes, links: event.data.links })
             }
         }
         window.addEventListener('message', handleMessage)
 
-        // Request history if already loaded
+        // Request timeline if already loaded
         const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement
-        iframe?.contentWindow?.postMessage({ type: 'GET_HISTORY' }, '*')
+        iframe?.contentWindow?.postMessage({ type: 'GET_TIMELINE' }, '*')
 
         // SEO & Metadata Tuning
         document.title = "Antigravity DNA — Unified Neural Network | Idan David-Aviv";
@@ -440,50 +457,70 @@ export default function AntigravityDNAShowcase() {
 
                                     <div className="h-px w-full bg-white/5 my-4" />
 
-                                    {history.length > 0 ? (
-                                        [...history].reverse().map((diff, idx) => (
+                                    {timeline.length > 0 ? (
+                                        [...timeline].reverse().map((batch, idx) => (
                                             <motion.button
-                                                key={diff.timestamp}
+                                                key={batch.id}
                                                 initial={{ opacity: 0, x: -20 }}
                                                 animate={{ opacity: 1, x: 0 }}
                                                 transition={{ delay: idx * 0.05 }}
                                                 whileHover={{ scale: 1.02 }}
                                                 whileTap={{ scale: 0.98 }}
                                                 onClick={() => {
-                                                    setActiveEpochTimestamp(diff.timestamp);
+                                                    setActiveEpochTimestamp(batch.id);
                                                     const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
-                                                    iframe?.contentWindow?.postMessage({ type: 'SET_EPOCH', timestamp: diff.timestamp }, '*');
+                                                    iframe?.contentWindow?.postMessage({ type: 'SET_EPOCH', timestamp: batch.id }, '*');
                                                 }}
-                                                className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all border ${activeEpochTimestamp === diff.timestamp
+                                                className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all border ${activeEpochTimestamp === batch.id
                                                     ? 'bg-purple-500/20 border-purple-500/50 shadow-[0_0_20px_-5px_rgba(168,85,247,0.3)]'
                                                     : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/20'
                                                     }`}
                                             >
-                                                <div className="text-left">
-                                                    <div className="flex items-center gap-2 mb-1">
-                                                        <span className="text-[8px] text-purple-400 font-mono tracking-widest uppercase opacity-70">{diff.timestamp}</span>
-                                                        {activeEpochTimestamp === diff.timestamp && <div className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />}
+                                                <div className="text-left w-full">
+                                                    <div className="flex items-center justify-between mb-1">
+                                                        <span className="text-[8px] text-purple-400 font-mono tracking-widest uppercase opacity-70">{batch.id}</span>
+                                                        {batch.type === 'EMPTY_BATCH' && (
+                                                            <span className="px-1.5 py-0.5 rounded bg-white/5 text-[7px] text-white/30 uppercase font-mono">
+                                                                {batch.items.length} commits
+                                                            </span>
+                                                        )}
                                                     </div>
-                                                    <div className="text-[11px] font-bold text-white leading-tight mb-2">{diff.label}</div>
+                                                    <div className="text-[11px] font-bold text-white leading-tight mb-2 truncate pr-2">
+                                                        {batch.type === 'EMPTY_BATCH' ? 'Archaeological Batch' : batch.label}
+                                                    </div>
+
+                                                    {/* Internal Summary for Batch */}
+                                                    <div className="flex flex-wrap gap-1.5 opacity-80 scale-90 origin-left">
+                                                        {(() => {
+                                                            let addedNodes = 0, removedNodes = 0, addedLinks = 0, removedLinks = 0;
+                                                            batch.items.forEach(c => {
+                                                                addedNodes += c.delta.nodes.added.length;
+                                                                removedNodes += c.delta.nodes.removed.length;
+                                                                addedLinks += c.delta.links.added.length;
+                                                                removedLinks += c.delta.links.removed.length;
+                                                            });
+
+                                                            return (
+                                                                <>
+                                                                    {addedNodes > 0 && <span className="text-[8px] text-emerald-400 font-mono">+{addedNodes}N</span>}
+                                                                    {removedNodes > 0 && <span className="text-[8px] text-red-400 font-mono">-{removedNodes}N</span>}
+                                                                    {addedLinks > 0 && <span className="text-[8px] text-blue-400 font-mono">+{addedLinks}L</span>}
+                                                                    {removedLinks > 0 && <span className="text-[8px] text-orange-400 font-mono">-{removedLinks}L</span>}
+                                                                </>
+                                                            )
+                                                        })()}
+                                                    </div>
+                                                    {/* Total State at this point */}
                                                     {(() => {
-                                                        const cum = cumulativeMap.get(diff.timestamp);
-                                                        return cum ? (
-                                                            <div className="flex gap-2">
-                                                                {cum.nodes > 0 && (
-                                                                    <span className="px-1.5 py-0.5 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-[8px] font-mono text-emerald-400">
-                                                                        +{cum.nodes} nodes
-                                                                    </span>
-                                                                )}
-                                                                {cum.links > 0 && (
-                                                                    <span className="px-1.5 py-0.5 rounded-md bg-blue-500/10 border border-blue-500/20 text-[8px] font-mono text-blue-400">
-                                                                        +{cum.links} links
-                                                                    </span>
-                                                                )}
+                                                        const total = cumulativeBatches.get(batch.id);
+                                                        return total ? (
+                                                            <div className="flex gap-2 mt-2 pt-2 border-t border-white/5 opacity-40">
+                                                                <span className="text-[7px] font-mono text-purple-300 uppercase italic">Total: {total.nodes}N / {total.links}L</span>
                                                             </div>
                                                         ) : null;
                                                     })()}
                                                 </div>
-                                                <ChevronRight className={`w-4 h-4 transition-transform ${activeEpochTimestamp === diff.timestamp ? 'text-purple-400 rotate-90' : 'text-white/10'}`} />
+                                                <ChevronRight className={`flex-shrink-0 w-4 h-4 transition-transform ${activeEpochTimestamp === batch.id ? 'text-purple-400 rotate-90' : 'text-white/10'}`} />
                                             </motion.button>
                                         ))
                                     ) : (
@@ -546,7 +583,7 @@ export default function AntigravityDNAShowcase() {
                                 {/* Floating Stats */}
                                 <div className="absolute bottom-6 right-6 flex items-center gap-4">
                                     <div className="px-4 py-2 rounded-lg bg-black/60 backdrop-blur-md border border-white/5 text-[10px] font-mono text-purple-400/60 uppercase tracking-widest">
-                                        Nodes: <span className="text-white">64</span> {' // '} Links: <span className="text-white">128</span>
+                                        Nodes: <span className="text-white">{graphStats.nodes}</span> {' // '} Links: <span className="text-white">{graphStats.links}</span>
                                     </div>
                                 </div>
                             </div>
