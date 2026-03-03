@@ -251,6 +251,12 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
 
         return group;
     })
+    .linkLabel((link: object) => {
+        const l = link as KiLink;
+        const type = l.ref_type || 'mention';
+        const typeLabel = type === 'formal' ? 'Explicit file path' : type === 'bold' ? '**Bold** mention' : 'Simple mention';
+        return `<div class="link-label"><strong>${typeLabel}</strong></div>`;
+    })
     .linkWidth((link: object) => {
         const l = link as KiLink;
         return l.ref_type === 'formal' ? 2.5 : (l.ref_type === 'bold' ? 1.2 : 0.4);
@@ -308,11 +314,16 @@ const _dir = new THREE.Vector3();
     const camera = Graph3D.camera();
     nodeSprites.forEach(({ sprite, node, size }) => {
         if (node.x == null) return;
+        // Calculate vector from node to observer (camera)
         _dir
             .set(camera.position.x - node.x, camera.position.y - (node.y ?? 0), camera.position.z - (node.z ?? 0))
-            .normalize()
-            .multiplyScalar(size * 1.5);
-        sprite.position.set(_dir.x, _dir.y, _dir.z);
+            .normalize();
+
+        // Scale vector to exactly 1.5 * node_radius (size)
+        const targetPos = _dir.clone().multiplyScalar(size * 1.5);
+
+        // Position sprite on that vector relative to node center
+        sprite.position.set(targetPos.x, targetPos.y, targetPos.z);
     });
     requestAnimationFrame(updateSpritePositions);
 }());
