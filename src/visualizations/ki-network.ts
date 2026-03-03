@@ -263,9 +263,14 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
     .linkOpacity(0.5)
     .linkColor((link: object) => {
         const l = link as KiLink;
+        const sid = typeof l.source === 'object' ? (l.source as KiNode).id : l.source as string;
         const tid = typeof l.target === 'object' ? (l.target as KiNode).id : l.target as string;
 
         const targetGroup = getNodeGroup(tid);
+        const sourceGroup = getNodeGroup(sid);
+
+        // Root Links (from GEMINI.md)
+        if (sourceGroup === 999) return '#2563eb';
 
         if (l.target_location === 'SRL' || targetGroup === 3) {
             return '#a855f7'; // Purple SRL External
