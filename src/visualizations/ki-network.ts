@@ -254,7 +254,7 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
     .linkLabel((link: object) => {
         const l = link as KiLink;
         const type = l.ref_type || 'mention';
-        const typeLabel = type === 'formal' ? 'Explicit file path' : type === 'bold' ? '**Bold** mention' : 'Simple mention';
+        const typeLabel = type === 'formal' ? 'Explicit file path' : type === 'bold' ? '<strong>Bold</strong> mention' : 'Simple mention';
         return `<div class="link-label"><strong>${typeLabel}</strong></div>`;
     })
     .linkWidth((link: object) => {
