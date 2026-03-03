@@ -92,6 +92,14 @@ function audit() {
 
     walk(path.join(REPO_PATH, KI_ROOT));
 
+    // Check registries for mapping integrity
+    const GROUPS_PATH = path.join(OUTPUT_DIR, 'ki-groups.json');
+    const EXTERNAL_PATH = path.join(OUTPUT_DIR, 'external-node-refs.json');
+
+    const groups = fs.existsSync(GROUPS_PATH) ? JSON.parse(fs.readFileSync(GROUPS_PATH, 'utf8')) : {};
+    const external = fs.existsSync(EXTERNAL_PATH) ? JSON.parse(fs.readFileSync(EXTERNAL_PATH, 'utf8')) : {};
+    const mappedNodes = new Set([...Object.keys(groups), ...Object.keys(external), 'GEMINI.md']);
+
     console.log(`--- Cumulative History Audit ---`);
     console.log(`Nodes: +${totalAddedNodes} | -${totalRemovedNodes} | Net: ${totalAddedNodes - totalRemovedNodes}`);
     console.log(`Links: +${totalAddedLinks} | -${totalRemovedLinks} | Net: ${totalAddedLinks - totalRemovedLinks}`);
@@ -99,9 +107,11 @@ function audit() {
 
     console.log(`📊 Ledger Nodes (Net): ${ledgerNodes.size}`);
     console.log(`📂 Disk Nodes: ${diskNodes.size}`);
+    console.log(`🎯 Registered Mapping: ${mappedNodes.size}`);
 
     const zombies = [...ledgerNodes].filter(n => !diskNodes.has(n));
     const ghosts = [...diskNodes].filter(n => !ledgerNodes.has(n));
+    const unmapped = [...ledgerNodes].filter(n => !mappedNodes.has(n));
 
     if (zombies.length > 0) {
         console.log(`🧟 ZOMBIES (In Ledger but NOT on Disk):`, zombies);
@@ -109,11 +119,18 @@ function audit() {
     if (ghosts.length > 0) {
         console.log(`👻 GHOSTS (On Disk but NOT in Ledger):`, ghosts);
     }
+    if (unmapped.length > 0) {
+        console.log(`⚠️  UNREGISTERED (In Ledger but NOT in ki-groups.json):`, unmapped);
+    }
 
-    if (zombies.length === 0 && ghosts.length === 0) {
-        console.log('✅ DNA Cumulative Integrity matches Physical Reality.');
+    if (zombies.length === 0 && ghosts.length === 0 && unmapped.length === 0) {
+        console.log('✅ DNA Cumulative Integrity matches Physical Reality & Registry.');
     } else {
-        console.log(`❌ DNA Inconsistency detected: ${zombies.length} zombies, ${ghosts.length} ghosts.`);
+        const errors = [];
+        if (zombies.length > 0) errors.push(`${zombies.length} zombies`);
+        if (ghosts.length > 0) errors.push(`${ghosts.length} ghosts`);
+        if (unmapped.length > 0) errors.push(`${unmapped.length} unregistered`);
+        console.log(`❌ DNA Inconsistency detected: ${errors.join(', ')}.`);
     }
 }
 
