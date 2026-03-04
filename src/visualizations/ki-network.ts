@@ -17,7 +17,40 @@ import {
     getTimelineBatches,
     TimelineBatch
 } from './dna-history-engine';
-import dnaHistoryData from './dna-history-backfill-v26.json';
+// Auto-resolve Latest JSON via import.meta.glob
+const ledgerModules = import.meta.glob('./dna-history-backfill-*.json', { eager: true });
+
+interface LedgerMetadata {
+    version: number;
+    sync: number;
+    last_hash: string;
+    is_partial: boolean;
+    scope: string[];
+}
+
+interface LedgerData {
+    metadata: LedgerMetadata;
+    epochs: KiDiff[];
+}
+
+function parseVersion(filename: string): { v: number; s: number } {
+    // Only match clean versioned or synced files. Ignore _p (partial).
+    const m = filename.match(/dna-history-backfill-v(\d+)(?:_s(\d+))?\.json$/);
+    return m ? { v: parseInt(m[1]), s: parseInt(m[2] ?? '0') } : { v: 0, s: 0 };
+}
+
+const latestKey = Object.keys(ledgerModules)
+    .sort((a, b) => {
+        const av = parseVersion(a), bv = parseVersion(b);
+        return av.v !== bv.v ? bv.v - av.v : bv.s - av.s;
+    })[0];
+
+if (!latestKey) {
+    throw new Error('No DNA history ledger found in src/visualizations/');
+}
+
+const ledger = (ledgerModules[latestKey] as { default: LedgerData }).default;
+const dnaHistoryData = ledger.epochs;
 import kiGroupsRegistry from './ki-groups.json';
 import externalNodeRegistry from './external-node-refs.json';
 
@@ -210,15 +243,6 @@ setTimeout(() => {
     }
 }, 500);
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
-
-const outDeg: Record<string, number> = {};
-kiData.links.forEach(l => {
-    const sid = typeof l.source === 'object' ? (l.source as KiNode).id : l.source;
-    outDeg[sid] = (outDeg[sid] || 0) + 1;
-});
-const isTerminal = (id: string) => !outDeg[id];
-
 // ─── 3D Graph ─────────────────────────────────────────────────────────────────
 
 // Registry for per-frame sprite projection - using WeakMap to survive history transitions
@@ -239,14 +263,12 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
         const color = groupNum === 999 ? '#00008b'
             : (groupNum === 3 ? '#a855f7' // Purple for SRL
                 : (groupNum === 0 ? '#94a3b8' // Grey for 0
-                    : (isTerminal(n.id) ? '#fbbf24'
-                        : (groupNum === 1 ? '#fbbf24' : '#22d3ee')))); // Gold for 1, Cyan for 2
+                    : (groupNum === 1 ? '#fbbf24' : '#22d3ee'))); // Gold for 1, Cyan for 2
 
         const size = groupNum === 999 ? 18
             : (groupNum === 3 ? 10 // SRL size
                 : (groupNum === 0 ? 8
-                    : (isTerminal(n.id) ? 4
-                        : (groupNum === 1 ? 10 : 8))));
+                    : (groupNum === 1 ? 10 : 8)));
 
         const sphere = new THREE.Mesh(
             new THREE.SphereGeometry(size, 24, 24),

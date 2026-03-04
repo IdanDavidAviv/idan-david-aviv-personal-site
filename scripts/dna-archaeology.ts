@@ -12,14 +12,38 @@ const BASE_NAME = 'dna-history-backfill';
 // --- CLI ARGUMENTS ---
 const args = process.argv.slice(2);
 const IS_FRESH = args.includes('--fresh');
-const IS_SYNC = args.includes('--sync') && !IS_FRESH;
-// const IS_DEEP = args.includes('--deep'); // Deprecated v0.5
 
 const partialIdx = args.indexOf('--partial');
 const MAX_EPOCHS = partialIdx !== -1 ? parseInt(args[partialIdx + 1], 10) : null;
 
 const scopeIdx = args.indexOf('--scope');
 const SCOPE_PATHS = scopeIdx !== -1 ? args[scopeIdx + 1].split(',') : [KI_ROOT, GEMINI_RELATIVE];
+
+if (args.includes('--help')) {
+    console.log(`
+DNA Archaeology v0.4
+Usage: tsx scripts/dna-archaeology.ts [flags]
+
+Flags:
+  --fresh          Start from Genesis (ignore existing ledger)
+  --sync           Resume from last known commit in the ledger
+  --partial N      Only process N new commits (combine with --fresh or --sync)
+  --scope a,b,...  Override scope paths, comma-separated (default: KI_ROOT + GEMINI.md)
+  --help           Show this message
+
+Flag Combinations:
+  --sync                  Safe incremental update (most common)
+  --sync --partial 5      Test-run: process only the last 5 new commits
+  --fresh                 Full rebuild from Genesis (replaces ledger)
+  --fresh --partial 20    Rebuild from Genesis, limit to first 20 commits
+  --fresh --scope path    Rebuild with a custom scope path
+
+Notes:
+  --fresh overrides --sync if both are passed.
+  Without flags, the script defaults to --sync (safe incremental update).
+`);
+    process.exit(0);
+}
 
 // --- TYPES ---
 interface KiNode {
@@ -44,31 +68,67 @@ interface KiDiff {
     };
 }
 
+interface LedgerMetadata {
+    version: number;
+    sync: number;
+    last_hash: string;
+    is_partial: boolean;
+    scope: string[];
+}
+
+interface LedgerData {
+    metadata: LedgerMetadata;
+    epochs: KiDiff[];
+}
+
 // --- UTILS ---
-function getLatestLedger(): { path: string; version: number; data: KiDiff[] | null } {
+function getLatestLedger(): { path: string; version: number; sync: number; data: LedgerData | null } {
     const files = fs.readdirSync(OUTPUT_DIR);
-    const versionRegex = new RegExp(`${BASE_NAME}-v(\\d+)\\.json`);
+    const versionRegex = new RegExp(`${BASE_NAME}-v(\\d+)(?:_s(\\d+))?\\.json`);
     let maxVersion = 0;
+    let maxSync = 0;
     let latestFile = '';
 
     for (const file of files) {
         const match = file.match(versionRegex);
         if (match) {
             const version = parseInt(match[1], 10);
-            if (version > maxVersion) {
+            const sync = match[2] ? parseInt(match[2], 10) : 0;
+            if (version > maxVersion || (version === maxVersion && sync > maxSync)) {
                 maxVersion = version;
+                maxSync = sync;
                 latestFile = file;
             }
         }
     }
 
-    if (!latestFile) return { path: '', version: 0, data: null };
+    if (!latestFile) return { path: '', version: 0, sync: 0, data: null };
 
     const fullPath = path.join(OUTPUT_DIR, latestFile);
+    const raw = fs.readFileSync(fullPath, 'utf8');
+    let parsed = JSON.parse(raw);
+
+    // Legacy Fallback for v26.json (array instead of object)
+    if (Array.isArray(parsed)) {
+        console.log("ℹ️ Legacy ledger detected. Converting to metadata format.");
+        const lastEpoch = parsed[parsed.length - 1];
+        parsed = {
+            metadata: {
+                version: maxVersion,
+                sync: maxSync,
+                last_hash: extractHashFromLabel(lastEpoch?.label) ?? '',
+                is_partial: false,
+                scope: [KI_ROOT, GEMINI_RELATIVE] // Default assumption
+            },
+            epochs: parsed
+        };
+    }
+
     return {
         path: fullPath,
         version: maxVersion,
-        data: JSON.parse(fs.readFileSync(fullPath, 'utf8'))
+        sync: maxSync,
+        data: parsed as LedgerData
     };
 }
 
@@ -102,14 +162,26 @@ async function runArchaeology() {
     let history: KiDiff[] = [];
     let prevGraph = { nodes: new Set<string>(), links: new Set<string>() };
 
-    // --- SYNC LOGIC ---
-    if (IS_SYNC && latest.data) {
-        const lastEpoch = latest.data[latest.data.length - 1];
+    // --- SYNC LOGIC (default behaviour unless --fresh) ---
+    if (!IS_FRESH && latest.data) {
+        // Scope Verification
+        const prevScope = latest.data.metadata.scope || [];
+        if (JSON.stringify([...prevScope].sort()) !== JSON.stringify([...SCOPE_PATHS].sort())) {
+            throw new Error(`⚠️ Scope mismatch! Current scope [${SCOPE_PATHS}] differs from ledger scope [${prevScope}]. Please run --fresh.`);
+        }
+
+        const lastEpoch = latest.data.epochs[latest.data.epochs.length - 1];
         startHash = extractHashFromLabel(lastEpoch.label);
+
+        // Hash Integrity Check
+        if (latest.data.metadata.last_hash && latest.data.metadata.last_hash !== startHash) {
+            throw new Error(`⛔ Sync Aborted: Ledger metadata hash [${latest.data.metadata.last_hash}] does not match the actual last epoch hash [${startHash}].`);
+        }
+
         console.log(`🔄 Sync active. Resuming from commit [${startHash}]...`);
 
         // Reconstruct LiveRegistry and State from existing ledger
-        latest.data.forEach(epoch => {
+        latest.data.epochs.forEach(epoch => {
             // Apply Additions
             epoch.delta.nodes.added.forEach(n => {
                 liveRegistry.add(n.id);
@@ -132,7 +204,7 @@ async function runArchaeology() {
                 });
             }
         });
-        history = latest.data;
+        history = [...latest.data.epochs];
     }
 
     // --- COMMIT FETCHING ---
@@ -162,7 +234,6 @@ async function runArchaeology() {
     const total = commitList.length;
     for (const commit of commitList) {
         count++;
-        console.log(`🔍 Epoch [${count}/${total}] ${commit.hash} [${commit.date}]`);
 
         // 1. Identify all files changed in this commit within scope
         const changedFiles = execSync(`git show --name-only --pretty="" ${commit.hash} -- ${scopeStr}`)
@@ -179,6 +250,7 @@ async function runArchaeology() {
         // 3. Extract Graph State
         const currentGraph = await extractGraphAtCommit(commit.hash, liveRegistry);
         const delta = computeDelta(prevGraph, currentGraph);
+        console.log(`🔍 [${count}/${total}] ${commit.hash} | +${delta.addedNodes.length}n +${delta.addedLinks.length}l -${delta.removedNodes.length}n -${delta.removedLinks.length}l`);
 
         // 4. Record History
         history.push({
@@ -194,14 +266,28 @@ async function runArchaeology() {
     }
 
     // --- OUTPUT ---
-    const newVersion = latest.version + 1;
-    const newPath = path.join(OUTPUT_DIR, `${BASE_NAME}-v${newVersion}.json`);
+    const isFresh = IS_FRESH || !latest.path;
+    const isPartial = MAX_EPOCHS !== null && commitList.length >= MAX_EPOCHS;
+    const suffix = isPartial ? '_p' : '';
 
-    const rawJson = JSON.stringify(history, null, 2);
-    const compactedJson = compactGraphJson(rawJson);
+    const outPath = isFresh
+        ? path.join(OUTPUT_DIR, `${BASE_NAME}-v${latest.version + 1}${suffix}.json`)
+        : path.join(OUTPUT_DIR, `${BASE_NAME}-v${latest.version}_s${latest.sync + 1}${suffix}.json`);
 
-    fs.writeFileSync(newPath, compactedJson);
-    console.log(`✅ Archaeology complete. Saved v${newVersion} to ${newPath}`);
+    const currentMetadata: LedgerMetadata = {
+        version: isFresh ? latest.version + 1 : latest.version,
+        sync: isFresh ? 0 : latest.sync + 1,
+        last_hash: history[history.length - 1]?.label.match(/\[(.*?)\]/)?.[1] ?? '',
+        is_partial: isPartial,
+        scope: SCOPE_PATHS
+    };
+
+    const finalData: LedgerData = { metadata: currentMetadata, epochs: history };
+    const compactedJson = serializeHistory(finalData);
+
+    fs.writeFileSync(outPath, compactedJson);
+    const outLabel = isFresh ? `v${currentMetadata.version} (fresh${suffix})` : `v${currentMetadata.version}_s${currentMetadata.sync}${suffix} (sync)`;
+    console.log(`✅ Archaeology complete. Saved ${outLabel} → ${outPath}`);
 }
 
 /**
@@ -339,14 +425,13 @@ async function extractGraphAtCommit(hash: string, registry: Set<string>) {
             target_location: (lp[4] || 'DNA') as KiLink['target_location']
         };
 
-        // Only prune internal DNA links
-        if (nodes.has(link.target) || link.target === 'GEMINI.md' || nodes.has(link.source)) {
+        // Validate: target must be in current nodes, registry, or GEMINI.md
+        if (nodes.has(link.target) || link.target === 'GEMINI.md' || registry.has(link.target)) {
             validLinks.add(lStr);
         } else {
-            // Check if target is a known DNA node from registry (even if not in current commit)
-            if (registry.has(link.target)) {
-                validLinks.add(lStr);
-            }
+            // Preserve unresolved links — re-tag as OTHER instead of pruning
+            const otherKey = canonicalKey({ ...link, target_location: 'OTHER' });
+            validLinks.add(otherKey);
         }
     });
 
@@ -356,15 +441,11 @@ async function extractGraphAtCommit(hash: string, registry: Set<string>) {
 function extractIdFromFilePath(filePath: string): string | null {
     if (filePath === GEMINI_RELATIVE) return 'GEMINI.md';
     if (filePath.includes('SKILL.md')) {
-        const parts = filePath.split('/');
-        const artifactsIdx = parts.indexOf('artifacts');
-        return (artifactsIdx > 0) ? parts[artifactsIdx - 1] : null;
-    }
-    // Expanded Discovery: Any file named GEMINI.md or SKILL.md in any subfolder
-    if (filePath.endsWith('SKILL.md')) {
         const parts = filePath.split(/[/\\]/);
-        const idx = parts.indexOf('SKILL.md');
-        return idx > 0 ? parts[idx - 1] : null;
+        const artifactsIdx = parts.indexOf('artifacts');
+        if (artifactsIdx > 0) return parts[artifactsIdx - 1];
+        const skillIdx = parts.indexOf('SKILL.md');
+        return skillIdx > 0 ? parts[skillIdx - 1] : null;
     }
     return null;
 }
@@ -398,21 +479,30 @@ function computeDelta(prev: { nodes: Set<string>; links: Set<string> }, curr: { 
     return { addedNodes, removedNodes, addedLinks, removedLinks };
 }
 
-function compactGraphJson(json: string): string {
-    return json
-        // Compact Node objects
-        .replace(/\{\n\s+"id": "(.*?)",\n\s+"name": "(.*?)",\n\s+"group": (.*?)\n\s+\}/g, '{ "id": "$1", "name": "$2", "group": $3 }')
-        // Compact Link objects (handling both possible field orders)
-        .replace(/\{\n\s+"source": "(.*?)",\n\s+"target": "(.*?)",\n\s+"label": "(.*?)",\n\s+"target_location": "(.*?)",\n\s+"ref_type": "(.*?)"\n\s+\}/g, '{ "source": "$1", "target": "$2", "label": "$3", "target_location": "$4", "ref_type": "$5" }')
-        .replace(/\{\n\s+"source": "(.*?)",\n\s+"target": "(.*?)",\n\s+"label": "(.*?)",\n\s+"ref_type": "(.*?)",\n\s+"target_location": "(.*?)"\n\s+\}/g, '{ "source": "$1", "target": "$2", "label": "$3", "ref_type": "$4", "target_location": "$5" }')
-        // Compact empty arrays
-        .replace(/\[\s+\]/g, '[]')
-        // Wrap added/removed arrays onto single lines if they are relatively short or have been compacted
-        .replace(/"added": \[\s+((?:\{.*?\}(?:,\s+)?)*)\s+\]/g, (m, content) => `"added": [ ${content.replace(/\s+/g, ' ').trim()} ]`)
-        .replace(/"removed": \[\s+((?:\{.*?\}(?:,\s+)?)*)\s+\]/g, (m, content) => `"removed": [ ${content.replace(/\s+/g, ' ').trim()} ]`)
-        // Compact delta structure
-        .replace(/"delta": \{\n\s+"nodes": \{\n\s+"added": (.*?),\n\s+"removed": (.*?)\n\s+\},\n\s+"links": \{\n\s+"added": (.*?),\n\s+"removed": (.*?)\n\s+\}\n\s+\}/gs,
-            '"delta": { "nodes": { "added": $1, "removed": $2 }, "links": { "added": $3, "removed": $4 } }');
+function serializeHistory(data: LedgerData): string {
+    const metaStr = JSON.stringify(data.metadata, null, 2);
+    const epochsStr = data.epochs.map(epoch => {
+        const nodesAdded = epoch.delta.nodes.added
+            .map(n => '          ' + JSON.stringify(n))
+            .join(',\n');
+        const nodesRemoved = JSON.stringify(epoch.delta.nodes.removed);
+        const linksAdded = epoch.delta.links.added
+            .map(l => ' ' + JSON.stringify(l))
+            .join(', ');
+        const linksRemoved = epoch.delta.links.removed
+            .map(l => ' ' + JSON.stringify(l))
+            .join(', ');
+
+        const nodesBlock = nodesAdded.length > 0
+            ? `[\n${nodesAdded}\n        ]`
+            : '[]';
+        const linksAddedBlock = linksAdded.length > 0 ? `[${linksAdded} ]` : '[]';
+        const linksRemovedBlock = linksRemoved.length > 0 ? `[${linksRemoved} ]` : '[]';
+
+        return `    {\n      "timestamp": ${JSON.stringify(epoch.timestamp)},\n      "label": ${JSON.stringify(epoch.label)},\n      "delta": { "nodes": { "added": ${nodesBlock}, "removed": ${nodesRemoved} }, "links": { "added": ${linksAddedBlock}, "removed": ${linksRemovedBlock} } }\n    }`;
+    }).join(',\n');
+
+    return `{\n  "metadata": ${metaStr},\n  "epochs": [\n${epochsStr}\n  ]\n}`;
 }
 
 runArchaeology().catch(console.error);
