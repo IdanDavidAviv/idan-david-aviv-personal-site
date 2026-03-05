@@ -341,12 +341,50 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
     .graphData(kiData)
     .onNodeClick((node: object) => {
         const n = node as KiNode;
-        const distance = 60;
-        const distRatio = 1 + distance / Math.hypot(n.x ?? 0, n.y ?? 0, n.z ?? 0);
+
+        // 1. Calculate the Center of Gravity (COG) of all nodes
+        const { nodes } = Graph3D.graphData();
+        let cogX = 0, cogY = 0, cogZ = 0;
+        let count = 0;
+
+        if (nodes && nodes.length > 0) {
+            nodes.forEach((n: KiNode) => {
+                if (n.x !== undefined && n.y !== undefined && n.z !== undefined) {
+                    cogX += n.x;
+                    cogY += n.y;
+                    cogZ += n.z;
+                    count++;
+                }
+            });
+            cogX /= count;
+            cogY /= count;
+            cogZ /= count;
+        }
+
+        // 2. Create a vector from COG to the target node
+        const cog = new THREE.Vector3(cogX, cogY, cogZ);
+        const targetPos = new THREE.Vector3(n.x ?? 0, n.y ?? 0, n.z ?? 0);
+
+        // Direction from COG outwards through the node
+        const dir = new THREE.Vector3().subVectors(targetPos, cog).normalize();
+
+        // If the node is exactly at COG (rare), fallback to a default direction
+        if (dir.lengthSq() === 0) {
+            dir.set(0, 0, 1);
+        }
+
+        // 3. Set the desired zoom distance (how far from the node the camera sits)
+        const zoomDistance = 150;
+
+        // 4. Move camera to the new position (Node + (Direction * Distance))
         Graph3D.cameraPosition(
-            { x: (n.x ?? 0) * distRatio, y: (n.y ?? 0) * distRatio, z: (n.z ?? 0) * distRatio },
-            { x: n.x ?? 0, y: n.y ?? 0, z: n.z ?? 0 },
-            2000
+            {
+                x: targetPos.x + (dir.x * zoomDistance),
+                y: targetPos.y + (dir.y * zoomDistance),
+                z: targetPos.z + (dir.z * zoomDistance)
+            },
+            targetPos, // Look exactly at the node
+            2000 // 2 seconds transition
         );
     });
 
