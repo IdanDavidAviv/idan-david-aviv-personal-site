@@ -25,7 +25,7 @@ export default function Hero() {
         transition={{ duration: 0.8 }}
         className="relative z-20 space-y-6"
       >
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-gradient">
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-gradient drop-shadow-[0_0_15px_rgba(168,85,247,0.3)]">
           {personalInfo.name}
         </h1>
         <p className="text-xl md:text-2xl text-base-content max-w-2xl mx-auto font-light">
@@ -40,7 +40,7 @@ export default function Hero() {
 
       {/* Spirit Research Lab visual accent */}
       <div className="absolute bottom-12 w-full flex justify-center z-20">
-        <div className="h-1.5 w-32 bg-gradient-to-r from-transparent via-accent to-transparent rounded-full opacity-50"></div>
+        <div className="h-1.5 w-32 bg-gradient-to-r from-transparent via-gemini-cyan to-transparent rounded-full opacity-60 shadow-[0_0_10px_rgb(var(--gemini-cyan)/0.4)]"></div>
       </div>
     </Section>
   )

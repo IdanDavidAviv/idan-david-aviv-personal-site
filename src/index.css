@@ -20,6 +20,12 @@
     /* #2e1065 in RGB */
     --mystic-text: 237 233 254;
     /* #ede9fe in RGB */
+
+    /* Gemini / Antigravity DNA Tokens */
+    --gemini-purple: 168 85 247;
+    /* #a855f7 */
+    --gemini-cyan: 34 211 238;
+    /* #22d3ee */
   }
 
   body {

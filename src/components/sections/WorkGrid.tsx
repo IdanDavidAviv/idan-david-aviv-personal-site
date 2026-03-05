@@ -23,18 +23,18 @@ export default function WorkGrid() {
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
           >
-            <GlassCard className="h-full group hover:border-accent/40 transition-colors">
+            <GlassCard className="h-full group hover:border-secondary/50 transition-colors duration-500">
               <div className="flex justify-between items-start mb-4">
-                <span className="text-xs font-mono text-accent/80 uppercase tracking-widest bg-accent/10 px-2 py-1 rounded">
+                <span className="text-xs font-mono text-secondary uppercase tracking-widest bg-secondary/10 px-2 py-1 rounded-md border border-secondary/20">
                   {item.year}
                 </span>
                 <div className={cn(
-                  "w-1.5 h-1.5 rounded-full shadow-lg shadow-current",
+                  "w-1.5 h-1.5 rounded-full shadow-[0_0_8px_currentColor]",
                   item.rank === 'strong' ? "text-emerald-400" :
-                    item.rank === 'medium' ? "text-amber-400" : "text-blue-400"
+                    item.rank === 'medium' ? "text-amber-400" : "text-gemini-cyan"
                 )} />
               </div>
-              <h3 className="text-xl font-bold mb-3 group-hover:text-accent transition-colors text-base-content">
+              <h3 className="text-xl font-bold mb-3 group-hover:text-secondary transition-colors text-base-content">
                 {item.section}
               </h3>
               <p className="text-muted-content text-sm leading-relaxed">
