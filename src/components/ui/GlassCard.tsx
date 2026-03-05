@@ -12,7 +12,7 @@ interface GlassCardProps {
 export default function GlassCard({ children, className }: GlassCardProps) {
     return (
         <div className={cn(
-            "p-6 bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl transition-all duration-300 hover:bg-white/10",
+            "p-6 bg-white/5 backdrop-blur-xl border border-white/5 rounded-2xl shadow-xl transition-all duration-500 hover:bg-white/10",
             className
         )}>
             {children}

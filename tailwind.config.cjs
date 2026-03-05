@@ -17,7 +17,25 @@ module.exports = {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif']
+      },
+      keyframes: {
+        'glow-pulse': {
+          '0%, 100%': {
+            filter: 'drop-shadow(-8px -8px 25px rgb(var(--idan-david-aviv-blue) / 0.8))'
+          },
+          '33%': {
+            filter: 'drop-shadow(8px 8px 35px rgb(var(--idan-david-aviv-gold) / 0.8))'
+          },
+          '66%': {
+            filter: 'drop-shadow(8px -8px 35px rgb(var(--idan-david-aviv-purple) / 0.8))'
+          }
+        }
+      },
+      animation: {
+        'glow-pulse': 'glow-pulse 8s ease-in-out infinite'
       }
+
+
     }
   },
   plugins: []
