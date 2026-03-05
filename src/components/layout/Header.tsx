@@ -24,16 +24,18 @@ export default function Header() {
                 >
                     Work
                 </Link>
-                <Link
-                    to="/design-lab"
-                    className={cn(
-                        "px-4 py-2 rounded-full border border-white/10 bg-white/5",
-                        "text-sm font-medium text-white/90 hover:bg-white/10 transition-all",
-                        "backdrop-blur-md"
-                    )}
-                >
-                    Design Lab
-                </Link>
+                {import.meta.env.DEV && (
+                    <Link
+                        to="/design-lab"
+                        className={cn(
+                            "px-4 py-2 rounded-full border border-white/10 bg-white/5",
+                            "text-sm font-medium text-white/90 hover:bg-white/10 transition-all",
+                            "backdrop-blur-md"
+                        )}
+                    >
+                        Design Lab
+                    </Link>
+                )}
                 <Link
                     to="/spirit-research-lab"
                     className={cn(

@@ -20,7 +20,9 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/design-lab" element={<DesignLab />} />
+          {import.meta.env.DEV && (
+            <Route path="/design-lab" element={<DesignLab />} />
+          )}
           <Route path="/spirit-research-lab" element={<SpiritResearchLabShowcase />} />
           <Route path="/antigravity-dna" element={<AntigravityDNAShowcase />} />
         </Routes>
