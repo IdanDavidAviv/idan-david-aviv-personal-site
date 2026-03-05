@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Dna, Brain, Cpu, Database, Shield, Zap, Sparkles, Binary, Network, Activity, Boxes, Layers, ChevronRight, Maximize, Minimize, X, GitCompare, GitGraph } from 'lucide-react'
+import { Dna, Brain, Cpu, Database, Shield, Zap, Sparkles, Binary, Network, Activity, Boxes, Layers, ChevronRight, Maximize, Minimize, X, GitCompare, GitGraph, FileCode, GitBranch, Terminal, Search, Code, CheckCircle, Settings } from 'lucide-react'
 import Section from '@/components/ui/Section'
 
 /**
@@ -132,35 +132,34 @@ export default function AntigravityDNAShowcase() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.5, duration: 0.8 }}
-                        className="p-6 md:p-12 rounded-[2.5rem] bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_50px_-12px_rgba(168,85,247,0.4)]"
+                        className="p-6 md:p-12 rounded-[2.5rem] bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_50px_-12px_rgba(34,211,238,0.3)]"
                     >
                         <div className="flex items-center justify-center gap-4 mb-6">
-                            <Dna className="w-8 h-8 md:w-12 md:h-12 text-purple-400 animate-pulse" />
-                            <h1 className="text-4xl md:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-purple-200 uppercase">
+                            <Dna className="w-8 h-8 md:w-12 md:h-12 text-idan-david-aviv-gold animate-pulse" />
+                            <h1 className="text-4xl md:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white via-idan-david-aviv-gold to-idan-david-aviv-gold/80 uppercase relative">
                                 Antigravity DNA
                             </h1>
-                            <Brain className="w-8 h-8 md:w-12 md:h-12 text-cyan-400 animate-pulse" />
+                            <Brain className="w-8 h-8 md:w-12 md:h-12 text-idan-david-aviv-gold animate-pulse" />
                         </div>
-                        <p className="max-w-2xl mx-auto text-purple-100/70 text-lg md:text-xl font-light leading-relaxed">
+                        <p className="max-w-2xl mx-auto text-idan-david-aviv-gold/70 text-lg md:text-xl font-light leading-relaxed">
                             The Foundation of Agent Reliability. <br className="hidden md:block" />
                             A path-orchestrated ecosystem for 100X deterministic performance.
                         </p>
 
                         <div className="mt-8 flex flex-wrap justify-center gap-4">
-                            <span className="px-4 py-1.5 rounded-full bg-purple-500/20 border border-purple-500/30 text-purple-200 text-xs font-mono uppercase tracking-widest">
+                            <span className="px-4 py-1.5 rounded-full bg-idan-david-aviv-gold/20 border border-idan-david-aviv-gold/30 text-idan-david-aviv-gold text-xs font-mono uppercase tracking-widest">
                                 stabilization protocol
                             </span>
-                            <span className="px-4 py-1.5 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-200 text-xs font-mono uppercase tracking-widest">
+                            <span className="px-4 py-1.5 rounded-full bg-idan-david-aviv-gold/20 border border-idan-david-aviv-gold/30 text-idan-david-aviv-gold text-xs font-mono uppercase tracking-widest">
                                 path-orchestration
                             </span>
-                            <span className="px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-200 text-xs font-mono uppercase tracking-widest">
+                            <span className="px-4 py-1.5 rounded-full bg-idan-david-aviv-gold/20 border border-idan-david-aviv-gold/30 text-idan-david-aviv-gold text-xs font-mono uppercase tracking-widest">
                                 self-maintainability
                             </span>
                         </div>
                     </motion.div>
                 </div>
             </motion.div>
-
             {/* section: The DNA Philosophy */}
             <Section id="dna-philosophy">
                 <div className="text-center mb-16">
@@ -169,9 +168,9 @@ export default function AntigravityDNAShowcase() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         className="text-4xl md:text-6xl font-bold text-white mb-6 uppercase tracking-tighter"
                     >
-                        The DNA <span className="text-purple-400">Philosophy</span>
+                        The DNA <span className="text-idan-david-aviv-gold">Philosophy</span>
                     </motion.h2>
-                    <p className="max-w-3xl mx-auto text-purple-100/40 text-lg md:text-xl font-light">
+                    <p className="max-w-3xl mx-auto text-idan-david-aviv-gold/40 text-lg md:text-xl font-light">
                         Engineering 100X efficiency by cleaning the noise from the agent runtime.
                         Stabilizing behavior through orchestrated paths and persistent memory.
                     </p>
@@ -181,35 +180,36 @@ export default function AntigravityDNAShowcase() {
                     <PhilosophyCard
                         title="Behavioral Stabilization"
                         description="Shifting from probabilistic guessing to deterministic execution. Codifying identity to eliminate erratic agent behavior."
-                        icon={<Activity className="text-purple-400" />}
+                        icon={<Activity className="text-idan-david-aviv-gold" />}
                     />
                     <PhilosophyCard
                         title="Path Orchestration"
                         description="Designing success through proactive workflows and skills. The agent follows high-integrity roadmaps, not trial-and-error."
-                        icon={<Network className="text-cyan-400" />}
+                        icon={<Network className="text-idan-david-aviv-gold" />}
                     />
                     <PhilosophyCard
                         title="Noise Reduction"
                         description="Automating 'repetitive nonsense' via code. Freeing the cognitive runtime to focus purely on high-level thinking."
-                        icon={<Cpu className="text-amber-400" />}
+                        icon={<Cpu className="text-idan-david-aviv-gold" />}
                     />
                     <PhilosophyCard
                         title="SSOT Consensus"
                         description="Thinking based on a Source of Truth. The agent audits historical data instead of hallucinating from transient logs."
-                        icon={<Database className="text-purple-400" />}
+                        icon={<Database className="text-idan-david-aviv-gold" />}
                     />
                     <PhilosophyCard
                         title="Self-Maintainability"
                         description="A system that audits and improves itself. Zero contextual leakage through crystalline architectural memory."
-                        icon={<Sparkles className="text-cyan-400" />}
+                        icon={<Sparkles className="text-idan-david-aviv-gold" />}
                     />
                     <PhilosophyCard
                         title="100X Performance"
                         description="Saving time, money, and developer frustration by solving problems once and locking them at the SSOT baseline."
-                        icon={<Zap className="text-amber-400" />}
+                        icon={<Zap className="text-idan-david-aviv-gold" />}
                     />
                 </div>
             </Section>
+            <PathTransition />
 
             {/* Content Sections */}
             <div className="w-full max-w-6xl mt-24 space-y-32">
@@ -218,42 +218,43 @@ export default function AntigravityDNAShowcase() {
                 <Section id="neural-blueprint">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">The Neural Blueprint</h2>
-                        <p className="text-purple-100/40 text-lg uppercase tracking-widest font-mono">Algorithmic Governance & Logic</p>
+                        <p className="text-idan-david-aviv-gold/40 text-lg uppercase tracking-widest font-mono">Algorithmic Governance & Logic</p>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
                         <FeatureCard
-                            icon={<Shield className="text-purple-400" />}
+                            icon={<Shield className="text-idan-david-aviv-gold" />}
                             title="Permission Protocol"
                             description="Strict 'Calm Execution' logic ensuring no state changes occur without explicit human authorization."
                         />
                         <FeatureCard
-                            icon={<Cpu className="text-cyan-400" />}
+                            icon={<Cpu className="text-idan-david-aviv-gold" />}
                             title="Operation Commander"
                             description="A meta-skill orchestrating implementation integrity through mandatory reconnaissance and planning."
                         />
                         <FeatureCard
-                            icon={<Zap className="text-gold-400" />}
+                            icon={<Zap className="text-idan-david-aviv-gold" />}
                             title="Windows Protocol"
                             description="Tailored high-integrity terminal execution standards for PowerShell environments."
                         />
                     </div>
                 </Section>
+                <PathTransition />
 
                 {/* section: Crystalline Memory */}
                 <Section id="crystalline-memory">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Crystalline Memory</h2>
-                        <p className="text-purple-100/40 text-lg uppercase tracking-widest font-mono">The Persistent Knowledge Base</p>
+                        <p className="text-idan-david-aviv-gold/40 text-lg uppercase tracking-widest font-mono">The Persistent Knowledge Base</p>
                     </div>
                     <div className="relative mt-12 p-8 md:p-12 rounded-[2.5rem] bg-gradient-to-br from-white/5 to-transparent backdrop-blur-sm border border-white/5 overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-20 pointer-events-none">
-                            <Binary className="w-64 h-64 text-purple-300" />
+                            <Binary className="w-64 h-64 text-idan-david-aviv-gold" />
                         </div>
 
                         <div className="relative z-10 flex flex-col lg:flex-row gap-12 items-center">
                             <div className="flex-1 space-y-6">
                                 <h3 className="text-3xl font-bold text-white">The KI Ecosystem</h3>
-                                <p className="text-purple-100/60 leading-relaxed text-lg">
+                                <p className="text-idan-david-aviv-gold/60 leading-relaxed text-lg">
                                     Knowledge Items (KIs) are more than documentation—they are distilled patterns of success.
                                     By decoupled context from transient chat tokens, the project achieves true <strong>Persistent Context</strong>.
                                 </p>
@@ -273,394 +274,447 @@ export default function AntigravityDNAShowcase() {
                         </div>
                     </div>
                 </Section>
+                <PathTransition />
 
                 {/* section: Technical Core */}
                 <Section id="technical-core">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Technical Core</h2>
-                        <p className="text-purple-100/40 text-lg uppercase tracking-widest font-mono">Architecture for AI Entrepreneurs</p>
+                        <p className="text-idan-david-aviv-gold/40 text-lg uppercase tracking-widest font-mono">Architecture for AI Entrepreneurs</p>
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mt-12">
                         <div className="space-y-8">
                             <div className="p-8 rounded-3xl bg-white/5 border border-white/10">
                                 <div className="flex items-center gap-4 mb-6">
-                                    <Layers className="text-cyan-400 w-8 h-8" />
+                                    <Layers className="text-idan-david-aviv-gold w-8 h-8" />
                                     <h4 className="text-2xl font-bold text-white">Dual-Layer Governance</h4>
                                 </div>
-                                <p className="text-purple-100/60 leading-relaxed">
+                                <p className="text-idan-david-aviv-gold/60 leading-relaxed">
                                     The system operates on two distinct layers:
                                 </p>
                                 <div className="mt-6 space-y-4">
                                     <div className="p-4 rounded-xl bg-white/5 border border-white/5">
                                         <p className="text-sm font-bold text-white mb-1">Layer 1: Global Protocols (GEMINI.md)</p>
-                                        <p className="text-xs text-purple-100/40 font-mono italic">Lower-level instincts governing planning and safety.</p>
+                                        <p className="text-xs text-idan-david-aviv-gold/40 font-mono italic">Lower-level instincts governing planning and safety.</p>
                                     </div>
                                     <div className="p-4 rounded-xl bg-white/5 border border-white/5">
                                         <p className="text-sm font-bold text-white mb-1">Layer 2: Domain Knowledge (KIs)</p>
-                                        <p className="text-xs text-purple-100/40 font-mono italic">High-level memories providing technical depth.</p>
+                                        <p className="text-xs text-idan-david-aviv-gold/40 font-mono italic">High-level memories providing technical depth.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="space-y-8 flex flex-col justify-center">
-                            <h3 className="text-3xl font-bold text-white leading-tight">
-                                Decoupling Memory from <span className="text-purple-400 italic">Transient Tokens</span>
-                            </h3>
-                            <p className="text-purple-100/50 text-lg leading-relaxed">
-                                Antigravity DNA avoids architectural amnesia. Every decision made in a session is crystalline—frozen in time as a KI node, ready to be inherited by future agents.
-                            </p>
-                            <div className="flex gap-4">
-                                <div className="flex flex-col">
-                                    <span className="text-4xl font-bold text-white">60%</span>
-                                    <span className="text-[10px] text-purple-400 uppercase tracking-widest font-mono">Dev Speed Increase</span>
-                                </div>
-                                <div className="w-[1px] h-12 bg-white/10" />
-                                <div className="flex flex-col">
-                                    <span className="text-4xl font-bold text-white">Zero</span>
-                                    <span className="text-[10px] text-purple-400 uppercase tracking-widest font-mono">Context Leakage</span>
-                                </div>
-                            </div>
+                        <p className="text-idan-david-aviv-gold/60 text-lg md:text-xl font-mono uppercase tracking-[0.3em]">
+                            The Distributed Network Architecture of a Performance Orchestrator
+                        </p>
+                    </div>
+                </Section>
+                <PathTransition />
+
+                {/* Core Philosophy */}
+                <Section className="py-20 relative overflow-hidden">
+                    <div className="max-w-7xl mx-auto px-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <PhilosophyCard
+                                icon={<Zap className="w-6 h-6 text-idan-david-aviv-gold" />}
+                                title="Zero-Latency Logic"
+                                description="Executing architecture by following pre-designed high-performance paths, eliminating decision fatigue."
+                            />
+                            <PhilosophyCard
+                                icon={<Shield className="w-6 h-6 text-idan-david-aviv-gold" />}
+                                title="SSOT Consensus"
+                                description="Behavioral stabilization via Knowledge Items (KIs) that serve as the single source of truth for all modules."
+                            />
+                            <PhilosophyCard
+                                icon={<Cpu className="w-6 h-6 text-idan-david-aviv-gold" />}
+                                title="Self-Maintainability"
+                                description="Recursive protocol auditing ensures the system improves its own orchestration without human drift."
+                            />
                         </div>
                     </div>
                 </Section>
+            </div>
+            <PathTransition />
 
-                {/* section: Session Integrity */}
-                <Section id="session-integrity">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Session Integrity</h2>
-                        <p className="text-purple-100/40 text-lg uppercase tracking-widest font-mono">Brain-to-Baseline Synchronization</p>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-                        <div className="group p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-purple-500/30 transition-all">
-                            <div className="w-12 h-12 rounded-2xl bg-purple-500/20 flex items-center justify-center mb-6">
-                                <Brain className="text-purple-400" />
-                            </div>
-                            <h4 className="text-xl font-bold text-white mb-4">The Brain Protocol</h4>
-                            <p className="text-purple-100/50 leading-relaxed">
-                                Persistent context stored in dedicated session directories. Ensures continuity between interactions without context leakage or historical fragmentation.
-                            </p>
-                        </div>
-
-                        <div className="group p-8 rounded-3xl bg-white/5 border border-white/10 hover:border-cyan-500/30 transition-all">
-                            <div className="w-12 h-12 rounded-2xl bg-cyan-500/20 flex items-center justify-center mb-6">
-                                <Sparkles className="text-cyan-400" />
-                            </div>
-                            <h4 className="text-xl font-bold text-white mb-4">Checkbox Sovereignty</h4>
-                            <p className="text-purple-100/50 leading-relaxed">
-                                A ritual of completion. Every task is manually validated and locked, creating a verifiable trail of high-integrity engineering.
-                            </p>
-                        </div>
-                    </div>
-                </Section>
-
-                {/* section: The Neural Explorer (3D Graph) */}
-                <Section id="neural-explorer">
-
-                    <motion.div
-                        layout
-                        initial={false}
-                        animate={{
-                            height: isGraphFullscreen ? '100vh' : 700,
-                            width: '100%',
-                            borderRadius: isGraphFullscreen ? 0 : '3rem',
-                        }}
-                        transition={{
-                            type: 'spring',
-                            damping: 25,
-                            stiffness: 120,
-                        }}
-                        onAnimationComplete={() => {
-                            const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
-                            iframe?.contentWindow?.postMessage({ type: 'RESYNC_SIZE' }, '*');
-                        }}
-                        className={isGraphFullscreen
-                            ? "fixed inset-0 z-[150] bg-[#050510] flex flex-col"
-                            : "relative group overflow-hidden border border-purple-500/20 bg-[#050510] shadow-[0_0_80px_-20px_rgba(168,85,247,0.4)] flex flex-col"
-                        }
-                    >
-                        {/* Integrated Top Head */}
-                        <div className="px-8 py-5 border-b border-white/5 bg-gradient-to-r from-purple-500/5 to-transparent flex items-center justify-between">
-                            <div className="flex items-center gap-6">
-                                <div className="relative">
-                                    <div className="absolute inset-0 bg-purple-500/20 blur-xl rounded-full" />
-                                    <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500/20 to-purple-900/40 flex items-center justify-center border border-purple-500/30">
-                                        <Network className="w-7 h-7 text-purple-400" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <h2 className="text-2xl font-bold text-white tracking-tight flex items-center gap-3">
-                                        Neural Explorer
-                                        <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-mono border border-emerald-500/20 animate-pulse">LIVE NODE</span>
-                                    </h2>
-                                    <p className="text-purple-100/40 text-xs uppercase tracking-[0.2em] font-mono mt-1">Antigravity DNA KI Network Interactive Incremental Graph</p>
-                                </div>
+            {/* Technical Core: Crystalline Memory */}
+            <Section className="py-32 relative">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                        <div className="space-y-10 order-2 lg:order-1">
+                            <div className="space-y-4">
+                                <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white uppercase italic">
+                                    Crystalline <span className="text-idan-david-aviv-gold">Memory</span>
+                                </h2>
+                                <div className="h-1 w-24 bg-gradient-to-r from-idan-david-aviv-gold to-transparent" />
+                                <p className="text-white/60 text-lg leading-relaxed max-w-lg">
+                                    Antigravity doesn&apos;t just process tasks; it embeds them into a synthetic cognitive lattice. Every interaction refines the behavioral DNA, ensuring absolute coherence across sessions.
+                                </p>
                             </div>
 
-                            <div className="flex items-center gap-4">
-                                <div className="flex items-center gap-1 p-1 rounded-xl bg-white/5 border border-white/10">
-                                    <button
-                                        onClick={() => switchView('3d')}
-                                        className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${currentView === '3d'
-                                            ? 'bg-purple-500/20 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.3)] border border-purple-500/30'
-                                            : 'text-white/40 hover:text-white/60'
-                                            }`}
-                                    >
-                                        3D Network
-                                    </button>
-                                    <button
-                                        onClick={() => switchView('2d')}
-                                        className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${currentView === '2d'
-                                            ? 'bg-cyan-500/20 text-cyan-400 shadow-[0_0_15px_rgba(34,211,238,0.3)] border border-cyan-500/30'
-                                            : 'text-white/40 hover:text-white/60'
-                                            }`}
-                                    >
-                                        2D Physics
-                                    </button>
-                                </div>
+                            <ul className="space-y-6">
+                                <MemoryPoint icon={<FileCode className="w-4 h-4" />} text="Dynamic GEMINI.md Behavioral Sync" />
+                                <MemoryPoint icon={<GitBranch className="w-4 h-4" />} text="Versioned Knowledge Injections" />
+                                <MemoryPoint icon={<Terminal className="w-4 h-4" />} text="High-Integrity Terminal Protocols" />
+                            </ul>
 
-                                <button
-                                    onClick={() => {
-                                        setIsGraphFullscreen(!isGraphFullscreen);
-                                        const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
-                                        iframe?.contentWindow?.postMessage({ type: 'toggle-fullscreen', isFullscreen: !isGraphFullscreen }, '*');
-                                    }}
-                                    className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 hover:bg-purple-500/20 transition-all shadow-lg shadow-purple-500/5 group"
-                                    title={isGraphFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
-                                    aria-label={isGraphFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+                            <div className="pt-6">
+                                <motion.div
+                                    whileHover={{ scale: 1.02 }}
+                                    className="p-8 rounded-[2rem] bg-gradient-to-br from-idan-david-aviv-gold/20 to-transparent border border-idan-david-aviv-gold/30 backdrop-blur-xl relative group overflow-hidden"
                                 >
-                                    {isGraphFullscreen ? (
-                                        <Minimize className="w-5 h-5" />
-                                    ) : (
-                                        <Maximize className="w-5 h-5" />
-                                    )}
-                                </button>
-                            </div>
-                        </div>
-
-                        {/* Explorer Workspace: Sidebar Overlay + Graph */}
-                        <div className="flex-1 relative overflow-hidden">
-                            <motion.div
-                                initial={false}
-                                animate={{
-                                    x: isSidebarCollapsed ? -320 : 0,
-                                    opacity: isSidebarCollapsed ? 0 : 1,
-                                }}
-                                transition={{ duration: 0.4, ease: "circOut" }}
-                                className="absolute top-0 left-0 h-full w-[320px] z-30 border-r border-white/5 bg-slate-900/40 backdrop-blur-3xl flex flex-col overflow-hidden"
-                            >
-                                <div className="px-4 py-3 border-b border-white/5 bg-gradient-to-b from-purple-500/5 to-transparent flex items-center justify-between gap-2">
-                                    <div className="flex items-center gap-3">
-                                        <GitGraph className="w-4 h-4 text-purple-400 flex-shrink-0" />
-                                        <div className="flex flex-col justify-center">
-                                            <span className="text-[10px] font-bold text-white uppercase tracking-wider leading-tight">DNA REFERENCE GRAPH EVOLUTION</span>
-                                            <span className="text-[8px] text-purple-100/40 uppercase tracking-[0.1em] italic mt-0.5">choose commit to see state</span>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-idan-david-aviv-gold/10 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
+                                    <div className="flex items-center gap-4 mb-6">
+                                        <Activity className="w-8 h-8 text-idan-david-aviv-gold animate-[pulse-slow_3s_infinite]" />
+                                        <span className="text-xs font-mono text-idan-david-aviv-gold uppercase tracking-[0.2em]">Logic Optimization Active</span>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-8">
+                                        <div>
+                                            <div className="text-3xl font-black text-white mb-1 shadow-[0_0_10px_rgba(255,255,255,0.1)]">100X</div>
+                                            <div className="text-[10px] text-idan-david-aviv-gold uppercase tracking-widest font-mono">Detective Performance</div>
+                                        </div>
+                                        <div>
+                                            <div className="text-3xl font-black text-white mb-1 shadow-[0_0_10px_rgba(255,255,255,0.1)]">0.0ms</div>
+                                            <div className="text-[10px] text-idan-david-aviv-gold uppercase tracking-widest font-mono">Cognitive Leakage</div>
                                         </div>
                                     </div>
-                                    <button
-                                        onClick={() => setIsSidebarCollapsed(true)}
-                                        className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/40 hover:text-white/70 transition-colors"
-                                        title="Collapse Sidebar"
-                                    >
-                                        <X className="w-4 h-4" />
-                                    </button>
+                                </motion.div>
+                            </div>
+                        </div>
+
+                        <div className="relative order-1 lg:order-2">
+                            <div className="absolute -inset-10 bg-idan-david-aviv-gold/10 blur-[100px] rounded-full" />
+                            <div className="grid grid-cols-2 gap-4 relative z-10">
+                                {[
+                                    { icon: <Search className="w-6 h-6" />, title: "Reconnaissance", color: "text-blue-400" },
+                                    { icon: <Code className="w-6 h-6" />, title: "Implementation", color: "idan-david-aviv-gold" },
+                                    { icon: <CheckCircle className="w-6 h-6" />, title: "Verification", color: "text-emerald-400" },
+                                    { icon: <Settings className="w-6 h-6" />, title: "Governance", color: "idan-david-aviv-gold" }
+                                ].map((step, i) => (
+                                    <FeatureCard
+                                        key={i}
+                                        icon={step.icon}
+                                        title={step.title}
+                                        description="Standardized protocol ensures high fidelity results."
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Section>
+
+            {/* section: The Neural Explorer (3D Graph) */}
+            <Section id="neural-explorer">
+
+                <motion.div
+                    layout
+                    initial={false}
+                    animate={{
+                        height: isGraphFullscreen ? '100vh' : 700,
+                        width: '100%',
+                        borderRadius: isGraphFullscreen ? 0 : '3rem',
+                    }}
+                    transition={{
+                        type: 'spring',
+                        damping: 25,
+                        stiffness: 120,
+                    }}
+                    onAnimationComplete={() => {
+                        const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
+                        iframe?.contentWindow?.postMessage({ type: 'RESYNC_SIZE' }, '*');
+                    }}
+                    className={isGraphFullscreen
+                        ? "fixed inset-0 z-[150] bg-[#050510] flex flex-col"
+                        : "relative group overflow-hidden border border-idan-david-aviv-gold/20 bg-[#050510] shadow-[0_0_80px_-20px_rgba(34,211,238,0.4)] flex flex-col"
+                    }
+                >
+                    {/* Integrated Top Head */}
+                    <div className="px-8 py-5 border-b border-white/5 bg-gradient-to-r from-idan-david-aviv-gold/5 to-transparent flex items-center justify-between">
+                        <div className="flex items-center gap-6">
+                            <div className="relative">
+                                <div className="absolute inset-0 bg-idan-david-aviv-gold/20 blur-xl rounded-full" />
+                                <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-idan-david-aviv-gold/20 to-idan-david-aviv-gold/40 flex items-center justify-center border border-idan-david-aviv-gold/30">
+                                    <Network className="w-7 h-7 text-idan-david-aviv-gold" />
                                 </div>
+                            </div>
+                            <div>
+                                <h2 className="text-2xl font-bold text-white tracking-tight flex items-center gap-3">
+                                    Neural Explorer
+                                </h2>
+                                <p className="text-idan-david-aviv-gold/40 text-xs uppercase tracking-[0.2em] font-mono mt-1">Antigravity DNA KI Network Interactive Incremental Graph</p>
+                            </div>
+                        </div>
 
-                                <div className="flex-1 overflow-y-auto premium-scrollbar p-4 space-y-3 min-w-[320px]">
+                        <div className="flex items-center gap-4">
+                            <div className="flex items-center gap-1 p-1 rounded-xl bg-white/5 border border-white/10">
+                                <button
+                                    onClick={() => switchView('3d')}
+                                    className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${currentView === '3d'
+                                        ? 'bg-idan-david-aviv-gold/20 text-idan-david-aviv-gold shadow-[0_0_15px_rgba(34,211,238,0.2)] border border-idan-david-aviv-gold/30'
+                                        : 'text-white/40 hover:text-white/60'
+                                        }`}
+                                >
+                                    3D Network
+                                </button>
+                                <button
+                                    onClick={() => switchView('2d')}
+                                    className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${currentView === '2d'
+                                        ? 'bg-idan-david-aviv-gold/20 text-idan-david-aviv-gold shadow-[0_0_15px_rgba(34,211,238,0.3)] border border-idan-david-aviv-gold/30'
+                                        : 'text-white/40 hover:text-white/60'
+                                        }`}
+                                >
+                                    2D Physics
+                                </button>
+                            </div>
 
-                                    {timeline.length > 0 ? (
-                                        [...timeline].reverse().map((batch, idx) => {
-                                            const isActive = activeEpochTimestamp === batch.id;
-                                            const isFlyoutOpen = openFlyoutBatchId === batch.id;
+                            <button
+                                onClick={() => {
+                                    setIsGraphFullscreen(!isGraphFullscreen);
+                                    const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
+                                    iframe?.contentWindow?.postMessage({ type: 'toggle-fullscreen', isFullscreen: !isGraphFullscreen }, '*');
+                                }}
+                                className="p-3 rounded-xl bg-idan-david-aviv-gold/10 border border-idan-david-aviv-gold/20 text-idan-david-aviv-gold hover:bg-idan-david-aviv-gold/20 transition-all shadow-lg shadow-idan-david-aviv-gold/5 group"
+                                title={isGraphFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+                                aria-label={isGraphFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+                            >
+                                {isGraphFullscreen ? (
+                                    <Minimize className="w-5 h-5" />
+                                ) : (
+                                    <Maximize className="w-5 h-5" />
+                                )}
+                            </button>
+                        </div>
+                    </div>
 
-                                            if (batch.type === 'SIGNIFICANT') {
-                                                return (
-                                                    <motion.button
-                                                        key={batch.id}
-                                                        initial={{ opacity: 0, x: -20 }}
-                                                        animate={{ opacity: 1, x: 0 }}
-                                                        transition={{ delay: idx * 0.05 }}
-                                                        whileHover={{ scale: 1.02 }}
-                                                        whileTap={{ scale: 0.98 }}
-                                                        onClick={() => {
-                                                            setActiveEpochTimestamp(batch.id);
-                                                            setOpenFlyoutBatchId(null);
-                                                            const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
-                                                            iframe?.contentWindow?.postMessage({ type: 'SET_EPOCH', timestamp: batch.id }, '*');
-                                                        }}
-                                                        className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all border ${isActive
-                                                            ? 'bg-purple-500/20 border-purple-500/50 shadow-[0_0_20px_-5px_rgba(168,85,247,0.3)]'
-                                                            : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/20'
-                                                            }`}
-                                                    >
-                                                        <div className="text-left w-full">
-                                                            <div className="flex items-center justify-between mb-1">
-                                                                <span className="text-[8px] text-purple-400 font-mono tracking-widest uppercase opacity-70">{batch.id}</span>
-                                                            </div>
-                                                            <div className="text-[11px] font-bold text-white leading-tight mb-2 truncate pr-2">
-                                                                {batch.label}
-                                                            </div>
 
-                                                            <div className="flex flex-wrap gap-1.5 opacity-80 scale-90 origin-left">
-                                                                {(() => {
-                                                                    let addedNodes = 0, removedNodes = 0, addedLinks = 0, removedLinks = 0;
-                                                                    batch.items.forEach(c => {
-                                                                        addedNodes += c.delta.nodes.added.length;
-                                                                        removedNodes += c.delta.nodes.removed.length;
-                                                                        addedLinks += c.delta.links.added.length;
-                                                                        removedLinks += c.delta.links.removed.length;
-                                                                    });
+                    {/* Sidebar Overlay + Graph Area */}
+                    <div className="flex-1 relative overflow-hidden flex">
+                        <motion.div
+                            initial={false}
+                            animate={{
+                                x: isSidebarCollapsed ? -320 : 0,
+                                opacity: isSidebarCollapsed ? 0 : 1,
+                            }}
+                            transition={{ duration: 0.4, ease: "circOut" }}
+                            className="absolute top-0 left-0 h-full w-[320px] z-30 border-r border-white/5 bg-slate-900/40 backdrop-blur-3xl flex flex-col overflow-hidden"
+                        >
+                            <div className="px-4 py-3 border-b border-white/5 bg-gradient-to-b from-idan-david-aviv-gold/5 to-transparent flex items-center justify-between gap-2">
+                                <div className="flex items-center gap-3">
+                                    <GitGraph className="w-4 h-4 text-idan-david-aviv-gold flex-shrink-0" />
+                                    <div className="flex flex-col justify-center">
+                                        <span className="text-[10px] font-bold text-white uppercase tracking-wider leading-tight">DNA REFERENCE GRAPH EVOLUTION</span>
+                                        <span className="text-[8px] text-idan-david-aviv-gold/40 uppercase tracking-[0.1em] italic mt-0.5">choose commit to see state</span>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={() => setIsSidebarCollapsed(true)}
+                                    className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white/40 hover:text-white/70 transition-colors"
+                                    title="Collapse Sidebar"
+                                >
+                                    <X className="w-4 h-4" />
+                                </button>
+                            </div>
 
-                                                                    return (
-                                                                        <>
-                                                                            {addedNodes > 0 && <span className="text-[8px] text-emerald-400 font-mono">+{addedNodes}N</span>}
-                                                                            {removedNodes > 0 && <span className="text-[8px] text-red-400 font-mono">-{removedNodes}N</span>}
-                                                                            {addedLinks > 0 && <span className="text-[8px] text-blue-400 font-mono">+{addedLinks}L</span>}
-                                                                            {removedLinks > 0 && <span className="text-[8px] text-orange-400 font-mono">-{removedLinks}L</span>}
-                                                                        </>
-                                                                    )
-                                                                })()}
-                                                            </div>
-                                                            {(() => {
-                                                                const total = cumulativeBatches.get(batch.id);
-                                                                return total ? (
-                                                                    <div className="flex gap-2 mt-2 pt-2 border-t border-white/5 opacity-40">
-                                                                        <span className="text-[7px] font-mono text-purple-300 uppercase italic">Total: {total.nodes}N / {total.links}L</span>
-                                                                    </div>
-                                                                ) : null;
-                                                            })()}
-                                                        </div>
-                                                        <ChevronRight className={`flex-shrink-0 w-4 h-4 transition-transform ${isActive ? 'text-purple-400 rotate-90' : 'text-white/10'}`} />
-                                                    </motion.button>
-                                                )
-                                            }
+                            <div className="flex-1 overflow-y-auto premium-scrollbar p-4 space-y-3 min-w-[320px]">
+                                {timeline.length > 0 ? (
+                                    [...timeline].reverse().map((batch, idx) => {
+                                        const isActive = activeEpochTimestamp === batch.id;
+                                        const isFlyoutOpen = openFlyoutBatchId === batch.id;
 
-                                            // EMPTY_BATCH Compact Row
+                                        if (batch.type === 'SIGNIFICANT') {
                                             return (
                                                 <motion.button
                                                     key={batch.id}
                                                     initial={{ opacity: 0, x: -20 }}
                                                     animate={{ opacity: 1, x: 0 }}
                                                     transition={{ delay: idx * 0.05 }}
-                                                    whileHover={{ x: 5 }}
+                                                    whileHover={{ scale: 1.02 }}
+                                                    whileTap={{ scale: 0.98 }}
                                                     onClick={() => {
-                                                        setOpenFlyoutBatchId(isFlyoutOpen ? null : batch.id);
+                                                        setActiveEpochTimestamp(batch.id);
+                                                        setOpenFlyoutBatchId(null);
+                                                        const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
+                                                        iframe?.contentWindow?.postMessage({ type: 'SET_EPOCH', timestamp: batch.id }, '*');
                                                     }}
-                                                    className={`w-full flex items-center justify-between px-5 py-2.5 rounded-xl transition-all border ${isFlyoutOpen
-                                                        ? 'bg-purple-500/10 border-purple-500/30'
-                                                        : 'bg-white/5 border-white/5 hover:bg-white/10'
+                                                    className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all border ${isActive
+                                                        ? 'bg-idan-david-aviv-gold/10 border-idan-david-aviv-gold/50 shadow-[0_0_20px_-5px_rgba(251,191,36,0.2)]'
+                                                        : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/20'
                                                         }`}
                                                 >
-                                                    <div className="flex items-center gap-3">
-                                                        <span className="text-[8px] text-purple-400/50 font-mono tracking-widest uppercase">{batch.id}</span>
-                                                        <span className="px-1.5 py-0.5 rounded bg-white/5 text-[7px] text-white/40 uppercase font-mono border border-white/5">
-                                                            {batch.items.length} ARCHIVED
-                                                        </span>
+                                                    <div className="text-left w-full">
+                                                        <div className="flex items-center justify-between mb-1">
+                                                            <span className="text-[8px] text-idan-david-aviv-gold font-mono tracking-widest uppercase opacity-70">{batch.id}</span>
+                                                        </div>
+                                                        <div className="text-[11px] font-bold text-white leading-tight mb-2 truncate pr-2">
+                                                            {batch.label}
+                                                        </div>
+                                                        <div className="flex flex-wrap gap-1.5 opacity-80 scale-90 origin-left">
+                                                            {(() => {
+                                                                let addedNodes = 0, removedNodes = 0, addedLinks = 0, removedLinks = 0;
+                                                                batch.items.forEach(c => {
+                                                                    addedNodes += c.delta.nodes.added.length;
+                                                                    removedNodes += c.delta.nodes.removed.length;
+                                                                    addedLinks += c.delta.links.added.length;
+                                                                    removedLinks += c.delta.links.removed.length;
+                                                                });
+
+                                                                return (
+                                                                    <>
+                                                                        {addedNodes > 0 && <span className="text-[8px] text-emerald-400 font-mono">+{addedNodes}N</span>}
+                                                                        {removedNodes > 0 && <span className="text-[8px] text-red-400 font-mono">-{removedNodes}N</span>}
+                                                                        {addedLinks > 0 && <span className="text-[8px] text-blue-400 font-mono">+{addedLinks}L</span>}
+                                                                        {removedLinks > 0 && <span className="text-[8px] text-orange-400 font-mono">-{removedLinks}L</span>}
+                                                                    </>
+                                                                )
+                                                            })()}
+                                                        </div>
+                                                        {(() => {
+                                                            const total = cumulativeBatches.get(batch.id);
+                                                            return total ? (
+                                                                <div className="flex gap-2 mt-2 pt-2 border-t border-white/5 opacity-40">
+                                                                    <span className="text-[7px] font-mono text-idan-david-aviv-gold uppercase italic">Total: {total.nodes}N / {total.links}L</span>
+                                                                </div>
+                                                            ) : null;
+                                                        })()}
                                                     </div>
-                                                    <ChevronRight className={`flex-shrink-0 w-3 h-3 transition-transform ${isFlyoutOpen ? 'text-purple-400 rotate-180' : 'text-white/10'}`} />
+                                                    <ChevronRight className={`flex-shrink-0 w-4 h-4 transition-transform ${isActive ? 'text-idan-david-aviv-gold rotate-90' : 'text-white/10'}`} />
                                                 </motion.button>
                                             )
-                                        })
-                                    ) : (
-                                        <div className="flex items-center gap-3 p-4 rounded-xl bg-white/5 animate-pulse">
-                                            <div className="w-4 h-4 border-2 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin" />
-                                            <span className="text-[10px] text-white/20 uppercase tracking-[0.2em] font-mono">Syncing Ledger...</span>
-                                        </div>
-                                    )}
+                                        }
 
-                                </div>
-                            </motion.div>
-
-                            {/* Flyout Layer */}
-                            <AnimatePresence>
-                                {openFlyoutBatchId && (() => {
-                                    const batch = timeline.find(b => b.id === openFlyoutBatchId);
-                                    return batch ? (
-                                        <EmptyBatchFlyout
-                                            batch={batch}
-                                            onClose={() => setOpenFlyoutBatchId(null)}
-                                        />
-                                    ) : null;
-                                })()}
-                            </AnimatePresence>
-
-                            {/* Graph Workspace (Full Container) */}
-                            <div className="absolute inset-0 z-10 bg-[#050510]">
-                                {isSidebarCollapsed && (
-                                    <motion.button
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        onClick={() => setIsSidebarCollapsed(false)}
-                                        className="absolute top-6 left-6 z-20 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 hover:bg-purple-500/20 transition-all shadow-lg shadow-purple-500/5 backdrop-blur-md group"
-                                        title="Open DNA REFERENCE GRAPH EVOLUTION"
-                                    >
-                                        <GitCompare className="w-5 h-5" />
-                                    </motion.button>
-                                )}
-
-                                <iframe
-                                    id="dna-visualizer"
-                                    src="visualizations/ki-network.html"
-                                    className="w-full h-full border-none opacity-90 transition-opacity duration-1000"
-                                    title="KI Network 3D Visualization"
-                                    onLoad={(e) => {
-                                        (e.currentTarget as HTMLIFrameElement).style.opacity = '1';
-                                        // Update view mode if it was changed before load
-                                        const iframe = e.currentTarget as HTMLIFrameElement;
-                                        iframe?.contentWindow?.postMessage({ type: 'SET_VIEW', view: currentView }, '*');
-                                    }}
-                                />
-
-                                {/* Floating Stats */}
-                                <div className="absolute bottom-6 right-6 flex items-center gap-4">
-                                    <div className="px-4 py-2 rounded-lg bg-black/60 backdrop-blur-md border border-white/5 text-[10px] font-mono text-purple-400/60 uppercase tracking-widest">
-                                        Nodes: <span className="text-white">{graphStats.nodes}</span> {' // '} Links: <span className="text-white">{graphStats.links}</span>
+                                        return (
+                                            <motion.button
+                                                key={batch.id}
+                                                initial={{ opacity: 0, x: -20 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                transition={{ delay: idx * 0.05 }}
+                                                whileHover={{ x: 5 }}
+                                                onClick={() => {
+                                                    setOpenFlyoutBatchId(isFlyoutOpen ? null : batch.id);
+                                                }}
+                                                className={`w-full flex items-center justify-between px-5 py-2.5 rounded-xl transition-all border ${isFlyoutOpen
+                                                    ? 'bg-idan-david-aviv-gold/5 border-idan-david-aviv-gold/30'
+                                                    : 'bg-white/5 border-white/5 hover:bg-white/10'
+                                                    }`}
+                                            >
+                                                <div className="flex items-center gap-3">
+                                                    <span className="text-[8px] text-idan-david-aviv-gold/50 font-mono tracking-widest uppercase">{batch.id}</span>
+                                                    <span className="px-1.5 py-0.5 rounded bg-white/5 text-[7px] text-white/40 uppercase font-mono border border-white/5">
+                                                        {batch.items.length} ARCHIVED
+                                                    </span>
+                                                </div>
+                                                <ChevronRight className={`flex-shrink-0 w-3 h-3 transition-transform ${isFlyoutOpen ? 'text-idan-david-aviv-gold rotate-180' : 'text-white/10'}`} />
+                                            </motion.button>
+                                        )
+                                    })
+                                ) : (
+                                    <div className="flex items-center gap-3 p-4 rounded-xl bg-white/5 animate-pulse">
+                                        <div className="w-4 h-4 border-2 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin" />
+                                        <span className="text-[10px] text-white/20 uppercase tracking-[0.2em] font-mono">Syncing Ledger...</span>
                                     </div>
+                                )}
+                            </div>
+                        </motion.div>
+
+                        {/* Flyout Layer */}
+                        <AnimatePresence>
+                            {openFlyoutBatchId && (() => {
+                                const batch = timeline.find(b => b.id === openFlyoutBatchId);
+                                return batch ? (
+                                    <EmptyBatchFlyout
+                                        batch={batch}
+                                        onClose={() => setOpenFlyoutBatchId(null)}
+                                    />
+                                ) : null;
+                            })()}
+                        </AnimatePresence>
+
+                        {/* Graph Workspace (Full Container) */}
+                        <div className="flex-1 relative bg-[#050510]">
+                            {/* HUD Overlay */}
+                            <div className="absolute inset-0 z-20 pointer-events-none">
+
+                                {/* Scanning Line */}
+                                <div className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-idan-david-aviv-gold to-transparent animate-[scan_4s_linear_infinite] opacity-50 shadow-[0_0_15px_rgba(251,191,36,0.3)]" />
+
+                            </div>
+
+                            {isSidebarCollapsed && (
+                                <button
+                                    onClick={() => setIsSidebarCollapsed(false)}
+                                    className="absolute top-6 left-6 z-20 p-3 rounded-xl bg-idan-david-aviv-gold/10 border border-idan-david-aviv-gold/20 text-idan-david-aviv-gold hover:bg-idan-david-aviv-gold/20 transition-all shadow-lg shadow-idan-david-aviv-gold/5 backdrop-blur-md group"
+                                    title="Open DNA REFERENCE GRAPH EVOLUTION"
+                                >
+                                    <GitCompare className="w-5 h-5" />
+                                </button>
+                            )}
+
+                            <iframe
+                                id="dna-visualizer"
+                                src="visualizations/ki-network.html"
+                                className="w-full h-full border-none opacity-90 transition-opacity duration-1000"
+                                title="KI Network 3D Visualization"
+                                onLoad={(e) => {
+                                    (e.currentTarget as HTMLIFrameElement).style.opacity = '1';
+                                    const iframe = e.currentTarget as HTMLIFrameElement;
+                                    iframe?.contentWindow?.postMessage({ type: 'SET_VIEW', view: currentView }, '*');
+                                }}
+                            />
+
+                            {/* Floating Stats */}
+                            <div className="absolute bottom-6 right-6 flex items-center gap-4 z-20">
+                                <div className="px-4 py-2 rounded-lg bg-black/60 backdrop-blur-md border border-white/5 text-[10px] font-mono text-idan-david-aviv-gold/60 uppercase tracking-widest">
+                                    Nodes: <span className="text-white">{graphStats.nodes}</span> {' // '} Links: <span className="text-white">{graphStats.links}</span>
                                 </div>
                             </div>
-                        </div>
-                    </motion.div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-                        <div className="p-6 rounded-2xl bg-white/5 border border-white/5 space-y-4">
-                            <div className="flex items-center gap-2 text-purple-300">
-                                <Network className="w-5 h-5" />
-                                <h4 className="font-bold uppercase tracking-tight">SSOT Consensus</h4>
-                            </div>
-                            <p className="text-sm text-purple-100/40 leading-relaxed">
-                                Decoupling memory from transient chat logs into persistent, versioned Knowledge Items.
-                            </p>
-                        </div>
-                        <div className="p-6 rounded-2xl bg-white/5 border border-white/5 space-y-4">
-                            <div className="flex items-center gap-2 text-cyan-300">
-                                <Boxes className="w-5 h-5" />
-                                <h4 className="font-bold uppercase tracking-tight">Interconnected Bridges</h4>
-                            </div>
-                            <p className="text-sm text-cyan-100/40 leading-relaxed">
-                                Logical dependencies between protocols ensure that a change in one domain propagates across all agents.
-                            </p>
-                        </div>
-                        <div className="p-6 rounded-2xl bg-white/5 border border-white/5 space-y-4">
-                            <div className="flex items-center gap-2 text-purple-300">
-                                <Layers className="w-5 h-5" />
-                                <h4 className="font-bold uppercase tracking-tight">High Fidelity</h4>
-                            </div>
-                            <p className="text-sm text-purple-100/40 leading-relaxed">
-                                Enterprise-grade protocols (`GEMINI.md`) acting as the behavioral DNA for all architectural execution.
-                            </p>
                         </div>
                     </div>
-                </Section>
-
-            </div >
-
+                </motion.div>
+                <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
+                    <div className="p-8 rounded-[2rem] bg-white/5 border border-white/5 space-y-4 hover:border-idan-david-aviv-gold/20 transition-all group">
+                        <div className="flex items-center gap-3 text-idan-david-aviv-gold mb-2">
+                            <div className="p-2 rounded-lg bg-idan-david-aviv-gold/10 group-hover:scale-110 transition-transform">
+                                <Network className="w-5 h-5" />
+                            </div>
+                            <h4 className="font-bold uppercase tracking-tight">SSOT Consensus</h4>
+                        </div>
+                        <p className="text-sm text-idan-david-aviv-gold/40 leading-relaxed font-mono">
+                            Decoupling memory from transient chat logs into persistent, versioned Knowledge Items.
+                        </p>
+                    </div>
+                    <div className="p-8 rounded-[2rem] bg-white/5 border border-white/5 space-y-4 hover:border-idan-david-aviv-gold/20 transition-all group">
+                        <div className="flex items-center gap-3 text-idan-david-aviv-gold mb-2">
+                            <div className="p-2 rounded-lg bg-idan-david-aviv-gold/10 group-hover:scale-110 transition-transform">
+                                <Boxes className="w-5 h-5" />
+                            </div>
+                            <h4 className="font-bold uppercase tracking-tight">Interconnected Bridges</h4>
+                        </div>
+                        <p className="text-sm text-idan-david-aviv-gold/40 leading-relaxed font-mono">
+                            Logical dependencies between protocols ensure that a change in one domain propagates across all agents.
+                        </p>
+                    </div>
+                    <div className="p-8 rounded-[2rem] bg-white/5 border border-white/5 space-y-4 hover:border-idan-david-aviv-gold/20 transition-all group">
+                        <div className="flex items-center gap-3 text-idan-david-aviv-gold mb-2">
+                            <div className="p-2 rounded-lg bg-idan-david-aviv-gold/10 group-hover:scale-110 transition-transform">
+                                <Layers className="w-5 h-5" />
+                            </div>
+                            <h4 className="font-bold uppercase tracking-tight">High Fidelity</h4>
+                        </div>
+                        <p className="text-sm text-idan-david-aviv-gold/40 leading-relaxed font-mono">
+                            Enterprise-grade protocols (`GEMINI.md`) acting as the behavioral DNA for all architectural execution.
+                        </p>
+                    </div>
+                </div>
+            </Section>
 
             {/* Final Footer Label */}
-            < div className="mt-40 mb-20 text-center" >
-                <p className="text-white/20 font-mono text-sm tracking-[0.5em] uppercase">Persistent Agent Module // Antigravity</p>
-            </div >
-        </main >
-    )
+            <div className="mt-40 mb-20 text-center relative z-10">
+                <div className="w-1 h-20 bg-gradient-to-b from-idan-david-aviv-gold/20 to-transparent mx-auto mb-8" />
+                <p className="text-white/20 font-mono text-sm tracking-[1em] uppercase">Persistent Agent Module // Antigravity</p>
+            </div>
+        </main>
+    );
 }
 
 function EmptyBatchFlyout({ batch, onClose }: { batch: TimelineBatch, onClose: () => void }) {
@@ -671,10 +725,10 @@ function EmptyBatchFlyout({ batch, onClose }: { batch: TimelineBatch, onClose: (
             exit={{ opacity: 0, x: -10 }}
             className="absolute top-0 left-[320px] h-full w-[360px] z-40 bg-slate-900/80 backdrop-blur-3xl border-r border-white/10 flex flex-col shadow-[20px_0_50px_-20px_rgba(0,0,0,0.5)]"
         >
-            <div className="p-6 border-b border-white/10 bg-gradient-to-r from-purple-500/10 to-transparent flex items-center justify-between">
+            <div className="p-6 border-b border-white/10 bg-gradient-to-r from-idan-david-aviv-gold/10 to-transparent flex items-center justify-between">
                 <div>
                     <h4 className="text-xs font-bold text-white uppercase tracking-widest">{batch.items.length} ARCHIVED COMMITS</h4>
-                    <p className="text-[10px] text-purple-400/60 font-mono mt-1 uppercase">Batch {batch.id}</p>
+                    <p className="text-[10px] text-idan-david-aviv-gold/60 font-mono mt-1 uppercase">Batch {batch.id}</p>
                 </div>
                 <button
                     onClick={onClose}
@@ -686,9 +740,9 @@ function EmptyBatchFlyout({ batch, onClose }: { batch: TimelineBatch, onClose: (
 
             <div className="flex-1 overflow-y-auto premium-scrollbar p-6 space-y-6">
                 {batch.items.map((commit: KiDiff) => (
-                    <div key={commit.timestamp} className="relative pl-6 border-l border-purple-500/20 py-1">
-                        <div className="absolute top-2.5 -left-[4.5px] w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]" />
-                        <span className="block text-[9px] text-purple-400 font-mono tracking-tighter opacity-50 mb-1">{commit.timestamp}</span>
+                    <div key={commit.timestamp} className="relative pl-6 border-l border-idan-david-aviv-gold/20 py-1">
+                        <div className="absolute top-2.5 -left-[4.5px] w-2 h-2 rounded-full bg-idan-david-aviv-gold shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
+                        <span className="block text-[9px] text-idan-david-aviv-gold font-mono tracking-tighter opacity-50 mb-1">{commit.timestamp}</span>
                         <p className="text-sm text-white/80 leading-relaxed font-light italic">
                             {commit.label}
                         </p>
@@ -705,37 +759,55 @@ function EmptyBatchFlyout({ batch, onClose }: { batch: TimelineBatch, onClose: (
     )
 }
 
+function PathTransition() {
+    return (
+        <div className="w-full flex justify-center py-20 pointer-events-none overflow-hidden h-32 relative">
+            <svg width="200" height="120" viewBox="0 0 200 120" fill="none" className="opacity-20">
+                <path d="M100 0V40M100 80V120M60 60H140" stroke="currentColor" strokeWidth="0.5" className="text-idan-david-aviv-gold" />
+                <motion.circle
+                    animate={{ cy: [0, 40, 60, 60, 140], cx: [100, 100, 60, 140, 100], opacity: [0, 1, 1, 1, 0] }}
+                    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                    r="2" fill="#FBBF24"
+                />
+            </svg>
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-idan-david-aviv-gold/5 to-transparent blur-3xl opacity-30" />
+        </div>
+    )
+}
+
 function PhilosophyCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
     return (
         <motion.div
-            whileHover={{ y: -5 }}
-            className="p-8 rounded-[2rem] bg-gradient-to-br from-white/10 to-transparent border border-white/10 hover:border-purple-500/40 transition-all group"
+            whileHover={{ y: -8, scale: 1.02 }}
+            className="p-8 rounded-[2rem] bg-gradient-to-br from-white/10 to-transparent border border-white/10 hover:border-idan-david-aviv-gold/40 transition-all group relative overflow-hidden"
         >
-            <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out" />
+            <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-idan-david-aviv-gold/10 transition-all duration-300">
                 {icon}
             </div>
-            <h4 className="text-xl font-bold text-white mb-3 tracking-tight">{title}</h4>
-            <p className="text-purple-100/50 text-sm leading-relaxed">{description}</p>
+            <h4 className="text-xl font-bold text-white mb-3 tracking-tight group-hover:text-idan-david-aviv-gold transition-colors">{title}</h4>
+            <p className="text-idan-david-aviv-gold/50 text-sm leading-relaxed group-hover:text-idan-david-aviv-gold/70 transition-colors">{description}</p>
         </motion.div>
     )
 }
 
 function FeatureCard({ icon, title, description }: { icon: React.ReactNode, title: string, description: string }) {
     return (
-        <div className="p-8 rounded-[2rem] bg-white/5 border border-white/10 hover:bg-white/[0.07] transition-all group">
+        <div className="p-8 rounded-[2rem] bg-white/5 border border-white/10 hover:bg-white/[0.07] hover:border-idan-david-aviv-gold/30 transition-all group relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-idan-david-aviv-gold/5 to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out" />
             <div className="mb-6 transform group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
                 {icon}
             </div>
-            <h4 className="text-xl font-bold text-white mb-3 tracking-tight">{title}</h4>
-            <p className="text-purple-100/50 text-sm leading-relaxed">{description}</p>
+            <h4 className="text-xl font-bold text-white mb-3 tracking-tight group-hover:text-idan-david-aviv-gold transition-colors">{title}</h4>
+            <p className="text-idan-david-aviv-gold/50 text-sm leading-relaxed">{description}</p>
         </div>
     )
 }
 
 function MemoryPoint({ icon, text }: { icon: React.ReactNode, text: string }) {
     return (
-        <li className="flex items-center gap-3 text-purple-100/70">
-            <span className="text-purple-400 w-5 h-5 flex-shrink-0">{icon}</span>
+        <li className="flex items-center gap-3 text-idan-david-aviv-gold/70">
+            <span className="text-idan-david-aviv-gold w-5 h-5 flex-shrink-0">{icon}</span>
             <span className="text-sm">{text}</span>
         </li>
     )
@@ -745,7 +817,7 @@ function StatItem({ label, value }: { label: string, value: string }) {
     return (
         <div className="p-6 rounded-2xl bg-white/5 border border-white/5 text-center">
             <div className="text-2xl font-bold text-white mb-1 tracking-tighter">{value}</div>
-            <div className="text-[10px] text-purple-400 uppercase tracking-widest font-mono">{label}</div>
+            <div className="text-[10px] text-idan-david-aviv-gold uppercase tracking-widest font-mono">{label}</div>
         </div>
     )
 }

@@ -125,7 +125,7 @@ function updateGraph(data: { nodes: KiNode[]; links: KiLink[] }) {
 
             let bgColor: string, textColor: string;
             // Genesis/GEMINI styling
-            if (group === 999) { bgColor = '#00008b'; textColor = '#ffffff'; }
+            if (group === 999) { bgColor = '#00008b'; textColor = '#ffffff'; } // Genesis = Blue
             else if (group === 1) { bgColor = '#fbbf24'; textColor = '#0f172a'; } // Core = Gold
             else if (group === 3) { bgColor = '#a855f7'; textColor = '#ffffff'; } // SRL = Purple
             else if (isMissing) { bgColor = '#ef4444'; textColor = '#ffffff'; } // Red for 404
