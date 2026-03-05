@@ -41,15 +41,11 @@
             ],
             "@lib/*": [
                 "src/lib/*"
-            ],
-            "@data/*": [
-                "data/*"
             ]
         }
     },
     "include": [
-        "src",
-        "data"
+        "src"
     ],
     "references": [
         {

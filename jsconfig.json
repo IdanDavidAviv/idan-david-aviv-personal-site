@@ -20,9 +20,6 @@
             ],
             "@hooks/*": [
                 "src/hooks/*"
-            ],
-            "@data/*": [
-                "src/data/*"
             ]
         }
     },

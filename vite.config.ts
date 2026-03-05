@@ -52,8 +52,7 @@ export default defineConfig({
       '@ui': resolve(__dirname, './src/components/ui'),
       '@layout': resolve(__dirname, './src/components/layout'),
       '@hooks': resolve(__dirname, './src/hooks'),
-      '@lib': resolve(__dirname, './src/lib'),
-      '@data': resolve(__dirname, './data'),
+      '@lib': resolve(__dirname, './src/lib')
     },
   },
   build: {
