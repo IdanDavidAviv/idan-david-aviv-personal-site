@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import useCVData from '@/hooks/useCVData'
+import { personalInfo } from '@/data/content'
 import Section from '@/components/ui/Section'
 
 /**
@@ -7,7 +7,6 @@ import Section from '@/components/ui/Section'
  * Using Premium visual tokens and high-integrity data.
  */
 export default function Hero() {
-  const { personalInfo } = useCVData()
 
   return (
     <Section id="hero" fullWidth className="relative flex flex-col items-center justify-center min-h-screen text-center overflow-hidden py-0 px-0">
@@ -33,7 +32,7 @@ export default function Hero() {
         transition={{ duration: 0.8 }}
         className="relative z-30 space-y-6"
       >
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-gradient drop-shadow-[0_0_25px_rgba(0,0,139,0.4)]">
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white animate-glow-pulse">
           {personalInfo.name}
         </h1>
         <p className="text-xl md:text-2xl text-base-content max-w-2xl mx-auto font-light">

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import useCVData from '@/hooks/useCVData'
+import { contentData } from '@/data/content'
 import Section from '@/components/ui/Section'
 import GlassCard from '@/components/ui/GlassCard'
 import { cn } from '@/lib/utils'
@@ -21,7 +21,7 @@ const getCardColor = (index: number) => {
 };
 
 export default function WorkGrid() {
-  const { rankedWork } = useCVData()
+  const rankedWork = contentData.ranked || []
 
   return (
     <Section id="work" className="space-y-12">
@@ -39,7 +39,8 @@ export default function WorkGrid() {
             >
               <GlassCard className={cn(
                 "h-full group transition-all duration-500",
-                `hover:border-${cardColor}/50 hover:shadow-[0_0_20px_rgba(var(--${cardColor}),0.15)]`
+                "hover:-translate-y-1",
+                `hover:border-${cardColor}/30 hover:shadow-[0_8px_30px_rgba(var(--${cardColor}),0.15),0_0_15px_rgba(var(--${cardColor}),0.4)]`
               )}>
                 <div className="flex justify-between items-start mb-4">
                   <span className={cn(
@@ -48,10 +49,16 @@ export default function WorkGrid() {
                   )}>
                     {item.year}
                   </span>
-                  <div className={cn(
-                    "w-1.5 h-1.5 rounded-full shadow-[0_0_8px_currentColor]",
-                    `text-${cardColor}`
-                  )} />
+                  <div className="relative flex items-center justify-center">
+                    <div className={cn(
+                      "absolute w-3 h-3 rounded-full opacity-40 animate-pulse-slow",
+                      `bg-${cardColor}`
+                    )} />
+                    <div className={cn(
+                      "relative w-1.5 h-1.5 rounded-full z-10",
+                      `bg-${cardColor} shadow-[0_0_10px_rgba(var(--${cardColor}),0.8)]`
+                    )} />
+                  </div>
                 </div>
                 <h3 className={cn(
                   "text-xl font-bold mb-3 transition-colors text-base-content",

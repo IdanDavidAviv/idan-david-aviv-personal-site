@@ -1,4 +1,4 @@
-import useCVData from '@/hooks/useCVData'
+import { personalInfo } from '@/data/content'
 import Section from '@/components/ui/Section'
 import GlassCard from '@/components/ui/GlassCard'
 import { motion } from 'framer-motion'
@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
  * About Section - Narrative and summary.
  */
 export default function About() {
-  const { personalInfo } = useCVData()
+  // personalInfo is imported directly
 
   return (
     <Section id="about">
