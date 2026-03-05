@@ -58,9 +58,17 @@ jobs:
         path: node_modules
         key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
 
+    - name: Cache ESLint Cache
+      uses: actions/cache@v4
+      with:
+        path: .eslintcache
+        key: ${{ runner.os }}-eslint-${{ hashFiles('package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.ts', '**/*.tsx') }}
+        restore-keys: |
+          ${{ runner.os }}-eslint-${{ hashFiles('package-lock.json') }}-
+
     - name: Lint and Typecheck
       run: |
-        npm run lint
+        npm run lint -- --cache
         npm run typecheck
 
   # Unit tests
@@ -77,6 +85,14 @@ jobs:
       with:
         path: node_modules
         key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+
+    - name: Cache Vitest Cache
+      uses: actions/cache@v4
+      with:
+        path: node_modules/.vite/vitest
+        key: ${{ runner.os }}-vitest-unit-${{ hashFiles('package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.ts', '**/*.tsx') }}
+        restore-keys: |
+          ${{ runner.os }}-vitest-unit-${{ hashFiles('package-lock.json') }}-
 
     - name: Run unit tests
       run: npm run test:unit
@@ -95,6 +111,14 @@ jobs:
       with:
         path: node_modules
         key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+
+    - name: Cache Vitest Cache
+      uses: actions/cache@v4
+      with:
+        path: node_modules/.vite/vitest
+        key: ${{ runner.os }}-vitest-component-${{ hashFiles('package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.ts', '**/*.tsx') }}
+        restore-keys: |
+          ${{ runner.os }}-vitest-component-${{ hashFiles('package-lock.json') }}-
 
     - name: Run component tests
       run: npm run test:component
