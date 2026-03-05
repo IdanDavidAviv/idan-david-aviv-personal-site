@@ -115,8 +115,6 @@ function updateGraph(data: { nodes: KiNode[]; links: KiLink[] }) {
     });
 
     Graph3D.graphData({ nodes: finalNodes, links: sanitizedLinks });
-    // Re-center camera after force simulation re-initializes
-    setTimeout(() => Graph3D.zoomToFit(600, 60), 800);
 
     if (visNodes && visEdges) {
         visNodes.clear();
@@ -390,7 +388,7 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
 
 // Force Layout Tuning
 Graph3D.d3Force('link').distance(80);
-Graph3D.d3Force('charge').strength(-150);
+Graph3D.d3Force('charge').strength(-150).distanceMax(200);
 
 // ─── Per-frame: keep sprite on node→camera vector ────────────────────────────
 
