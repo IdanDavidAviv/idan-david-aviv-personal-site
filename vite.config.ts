@@ -60,15 +60,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        'ki-network': resolve(__dirname, 'public/visualizations/ki-network.html'),
-      },
-      output: {
-        manualChunks: {
-          'vendor-react': ['react', 'react-dom'],
-          'vendor-utils': ['framer-motion', 'lucide-react', 'clsx', 'tailwind-merge'],
-          'vendor-three': ['three'],
-          'vendor-vis': ['vis-network/standalone'],
-        },
+        'visualizations/ki-network': resolve(__dirname, 'visualizations/ki-network.html'),
       },
     },
   },

@@ -600,7 +600,7 @@ export default function AntigravityDNAShowcase() {
 
                                 <iframe
                                     id="dna-visualizer"
-                                    src="/visualizations/ki-network.html?minimal=true"
+                                    src="visualizations/ki-network.html"
                                     className="w-full h-full border-none opacity-90 transition-opacity duration-1000"
                                     title="KI Network 3D Visualization"
                                     onLoad={(e) => {
