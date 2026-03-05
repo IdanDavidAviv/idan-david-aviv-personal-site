@@ -263,6 +263,11 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
                 : (groupNum === 0 ? '#94a3b8' // Grey for 0
                     : (groupNum === 1 ? '#fbbf24' : '#22d3ee'))); // Gold for 1, Cyan for 2
 
+        const textColor = groupNum === 999 ? '#a4d5f8ff' // Crisp sky blue for deep blue
+            : (groupNum === 3 ? '#f3e8ff' // Very light purple for Purple
+                : (groupNum === 0 ? '#f8fafc' // Bright off-white for Grey
+                    : (groupNum === 1 ? '#78350f' : '#083344'))); // Deep amber for Gold, Deep cyan for Cyan
+
         const size = groupNum === 999 ? 18
             : (groupNum === 3 ? 10 // SRL size
                 : (groupNum === 0 ? 8
@@ -279,7 +284,7 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
         group.add(sphere);
 
         const sprite = new SpriteText(n.id.replace(/_/g, '\n'));
-        sprite.color = '#ffffff';
+        sprite.color = textColor;
         sprite.textHeight = Math.max(3, size * 0.5);
         sprite.padding = 1;
         sprite.backgroundColor = false as unknown as string;
@@ -311,8 +316,8 @@ const Graph3D = (ForceGraph3D as any)()(document.getElementById('view-3d') as HT
         const targetGroup = getNodeGroup(tid);
         const sourceGroup = getNodeGroup(sid);
 
-        // Root Links (from GEMINI.md)
-        if (sourceGroup === 999) return '#2563eb';
+        // Root Links (from or to GEMINI.md)
+        if (sourceGroup === 999 || targetGroup === 999) return '#2563eb';
 
         if (l.target_location === 'SRL' || targetGroup === 3) {
             return '#a855f7'; // Purple SRL External
