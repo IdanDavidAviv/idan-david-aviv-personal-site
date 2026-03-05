@@ -209,7 +209,10 @@ jobs:
         name: build-artifacts
         path: dist/
       
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v2
+      with:
+        credentials_json: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_IDAN_DAVID_AVIV }}'
+
     - name: Deploy to Firebase
-      run: firebase deploy --only hosting --token "${{ secrets.FIREBASE_TOKEN }}"
-      # Note: Using FIREBASE_TOKEN for simplicity if service account JSON is not available.
-      # Ideally, use google-github-actions/auth with a service account JSON.
+      run: firebase deploy --only hosting
