@@ -136,14 +136,16 @@ function updateGraph(data: { nodes: KiNode[]; links: KiLink[] }) {
                 id: n.id,
                 label: label.split(' ').join('\n'),
                 shape: 'circle' as const,
-                margin: 10,
-                color: { background: bgColor, border: isMissing ? '#7f1d1d' : '#1e293b' },
-                font: { color: textColor, size: 11, face: 'Inter' },
+                margin: { top: 10, bottom: 10, left: 10, right: 10 },
+                widthConstraint: { minimum: 50, maximum: 100 },
+                color: { background: bgColor, border: isMissing ? '#7f1d1d' : '#1e293b', highlight: { background: bgColor, border: '#ffffff' } },
+                font: { color: textColor, size: 11, face: 'Inter', multi: false },
             };
         }));
 
         visEdges.clear();
-        visEdges.add(sanitizedLinks.map(l => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        visEdges.add(sanitizedLinks.map((l: any) => {
             const width = l.ref_type === 'formal' ? 3 : (l.ref_type === 'bold' ? 1.5 : 0.6);
 
             const targetGroup = getNodeGroup(l.target);
@@ -442,7 +444,7 @@ setTimeout(() => {
 
 // ─── 2D Graph (vis-network) ──────────────────────────────────────────────────
 
-const visNodes = new DataSet(kiData.nodes.map(n => {
+const processedVisNodes = kiData.nodes.map(n => {
     const label = n.id.replace(/_/g, ' ');
     const group = getNodeGroup(n.id);
     const isMissing = !groupLookup[n.id] && n.id !== 'GEMINI.md' && !n.id.includes('.md');
@@ -467,14 +469,18 @@ const visNodes = new DataSet(kiData.nodes.map(n => {
         id: n.id,
         label: label.split(' ').join('\n'),
         shape: 'circle' as const,
-        margin: 10,
+        margin: { top: 10, bottom: 10, left: 10, right: 10 },
         widthConstraint: { minimum: 50, maximum: 100 },
         color: { background: bgColor, border: '#1e293b', highlight: { background: bgColor, border: '#ffffff' } },
         font: { color: textColor, size: 11, face: 'Inter', multi: false },
     };
-}));
+});
 
-const visEdges = new DataSet(kiData.links.map(l => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const visNodes = new DataSet<any>(processedVisNodes);
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const visEdges = new DataSet<any>(kiData.links.map(l => {
     const width = l.ref_type === 'formal' ? 3 : (l.ref_type === 'bold' ? 1.5 : 0.6);
     return {
         from: typeof l.source === 'object' ? (l.source as KiNode).id : l.source,
@@ -486,7 +492,8 @@ const visEdges = new DataSet(kiData.links.map(l => {
 
 const network = new Network(
     document.getElementById('view-2d') as HTMLElement,
-    { nodes: visNodes, edges: visEdges },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    { nodes: visNodes as any, edges: visEdges as any },
     {
         physics: {
             enabled: true,
