@@ -21,11 +21,19 @@
     --mystic-text: 237 233 254;
     /* #ede9fe in RGB */
 
-    /* Gemini / Antigravity DNA Tokens */
-    --gemini-purple: 168 85 247;
-    /* #a855f7 */
-    --gemini-cyan: 34 211 238;
-    /* #22d3ee */
+    /* IDAN-DAVID-AVIV Branding (Full Hierarchy) */
+    --idan-david-aviv-blue: 0 0 139;
+    /* Genesis */
+    --idan-david-aviv-gold: 251 191 36;
+    /* Core */
+    --idan-david-aviv-cyan: 34 211 238;
+    /* DNA / Standard */
+    --idan-david-aviv-purple: 168 85 247;
+    /* SRL */
+    --idan-david-aviv-grey: 148 163 184;
+    /* Meta */
+    --idan-david-aviv-red: 239 68 68;
+    /* Alert */
   }
 
   body {
