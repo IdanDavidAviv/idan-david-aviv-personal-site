@@ -25,7 +25,6 @@ async function initNetwork() {
     const graphData: { nodes: KiNode[], links: KiLink[] } = await getGraphData();
     
     function refreshGraphs(data: { nodes: KiNode[], links: KiLink[] }) {
-        console.warn(`[DNA] Refreshing graphs with ${data.nodes.length} nodes and ${data.links.length} links`);
         graph3D.graphData(data);
         update2DGraph(visNodes, visEdges, data.nodes, data.links);
         
@@ -34,7 +33,7 @@ async function initNetwork() {
             type: 'EPOCH_UPDATED',
             nodes: data.nodes.length,
             links: data.links.length
-        }, '*');
+        }, '*');    
     }
 
     refreshGraphs(graphData);
@@ -51,11 +50,9 @@ async function initNetwork() {
     // Message Handling (Inter-component Sync)
     window.addEventListener('message', (event) => {
         const msg = event.data;
-        console.warn('[DNA] Received message:', msg.type, msg);
 
         if (msg.type === 'SET_EPOCH') {
             const newState = getHistoryState(epochs, msg.timestamp);
-            console.warn('[DNA] Setting epoch to:', msg.timestamp, newState.nodes.length, 'nodes');
             refreshGraphs(newState);
         }
 

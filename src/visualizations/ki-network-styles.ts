@@ -120,13 +120,6 @@ export function getLinkStyle(link: KiLink, is3D = true): LinkStyle {
         color = THEME.colors.meta;
     }
 
-    // --- Enhanced Debugging ---
-    if (typeof window !== 'undefined' && window.__DEBUG_STYLE_LINK === `${sourceId}-${targetId}`) {
-        console.warn(`[STYLE-DEBUG] 🌈 Link: ${sourceId} -> ${targetId}`);
-        console.warn(`   └─ Props: loc=${link.target_location}, type=${link.ref_type}, groups: src=${sourceGroup}, tgt=${targetGroup}`);
-        console.warn(`   └─ Decision: ${color} (Hex)`);
-    }
-
     // Width logic
     const refType = link.ref_type || 'mention';
     let width = (refType === 'formal' || refType === 'explicit') ? 4.0 : (refType === 'bold' ? 2.0 : 1.0);

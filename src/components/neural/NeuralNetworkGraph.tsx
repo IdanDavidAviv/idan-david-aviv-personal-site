@@ -35,6 +35,9 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
 
   const onTimelineDataRef = useRef(onTimelineData);
   const onStatsUpdateRef = useRef(onStatsUpdate);
+  const skipInitialSyncRef = useRef(false);
+  const loadingPromiseRef = useRef<Promise<void> | null>(null);
+  const lastBoundTimestampRef = useRef<string | null>(null);
   const lastStatsRef = useRef({ nodes: 0, links: 0 });
 
   useEffect(() => { onTimelineDataRef.current = onTimelineData; }, [onTimelineData]);
@@ -44,7 +47,12 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
   const epochs = useMemo(() => (historyData as { epochs: KiDiff[] }).epochs, []);
 
   const refreshGraphs = React.useCallback((state: HistoryState) => {
-    const { nodes, links } = state;
+    const { nodes, links, metadata } = state;
+    
+    // Deduplication Guard: Don't re-bind if timestamp is identical
+    if (metadata.timestamp && metadata.timestamp === lastBoundTimestampRef.current) return;
+    lastBoundTimestampRef.current = metadata.timestamp;
+
     if (graph3DRef.current) graph3DRef.current.graphData({ nodes, links });
     if (visNodesRef.current && visEdgesRef.current) {
       update2DGraph(visNodesRef.current, visEdgesRef.current, nodes, links);
@@ -129,29 +137,40 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
     };
   }, [isFullscreen, currentView]);
 
-  // Data Loading
+  // Data Loading (Single Flight Pattern)
   useEffect(() => {
-    if (isDataLoadedRef.current) return;
+    if (isDataLoadedRef.current || loadingPromiseRef.current) return;
+    
     const loadInitial = async () => {
       try {
         const initialData = await getGraphData(historyData);
+        skipInitialSyncRef.current = true;
+        
+        // 1. Refresh internal engine
         refreshGraphs(initialData);
         isDataLoadedRef.current = true;
+        
+        // 2. Notify parent of timeline (batching happens in parent)
         if (onTimelineDataRef.current && epochs.length > 0) {
-          onTimelineDataRef.current(getTimelineBatches(epochs), epochs[epochs.length - 1].timestamp);
+          const lastEpoch = epochs[epochs.length - 1];
+          onTimelineDataRef.current(getTimelineBatches(epochs), lastEpoch.timestamp);
         }
+        
+        // 3. Stabilization gap before enabling prop sync
         setTimeout(() => {
           if (graph3DRef.current) graph3DRef.current.zoomToFit(800, 100);
-        }, 800);
+          skipInitialSyncRef.current = false;
+        }, 1200); // Increased slightly for safety
       } catch (err) {
         console.error('[DNA-Native] ❌ loadInitial Error:', err);
       }
     };
-    loadInitial();
+    
+    loadingPromiseRef.current = loadInitial();
   }, [epochs, refreshGraphs]);
 
   useEffect(() => {
-    if (!activeEpochTimestamp) return;
+    if (!activeEpochTimestamp || skipInitialSyncRef.current) return;
     refreshGraphs(getHistoryState(epochs, activeEpochTimestamp));
   }, [activeEpochTimestamp, epochs, refreshGraphs]);
 

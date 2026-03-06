@@ -56,7 +56,6 @@ export function createGraph2D(container: HTMLElement, nodes: KiNode[], links: Ki
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function update2DGraph(visNodes: DataSet<any>, visEdges: DataSet<any>, nodes: KiNode[], links: KiLink[]) {
-    console.log(`[DNA-2D-Engine] 📥 Data Bound to Renderer: ${nodes?.length || 0} nodes, ${links?.length || 0} links`);
     visNodes.clear();
     visNodes.add(nodes.map(n => {
         const label = n.id.replace(/_/g, ' ');

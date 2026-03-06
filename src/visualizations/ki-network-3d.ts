@@ -7,9 +7,9 @@ import { getLinkLabel } from './ki-network-ui';
 
 export function createGraph3D(container: HTMLElement) {
     // Registry for per-frame sprite projection
+    const instanceId = Math.random().toString(36).substring(7);
     const nodeSprites = new WeakMap<object, { sprite: THREE.Object3D, size: number }>();
 
-    console.warn('[DNA-DEBUG] 🚀 Calling ForceGraph3D constructor...');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const graph = (ForceGraph3D as any)()(container)
         .backgroundColor('#050510')
@@ -76,7 +76,6 @@ export function createGraph3D(container: HTMLElement) {
         const pointLight = new THREE.PointLight(0xffffff, 1);
         pointLight.position.set(100, 100, 100);
         scene.add(pointLight);
-        console.warn('[DNA-3D-Engine] 💡 Custom Lighting Injected into Scene.');
     }
 
     // Data Binding Watcher
@@ -84,10 +83,7 @@ export function createGraph3D(container: HTMLElement) {
     graph.graphData = function(...args: unknown[]) {
         if (args.length > 0) {
             const data = args[0] as { nodes?: KiNode[], links?: object[] };
-            console.warn(`[DNA-3D-Engine] 📥 Data Bound to Renderer: ${data.nodes?.length || 0} nodes, ${data.links?.length || 0} links`);
-            if (data.nodes && data.nodes.length > 0) {
-                console.warn('   └─ Sample Node ID:', data.nodes[0].id);
-            }
+            console.warn(`[DNA-3D-Engine] 📥 Data Bound to Renderer [${instanceId}]: ${data.nodes?.length || 0} nodes, ${data.links?.length || 0} links`);
         }
         return originalGraphData.apply(this, args);
     };

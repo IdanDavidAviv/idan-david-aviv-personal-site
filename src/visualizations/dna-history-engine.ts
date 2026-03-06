@@ -107,14 +107,20 @@ export interface HistoryState {
     };
 }
 
+const stateCache = new Map<string, HistoryState>();
+
 /**
  * Reconstructs the graph state at a specific point in time by walking FORWARD from Genesis.
  * @param epochs The full ledger of KiDiff epochs.
  * @param targetTimestamp The timestamp to stop at (inclusive). If null, returns the full cumulative state.
  */
 export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null): HistoryState {
+    const cacheKey = targetTimestamp || '__FULL__';
+    if (stateCache.has(cacheKey)) {
+        return stateCache.get(cacheKey)!;
+    }
+
     const startTime = performance.now();
-    console.warn(`[DNA-Engine] getHistoryState called for ${targetTimestamp}. Epochs count: ${epochs?.length}`);
     if (!epochs || epochs.length === 0) {
         console.error('[DNA-Engine] No epochs provided to getHistoryState');
         return { 
@@ -148,7 +154,6 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
     let finalLabel = 'Full Cumulative State';
 
     const endPos = (stopIdx === -1 ? epochs.length - 1 : stopIdx);
-    console.warn(`[DNA-Reconstruction] 🛠️ Walking Genesis -> ${endPos}...`);
 
     for (let i = 0; i <= endPos; i++) {
         const { delta, label } = epochs[i];
@@ -184,15 +189,9 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
     
     // Tier 3: Compressed Observability
     const duration = performance.now() - startTime;
-    const refTypeCounts = Array.from(links.values()).reduce((acc, l) => {
-        const type = l.ref_type || 'mention';
-        acc[type] = (acc[type] || 0) + 1;
-        return acc;
-    }, {} as Record<string, number>);
 
     console.warn(`[DNA-Reconstruction] ✅ Walked ${endPos + 1} epochs in ${duration.toFixed(2)}ms`);
-    console.warn(`   └─ Final State: ${nodes.size} nodes, ${links.size} links (${finalLabel})`);
-    console.warn(`   └─ Styles: formal=${refTypeCounts.formal || 0}, bold=${refTypeCounts.bold || 0}, mention=${refTypeCounts.mention || 0}`);
+
 
     const finalNodes = Array.from(nodes.values());
     const finalLinks = Array.from(links.values()).map(link => {
@@ -232,7 +231,7 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
 
     const endTime = performance.now();
 
-    return {
+    const result = {
         nodes: finalNodes,
         links: finalLinks,
         metadata: {
@@ -242,6 +241,9 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
             delta: { nodesAdded, nodesRemoved, linksAdded, linksRemoved }
         }
     };
+
+    stateCache.set(cacheKey, result);
+    return result;
 }
 
 /**
