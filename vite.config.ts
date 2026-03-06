@@ -59,7 +59,6 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        'visualizations/ki-network': resolve(__dirname, 'visualizations/ki-network.html'),
       },
     },
   },
