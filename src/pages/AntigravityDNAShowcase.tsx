@@ -1,23 +1,16 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Dna, Brain, Cpu, Database, Shield, Zap, Sparkles, Binary, Network, Activity, Boxes, Layers, ChevronRight, Maximize, Minimize, X, GitCompare, GitGraph, FileCode, GitBranch, Terminal, Search, Code, CheckCircle, Settings } from 'lucide-react'
 import Section from '@/components/ui/Section'
+import { NeuralNetworkGraph } from '@/components/neural/NeuralNetworkGraph'
+import { TimelineBatch, KiNode, KiLink } from '@/visualizations/ki-network-types'
 
 /**
  * Antigravity DNA Showcase Page
  * A technical deep-dive into the AI agent's evolutionary architecture and persistence protocols.
  */
 
-interface KiNode {
-    id: string;
-    name: string;
-    group: number;
-}
-
-interface KiLink {
-    source: string | KiNode;
-    target: string | KiNode;
-}
+// Types defined in ki-network-types.ts
 
 interface KiDiff {
     timestamp: string;
@@ -28,12 +21,7 @@ interface KiDiff {
     };
 }
 
-interface TimelineBatch {
-    id: string; // Latest timestamp in batch
-    type: 'SIGNIFICANT' | 'EMPTY_BATCH';
-    label: string;     // Representative label
-    items: KiDiff[]; // All commits in this batch
-}
+// TimelineBatch imported from ki-network-types.ts
 
 export default function AntigravityDNAShowcase() {
     const [isGraphFullscreen, setIsGraphFullscreen] = useState(false)
@@ -66,34 +54,22 @@ export default function AntigravityDNAShowcase() {
 
     const switchView = (view: '3d' | '2d') => {
         setCurrentView(view)
-        const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement
-        iframe?.contentWindow?.postMessage({ type: 'SET_VIEW', view }, '*')
     }
 
+    const handleStatsUpdate = useCallback((stats: { nodes: number; links: number }) => {
+        setGraphStats(stats);
+    }, []);
+
+    const handleTimelineData = useCallback((timelineData: TimelineBatch[], currentEpoch: string) => {
+        setTimeline(timelineData);
+        setActiveEpochTimestamp(prev => prev || currentEpoch);
+    }, []);
+
     useEffect(() => {
-        const handleMessage = (event: MessageEvent) => {
-            if (event.data.type === 'toggle-fullscreen') {
-                setIsGraphFullscreen(event.data.isFullscreen)
-            }
-            if (event.data.type === 'TIMELINE_DATA') {
-                setTimeline(event.data.timeline as TimelineBatch[])
-                if (event.data.currentEpoch) setActiveEpochTimestamp(event.data.currentEpoch);
-            }
-            if (event.data.type === 'EPOCH_UPDATED') {
-                setGraphStats({ nodes: event.data.nodes, links: event.data.links })
-            }
-        }
-        window.addEventListener('message', handleMessage)
-
-        // Request timeline if already loaded
-        const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement
-        iframe?.contentWindow?.postMessage({ type: 'GET_TIMELINE' }, '*')
-
         // SEO & Metadata Tuning
         document.title = "Antigravity DNA — Unified Neural Network | Idan David-Aviv";
-
-        return () => window.removeEventListener('message', handleMessage)
     }, [])
+
 
     // Manage body overflow for fullscreen
     useEffect(() => {
@@ -421,8 +397,7 @@ export default function AntigravityDNAShowcase() {
                         stiffness: 120,
                     }}
                     onAnimationComplete={() => {
-                        const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
-                        iframe?.contentWindow?.postMessage({ type: 'RESYNC_SIZE' }, '*');
+                        // No longer need to postMessage to iframe for resize
                     }}
                     className={isGraphFullscreen
                         ? "fixed inset-0 z-[150] bg-[#050510] flex flex-col"
@@ -469,11 +444,7 @@ export default function AntigravityDNAShowcase() {
                             </div>
 
                             <button
-                                onClick={() => {
-                                    setIsGraphFullscreen(!isGraphFullscreen);
-                                    const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
-                                    iframe?.contentWindow?.postMessage({ type: 'toggle-fullscreen', isFullscreen: !isGraphFullscreen }, '*');
-                                }}
+                                onClick={() => setIsGraphFullscreen(!isGraphFullscreen)}
                                 className="p-3 rounded-xl bg-idan-david-aviv-gold/10 border border-idan-david-aviv-gold/20 text-idan-david-aviv-gold hover:bg-idan-david-aviv-gold/20 transition-all shadow-lg shadow-idan-david-aviv-gold/5 group"
                                 title={isGraphFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
                                 aria-label={isGraphFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
@@ -534,8 +505,6 @@ export default function AntigravityDNAShowcase() {
                                                     onClick={() => {
                                                         setActiveEpochTimestamp(batch.id);
                                                         setOpenFlyoutBatchId(null);
-                                                        const iframe = document.getElementById('dna-visualizer') as HTMLIFrameElement;
-                                                        iframe?.contentWindow?.postMessage({ type: 'SET_EPOCH', timestamp: batch.id }, '*');
                                                     }}
                                                     className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all border ${isActive
                                                         ? 'bg-idan-david-aviv-gold/10 border-idan-david-aviv-gold/50 shadow-[0_0_20px_-5px_rgba(251,191,36,0.2)]'
@@ -631,7 +600,7 @@ export default function AntigravityDNAShowcase() {
                         </AnimatePresence>
 
                         {/* Graph Workspace (Full Container) */}
-                        <div className="flex-1 relative bg-[#050510]">
+                        <div className="flex-1 relative flex flex-col bg-[#050510]">
                             {/* HUD Overlay */}
                             <div className="absolute inset-0 z-20 pointer-events-none">
 
@@ -650,17 +619,16 @@ export default function AntigravityDNAShowcase() {
                                 </button>
                             )}
 
-                            <iframe
-                                id="dna-visualizer"
-                                src="visualizations/ki-network.html"
-                                className="w-full h-full border-none opacity-90 transition-opacity duration-1000"
-                                title="KI Network 3D Visualization"
-                                onLoad={(e) => {
-                                    (e.currentTarget as HTMLIFrameElement).style.opacity = '1';
-                                    const iframe = e.currentTarget as HTMLIFrameElement;
-                                    iframe?.contentWindow?.postMessage({ type: 'SET_VIEW', view: currentView }, '*');
-                                }}
-                            />
+                            {/* Interactive Graph Area Layer */}
+                            <div className="flex-1 relative flex flex-col bg-[#050510]">
+                                <NeuralNetworkGraph
+                                    activeEpochTimestamp={activeEpochTimestamp}
+                                    currentView={currentView}
+                                    isFullscreen={isGraphFullscreen}
+                                    onTimelineData={handleTimelineData}
+                                    onStatsUpdate={handleStatsUpdate}
+                                />
+                            </div>
 
                             {/* Floating Stats */}
                             <div className="absolute bottom-6 right-6 flex items-center gap-4 z-20">
@@ -765,6 +733,7 @@ function PathTransition() {
             <svg width="200" height="120" viewBox="0 0 200 120" fill="none" className="opacity-20">
                 <path d="M100 0V40M100 80V120M60 60H140" stroke="currentColor" strokeWidth="0.5" className="text-idan-david-aviv-gold" />
                 <motion.circle
+                    initial={{ cy: 0, cx: 100, opacity: 0 }}
                     animate={{ cy: [0, 40, 60, 60, 140], cx: [100, 100, 60, 140, 100], opacity: [0, 1, 1, 1, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
                     r="2" fill="#FBBF24"

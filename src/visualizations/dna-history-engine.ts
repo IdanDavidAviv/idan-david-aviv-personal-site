@@ -32,6 +32,7 @@ export interface KiDiff {
     delta: KiDelta;
 }
 
+
 export interface TimelineBatch {
     id: string; // Timestamp of the first/main item
     type: 'SIGNIFICANT' | 'EMPTY_BATCH';
@@ -40,42 +41,180 @@ export interface TimelineBatch {
 }
 
 /**
+ * Fetches the timeline data and reconstructs the cumulative graph state.
+ */
+export async function getGraphData(preLoadedData?: any) {
+    const DATA_URL = './dna-history-backfill-v26_s1.json';
+    try {
+        if (preLoadedData) {
+            const epochs = preLoadedData.epochs || preLoadedData;
+            if (Array.isArray(epochs)) {
+                return getHistoryState(epochs, null);
+            }
+        }
+
+        const response = await fetch(DATA_URL);
+        
+        if (!response.ok) {
+            console.error(`[DNA-Engine] ❌ Fetch Failed for ${DATA_URL}`);
+            console.error(`   ├─ Status: ${response.status} (${response.statusText})`);
+            console.error(`   └─ Type: ${response.type}`);
+            return { nodes: [], links: [], metadata: { timestamp: null, label: 'Fetch Error', reconstructionTimeMs: 0, delta: { nodesAdded: 0, nodesRemoved: 0, linksAdded: 0, linksRemoved: 0 } } };
+        }
+
+        let data;
+        try {
+            data = await response.json();
+        } catch (jsonErr) {
+            console.error(`[DNA-Engine] ❌ JSON Parse Error for ${DATA_URL}`);
+            console.error(`   └─ Message: ${jsonErr instanceof Error ? jsonErr.message : String(jsonErr)}`);
+            return { nodes: [], links: [], metadata: { timestamp: null, label: 'JSON Error', reconstructionTimeMs: 0, delta: { nodesAdded: 0, nodesRemoved: 0, linksAdded: 0, linksRemoved: 0 } } };
+        }
+
+        const epochs = data.epochs || data;
+        const metadata = data.metadata || {};
+        
+        console.log(`[DNA-Engine] 🛰️ Data Fetch Success: ${DATA_URL}`);
+        console.log(`   ├─ Version: ${metadata.version || 'unknown'}`);
+        console.log(`   ├─ Sync: ${metadata.sync || 'unknown'}`);
+        console.log(`   └─ Total Epochs: ${epochs.length}`);
+        
+        if (!Array.isArray(epochs)) {
+            console.error(`[DNA-Engine] ❌ Schema Error: Data is not an array of epochs`);
+            return { nodes: [], links: [], metadata: { timestamp: null, label: 'Schema Error', reconstructionTimeMs: 0, delta: { nodesAdded: 0, nodesRemoved: 0, linksAdded: 0, linksRemoved: 0 } } };
+        }
+
+        return getHistoryState(epochs, null);
+    } catch (e) {
+        console.error('[DNA-Engine] ❌ Unexpected Error during getGraphData:', e);
+        return { nodes: [], links: [], metadata: { timestamp: null, label: 'Unexpected Error', reconstructionTimeMs: 0, delta: { nodesAdded: 0, nodesRemoved: 0, linksAdded: 0, linksRemoved: 0 } } };
+    }
+}
+
+export interface HistoryState {
+    nodes: KiNode[];
+    links: KiLink[];
+    metadata: {
+        timestamp: string | null;
+        label: string;
+        reconstructionTimeMs: number;
+        delta: {
+            nodesAdded: number;
+            nodesRemoved: number;
+            linksAdded: number;
+            linksRemoved: number;
+        };
+    };
+}
+
+/**
  * Reconstructs the graph state at a specific point in time by walking FORWARD from Genesis.
- * @param history The full ledger of KiDiff epochs.
+ * @param epochs The full ledger of KiDiff epochs.
  * @param targetTimestamp The timestamp to stop at (inclusive). If null, returns the full cumulative state.
  */
-export function getHistoryState(history: KiDiff[], targetTimestamp: string | null): { nodes: KiNode[]; links: KiLink[] } {
+export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null): HistoryState {
+    const startTime = performance.now();
+    console.warn(`[DNA-Engine] getHistoryState called for ${targetTimestamp}. Epochs count: ${epochs?.length}`);
+    if (!epochs || epochs.length === 0) {
+        console.error('[DNA-Engine] No epochs provided to getHistoryState');
+        return { 
+            nodes: [], 
+            links: [], 
+            metadata: { timestamp: null, label: 'Empty', reconstructionTimeMs: 0, delta: { nodesAdded: 0, nodesRemoved: 0, linksAdded: 0, linksRemoved: 0 } } 
+        };
+    }
     const nodes = new Map<string, KiNode>();
     const links = new Set<string>(); // Serialized KiLink for unique identification
 
+    const getLinkId = (link: KiLink) => {
+        const s = typeof link.source === 'string' ? link.source : (link.source as KiNode).id;
+        const t = typeof link.target === 'string' ? link.target : (link.target as KiNode).id;
+        return `${s}-${t}`;
+    };
+
     const stopIdx = targetTimestamp
-        ? history.findIndex(h => h.timestamp === targetTimestamp)
-        : history.length - 1;
+        ? epochs.findIndex(h => h.timestamp === targetTimestamp)
+        : epochs.length - 1;
 
     if (targetTimestamp && stopIdx === -1) {
         console.warn(`⚠️ Target timestamp ${targetTimestamp} not found in history.`);
     }
 
     // Walk FORWARD from index 0
-    for (let i = 0; i <= (stopIdx === -1 ? history.length - 1 : stopIdx); i++) {
-        const { delta } = history[i];
+    let nodesAdded = 0;
+    let nodesRemoved = 0;
+    let linksAdded = 0;
+    let linksRemoved = 0;
+    let finalLabel = 'Full Cumulative State';
+
+    const endPos = (stopIdx === -1 ? epochs.length - 1 : stopIdx);
+    console.log(`[DNA-Reconstruction] 🛠️ Walking Genesis -> ${endPos}...`);
+
+    for (let i = 0; i <= endPos; i++) {
+        const { delta, label, timestamp } = epochs[i];
+        if (i === endPos) finalLabel = label;
+
+        const prevNodeCount = nodes.size;
+        const prevLinkCount = links.size;
 
         // 1. Process Nodes
-        delta.nodes.removed.forEach(id => nodes.delete(id));
-        delta.nodes.added.forEach(node => nodes.set(node.id, node));
+        delta.nodes.removed.forEach(id => {
+            if (nodes.has(id)) {
+                nodes.delete(id);
+                nodesRemoved++;
+            }
+        });
+        delta.nodes.added.forEach(node => {
+            nodes.set(node.id, { ...node });
+            nodesAdded++;
+        });
 
         // 2. Process Links
         delta.links.removed.forEach(link => {
-            links.delete(serializeLink(link));
+            const id = getLinkId(link);
+            if (links.has(id)) {
+                links.delete(id);
+                linksRemoved++;
+            }
         });
         delta.links.added.forEach(link => {
-            links.add(serializeLink(link));
+            const id = getLinkId(link);
+            links.add(id);
+            linksAdded++;
         });
+
+        // Verbose checkpoint for major steps
+        if (i % 5 === 0 || i === endPos) {
+            console.log(`   [Step ${i}] ⏩ ${timestamp.split('T')[1].split('+')[0]} | ${label.substring(0, 30)}...`);
+            console.log(`       └─ Cumulative State: ${nodes.size} nodes (+${nodes.size - prevNodeCount}), ${links.size} links (+${links.size - prevLinkCount})`);
+        }
     }
 
+    const finalNodes = Array.from(nodes.values());
+    const finalLinks = Array.from(links).map(id => {
+        const [source, target] = id.split('-');
+        return { source, target };
+    }) as KiLink[];
+
+    // Data Validation
+    const invalidLinks = finalLinks.filter(l => !nodes.has(typeof l.source === 'string' ? l.source : (l.source as KiNode).id) || 
+                                              !nodes.has(typeof l.target === 'string' ? l.target : (l.target as KiNode).id));
+    
+    if (invalidLinks.length > 0) {
+        console.error(`[DNA-Engine] ⚠️ Found ${invalidLinks.length} dangling links!`);
+    }
+
+    const endTime = performance.now();
+
     return {
-        nodes: Array.from(nodes.values()),
-        links: Array.from(links).map(l => JSON.parse(l) as KiLink)
+        nodes: finalNodes,
+        links: finalLinks,
+        metadata: {
+            timestamp: targetTimestamp,
+            label: finalLabel,
+            reconstructionTimeMs: parseFloat((endTime - startTime).toFixed(3)),
+            delta: { nodesAdded, nodesRemoved, linksAdded, linksRemoved }
+        }
     };
 }
 
@@ -101,11 +240,12 @@ export function isSignificant(diff: KiDiff): boolean {
 /**
  * Groups consecutive non-significant commits into batches.
  */
-export function getTimelineBatches(history: KiDiff[]): TimelineBatch[] {
+export function getTimelineBatches(epochs: KiDiff[]): TimelineBatch[] {
+    console.warn(`[DNA-Engine] Generating timeline batches for ${epochs.length} epochs`);
     const batches: TimelineBatch[] = [];
     let currentBatch: KiDiff[] = [];
 
-    history.forEach((diff) => {
+    epochs.forEach((diff) => {
         if (isSignificant(diff)) {
             // If we have a pending empty batch, push it
             if (currentBatch.length > 0) {
@@ -142,13 +282,3 @@ export function getTimelineBatches(history: KiDiff[]): TimelineBatch[] {
     return batches;
 }
 
-function serializeLink(link: KiLink): string {
-    // We normalize the link for set comparison (source + target is the unique key)
-    return JSON.stringify({
-        source: typeof link.source === 'object' ? (link.source as KiNode).id : link.source,
-        target: typeof link.target === 'object' ? (link.target as KiNode).id : link.target,
-        label: link.label,
-        target_location: link.target_location,
-        ref_type: link.ref_type
-    });
-}
