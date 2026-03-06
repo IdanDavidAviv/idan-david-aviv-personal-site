@@ -134,3 +134,13 @@ export function getLinkStyle(link: KiLink, is3D = true): LinkStyle {
 
     return { color, rgba, width };
 }
+
+export function getLinkLabel(l: KiLink) {
+    const type = l.ref_type || 'mention';
+    const typeLabel = (type === 'formal' || type === 'explicit') 
+        ? 'Explicit file path' 
+        : type === 'bold' 
+            ? '<strong>Bold</strong> mention' 
+            : 'Simple mention';
+    return `<div class="link-label"><strong>${typeLabel}</strong></div>`;
+}

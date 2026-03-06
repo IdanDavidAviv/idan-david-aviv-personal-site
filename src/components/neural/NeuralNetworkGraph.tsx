@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { Network, DataSet } from 'vis-network/standalone';
 import { GitCommit, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { getGraphData, getHistoryState, getTimelineBatches, HistoryState, KiDiff, TimelineBatch, KiNode } from '../../visualizations/dna-history-engine';
 import { createGraph3D, handle3DNodeClick, updateSpritePositions } from '../../visualizations/ki-network-3d';
 import { createGraph2D, update2DGraph } from '../../visualizations/ki-network-2d';
@@ -142,6 +143,7 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
     if (isDataLoadedRef.current || loadingPromiseRef.current) return;
     
     const loadInitial = async () => {
+      const startTime = performance.now();
       try {
         const initialData = await getGraphData(historyData);
         skipInitialSyncRef.current = true;
@@ -160,6 +162,8 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
         setTimeout(() => {
           if (graph3DRef.current) graph3DRef.current.zoomToFit(800, 100);
           skipInitialSyncRef.current = false;
+          const duration = performance.now() - startTime;
+          console.warn(`[DNA-Performance] 🚀 Engine Warmup Complete in ${duration.toFixed(2)}ms (Single-Flight)`);
         }, 1200); // Increased slightly for safety
       } catch (err) {
         console.error('[DNA-Native] ❌ loadInitial Error:', err);
@@ -189,92 +193,109 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
       />
 
       {/* Legend UI */}
-      <div 
-        className={`absolute top-5 right-5 z-[200] bg-[#050510]/85 backdrop-blur-xl border border-idan-david-aviv-gold/20 rounded-2xl shadow-2xl transition-all duration-500 overflow-hidden ${
-          isLegendExpanded ? 'w-[240px] max-h-[600px] p-5' : 'w-11 h-11 p-0'
-        }`}
+      <motion.div 
+        initial={false}
+        animate={{
+          width: isLegendExpanded ? 240 : 44,
+          height: isLegendExpanded ? 490 : 44,
+          borderRadius: 16
+        }}
+        transition={{ 
+          duration: 0.35,
+          ease: "linear"
+        }}
+        className="absolute top-5 right-5 z-[200] bg-[#050510]/85 backdrop-blur-xl border border-idan-david-aviv-gold/20 shadow-2xl overflow-hidden"
       >
-        {!isLegendExpanded ? (
-          <button 
-            onClick={() => setIsLegendExpanded(true)}
-            className="w-full h-full flex items-center justify-center text-idan-david-aviv-gold hover:bg-idan-david-aviv-gold/10 transition-colors"
-            title="Show Legend"
-          >
-            <GitCommit className="w-5 h-5" />
-          </button>
-        ) : (
-          <div className="relative flex flex-col gap-5">
-            <button 
-              onClick={() => setIsLegendExpanded(false)}
-              className="absolute -top-1 -right-1 p-1 hover:bg-white/10 rounded-lg text-white/40 hover:text-white transition-all"
+        <AnimatePresence mode="wait">
+          {!isLegendExpanded ? (
+            <motion.button 
+              key="toggle"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsLegendExpanded(true)}
+              className="w-11 h-11 flex items-center justify-center text-idan-david-aviv-gold hover:bg-idan-david-aviv-gold/10 transition-colors"
+              title="Show Legend"
             >
-              <X className="w-4 h-4" />
-            </button>
-            
-            <div className="space-y-6">
-              <section>
-                <h4 className="text-[10px] font-bold text-idan-david-aviv-gold uppercase tracking-[0.2em] border-b border-idan-david-aviv-gold/10 pb-2 mb-3">Nodes</h4>
-                <div className="space-y-2">
-                  <LegendItem color="#00008b" label="Genesis (Root)" />
-                  <LegendItem color="#fbbf24" label="Core KIs (Group 1)" />
-                  <LegendItem color="#22d3ee" label="Other KIs (Group 2)" />
-                  <LegendItem color="#a855f7" label="SRL / External" />
-                  <LegendItem color="#ef4444" label="Broken Ref (404)" />
-                  <LegendItem color="#94a3b8" label="Meta/Secondary (Group 0)" />
-                </div>
-              </section>
+              <GitCommit className="w-5 h-5" />
+            </motion.button>
+          ) : (
+            <motion.div 
+              key="content"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              className="relative flex flex-col gap-5 p-5"
+            >
+              <button 
+                onClick={() => setIsLegendExpanded(false)}
+                className="absolute top-4 right-4 p-1 hover:bg-white/10 rounded-lg text-white/40 hover:text-white transition-all"
+              >
+                <X className="w-4 h-4" />
+              </button>
+              
+              <div className="space-y-6">
+                <section>
+                  <h4 className="text-[10px] font-bold text-idan-david-aviv-gold uppercase tracking-[0.2em] border-b border-idan-david-aviv-gold/10 pb-2 mb-3">Nodes</h4>
+                  <div className="space-y-2">
+                    <LegendItem color="#00008b" label="Genesis (Root)" />
+                    <LegendItem color="#fbbf24" label="Core KIs (Group 1)" />
+                    <LegendItem color="#22d3ee" label="Other KIs (Group 2)" />
+                    <LegendItem color="#a855f7" label="SRL / External" />
+                    <LegendItem color="#ef4444" label="Broken Ref (404)" />
+                    <LegendItem color="#94a3b8" label="Meta/Secondary (Group 0)" />
+                  </div>
+                </section>
 
-              <section>
-                <h4 className="text-[10px] font-bold text-idan-david-aviv-gold uppercase tracking-[0.2em] border-b border-idan-david-aviv-gold/10 pb-2 mb-3">Link Color</h4>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                    <span className="w-5 h-[3px] rounded-full bg-[#00008b]" /> 
-                    <span>Genesis source</span>
+                <section>
+                  <h4 className="text-[10px] font-bold text-idan-david-aviv-gold uppercase tracking-[0.2em] border-b border-idan-david-aviv-gold/10 pb-2 mb-3">Link Color</h4>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
+                      <span className="w-5 h-[3px] rounded-full bg-[#00008b]" /> 
+                      <span>Genesis source</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
+                      <span className="w-5 h-[3px] rounded-full bg-[#fbbf24]" /> 
+                      <span>Core KI target</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
+                      <span className="w-5 h-[3px] rounded-full bg-[#22d3ee]" /> 
+                      <span>Other KI target</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
+                      <span className="w-5 h-[3px] rounded-full bg-[#a855f7]" /> 
+                      <span>SRL External Codebase</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
+                      <span className="w-5 h-[3px] rounded-full bg-[#ef4444]" /> 
+                      <span>Broken Reference</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                    <span className="w-5 h-[3px] rounded-full bg-[#fbbf24]" /> 
-                    <span>Core KI target</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                    <span className="w-5 h-[3px] rounded-full bg-[#22d3ee]" /> 
-                    <span>Other KI target</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                    <span className="w-5 h-[3px] rounded-full bg-[#a855f7]" /> 
-                    <span>SRL External Codebase</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                    <span className="w-5 h-[3px] rounded-full bg-[#ef4444]" /> 
-                    <span>Audit Error (Ref. Failure)</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                    <span className="w-5 h-[3px] rounded-full bg-[#94a3b8]" /> 
-                    <span>Fallback / Meta (Group 0)</span>
-                  </div>
-                </div>
-              </section>
+                </section>
 
-              <section>
-                <h4 className="text-[10px] font-bold text-idan-david-aviv-gold uppercase tracking-[0.2em] border-b border-idan-david-aviv-gold/10 pb-2 mb-3">Reference Type</h4>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                    <span className="w-5 h-1 rounded-full bg-white/80" /> 
-                    <span>Explicit file path</span>
+                <section>
+                  <h4 className="text-[10px] font-bold text-idan-david-aviv-gold uppercase tracking-[0.2em] border-b border-idan-david-aviv-gold/10 pb-2 mb-3">Reference Type</h4>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
+                      <span className="w-5 h-1 rounded-full bg-white/80" /> 
+                      <span>Explicit file path</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
+                      <span className="w-5 h-[2px] rounded-full bg-white/80" /> 
+                      <span className="font-bold">Bold mention</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
+                      <span className="w-5 h-[1px] rounded-full bg-white/80" /> 
+                      <span>Simple mention</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                    <span className="w-5 h-[2px] rounded-full bg-white/80" /> 
-                    <span className="font-bold">Bold mention</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                    <span className="w-5 h-[1px] rounded-full bg-white/80" /> 
-                    <span>Simple mention</span>
-                  </div>
-                </div>
-              </section>
-            </div>
-          </div>
-        )}
-      </div>
+                </section>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
     </div>
   );
 };

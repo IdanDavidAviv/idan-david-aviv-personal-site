@@ -2,8 +2,7 @@ import * as THREE from 'three';
 import ForceGraph3D from '3d-force-graph';
 import SpriteText from 'three-spritetext';
 import { KiNode, KiLink } from './ki-network-types';
-import { getNodeStyle, getLinkStyle } from './ki-network-styles';
-import { getLinkLabel } from './ki-network-ui';
+import { getNodeStyle, getLinkStyle, getLinkLabel } from './ki-network-styles';
 
 export function createGraph3D(container: HTMLElement) {
     // Registry for per-frame sprite projection
