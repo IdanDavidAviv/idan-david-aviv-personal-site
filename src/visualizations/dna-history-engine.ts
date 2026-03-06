@@ -18,7 +18,7 @@ export interface KiLink {
     target: string | KiNode;
     label?: string;
     target_location?: 'DNA' | 'SRL' | 'OTHER';
-    ref_type?: 'formal' | 'bold' | 'mention';
+    ref_type?: 'formal' | 'bold' | 'mention' | 'explicit';
 }
 
 export interface KiDelta {
@@ -40,21 +40,29 @@ export interface TimelineBatch {
     label: string;
 }
 
+interface DataSchema {
+    epochs: KiDiff[];
+    metadata?: {
+        version?: string;
+        sync?: string;
+    };
+}
+
 /**
  * Fetches the timeline data and reconstructs the cumulative graph state.
  */
-export async function getGraphData(preLoadedData?: any) {
+export async function getGraphData(preLoadedData?: unknown) {
     const DATA_URL = './dna-history-backfill-v26_s1.json';
     try {
         if (preLoadedData) {
-            const epochs = preLoadedData.epochs || preLoadedData;
-            if (Array.isArray(epochs)) {
+            const data = preLoadedData as DataSchema;
+            const epochs = data.epochs || (Array.isArray(preLoadedData) ? preLoadedData : []);
+            if (Array.isArray(epochs) && epochs.length > 0) {
                 return getHistoryState(epochs, null);
             }
         }
 
         const response = await fetch(DATA_URL);
-        
         if (!response.ok) {
             console.error(`[DNA-Engine] ❌ Fetch Failed for ${DATA_URL}`);
             console.error(`   ├─ Status: ${response.status} (${response.statusText})`);
@@ -62,22 +70,14 @@ export async function getGraphData(preLoadedData?: any) {
             return { nodes: [], links: [], metadata: { timestamp: null, label: 'Fetch Error', reconstructionTimeMs: 0, delta: { nodesAdded: 0, nodesRemoved: 0, linksAdded: 0, linksRemoved: 0 } } };
         }
 
-        let data;
-        try {
-            data = await response.json();
-        } catch (jsonErr) {
-            console.error(`[DNA-Engine] ❌ JSON Parse Error for ${DATA_URL}`);
-            console.error(`   └─ Message: ${jsonErr instanceof Error ? jsonErr.message : String(jsonErr)}`);
-            return { nodes: [], links: [], metadata: { timestamp: null, label: 'JSON Error', reconstructionTimeMs: 0, delta: { nodesAdded: 0, nodesRemoved: 0, linksAdded: 0, linksRemoved: 0 } } };
-        }
-
-        const epochs = data.epochs || data;
-        const metadata = data.metadata || {};
+        const json = (await response.json()) as DataSchema;
+        const epochs = json.epochs || (json as unknown as KiDiff[]);
+        const metadata = json.metadata || {};
         
-        console.log(`[DNA-Engine] 🛰️ Data Fetch Success: ${DATA_URL}`);
-        console.log(`   ├─ Version: ${metadata.version || 'unknown'}`);
-        console.log(`   ├─ Sync: ${metadata.sync || 'unknown'}`);
-        console.log(`   └─ Total Epochs: ${epochs.length}`);
+        console.warn(`[DNA-Engine] 🛰️ Data Fetch Success: ${DATA_URL}`);
+        console.warn(`   ├─ Version: ${metadata.version || 'unknown'}`);
+        console.warn(`   ├─ Sync: ${metadata.sync || 'unknown'}`);
+        console.warn(`   └─ Total Epochs: ${epochs.length}`);
         
         if (!Array.isArray(epochs)) {
             console.error(`[DNA-Engine] ❌ Schema Error: Data is not an array of epochs`);
@@ -85,7 +85,7 @@ export async function getGraphData(preLoadedData?: any) {
         }
 
         return getHistoryState(epochs, null);
-    } catch (e) {
+    } catch (e: unknown) {
         console.error('[DNA-Engine] ❌ Unexpected Error during getGraphData:', e);
         return { nodes: [], links: [], metadata: { timestamp: null, label: 'Unexpected Error', reconstructionTimeMs: 0, delta: { nodesAdded: 0, nodesRemoved: 0, linksAdded: 0, linksRemoved: 0 } } };
     }
@@ -114,7 +114,7 @@ export interface HistoryState {
  */
 export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null): HistoryState {
     const startTime = performance.now();
-    console.log(`[DNA-Engine] getHistoryState called for ${targetTimestamp}. Epochs count: ${epochs?.length}`);
+    console.warn(`[DNA-Engine] getHistoryState called for ${targetTimestamp}. Epochs count: ${epochs?.length}`);
     if (!epochs || epochs.length === 0) {
         console.error('[DNA-Engine] No epochs provided to getHistoryState');
         return { 
@@ -137,7 +137,7 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
         : epochs.length - 1;
 
     if (targetTimestamp && stopIdx === -1) {
-        console.log(`[DNA-Engine] ⚠️ Target timestamp ${targetTimestamp} not found in history.`);
+        console.warn(`[DNA-Engine] ⚠️ Target timestamp ${targetTimestamp} not found in history.`);
     }
 
     // Walk FORWARD from index 0
@@ -148,14 +148,11 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
     let finalLabel = 'Full Cumulative State';
 
     const endPos = (stopIdx === -1 ? epochs.length - 1 : stopIdx);
-    console.log(`[DNA-Reconstruction] 🛠️ Walking Genesis -> ${endPos}...`);
+    console.warn(`[DNA-Reconstruction] 🛠️ Walking Genesis -> ${endPos}...`);
 
     for (let i = 0; i <= endPos; i++) {
-        const { delta, label, timestamp } = epochs[i];
+        const { delta, label } = epochs[i];
         if (i === endPos) finalLabel = label;
-
-        const prevNodeCount = nodes.size;
-        const prevLinkCount = links.size;
 
         // 1. Process Nodes
         delta.nodes.removed.forEach(id => {
@@ -193,9 +190,9 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
         return acc;
     }, {} as Record<string, number>);
 
-    console.log(`[DNA-Reconstruction] ✅ Walked ${endPos + 1} epochs in ${duration.toFixed(2)}ms`);
-    console.log(`   └─ Final State: ${nodes.size} nodes, ${links.size} links (${finalLabel})`);
-    console.log(`   └─ Styles: formal=${refTypeCounts.formal || 0}, bold=${refTypeCounts.bold || 0}, mention=${refTypeCounts.mention || 0}`);
+    console.warn(`[DNA-Reconstruction] ✅ Walked ${endPos + 1} epochs in ${duration.toFixed(2)}ms`);
+    console.warn(`   └─ Final State: ${nodes.size} nodes, ${links.size} links (${finalLabel})`);
+    console.warn(`   └─ Styles: formal=${refTypeCounts.formal || 0}, bold=${refTypeCounts.bold || 0}, mention=${refTypeCounts.mention || 0}`);
 
     const finalNodes = Array.from(nodes.values());
     const finalLinks = Array.from(links.values()).map(link => {
@@ -270,7 +267,7 @@ export function isSignificant(diff: KiDiff): boolean {
  * Groups consecutive non-significant commits into batches.
  */
 export function getTimelineBatches(epochs: KiDiff[]): TimelineBatch[] {
-    console.log(`[DNA-Engine] Generating timeline batches for ${epochs.length} epochs`);
+    console.warn(`[DNA-Engine] Generating timeline batches for ${epochs.length} epochs`);
     const batches: TimelineBatch[] = [];
     let currentBatch: KiDiff[] = [];
 

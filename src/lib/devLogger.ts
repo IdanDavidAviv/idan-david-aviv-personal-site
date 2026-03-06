@@ -48,8 +48,8 @@ export function initDevLogger(): void {
     if (!import.meta.env.DEV) return;
     
     // Prevent double-initialization (common during Vite HMR)
-    if ((window as any).__DEV_LOGGER_INITIALIZED__) return;
-    (window as any).__DEV_LOGGER_INITIALIZED__ = true;
+    if ((window as unknown as Record<string, boolean>).__DEV_LOGGER_INITIALIZED__) return;
+    (window as unknown as Record<string, boolean>).__DEV_LOGGER_INITIALIZED__ = true;
 
     const orig = {
         log: console.log.bind(console),
@@ -60,7 +60,7 @@ export function initDevLogger(): void {
     };
 
     // Generic high-perf interceptor
-    const intercept = (level: LogLevel, original: (...args: any[]) => void, filter?: (msg: string) => boolean) => {
+    const intercept = (level: LogLevel, original: (...args: unknown[]) => void) => {
         return (...args: unknown[]) => {
             const msg = serialize(args);
             
@@ -79,9 +79,8 @@ export function initDevLogger(): void {
                 effectiveLevel = 'INFO';
             }
 
-            const isSignificant = isDnaSystem || 
+            const isSignificant = (isDnaSystem && (level === 'WARN' || level === 'ERROR')) || 
                                 msg.includes('[UNCAUGHT-') || 
-                                level === 'WARN' || 
                                 level === 'ERROR';
 
             if (isSignificant) {

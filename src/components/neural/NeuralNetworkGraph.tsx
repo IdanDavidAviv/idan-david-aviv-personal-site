@@ -25,10 +25,12 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
   const container3DRef = useRef<HTMLDivElement>(null);
   const container2DRef = useRef<HTMLDivElement>(null);
   
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const graph3DRef = useRef<any>(null);
   const nodeSpritesRef = useRef<WeakMap<object, { sprite: THREE.Object3D, size: number }>>(new WeakMap());
   const network2DRef = useRef<Network | null>(null);
   const visNodesRef = useRef<DataSet<KiNode, 'id'> | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const visEdgesRef = useRef<DataSet<any, 'id'> | null>(null);
 
   const onTimelineDataRef = useRef(onTimelineData);
@@ -70,6 +72,7 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
       const { clientWidth: w, clientHeight: h } = container3DRef.current;
       g3.width(w).height(h);
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (window as any).__DNA_FORCE_REFRESH = () => {
         if (graph3DRef.current) {
           graph3DRef.current.width(container3DRef.current?.clientWidth || 800);

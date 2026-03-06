@@ -9,7 +9,7 @@ export function createGraph3D(container: HTMLElement) {
     // Registry for per-frame sprite projection
     const nodeSprites = new WeakMap<object, { sprite: THREE.Object3D, size: number }>();
 
-    console.log('[DNA-DEBUG] 🚀 Calling ForceGraph3D constructor...');
+    console.warn('[DNA-DEBUG] 🚀 Calling ForceGraph3D constructor...');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const graph = (ForceGraph3D as any)()(container)
         .backgroundColor('#050510')
@@ -50,10 +50,6 @@ export function createGraph3D(container: HTMLElement) {
         .linkWidth((link: object) => {
             const l = link as KiLink;
             const style = getLinkStyle(l, true);
-            // Debug probe for specific link targets
-            if (l.ref_type === 'bold' && Math.random() < 0.01) {
-                console.log(`[DNA-FLOW] 🛰️ Bold style detected for link to: ${typeof l.target === 'object' ? (l.target as KiNode).id : l.target}`);
-            }
             return style.width;
         })
         .linkOpacity(0.5)
@@ -80,17 +76,17 @@ export function createGraph3D(container: HTMLElement) {
         const pointLight = new THREE.PointLight(0xffffff, 1);
         pointLight.position.set(100, 100, 100);
         scene.add(pointLight);
-        console.log('[DNA-3D-Engine] 💡 Custom Lighting Injected into Scene.');
+        console.warn('[DNA-3D-Engine] 💡 Custom Lighting Injected into Scene.');
     }
 
     // Data Binding Watcher
     const originalGraphData = graph.graphData;
-    graph.graphData = function(...args: any[]) {
+    graph.graphData = function(...args: unknown[]) {
         if (args.length > 0) {
-            const data = args[0];
-            console.log(`[DNA-3D-Engine] 📥 Data Bound to Renderer: ${data.nodes?.length || 0} nodes, ${data.links?.length || 0} links`);
-            if (data.nodes?.length > 0) {
-                console.log('   └─ Sample Node ID:', data.nodes[0].id);
+            const data = args[0] as { nodes?: KiNode[], links?: object[] };
+            console.warn(`[DNA-3D-Engine] 📥 Data Bound to Renderer: ${data.nodes?.length || 0} nodes, ${data.links?.length || 0} links`);
+            if (data.nodes && data.nodes.length > 0) {
+                console.warn('   └─ Sample Node ID:', data.nodes[0].id);
             }
         }
         return originalGraphData.apply(this, args);
@@ -142,8 +138,7 @@ export function updateSpritePositions(graph: { camera: () => THREE.Camera, graph
     const { nodes } = graph.graphData();
 
     if (nodes) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        nodes.forEach((node: any) => {
+        nodes.forEach((node: KiNode) => {
             if (node.x == null) return;
             const entry = nodeSprites.get(node);
             if (!entry) return;

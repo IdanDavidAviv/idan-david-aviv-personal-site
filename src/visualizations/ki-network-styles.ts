@@ -2,11 +2,16 @@ import kiGroupsRegistry from './ki-groups.json';
 import externalNodeRegistry from './external-node-refs.json';
 import { KiNode, KiLink, NodeStyle, LinkStyle } from './ki-network-types';
 
-// Combine registries for lookup
 const groupLookup: Record<string, number> = {
     ...kiGroupsRegistry,
     ...externalNodeRegistry
 };
+
+declare global {
+    interface Window {
+        __DEBUG_STYLE_LINK?: string;
+    }
+}
 
 export const THEME = {
     colors: {
@@ -116,14 +121,14 @@ export function getLinkStyle(link: KiLink, is3D = true): LinkStyle {
     }
 
     // --- Enhanced Debugging ---
-    if (typeof window !== 'undefined' && (window as any).__DEBUG_STYLE_LINK === `${sourceId}-${targetId}`) {
+    if (typeof window !== 'undefined' && window.__DEBUG_STYLE_LINK === `${sourceId}-${targetId}`) {
         console.warn(`[STYLE-DEBUG] 🌈 Link: ${sourceId} -> ${targetId}`);
         console.warn(`   └─ Props: loc=${link.target_location}, type=${link.ref_type}, groups: src=${sourceGroup}, tgt=${targetGroup}`);
         console.warn(`   └─ Decision: ${color} (Hex)`);
     }
 
     // Width logic
-    const refType = (link as any).ref_type || (link as any).typeref || 'mention';
+    const refType = link.ref_type || 'mention';
     let width = (refType === 'formal' || refType === 'explicit') ? 4.0 : (refType === 'bold' ? 2.0 : 1.0);
     
     // 3D might need a slight scale boost if user feels they are too thin
