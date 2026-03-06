@@ -93,22 +93,42 @@ export function getLinkStyle(link: KiLink, is3D = true): LinkStyle {
 
     // Color logic
     let color = THEME.colors.missing; // default to red/missing
+    
+    // Priority 1: Genesis links
     if (sourceGroup === 999 || targetGroup === 999) {
-        color = '#2563eb'; // Genesis blue
-    } else if (link.target_location === 'SRL' || targetGroup === 3) {
+        color = THEME.colors.genesis; 
+    } 
+    // Priority 2: SRL / External (Purple)
+    else if (link.target_location === 'SRL' || targetGroup === 3) {
         color = THEME.colors.srl;
-    } else if (link.target_location === 'DNA') {
-        if (targetGroup === 1) color = THEME.colors.core;
-        else if (targetGroup === 0) color = THEME.colors.meta;
-        else color = THEME.colors.other;
-    } else if (link.target_location === 'OTHER') {
+    } 
+    // Priority 3: Core (Gold)
+    else if (targetGroup === 1 || link.target_location === 'DNA' && targetGroup === 1) {
+        color = THEME.colors.core;
+    }
+    // Priority 4: Other KIs (Cyan)
+    else if (targetGroup === 2 || link.target_location === 'DNA' && targetGroup === 2) {
+        color = THEME.colors.other;
+    }
+    // Priority 5: Meta / Undefined (Slate)
+    else if (targetGroup === 0 || link.target_location === 'OTHER' || link.target_location === 'DNA' && targetGroup === 0) {
         color = THEME.colors.meta;
     }
 
+    // --- Enhanced Debugging ---
+    if (typeof window !== 'undefined' && (window as any).__DEBUG_STYLE_LINK === `${sourceId}-${targetId}`) {
+        console.warn(`[STYLE-DEBUG] 🌈 Link: ${sourceId} -> ${targetId}`);
+        console.warn(`   └─ Props: loc=${link.target_location}, type=${link.ref_type}, groups: src=${sourceGroup}, tgt=${targetGroup}`);
+        console.warn(`   └─ Decision: ${color} (Hex)`);
+    }
+
     // Width logic
-    let width = link.ref_type === 'formal' ? 4.0 : (link.ref_type === 'bold' ? 2.0 : 1.0);
+    const refType = (link as any).ref_type || (link as any).typeref || 'mention';
+    let width = (refType === 'formal' || refType === 'explicit') ? 4.0 : (refType === 'bold' ? 2.0 : 1.0);
+    
+    // 3D might need a slight scale boost if user feels they are too thin
     if (is3D) {
-        width = link.ref_type === 'formal' ? 4.0 : (link.ref_type === 'bold' ? 2.0 : 1.0);
+        width = width * 1.25; // Calibrated for 3D visibility in dark theme
     }
 
     // Convert to RGBA for consistency where needed

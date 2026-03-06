@@ -594,6 +594,8 @@ export default function AntigravityDNAShowcase() {
                                     <EmptyBatchFlyout
                                         batch={batch}
                                         onClose={() => setOpenFlyoutBatchId(null)}
+                                        onSelectCommit={setActiveEpochTimestamp}
+                                        activeEpochTimestamp={activeEpochTimestamp}
                                     />
                                 ) : null;
                             })()}
@@ -685,7 +687,17 @@ export default function AntigravityDNAShowcase() {
     );
 }
 
-function EmptyBatchFlyout({ batch, onClose }: { batch: TimelineBatch, onClose: () => void }) {
+function EmptyBatchFlyout({ 
+    batch, 
+    onClose,
+    onSelectCommit,
+    activeEpochTimestamp
+}: { 
+    batch: TimelineBatch, 
+    onClose: () => void,
+    onSelectCommit: (ts: string) => void,
+    activeEpochTimestamp: string | null
+}) {
     return (
         <motion.div
             initial={{ opacity: 0, x: -20 }}
@@ -707,15 +719,41 @@ function EmptyBatchFlyout({ batch, onClose }: { batch: TimelineBatch, onClose: (
             </div>
 
             <div className="flex-1 overflow-y-auto premium-scrollbar p-6 space-y-6">
-                {batch.items.map((commit: KiDiff) => (
-                    <div key={commit.timestamp} className="relative pl-6 border-l border-idan-david-aviv-gold/20 py-1">
-                        <div className="absolute top-2.5 -left-[4.5px] w-2 h-2 rounded-full bg-idan-david-aviv-gold shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
-                        <span className="block text-[9px] text-idan-david-aviv-gold font-mono tracking-tighter opacity-50 mb-1">{commit.timestamp}</span>
-                        <p className="text-sm text-white/80 leading-relaxed font-light italic">
-                            {commit.label}
-                        </p>
-                    </div>
-                ))}
+                {batch.items.map((commit: KiDiff) => {
+                    const isActive = commit.timestamp === activeEpochTimestamp;
+                    return (
+                        <motion.button
+                            key={commit.timestamp}
+                            whileHover={{ x: 4 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => onSelectCommit(commit.timestamp)}
+                            className={`w-full text-left relative pl-6 py-2 transition-all group/commit rounded-r-xl ${
+                                isActive 
+                                    ? 'bg-idan-david-aviv-gold/10 border-l-2 border-idan-david-aviv-gold shadow-[0_0_15px_rgba(251,191,36,0.1)]' 
+                                    : 'border-l border-idan-david-aviv-gold/20 hover:bg-idan-david-aviv-gold/5'
+                            }`}
+                        >
+                            <div className={`absolute top-3.5 -left-[5px] w-2 h-2 rounded-full transition-all ${
+                                isActive 
+                                    ? 'bg-idan-david-aviv-gold shadow-[0_0_10px_rgba(251,191,36,1)] scale-110' 
+                                    : 'bg-idan-david-aviv-gold/40 group-hover/commit:bg-idan-david-aviv-gold/60'
+                            }`} />
+                            <span className={`block text-[9px] font-mono tracking-tighter transition-colors mb-1 ${
+                                isActive ? 'text-idan-david-aviv-gold' : 'text-idan-david-aviv-gold/40'
+                            }`}>
+                                {commit.timestamp}
+                            </span>
+                            <p className={`text-sm leading-relaxed transition-colors italic ${
+                                isActive ? 'text-white font-medium' : 'text-white/60 font-light'
+                            }`}>
+                                {commit.label}
+                            </p>
+                            {isActive && (
+                                <div className="absolute top-1/2 -translate-y-1/2 right-4 w-1.5 h-1.5 rounded-full bg-idan-david-aviv-gold animate-pulse" />
+                            )}
+                        </motion.button>
+                    );
+                })}
             </div>
 
             <div className="p-6 border-t border-white/5 bg-black/20">

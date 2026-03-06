@@ -114,7 +114,7 @@ export interface HistoryState {
  */
 export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null): HistoryState {
     const startTime = performance.now();
-    console.warn(`[DNA-Engine] getHistoryState called for ${targetTimestamp}. Epochs count: ${epochs?.length}`);
+    console.log(`[DNA-Engine] getHistoryState called for ${targetTimestamp}. Epochs count: ${epochs?.length}`);
     if (!epochs || epochs.length === 0) {
         console.error('[DNA-Engine] No epochs provided to getHistoryState');
         return { 
@@ -124,7 +124,7 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
         };
     }
     const nodes = new Map<string, KiNode>();
-    const links = new Set<string>(); // Serialized KiLink for unique identification
+    const links = new Map<string, KiLink>(); // ID -> Link object to preserve metadata
 
     const getLinkId = (link: KiLink) => {
         const s = typeof link.source === 'string' ? link.source : (link.source as KiNode).id;
@@ -137,7 +137,7 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
         : epochs.length - 1;
 
     if (targetTimestamp && stopIdx === -1) {
-        console.warn(`⚠️ Target timestamp ${targetTimestamp} not found in history.`);
+        console.log(`[DNA-Engine] ⚠️ Target timestamp ${targetTimestamp} not found in history.`);
     }
 
     // Walk FORWARD from index 0
@@ -179,21 +179,50 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
         });
         delta.links.added.forEach(link => {
             const id = getLinkId(link);
-            links.add(id);
+            links.set(id, { ...link }); // Preserve all properties
             linksAdded++;
         });
 
-        // Verbose checkpoint for major steps
-        if (i % 5 === 0 || i === endPos) {
-            console.log(`   [Step ${i}] ⏩ ${timestamp.split('T')[1].split('+')[0]} | ${label.substring(0, 30)}...`);
-            console.log(`       └─ Cumulative State: ${nodes.size} nodes (+${nodes.size - prevNodeCount}), ${links.size} links (+${links.size - prevLinkCount})`);
-        }
     }
+    
+    // Tier 3: Compressed Observability
+    const duration = performance.now() - startTime;
+    const refTypeCounts = Array.from(links.values()).reduce((acc, l) => {
+        const type = l.ref_type || 'mention';
+        acc[type] = (acc[type] || 0) + 1;
+        return acc;
+    }, {} as Record<string, number>);
+
+    console.log(`[DNA-Reconstruction] ✅ Walked ${endPos + 1} epochs in ${duration.toFixed(2)}ms`);
+    console.log(`   └─ Final State: ${nodes.size} nodes, ${links.size} links (${finalLabel})`);
+    console.log(`   └─ Styles: formal=${refTypeCounts.formal || 0}, bold=${refTypeCounts.bold || 0}, mention=${refTypeCounts.mention || 0}`);
 
     const finalNodes = Array.from(nodes.values());
-    const finalLinks = Array.from(links).map(id => {
-        const [source, target] = id.split('-');
-        return { source, target };
+    const finalLinks = Array.from(links.values()).map(link => {
+        const source = typeof link.source === 'string' ? link.source : (link.source as KiNode).id;
+        const target = typeof link.target === 'string' ? link.target : (link.target as KiNode).id;
+        
+        // --- Tier 3: Ghost Node Restoration ---
+        // If a node is referenced by a link but missing from the nodes map, 
+        // we inject a "Ghost Node" to prevent engine crashes.
+        [source, target].forEach(nodeId => {
+            if (!nodes.has(nodeId)) {
+                console.warn(`[DNA-Probe] 👻 Ghost Node Injected: ${nodeId} (Missing in epoch: ${finalLabel})`);
+                const ghostNode: KiNode = {
+                    id: nodeId,
+                    name: `Ghost: ${nodeId}`,
+                    val: 1 // Minimal visibility
+                };
+                nodes.set(nodeId, ghostNode);
+                finalNodes.push(ghostNode);
+            }
+        });
+
+        return { 
+            ...link,
+            source, 
+            target 
+        };
     }) as KiLink[];
 
     // Data Validation
@@ -241,7 +270,7 @@ export function isSignificant(diff: KiDiff): boolean {
  * Groups consecutive non-significant commits into batches.
  */
 export function getTimelineBatches(epochs: KiDiff[]): TimelineBatch[] {
-    console.warn(`[DNA-Engine] Generating timeline batches for ${epochs.length} epochs`);
+    console.log(`[DNA-Engine] Generating timeline batches for ${epochs.length} epochs`);
     const batches: TimelineBatch[] = [];
     let currentBatch: KiDiff[] = [];
 

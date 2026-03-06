@@ -46,6 +46,10 @@ function forward(level: LogLevel, args: unknown[]): void {
  */
 export function initDevLogger(): void {
     if (!import.meta.env.DEV) return;
+    
+    // Prevent double-initialization (common during Vite HMR)
+    if ((window as any).__DEV_LOGGER_INITIALIZED__) return;
+    (window as any).__DEV_LOGGER_INITIALIZED__ = true;
 
     const orig = {
         log: console.log.bind(console),
@@ -55,30 +59,56 @@ export function initDevLogger(): void {
         debug: console.debug.bind(console),
     };
 
-    console.log = (...args: unknown[]) => {
-        orig.log(...args);
-        forward('INFO', args);
+    // Generic high-perf interceptor
+    const intercept = (level: LogLevel, original: (...args: any[]) => void, filter?: (msg: string) => boolean) => {
+        return (...args: unknown[]) => {
+            const msg = serialize(args);
+            
+            // 1. Silent specific noise (THREE.Clock deprecations)
+            if (msg.includes('THREE.Clock') && msg.includes('deprecated')) return;
+
+            // 2. Browser side log
+            original(...args);
+
+            // 3. Conditional terminal forwarding
+            // We only forward [DNA-] logic, [UNCAUGHT-] crashes, or explicit WARN/ERROR
+            // Special: Downgrade DNA tags from WARN to INFO in terminal as requested
+            let effectiveLevel = level;
+            const isDnaSystem = msg.includes('[DNA-');
+            if (isDnaSystem && level === 'WARN') {
+                effectiveLevel = 'INFO';
+            }
+
+            const isSignificant = isDnaSystem || 
+                                msg.includes('[UNCAUGHT-') || 
+                                level === 'WARN' || 
+                                level === 'ERROR';
+
+            if (isSignificant) {
+                forward(effectiveLevel, args);
+            }
+        };
     };
 
-    console.info = (...args: unknown[]) => {
-        orig.info(...args);
-        forward('INFO', args);
-    };
+    console.log = intercept('INFO', orig.log);
+    console.info = intercept('INFO', orig.info);
+    console.warn = intercept('WARN', orig.warn);
+    console.error = intercept('ERROR', orig.error);
+    console.debug = intercept('DEBUG', orig.debug);
 
-    console.warn = (...args: unknown[]) => {
-        orig.warn(...args);
-        forward('WARN', args);
-    };
+    // --- Error & Warning Interception ---
 
-    console.error = (...args: unknown[]) => {
-        orig.error(...args);
-        forward('ERROR', args);
-    };
+    window.addEventListener('error', (event) => {
+        const errorMsg = `[UNCAUGHT-CRASH] 🔴 ${event.message}\n   at ${event.filename}:${event.lineno}:${event.colno}`;
+        forward('ERROR', [errorMsg]);
+    });
 
-    console.debug = (...args: unknown[]) => {
-        orig.debug(...args);
-        forward('DEBUG', args);
-    };
+    window.addEventListener('unhandledrejection', (event) => {
+        const reason = event.reason instanceof Error ? event.reason.message : String(event.reason);
+        const errorMsg = `[UNCAUGHT-PROMISE] 🟠 ${reason}`;
+        forward('ERROR', [errorMsg]);
+    });
 
     orig.log('%c[DevLogger] Console → Terminal bridge active ⚡', 'color: #a855f7; font-weight: bold;');
+    orig.log('%c[DevLogger] 🛡️ Integrity Interceptors Enabled (Deduplicated)', 'color: #10b981;');
 }

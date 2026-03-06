@@ -47,7 +47,15 @@ export function createGraph3D(container: HTMLElement) {
             return group;
         })
         .linkLabel((link: object) => getLinkLabel(link as KiLink))
-        .linkWidth((link: object) => getLinkStyle(link as KiLink, true).width)
+        .linkWidth((link: object) => {
+            const l = link as KiLink;
+            const style = getLinkStyle(l, true);
+            // Debug probe for specific link targets
+            if (l.ref_type === 'bold' && Math.random() < 0.01) {
+                console.log(`[DNA-FLOW] 🛰️ Bold style detected for link to: ${typeof l.target === 'object' ? (l.target as KiNode).id : l.target}`);
+            }
+            return style.width;
+        })
         .linkOpacity(0.5)
         .linkColor((link: object) => getLinkStyle(link as KiLink, true).color)
         .linkDirectionalArrowLength(4)
@@ -55,6 +63,7 @@ export function createGraph3D(container: HTMLElement) {
         .linkCurvature(0.25)
         .linkDirectionalParticles((link: object) => {
             const l = link as KiLink;
+            // Formal = 3 particles, Bold = 2 particles, Mention = 1 particle
             return l.ref_type === 'formal' ? 3 : (l.ref_type === 'bold' ? 2 : 1);
         })
         .linkDirectionalParticleSpeed(0.005);
