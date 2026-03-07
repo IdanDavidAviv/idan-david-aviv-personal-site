@@ -52,6 +52,7 @@ interface DataSchema {
  * Fetches the timeline data and reconstructs the cumulative graph state.
  */
 export async function getGraphData(preLoadedData?: unknown) {
+    console.info('[DNA-Refresh] 📥 Fetching and reconstructing graph data...');
     const DATA_URL = './dna-history-backfill-v26_s1.json';
     try {
         if (preLoadedData) {
@@ -74,10 +75,10 @@ export async function getGraphData(preLoadedData?: unknown) {
         const epochs = json.epochs || (json as unknown as KiDiff[]);
         const metadata = json.metadata || {};
         
-        console.warn(`[DNA-Engine] 🛰️ Data Fetch Success: ${DATA_URL}`);
-        console.warn(`   ├─ Version: ${metadata.version || 'unknown'}`);
-        console.warn(`   ├─ Sync: ${metadata.sync || 'unknown'}`);
-        console.warn(`   └─ Total Epochs: ${epochs.length}`);
+        console.debug(`[DNA-Engine] 🛰️ Data Fetch Success: ${DATA_URL}`);
+        console.debug(`   ├─ Version: ${metadata.version || 'unknown'}`);
+        console.debug(`   ├─ Sync: ${metadata.sync || 'unknown'}`);
+        console.debug(`   └─ Total Epochs: ${epochs.length}`);
         
         if (!Array.isArray(epochs)) {
             console.error(`[DNA-Engine] ❌ Schema Error: Data is not an array of epochs`);
@@ -143,7 +144,7 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
         : epochs.length - 1;
 
     if (targetTimestamp && stopIdx === -1) {
-        console.warn(`[DNA-Engine] ⚠️ Target timestamp ${targetTimestamp} not found in history.`);
+        console.debug(`[DNA-Engine] ⚠️ Target timestamp ${targetTimestamp} not found in history.`);
     }
 
     // Walk FORWARD from index 0
@@ -190,7 +191,8 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
     // Tier 3: Compressed Observability
     const duration = performance.now() - startTime;
 
-    console.warn(`[DNA-Reconstruction] ✅ Walked ${endPos + 1} epochs in ${duration.toFixed(2)}ms`);
+    // eslint-disable-next-line no-console
+    console.debug(`[DNA-Reconstruction] ✅ Walked ${endPos + 1} epochs in ${duration.toFixed(2)}ms`);
 
 
     const finalNodes = Array.from(nodes.values());
@@ -203,7 +205,7 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
         // we inject a "Ghost Node" to prevent engine crashes.
         [source, target].forEach(nodeId => {
             if (!nodes.has(nodeId)) {
-                console.warn(`[DNA-Probe] 👻 Ghost Node Injected: ${nodeId} (Missing in epoch: ${finalLabel})`);
+                console.debug(`[DNA-Probe] 👻 Ghost Node Injected: ${nodeId} (Missing in epoch: ${finalLabel})`);
                 const ghostNode: KiNode = {
                     id: nodeId,
                     name: `Ghost: ${nodeId}`,
@@ -247,6 +249,14 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
 }
 
 /**
+ * Clears the internal state cache to force a fresh reconstruction.
+ */
+export function clearCache() {
+    stateCache.clear();
+    console.info('[DNA-Refresh] 🧹 Cache Cleared - Forcing fresh data reload');
+}
+
+/**
  * Summarizes the total delta from baseline up to a specific point.
  */
 export function getDiffSummary(history: KiDiff[], targetTimestamp: string) {
@@ -269,7 +279,7 @@ export function isSignificant(diff: KiDiff): boolean {
  * Groups consecutive non-significant commits into batches.
  */
 export function getTimelineBatches(epochs: KiDiff[]): TimelineBatch[] {
-    console.warn(`[DNA-Engine] Generating timeline batches for ${epochs.length} epochs`);
+    console.debug(`[DNA-Engine] Generating timeline batches for ${epochs.length} epochs`);
     const batches: TimelineBatch[] = [];
     let currentBatch: KiDiff[] = [];
 

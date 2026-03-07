@@ -14,6 +14,7 @@ interface NeuralNetworkGraphProps {
   onTimelineData?: (timeline: TimelineBatch[], currentEpoch: string) => void;
   onStatsUpdate?: (stats: { nodes: number; links: number }) => void;
   isFullscreen?: boolean;
+  isSidebarCollapsed?: boolean;
 }
 
 export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
@@ -21,11 +22,12 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
   currentView,
   onTimelineData,
   onStatsUpdate,
-  isFullscreen
+  isFullscreen,
+  isSidebarCollapsed = false
 }) => {
   const container3DRef = useRef<HTMLDivElement>(null);
   const container2DRef = useRef<HTMLDivElement>(null);
-  
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const graph3DRef = useRef<any>(null);
   const nodeSpritesRef = useRef<WeakMap<object, { sprite: THREE.Object3D, size: number }>>(new WeakMap());
@@ -43,21 +45,32 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
 
   useEffect(() => { onTimelineDataRef.current = onTimelineData; }, [onTimelineData]);
   useEffect(() => { onStatsUpdateRef.current = onStatsUpdate; }, [onStatsUpdate]);
-  
+
   const [isLegendExpanded, setIsLegendExpanded] = useState(false);
   const epochs = useMemo(() => (historyData as { epochs: KiDiff[] }).epochs, []);
 
   const refreshGraphs = React.useCallback((state: HistoryState) => {
     const { nodes, links, metadata } = state;
-    
+
     // Deduplication Guard: Don't re-bind if timestamp is identical
     if (metadata.timestamp && metadata.timestamp === lastBoundTimestampRef.current) return;
     lastBoundTimestampRef.current = metadata.timestamp;
 
-    if (graph3DRef.current) graph3DRef.current.graphData({ nodes, links });
+    if (graph3DRef.current) {
+      // Smooth Transition: Boost alpha to allow nodes to flow into new positions
+      graph3DRef.current.graphData({ nodes, links });
+      graph3DRef.current.d3AlphaTarget = 0.2; // Setting target reheating the simulation automatically
+
+      // Gradually settle the physics
+      setTimeout(() => {
+        if (graph3DRef.current) graph3DRef.current.d3AlphaTarget = 0;
+      }, 1500);
+    }
+
     if (visNodesRef.current && visEdgesRef.current) {
       update2DGraph(visNodesRef.current, visEdgesRef.current, nodes, links);
     }
+
     if (onStatsUpdateRef.current) {
       if (lastStatsRef.current.nodes !== nodes.length || lastStatsRef.current.links !== links.length) {
         lastStatsRef.current = { nodes: nodes.length, links: links.length };
@@ -71,13 +84,13 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
   // 3D Engine Initialization
   useEffect(() => {
     if (!container3DRef.current || graph3DRef.current) return;
-    
+
     try {
       const { graph: g3, nodeSprites } = createGraph3D(container3DRef.current);
       graph3DRef.current = g3;
       nodeSpritesRef.current = nodeSprites;
       g3.onNodeClick((node: object) => handle3DNodeClick(node, g3));
-      
+
       const { clientWidth: w, clientHeight: h } = container3DRef.current;
       g3.width(w).height(h);
 
@@ -123,9 +136,22 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
   // Resize Handling
   useEffect(() => {
     const handleResize = () => {
+      // Harmonic Viewport: Trust the container's actual pixel width during animation
       if (graph3DRef.current && container3DRef.current) {
-        graph3DRef.current.width(container3DRef.current.clientWidth);
-        graph3DRef.current.height(container3DRef.current.clientHeight);
+        const w = container3DRef.current.clientWidth;
+        const h = container3DRef.current.clientHeight;
+        
+        graph3DRef.current.width(w);
+        graph3DRef.current.height(h);
+        
+        // Pixel-Perfect Camera Follow: Recenter every frame of the transition
+        graph3DRef.current.zoomToFit(0);
+      }
+
+      if (network2DRef.current && container2DRef.current) {
+        const w2d = container2DRef.current.clientWidth;
+        const h2d = container2DRef.current.clientHeight;
+        network2DRef.current.setSize(w2d + 'px', h2d + 'px');
       }
     };
     window.addEventListener('resize', handleResize);
@@ -136,40 +162,42 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
       window.removeEventListener('resize', handleResize);
       ro.disconnect();
     };
-  }, [isFullscreen, currentView]);
+  }, [isFullscreen, currentView, isSidebarCollapsed]);
 
   // Data Loading (Single Flight Pattern)
   useEffect(() => {
     if (isDataLoadedRef.current || loadingPromiseRef.current) return;
-    
+
     const loadInitial = async () => {
+      // eslint-disable-next-line no-console
+      console.info('[DNA-Refresh] 🚀 Graph Component Remounted - Loading initial state');
       const startTime = performance.now();
       try {
         const initialData = await getGraphData(historyData);
         skipInitialSyncRef.current = true;
-        
+
         // 1. Refresh internal engine
         refreshGraphs(initialData);
         isDataLoadedRef.current = true;
-        
+
         // 2. Notify parent of timeline (batching happens in parent)
         if (onTimelineDataRef.current && epochs.length > 0) {
           const lastEpoch = epochs[epochs.length - 1];
           onTimelineDataRef.current(getTimelineBatches(epochs), lastEpoch.timestamp);
         }
-        
-        // 3. Stabilization gap before enabling prop sync
+
+        // 3. Stabilization gap (No auto-zoom to prevent jumpy transitions)
         setTimeout(() => {
-          if (graph3DRef.current) graph3DRef.current.zoomToFit(800, 100);
           skipInitialSyncRef.current = false;
           const duration = performance.now() - startTime;
-          console.warn(`[DNA-Performance] 🚀 Engine Warmup Complete in ${duration.toFixed(2)}ms (Single-Flight)`);
-        }, 1200); // Increased slightly for safety
+          // eslint-disable-next-line no-console
+          console.debug(`[DNA-Performance] 🚀 Engine Warmup Complete in ${duration.toFixed(2)}ms (Single-Flight)`);
+        }, 1200);
       } catch (err) {
         console.error('[DNA-Native] ❌ loadInitial Error:', err);
       }
     };
-    
+
     loadingPromiseRef.current = loadInitial();
   }, [epochs, refreshGraphs]);
 
@@ -181,26 +209,42 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
   return (
     <div className="relative flex-1 w-full h-full overflow-hidden bg-[#050510]">
       {/* 3D Graph Layer */}
-      <div 
-        ref={container3DRef} 
+      <motion.div
+        ref={container3DRef}
+        initial={false}
+        animate={{
+          paddingLeft: (!isSidebarCollapsed && !isFullscreen) ? 160 : 0
+        }}
+        transition={{
+          ease: "linear",
+          duration: 0.4
+        }}
         className={`absolute inset-0 transition-opacity duration-1000 ${currentView === '3d' ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
       />
 
       {/* 2D Graph Layer */}
-      <div 
+      <motion.div
         ref={container2DRef}
+        initial={false}
+        animate={{
+          paddingLeft: (!isSidebarCollapsed && !isFullscreen) ? 160 : 0
+        }}
+        transition={{
+          ease: "linear",
+          duration: 0.4
+        }}
         className={`absolute inset-0 bg-[#050510] transition-opacity duration-500 ${currentView === '2d' ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}`}
       />
 
       {/* Legend UI */}
-      <motion.div 
+      <motion.div
         initial={false}
         animate={{
           width: isLegendExpanded ? 240 : 44,
           height: isLegendExpanded ? 490 : 44,
           borderRadius: 16
         }}
-        transition={{ 
+        transition={{
           duration: 0.35,
           ease: "linear"
         }}
@@ -208,7 +252,7 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
       >
         <AnimatePresence mode="wait">
           {!isLegendExpanded ? (
-            <motion.button 
+            <motion.button
               key="toggle"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -220,20 +264,20 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
               <GitCommit className="w-5 h-5" />
             </motion.button>
           ) : (
-            <motion.div 
+            <motion.div
               key="content"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
               className="relative flex flex-col gap-5 p-5"
             >
-              <button 
+              <button
                 onClick={() => setIsLegendExpanded(false)}
                 className="absolute top-4 right-4 p-1 hover:bg-white/10 rounded-lg text-white/40 hover:text-white transition-all"
               >
                 <X className="w-4 h-4" />
               </button>
-              
+
               <div className="space-y-6">
                 <section>
                   <h4 className="text-[10px] font-bold text-idan-david-aviv-gold uppercase tracking-[0.2em] border-b border-idan-david-aviv-gold/10 pb-2 mb-3">Nodes</h4>
@@ -251,23 +295,23 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
                   <h4 className="text-[10px] font-bold text-idan-david-aviv-gold uppercase tracking-[0.2em] border-b border-idan-david-aviv-gold/10 pb-2 mb-3">Link Color</h4>
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                      <span className="w-5 h-[3px] rounded-full bg-[#00008b]" /> 
+                      <span className="w-5 h-[3px] rounded-full bg-[#00008b]" />
                       <span>Genesis source</span>
                     </div>
                     <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                      <span className="w-5 h-[3px] rounded-full bg-[#fbbf24]" /> 
+                      <span className="w-5 h-[3px] rounded-full bg-[#fbbf24]" />
                       <span>Core KI target</span>
                     </div>
                     <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                      <span className="w-5 h-[3px] rounded-full bg-[#22d3ee]" /> 
+                      <span className="w-5 h-[3px] rounded-full bg-[#22d3ee]" />
                       <span>Other KI target</span>
                     </div>
                     <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                      <span className="w-5 h-[3px] rounded-full bg-[#a855f7]" /> 
+                      <span className="w-5 h-[3px] rounded-full bg-[#a855f7]" />
                       <span>SRL External Codebase</span>
                     </div>
                     <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                      <span className="w-5 h-[3px] rounded-full bg-[#ef4444]" /> 
+                      <span className="w-5 h-[3px] rounded-full bg-[#ef4444]" />
                       <span>Broken Reference</span>
                     </div>
                   </div>
@@ -277,15 +321,15 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
                   <h4 className="text-[10px] font-bold text-idan-david-aviv-gold uppercase tracking-[0.2em] border-b border-idan-david-aviv-gold/10 pb-2 mb-3">Reference Type</h4>
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                      <span className="w-5 h-1 rounded-full bg-white/80" /> 
+                      <span className="w-5 h-1 rounded-full bg-white/80" />
                       <span>Explicit file path</span>
                     </div>
                     <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                      <span className="w-5 h-[2px] rounded-full bg-white/80" /> 
+                      <span className="w-5 h-[2px] rounded-full bg-white/80" />
                       <span className="font-bold">Bold mention</span>
                     </div>
                     <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                      <span className="w-5 h-[1px] rounded-full bg-white/80" /> 
+                      <span className="w-5 h-[1px] rounded-full bg-white/80" />
                       <span>Simple mention</span>
                     </div>
                   </div>
@@ -302,8 +346,8 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
 
 const LegendItem: React.FC<{ color: string; label: string }> = ({ color, label }) => (
   <div className="flex items-center gap-3 group transition-all">
-    <span 
-      className="w-2.5 h-2.5 rounded-full shadow-[0_0_8px_currentColor]" 
+    <span
+      className="w-2.5 h-2.5 rounded-full shadow-[0_0_8px_currentColor]"
       style={{ backgroundColor: color, color: color }}
     />
     <span className="text-[10px] text-white/60 font-medium group-hover:text-white/90 transition-colors">{label}</span>

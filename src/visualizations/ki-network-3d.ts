@@ -82,7 +82,8 @@ export function createGraph3D(container: HTMLElement) {
     graph.graphData = function(...args: unknown[]) {
         if (args.length > 0) {
             const data = args[0] as { nodes?: KiNode[], links?: object[] };
-            console.warn(`[DNA-3D-Engine] 📥 Data Bound to Renderer [${instanceId}]: ${data.nodes?.length || 0} nodes, ${data.links?.length || 0} links`);
+            // eslint-disable-next-line no-console
+            console.debug(`[DNA-3D-Engine] 📥 Data Bound to Renderer [${instanceId}]: ${data.nodes?.length || 0} nodes, ${data.links?.length || 0} links`);
         }
         return originalGraphData.apply(this, args);
     };

@@ -12,14 +12,16 @@
  */
 
 type LogLevel = 'INFO' | 'WARN' | 'ERROR' | 'DEBUG';
-
 const ENDPOINT = '/__log';
 
 function serialize(args: unknown[]): string {
     return args
         .map((a) => {
+            if (a instanceof Error) {
+                return `[Error: ${a.message}]\n${a.stack || ''}`;
+            }
             try {
-                return typeof a === 'object' ? JSON.stringify(a) : String(a);
+                return typeof a === 'object' ? JSON.stringify(a, null, 2) : String(a);
             } catch {
                 return '[unserializable]';
             }
@@ -27,13 +29,34 @@ function serialize(args: unknown[]): string {
         .join(' ');
 }
 
+/**
+ * Sanitizes arguments for JSON transport, ensuring Error objects
+ * expose their properties.
+ */
+function sanitizeForTransport(args: unknown[]): unknown[] {
+    return args.map(a => {
+        if (a instanceof Error) {
+            return {
+                name: a.name,
+                message: a.message,
+                stack: a.stack,
+                // Capture additional properties if any
+                ...Object.fromEntries(Object.entries(a))
+            };
+        }
+        return a;
+    });
+}
+
 function forward(level: LogLevel, args: unknown[]): void {
     const message = serialize(args);
+    const sanitizedArgs = sanitizeForTransport(args);
+    
     // Fire-and-forget — we deliberately don't await/catch to keep console fast.
     fetch(ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ level, message, args: [] }),
+        body: JSON.stringify({ level, message, args: sanitizedArgs }),
     }).catch(() => {
         // Silently swallow — server might be restarting.
     });
@@ -79,8 +102,9 @@ export function initDevLogger(): void {
                 effectiveLevel = 'INFO';
             }
 
-            const isSignificant = (isDnaSystem && (level === 'WARN' || level === 'ERROR')) || 
-                                msg.includes('[UNCAUGHT-') || 
+            const isSignificant = (isDnaSystem && (level === 'WARN' || level === 'ERROR' || level === 'INFO')) || 
+                                msg.includes('Error') ||  msg.includes('Warn') ||
+                                msg.includes('[UNCAUGHT-') || level === 'DEBUG'||
                                 level === 'ERROR';
 
             if (isSignificant) {
@@ -108,6 +132,6 @@ export function initDevLogger(): void {
         forward('ERROR', [errorMsg]);
     });
 
-    orig.log('%c[DevLogger] Console → Terminal bridge active ⚡', 'color: #a855f7; font-weight: bold;');
-    orig.log('%c[DevLogger] 🛡️ Integrity Interceptors Enabled (Deduplicated)', 'color: #10b981;');
+    orig.debug('%c[DevLogger] Console → Terminal bridge active ⚡', 'color: #a855f7; font-weight: bold;');
+    orig.debug('%c[DevLogger] 🛡️ Integrity Interceptors Enabled (Deduplicated)', 'color: #10b981;');
 }
