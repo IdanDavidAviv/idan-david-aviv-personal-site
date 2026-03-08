@@ -21,7 +21,7 @@ export default function AntigravityDNAShowcase() {
         document.title = "Antigravity DNA — Unified Neural Network | Idan David-Aviv";
     }, [])
     return (
-        <main className="min-h-screen w-full bg-[#050510] py-20 px-4 md:px-8 lg:px-12 flex flex-col items-center">
+        <main className="min-h-screen w-full bg-[#050510] pt-28 md:pt-32 pb-20 px-4 md:px-8 lg:px-12 flex flex-col items-center">
             <DNAHero />
             
             <PathTransition />
@@ -49,7 +49,7 @@ export default function AntigravityDNAShowcase() {
 
 function PathTransition() {
     return (
-        <div className="w-full flex justify-center py-20 pointer-events-none overflow-hidden h-32 relative">
+        <div className="w-full flex justify-center py-10 md:py-20 pointer-events-none overflow-hidden h-32 relative">
             <svg width="200" height="120" viewBox="0 0 200 120" fill="none" className="opacity-20">
                 <path d="M100 0V40M100 80V120M60 60H140" stroke="currentColor" strokeWidth="0.5" className="text-idan-david-aviv-gold" />
                 <motion.circle

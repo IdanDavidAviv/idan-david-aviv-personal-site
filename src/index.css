@@ -160,3 +160,10 @@
 .premium-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(251, 191, 36, 0.4);
 }
+
+/* 3D Force Graph Library Overrides */
+@media (max-width: 768px) {
+  .scene-nav-info {
+    display: none !important;
+  }
+}

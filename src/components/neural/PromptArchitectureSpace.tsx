@@ -100,9 +100,9 @@ export function PromptArchitectureSpace() {
                 layout
                 initial={false}
                 animate={{
-                    height: isGraphFullscreen ? '100vh' : 700,
+                    height: isGraphFullscreen ? '100vh' : (window.innerWidth < 768 ? 500 : 700),
                     width: '100%',
-                    borderRadius: isGraphFullscreen ? 0 : '3rem',
+                    borderRadius: isGraphFullscreen ? 0 : (window.innerWidth < 768 ? '1.5rem' : '3rem'),
                 }}
                 transition={{
                     type: 'spring',
@@ -115,62 +115,62 @@ export function PromptArchitectureSpace() {
                 }
             >
                 {/* Integrated Top Head */}
-                <div className="px-8 py-5 border-b border-white/5 bg-gradient-to-r from-idan-david-aviv-gold/5 to-transparent flex items-center justify-between">
-                    <div className="flex items-center gap-6">
+                <div className="px-4 md:px-8 py-4 md:py-5 border-b border-white/5 bg-gradient-to-r from-idan-david-aviv-gold/5 to-transparent flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-4 md:gap-6">
                         <div className="relative">
                             <div className="absolute inset-0 bg-idan-david-aviv-gold/20 blur-xl rounded-full" />
-                            <div className="relative w-14 h-14 rounded-2xl bg-gradient-to-br from-idan-david-aviv-gold/20 to-idan-david-aviv-gold/40 flex items-center justify-center border border-idan-david-aviv-gold/30">
-                                <Network className="w-7 h-7 text-idan-david-aviv-gold" />
+                            <div className="relative w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-gradient-to-br from-idan-david-aviv-gold/20 to-idan-david-aviv-gold/40 flex items-center justify-center border border-idan-david-aviv-gold/30">
+                                <Network className="w-5 h-5 md:w-7 md:h-7 text-idan-david-aviv-gold" />
                             </div>
                         </div>
                         <div>
-                            <h2 className="text-2xl font-bold text-white tracking-tight flex items-center gap-3">
+                            <h2 className="text-xl md:text-2xl font-bold text-white tracking-tight flex items-center gap-3">
                                 Prompt Architecture Space
                             </h2>
-                            <p className="text-idan-david-aviv-gold/40 text-xs uppercase tracking-[0.2em] font-mono mt-1">Interactive Neural Traceability Network</p>
+                            <p className="text-idan-david-aviv-gold/40 text-[9px] md:text-xs uppercase tracking-[0.2em] font-mono mt-0.5 md:mt-1">Interactive Neural Traceability Network</p>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2 md:gap-4 w-full sm:w-auto justify-end">
                         <div className="flex items-center gap-1 p-1 rounded-xl bg-white/5 border border-white/10">
                             <button
                                 onClick={() => handleRefresh(activeEpochTimestamp || '')}
                                 className="p-1.5 rounded-lg text-white/40 hover:text-white/80 hover:bg-white/5 transition-all group"
                                 title="Refresh Graph"
                             >
-                                <RotateCcw className="w-4 h-4 group-active:rotate-180 transition-transform duration-500" />
+                                <RotateCcw className="w-3.5 h-3.5 md:w-4 md:h-4 group-active:rotate-180 transition-transform duration-500" />
                             </button>
                             <div className="w-[1px] h-4 bg-white/10 mx-1" />
                             <button
                                 onClick={() => switchView('3d')}
-                                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${currentView === '3d'
+                                className={`px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-[8px] md:text-[10px] font-bold uppercase tracking-widest transition-all ${currentView === '3d'
                                     ? 'bg-idan-david-aviv-gold/20 text-idan-david-aviv-gold shadow-[0_0_15px_rgba(34,211,238,0.2)] border border-idan-david-aviv-gold/30'
                                     : 'text-white/40 hover:text-white/60'
                                     }`}
                             >
-                                3D Network
+                                3D
                             </button>
                             <button
                                 onClick={() => switchView('2d')}
-                                className={`px-3 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${currentView === '2d'
+                                className={`px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-[8px] md:text-[10px] font-bold uppercase tracking-widest transition-all ${currentView === '2d'
                                     ? 'bg-idan-david-aviv-gold/20 text-idan-david-aviv-gold shadow-[0_0_15px_rgba(34,211,238,0.3)] border border-idan-david-aviv-gold/30'
                                     : 'text-white/40 hover:text-white/60'
                                     }`}
                             >
-                                2D Graph
+                                2D
                             </button>
                         </div>
 
                         <button
                             onClick={() => setIsGraphFullscreen(!isGraphFullscreen)}
-                            className="p-3 rounded-xl bg-idan-david-aviv-gold/10 border border-idan-david-aviv-gold/20 text-idan-david-aviv-gold hover:bg-idan-david-aviv-gold/20 transition-all shadow-lg shadow-idan-david-aviv-gold/5 group"
+                            className="p-2 md:p-3 rounded-xl bg-idan-david-aviv-gold/10 border border-idan-david-aviv-gold/20 text-idan-david-aviv-gold hover:bg-idan-david-aviv-gold/20 transition-all shadow-lg shadow-idan-david-aviv-gold/5 group"
                             title={isGraphFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
                             aria-label={isGraphFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
                         >
                             {isGraphFullscreen ? (
-                                <Minimize className="w-5 h-5" />
+                                <Minimize className="w-4 h-4 md:w-5 md:h-5" />
                             ) : (
-                                <Maximize className="w-5 h-5" />
+                                <Maximize className="w-4 h-4 md:w-5 md:h-5" />
                             )}
                         </button>
                     </div>
@@ -181,7 +181,7 @@ export function PromptArchitectureSpace() {
                     <motion.div
                         initial={false}
                         animate={{
-                            x: isSidebarCollapsed ? -320 : 0,
+                            x: isSidebarCollapsed ? (window.innerWidth < 768 ? -window.innerWidth : -320) : 0,
                             opacity: isSidebarCollapsed ? 0 : 1,
                         }}
                         transition={{
@@ -190,14 +190,14 @@ export function PromptArchitectureSpace() {
                             damping: 20,
                             mass: 1
                         }}
-                        className="absolute top-0 left-0 h-full w-[320px] z-30 border-r border-white/5 bg-slate-900/40 backdrop-blur-3xl flex flex-col overflow-hidden"
+                        className="absolute top-0 left-0 h-full w-full md:w-[320px] z-[250] border-r border-white/5 bg-[#050510]/95 md:bg-slate-900/40 backdrop-blur-3xl flex flex-col overflow-hidden"
                     >
                         <div className="px-4 py-3 border-b border-white/5 bg-gradient-to-b from-idan-david-aviv-gold/5 to-transparent flex items-center justify-between gap-2">
                             <div className="flex items-center gap-3">
                                 <GitGraph className="w-4 h-4 text-idan-david-aviv-gold flex-shrink-0" />
                                 <div className="flex flex-col justify-center">
                                     <span className="text-[10px] font-bold text-white uppercase tracking-wider leading-tight">DNA REFERENCE GRAPH EVOLUTION</span>
-                                    <span className="text-[8px] text-idan-david-aviv-gold/40 uppercase tracking-[0.1em] italic mt-0.5">choose commit to see state</span>
+                                    <span className="hidden md:inline text-[8px] text-idan-david-aviv-gold/40 uppercase tracking-[0.1em] italic mt-0.5">choose commit to see state</span>
                                 </div>
                             </div>
                             <button
@@ -209,7 +209,7 @@ export function PromptArchitectureSpace() {
                             </button>
                         </div>
 
-                        <div className="flex-1 overflow-y-auto premium-scrollbar p-4 space-y-3 min-w-[320px]">
+                        <div className="flex-1 overflow-y-auto premium-scrollbar p-3 md:p-4 space-y-2 md:space-y-3 md:min-w-[320px] w-full">
                             {timeline.length > 0 ? (
                                 [...timeline].reverse().map((batch, idx) => {
                                     const isActive = activeEpochTimestamp === batch.id;
@@ -228,7 +228,7 @@ export function PromptArchitectureSpace() {
                                                     setActiveEpochTimestamp(batch.id);
                                                     setOpenFlyoutBatchId(null);
                                                 }}
-                                                className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl transition-all border ${isActive
+                                                className={`w-full flex items-center justify-between px-3 md:px-5 py-3 md:py-4 rounded-xl md:rounded-2xl transition-all border ${isActive
                                                     ? 'bg-idan-david-aviv-gold/10 border-idan-david-aviv-gold/50 shadow-[0_0_20px_-5px_rgba(251,191,36,0.2)]'
                                                     : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/20'
                                                     }`}
@@ -237,7 +237,7 @@ export function PromptArchitectureSpace() {
                                                     <div className="flex items-center justify-between mb-1">
                                                         <span className="text-[8px] text-idan-david-aviv-gold font-mono tracking-widest uppercase opacity-70">{batch.id}</span>
                                                     </div>
-                                                    <div className="text-[11px] font-bold text-white leading-tight mb-2 truncate pr-2">
+                                                    <div className="text-[10px] md:text-[11px] font-bold text-white leading-tight mb-2 truncate pr-2">
                                                         {batch.label}
                                                     </div>
                                                     <div className="flex flex-wrap gap-1.5 opacity-80 scale-90 origin-left">
@@ -294,7 +294,7 @@ export function PromptArchitectureSpace() {
                                                         setOpenFlyoutBatchId(batch.id);
                                                     }
                                                 }}
-                                                className={`w-full flex items-center justify-between px-5 py-2.5 rounded-xl transition-all border ${isFlyoutOpen
+                                                className={`w-full flex items-center justify-between px-3 md:px-5 py-2 md:py-2.5 rounded-lg md:rounded-xl transition-all border ${isFlyoutOpen
                                                     ? 'bg-idan-david-aviv-gold/5 border-idan-david-aviv-gold/30'
                                                     : 'bg-white/5 border-white/5 hover:bg-white/10'
                                                     }`}
@@ -328,7 +328,7 @@ export function PromptArchitectureSpace() {
                                                                         className="block w-full text-left group/item transition-all no-underline py-1"
                                                                     >
                                                                         <div className="text-[9px] font-mono tracking-tighter text-white/20 mb-0.5 group-hover/item:text-idan-david-aviv-gold/50">{commit.timestamp}</div>
-                                                                        <div className="text-[11px] leading-tight italic font-light text-white/40 group-hover/item:text-white/80 flex items-center gap-1.5">
+                                                                        <div className="text-[10px] md:text-[11px] leading-tight italic font-light text-white/40 group-hover/item:text-white/80 flex items-center gap-1.5">
                                                                             {commit.label}
                                                                             <ExternalLink className="w-2.5 h-2.5 opacity-0 group-hover/item:opacity-100 transition-opacity text-idan-david-aviv-gold" />
                                                                         </div>
@@ -399,8 +399,11 @@ export function PromptArchitectureSpace() {
                         </div>
 
                         <div className="absolute bottom-6 right-6 flex items-center gap-4 z-20">
-                            <div className="px-4 py-2 rounded-lg bg-black/60 backdrop-blur-md border border-white/5 text-[10px] font-mono text-idan-david-aviv-gold/60 uppercase tracking-widest">
-                                Nodes: <span className="text-white">{graphStats.nodes}</span> {' // '} Links: <span className="text-white">{graphStats.links}</span>
+                            <div className="px-3 md:px-4 py-2 rounded-lg bg-black/60 backdrop-blur-md border border-white/5 text-[9px] md:text-[10px] font-mono text-idan-david-aviv-gold/60 uppercase tracking-widest flex flex-col md:flex-row items-end md:items-center gap-1 md:gap-0">
+                                <div>Nodes: <span className="text-white">{graphStats.nodes}</span></div>
+                                <div className="hidden md:inline mx-2 opacity-30">{' // '}</div>
+                                <div className="md:hidden w-full h-px bg-white/5 my-0.5" />
+                                <div>Links: <span className="text-white">{graphStats.links}</span></div>
                             </div>
                         </div>
                     </div>

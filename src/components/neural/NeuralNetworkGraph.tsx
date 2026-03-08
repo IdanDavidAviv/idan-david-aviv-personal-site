@@ -241,14 +241,14 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
         initial={false}
         animate={{
           width: isLegendExpanded ? 240 : 44,
-          height: isLegendExpanded ? 490 : 44,
+          height: isLegendExpanded ? 'auto' : 44,
           borderRadius: 16
         }}
         transition={{
           duration: 0.35,
           ease: "linear"
         }}
-        className="absolute top-5 right-5 z-[200] bg-[#050510]/85 backdrop-blur-xl border border-idan-david-aviv-gold/20 shadow-2xl overflow-hidden"
+        className="absolute top-5 right-5 z-[200] bg-[#050510]/85 backdrop-blur-xl border border-idan-david-aviv-gold/20 shadow-2xl overflow-hidden max-h-[85vh] flex flex-col"
       >
         <AnimatePresence mode="wait">
           {!isLegendExpanded ? (
@@ -269,7 +269,7 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              className="relative flex flex-col gap-5 p-5"
+              className="relative flex flex-col gap-5 p-5 overflow-y-auto premium-scrollbar"
             >
               <button
                 onClick={() => setIsLegendExpanded(false)}

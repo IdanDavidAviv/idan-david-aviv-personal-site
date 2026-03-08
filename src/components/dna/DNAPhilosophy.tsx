@@ -60,14 +60,14 @@ function PhilosophyCard({ icon, title, description }: { icon: React.ReactNode, t
     return (
         <motion.div
             whileHover={{ y: -8, scale: 1.02 }}
-            className="p-8 rounded-[2rem] bg-gradient-to-br from-white/10 to-transparent border border-white/10 hover:border-idan-david-aviv-gold/40 transition-all group relative overflow-hidden"
+            className="flex flex-col h-full p-8 rounded-[2.5rem] bg-white/[0.03] backdrop-blur-2xl border border-white/10 hover:border-idan-david-aviv-gold/40 transition-all group relative overflow-hidden"
         >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.05] to-transparent -skew-x-12 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out" />
             <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-idan-david-aviv-gold/10 transition-all duration-300">
                 {icon}
             </div>
             <h4 className="text-xl font-bold text-white mb-3 tracking-tight group-hover:text-idan-david-aviv-gold transition-colors">{title}</h4>
-            <p className="text-idan-david-aviv-gold/50 text-sm leading-relaxed group-hover:text-idan-david-aviv-gold/70 transition-colors">{description}</p>
+            <p className="flex-grow text-idan-david-aviv-gold/50 text-sm leading-relaxed group-hover:text-idan-david-aviv-gold/70 transition-colors">{description}</p>
         </motion.div>
     )
 }
