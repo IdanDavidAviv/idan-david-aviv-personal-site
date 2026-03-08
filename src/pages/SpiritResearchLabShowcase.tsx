@@ -422,14 +422,13 @@ export default function SpiritResearchLabShowcase() {
                             <img src="/assets/flask-only-no-bg.png" alt="" className="absolute -bottom-10 -right-10 w-48 h-48 object-contain opacity-[0.03] rotate-12" />
                         </motion.div>
 
-                        <motion.button
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="amber-glass premium-glow px-16 py-6 rounded-full text-gold-50 font-black text-2xl shadow-[0_0_50px_rgba(217,119,6,0.3)] transition-all"
+                        <Link
+                            to="/#contact"
+                            className="amber-glass premium-glow px-16 py-6 rounded-full text-gold-50 font-black text-2xl shadow-[0_0_50px_rgba(217,119,6,0.3)] transition-all inline-flex items-center group cursor-pointer"
                         >
-                            Secure a Project Link
+                            Contact for Calibration
                             <ChevronRight className="inline-block ml-3 group-hover:translate-x-1 transition-transform" />
-                        </motion.button>
+                        </Link>
                         <p className="text-mystic-500 uppercase tracking-widest text-xs font-bold pt-8">
                             Available for Senior-Level Collaborations & Architect-as-a-Service
                         </p>

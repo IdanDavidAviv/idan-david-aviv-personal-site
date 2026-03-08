@@ -60,5 +60,10 @@ export const contentData: CVData = {
 export const personalInfo = {
     name: "Idan David-Aviv",
     title: "AI Innovator · CTO · LLM Architect",
-    summary: contentData.summary || "Building AI systems that feel alive."
+    summary: contentData.summary || "Building AI systems that feel alive.",
+    contact: {
+        email: "idandavidaviv@gmail.com",
+        whatsapp: "+972542475705",
+        linkedin: "https://www.linkedin.com/in/idanlavi/",
+    }
 }

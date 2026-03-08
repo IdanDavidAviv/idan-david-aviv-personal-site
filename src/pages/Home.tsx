@@ -1,6 +1,7 @@
 import Hero from '@/components/sections/Hero'
 import About from '@/components/sections/About'
 import WorkGrid from '@/components/sections/WorkGrid'
+import Contact from '@/components/sections/Contact'
 
 /**
  * Home Page - The primary landing page.
@@ -11,6 +12,7 @@ export default function Home() {
             <Hero />
             <About />
             <WorkGrid />
+            <Contact />
         </main>
     )
 }
