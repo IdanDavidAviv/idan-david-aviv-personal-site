@@ -176,11 +176,20 @@ export default function SpiritResearchLabShowcase() {
                             className="space-y-6"
                         >
                             <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-white/90 font-rubik">
-                                Engineering the <span className="text-gold-400">Ineffable</span>.
+                                Organizing Spiritual <span className="text-idan-david-aviv-gold">Knowledge</span>.
                             </h1>
                             <p className="text-xl md:text-2xl text-mystic-200 font-light leading-relaxed max-w-3xl mx-auto italic">
-                                &quot;A technical masterclass in architectural astrology, numeric resonance, and schema-first data stabilization.&quot;
+                                A support system for astrological, numerological, and kabalistic 
+                                <br /> 
+                                data driven personal research.
                             </p>
+                            <p className="text-xl md:text-2xl text-mystic-200 font-light leading-relaxed max-w-3xl mx-auto italic">
+                                Use your critical thinking and pattern recognition skills
+                                <br />
+                                to find out for yourself
+                            </p>
+
+
                         </motion.div>
 
                         <motion.div
@@ -189,18 +198,15 @@ export default function SpiritResearchLabShowcase() {
                             transition={{ delay: 1, duration: 0.8 }}
                             className="flex flex-wrap justify-center gap-8 pt-10"
                         >
-                            <button
-                                className="amber-glass premium-glow px-12 py-5 rounded-full text-gold-50 font-bold text-lg transition-all hover:scale-105 hover:brightness-110 active:scale-95 shadow-[0_0_30px_rgba(217,119,6,0.2)]"
+                            <motion.a
+                                href="https://spirit-research-lab.com/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="amber-glass premium-glow px-12 py-5 rounded-full text-gold-50 font-bold text-lg transition-all hover:scale-105 hover:brightness-110 active:scale-95 shadow-[0_0_30px_rgba(217,119,6,0.2)] flex items-center justify-center cursor-pointer"
                                 aria-label="Experience the Calculator"
                             >
-                                Experience the Calculator
-                            </button>
-                            <button
-                                className="glass-card px-12 py-5 rounded-full text-white/90 font-semibold text-lg hover:bg-white/15 transition-all active:scale-95 border-white/20"
-                                aria-label="View Technical Documentation"
-                            >
-                                View Technical Docs
-                            </button>
+                                Go see the lab
+                            </motion.a>
                         </motion.div>
                     </div>
                 </Section>
