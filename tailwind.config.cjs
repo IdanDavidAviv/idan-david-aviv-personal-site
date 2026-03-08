@@ -12,7 +12,7 @@ module.exports = {
         'idan-david-aviv-gold': 'rgb(var(--idan-david-aviv-gold) / <alpha-value>)',
         'idan-david-aviv-cyan': 'rgb(var(--idan-david-aviv-cyan) / <alpha-value>)',
         'idan-david-aviv-purple': 'rgb(var(--idan-david-aviv-purple) / <alpha-value>)',
-        'idan-david-aviv-grey': 'rgb(var(--idan-david-aviv-grey) / <alpha-value>)',
+        'idan-david-aviv-slate': 'rgb(var(--idan-david-aviv-slate) / <alpha-value>)',
         'idan-david-aviv-red': 'rgb(var(--idan-david-aviv-red) / <alpha-value>)'
       },
       fontFamily: {

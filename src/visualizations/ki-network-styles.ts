@@ -13,23 +13,55 @@ declare global {
     }
 }
 
+/**
+ * Resolves a CSS variable to its value.
+ * Since some variables are stored as RGB triplets (e.g., "59 130 246"),
+ * we handle both direct values and triplet conversion.
+ */
+function resolveCssVar(name: string, fallback: string): string {
+    if (typeof window === 'undefined') return fallback;
+    const root = document.documentElement;
+    const value = getComputedStyle(root).getPropertyValue(name).trim();
+    
+    // Internal Registry for deep debugging
+    if (!(window as any).__DNA_THEME_REGISTRY) (window as any).__DNA_THEME_REGISTRY = {};
+    
+    if (!value) {
+        (window as any).__DNA_THEME_REGISTRY[name] = `FALLBACK: ${fallback}`;
+        return fallback;
+    }
+    
+    // Handle modern space-separated triplets (e.g. "48 185 242")
+    const parts = value.split(/[\s,]+/).filter(Boolean);
+    if (parts.length === 3 && parts.every(p => !isNaN(Number(p)))) {
+        const rgb = `rgb(${parts.join(',')})`;
+        (window as any).__DNA_THEME_REGISTRY[name] = rgb;
+        return rgb;
+    }
+    
+    (window as any).__DNA_THEME_REGISTRY[name] = value;
+    return value;
+}
+
 export const THEME = {
-    colors: {
-        genesis: '#00008b',
-        core: '#fbbf24',
-        other: '#22d3ee',
-        srl: '#a855f7',
-        meta: '#94a3b8',
-        missing: '#ef4444',
-        text: {
-            genesis: '#a4d5f8',
-            core: '#78350f',
-            srl: '#f3e8ff',
-            meta: '#f8fafc',
-            other: '#083344',
-            light: '#ffffff',
-            dark: '#0f172a'
-        }
+    get colors() {
+        return {
+            genesis: resolveCssVar('--idan-david-aviv-blue-genesis', '#00008b'),
+            core: resolveCssVar('--idan-david-aviv-gold', '#fbbf24'),
+            other: resolveCssVar('--idan-david-aviv-cyan', '#22d3ee'),
+            srl: resolveCssVar('--idan-david-aviv-purple', '#a855f7'),
+            meta: resolveCssVar('--idan-david-aviv-slate', '#94a3b8'),
+            missing: resolveCssVar('--idan-david-aviv-red', '#ef4444'),
+            text: {
+                genesis: '#a4d5f8',
+                core: '#78350f',
+                srl: '#f3e8ff',
+                meta: '#f8fafc',
+                other: '#083344',
+                light: '#ffffff',
+                dark: '#0f172a'
+            }
+        };
     },
     sizes: {
         genesis: 18,
@@ -130,7 +162,7 @@ export function getLinkStyle(link: KiLink, is3D = true): LinkStyle {
     }
 
     // Convert to RGBA for consistency where needed
-    const rgba = color.startsWith('#') ? `${color}cc` : color; // simple alpha for now
+    const rgba = color.startsWith('rgb') ? color.replace('rgb', 'rgba').replace(')', ', 0.8)') : (color.startsWith('#') ? `${color}cc` : color);
 
     return { color, rgba, width };
 }

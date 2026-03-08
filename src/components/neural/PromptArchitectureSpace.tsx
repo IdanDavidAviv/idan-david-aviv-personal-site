@@ -8,6 +8,18 @@ import Section from '@/components/ui/Section'
 import { NeuralNetworkGraph } from '@/components/neural/NeuralNetworkGraph'
 import { TimelineBatch, KiDiff } from '@/visualizations/ki-network-types'
 import { clearCache } from '@/visualizations/dna-history-engine'
+import { THEME } from '@/visualizations/ki-network-styles'
+import { cn } from '@/lib/utils'
+
+/**
+ * Safely applies alpha to a resolved color string (rgb or hex).
+ */
+const withAlpha = (color: string, alpha: number) => {
+    if (color && color.startsWith('rgb(')) {
+        return color.replace('rgb(', 'rgba(').replace(')', `, ${alpha})`);
+    }
+    return color; 
+}
 
 /**
  * PromptArchitectureSpace Component
@@ -96,7 +108,28 @@ export function PromptArchitectureSpace() {
 
     return (
         <Section id="neural-explorer">
-            <motion.div
+            <div className="relative w-full">
+                {!isGraphFullscreen && (
+                    <motion.div
+                        initial={false}
+                        animate={{
+                            height: window.innerWidth < 768 ? 500 : 700,
+                            width: '100%',
+                            borderRadius: window.innerWidth < 768 ? '1.5rem' : '3rem',
+                        }}
+                        transition={{
+                            type: 'spring',
+                            damping: 25,
+                            stiffness: 120,
+                        }}
+                        className="absolute inset-0 pointer-events-none"
+                        style={{ 
+                            boxShadow: `0 0 100px 0px ${withAlpha(THEME.colors.other, 0.6)}`,
+                            zIndex: 0
+                        }}
+                    />
+                )}
+                <motion.div
                 layout
                 initial={false}
                 animate={{
@@ -109,10 +142,13 @@ export function PromptArchitectureSpace() {
                     damping: 25,
                     stiffness: 120,
                 }}
-                className={isGraphFullscreen
-                    ? "fixed inset-0 z-[150] bg-[#050510] flex flex-col"
-                    : "relative group overflow-hidden border border-idan-david-aviv-gold/20 bg-[#050510] shadow-[0_0_80px_-20px_rgba(34,211,238,0.4)] flex flex-col"
-                }
+                className={cn(
+                    "relative flex flex-col transition-all duration-700",
+                    isGraphFullscreen
+                        ? "fixed inset-0 z-[150] bg-[#050510] rounded-none"
+                        : "group overflow-hidden border border-idan-david-aviv-gold/20 bg-[#050510] z-10"
+                )}
+                style={{}}
             >
                 {/* Integrated Top Head */}
                 <div className="px-4 md:px-8 py-4 md:py-5 border-b border-white/5 bg-gradient-to-r from-idan-david-aviv-gold/5 to-transparent flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -143,19 +179,25 @@ export function PromptArchitectureSpace() {
                             <div className="w-[1px] h-4 bg-white/10 mx-1" />
                             <button
                                 onClick={() => switchView('3d')}
-                                className={`px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-[8px] md:text-[10px] font-bold uppercase tracking-widest transition-all ${currentView === '3d'
-                                    ? 'bg-idan-david-aviv-gold/20 text-idan-david-aviv-gold shadow-[0_0_15px_rgba(34,211,238,0.2)] border border-idan-david-aviv-gold/30'
-                                    : 'text-white/40 hover:text-white/60'
-                                    }`}
+                                className={cn(
+                                    "px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-[8px] md:text-[10px] font-bold uppercase tracking-widest transition-all",
+                                    currentView === '3d'
+                                        ? 'bg-idan-david-aviv-gold/20 text-idan-david-aviv-gold border border-idan-david-aviv-gold/30'
+                                        : 'text-white/40 hover:text-white/60'
+                                )}
+                                style={currentView === '3d' ? { boxShadow: `0 0 20px ${withAlpha(THEME.colors.other, 0.4)}` } : undefined}
                             >
                                 3D
                             </button>
                             <button
                                 onClick={() => switchView('2d')}
-                                className={`px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-[8px] md:text-[10px] font-bold uppercase tracking-widest transition-all ${currentView === '2d'
-                                    ? 'bg-idan-david-aviv-gold/20 text-idan-david-aviv-gold shadow-[0_0_15px_rgba(34,211,238,0.3)] border border-idan-david-aviv-gold/30'
-                                    : 'text-white/40 hover:text-white/60'
-                                    }`}
+                                className={cn(
+                                    "px-2 md:px-3 py-1 md:py-1.5 rounded-lg text-[8px] md:text-[10px] font-bold uppercase tracking-widest transition-all",
+                                    currentView === '2d'
+                                        ? 'bg-idan-david-aviv-gold/20 text-idan-david-aviv-gold border border-idan-david-aviv-gold/30'
+                                        : 'text-white/40 hover:text-white/60'
+                                )}
+                                style={currentView === '2d' ? { boxShadow: `0 0 20px ${withAlpha(THEME.colors.other, 0.4)}` } : undefined}
                             >
                                 2D
                             </button>
@@ -233,7 +275,7 @@ export function PromptArchitectureSpace() {
                                                         : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/20'
                                                         }`}
                                                 >
-                                                    <div className="flextext-left flex-1 min-w-0">
+                                                    <div className="flex flex-col text-left flex-1 min-w-0">
                                                         <div className="flex items-center justify-between mb-1">
                                                             <span className="text-[8px] text-idan-david-aviv-gold font-mono tracking-widest uppercase opacity-70">{batch.id}</span>
                                                         </div>
@@ -408,6 +450,7 @@ export function PromptArchitectureSpace() {
                     </div>
                 </div>
             </motion.div>
+        </div>
 
             <div className="max-w-7xl mx-auto px-6 mt-20 mb-10">
                 <div className="flex items-center gap-4">

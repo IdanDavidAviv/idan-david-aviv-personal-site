@@ -21,7 +21,11 @@
     --mystic-text: 237 233 254;
     /* #ede9fe in RGB */
 
-    /* IDAN-DAVID-AVIV Branding (Full Hierarchy) */
+  }
+}
+
+/* IDAN-DAVID-AVIV Branding (Global Level Resolve) */
+:root {
     --idan-david-aviv-blue: 59 130 246;          /* Systems / Highlight */
     --idan-david-aviv-blue-genesis: 0 0 139;    /* Deep grounded identity */
     --idan-david-aviv-blue-equilibrium: 30 65 193; /* Mathematical average */
@@ -34,9 +38,16 @@
     --idan-david-aviv-purple-genesis: 75 0 130;  /* Deep INDIGO mystic */
     --idan-david-aviv-purple-equilibrium: 122 43 189; /* Amethyst Glow */
 
-    --idan-david-aviv-cyan: 34 211 238;          /* DNA / Standard */
-    --idan-david-aviv-grey: 148 163 184;         /* Meta */
+    --idan-david-aviv-cyan: 44 179 241;          /* UPDATED: 60/40 mix toward Systems Blue */
+    --idan-david-aviv-slate: 148 163 184;         /* Meta */
     --idan-david-aviv-red: 239 68 68;            /* Alert */
+    
+    /* Meta Identity Check */
+    --dna-sync-status: "systems-cyan-v2-global";
+}
+
+@layer base {
+  :root {
 
     /* Themed Deep Backgrounds - Neutralized for Global Atmosphere */
     --bg-themed-default: transparent;
