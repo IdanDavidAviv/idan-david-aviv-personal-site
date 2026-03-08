@@ -1,5 +1,5 @@
 import { Network, DataSet } from 'vis-network/standalone';
-import { KiNode, KiLink } from './ki-network-types';
+import { KiNode, KiLink, VisNode, VisEdge } from './ki-network-types';
 import { getNodeStyle, getLinkStyle } from './ki-network-styles';
 
 export function createGraph2D(container: HTMLElement, nodes: KiNode[], links: KiLink[]) {
@@ -22,11 +22,9 @@ export function createGraph2D(container: HTMLElement, nodes: KiNode[], links: Ki
         };
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const visNodes = new DataSet<any>(processedVisNodes);
+    const visNodes = new DataSet<VisNode>(processedVisNodes);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const visEdges = new DataSet<any>(links.map(l => {
+    const visEdges = new DataSet<VisEdge>(links.map(l => {
         const style = getLinkStyle(l, false);
         return {
             from: typeof l.source === 'object' ? (l.source as KiNode).id : l.source,
@@ -38,8 +36,7 @@ export function createGraph2D(container: HTMLElement, nodes: KiNode[], links: Ki
 
     const network = new Network(
         container,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        { nodes: visNodes as any, edges: visEdges as any },
+        { nodes: visNodes, edges: visEdges },
         {
             physics: {
                 enabled: true,
@@ -54,8 +51,7 @@ export function createGraph2D(container: HTMLElement, nodes: KiNode[], links: Ki
     return { network, visNodes, visEdges };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function update2DGraph(visNodes: DataSet<any>, visEdges: DataSet<any>, nodes: KiNode[], links: KiLink[]) {
+export function update2DGraph(visNodes: DataSet<VisNode>, visEdges: DataSet<VisEdge>, nodes: KiNode[], links: KiLink[]) {
     visNodes.clear();
     visNodes.add(nodes.map(n => {
         const label = n.id.replace(/_/g, ' ');

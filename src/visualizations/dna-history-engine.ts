@@ -52,6 +52,7 @@ interface DataSchema {
  * Fetches the timeline data and reconstructs the cumulative graph state.
  */
 export async function getGraphData(preLoadedData?: unknown) {
+    // eslint-disable-next-line no-console
     console.info('[DNA-Refresh] 📥 Fetching and reconstructing graph data...');
     const DATA_URL = './dna-history-backfill-v26_s1.json';
     try {
@@ -74,12 +75,16 @@ export async function getGraphData(preLoadedData?: unknown) {
         const json = (await response.json()) as DataSchema;
         const epochs = json.epochs || (json as unknown as KiDiff[]);
         const metadata = json.metadata || {};
-        
+
+        // eslint-disable-next-line no-console
         console.debug(`[DNA-Engine] 🛰️ Data Fetch Success: ${DATA_URL}`);
+        // eslint-disable-next-line no-console
         console.debug(`   ├─ Version: ${metadata.version || 'unknown'}`);
+        // eslint-disable-next-line no-console
         console.debug(`   ├─ Sync: ${metadata.sync || 'unknown'}`);
+        // eslint-disable-next-line no-console
         console.debug(`   └─ Total Epochs: ${epochs.length}`);
-        
+
         if (!Array.isArray(epochs)) {
             console.error(`[DNA-Engine] ❌ Schema Error: Data is not an array of epochs`);
             return { nodes: [], links: [], metadata: { timestamp: null, label: 'Schema Error', reconstructionTimeMs: 0, delta: { nodesAdded: 0, nodesRemoved: 0, linksAdded: 0, linksRemoved: 0 } } };
@@ -124,10 +129,10 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
     const startTime = performance.now();
     if (!epochs || epochs.length === 0) {
         console.error('[DNA-Engine] No epochs provided to getHistoryState');
-        return { 
-            nodes: [], 
-            links: [], 
-            metadata: { timestamp: null, label: 'Empty', reconstructionTimeMs: 0, delta: { nodesAdded: 0, nodesRemoved: 0, linksAdded: 0, linksRemoved: 0 } } 
+        return {
+            nodes: [],
+            links: [],
+            metadata: { timestamp: null, label: 'Empty', reconstructionTimeMs: 0, delta: { nodesAdded: 0, nodesRemoved: 0, linksAdded: 0, linksRemoved: 0 } }
         };
     }
     const nodes = new Map<string, KiNode>();
@@ -144,6 +149,7 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
         : epochs.length - 1;
 
     if (targetTimestamp && stopIdx === -1) {
+        // eslint-disable-next-line no-console
         console.debug(`[DNA-Engine] ⚠️ Target timestamp ${targetTimestamp} not found in history.`);
     }
 
@@ -187,7 +193,7 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
         });
 
     }
-    
+
     // Tier 3: Compressed Observability
     const duration = performance.now() - startTime;
 
@@ -199,12 +205,13 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
     const finalLinks = Array.from(links.values()).map(link => {
         const source = typeof link.source === 'string' ? link.source : (link.source as KiNode).id;
         const target = typeof link.target === 'string' ? link.target : (link.target as KiNode).id;
-        
+
         // --- Tier 3: Ghost Node Restoration ---
         // If a node is referenced by a link but missing from the nodes map, 
         // we inject a "Ghost Node" to prevent engine crashes.
         [source, target].forEach(nodeId => {
             if (!nodes.has(nodeId)) {
+                // eslint-disable-next-line no-console
                 console.debug(`[DNA-Probe] 👻 Ghost Node Injected: ${nodeId} (Missing in epoch: ${finalLabel})`);
                 const ghostNode: KiNode = {
                     id: nodeId,
@@ -216,17 +223,17 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
             }
         });
 
-        return { 
+        return {
             ...link,
-            source, 
-            target 
+            source,
+            target
         };
     }) as KiLink[];
 
     // Data Validation
-    const invalidLinks = finalLinks.filter(l => !nodes.has(typeof l.source === 'string' ? l.source : (l.source as KiNode).id) || 
-                                              !nodes.has(typeof l.target === 'string' ? l.target : (l.target as KiNode).id));
-    
+    const invalidLinks = finalLinks.filter(l => !nodes.has(typeof l.source === 'string' ? l.source : (l.source as KiNode).id) ||
+        !nodes.has(typeof l.target === 'string' ? l.target : (l.target as KiNode).id));
+
     if (invalidLinks.length > 0) {
         console.error(`[DNA-Engine] ⚠️ Found ${invalidLinks.length} dangling links!`);
     }
@@ -253,6 +260,7 @@ export function getHistoryState(epochs: KiDiff[], targetTimestamp: string | null
  */
 export function clearCache() {
     stateCache.clear();
+    // eslint-disable-next-line no-console
     console.info('[DNA-Refresh] 🧹 Cache Cleared - Forcing fresh data reload');
 }
 
@@ -279,6 +287,7 @@ export function isSignificant(diff: KiDiff): boolean {
  * Groups consecutive non-significant commits into batches.
  */
 export function getTimelineBatches(epochs: KiDiff[]): TimelineBatch[] {
+    // eslint-disable-next-line no-console
     console.debug(`[DNA-Engine] Generating timeline batches for ${epochs.length} epochs`);
     const batches: TimelineBatch[] = [];
     let currentBatch: KiDiff[] = [];

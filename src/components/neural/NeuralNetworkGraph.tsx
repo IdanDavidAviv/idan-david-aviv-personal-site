@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { Network, DataSet } from 'vis-network/standalone';
 import { GitCommit, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { getGraphData, getHistoryState, getTimelineBatches, HistoryState, KiDiff, TimelineBatch, KiNode } from '../../visualizations/dna-history-engine';
+import { getGraphData, getHistoryState, getTimelineBatches, HistoryState, KiDiff, TimelineBatch } from '../../visualizations/dna-history-engine';
 import { createGraph3D, handle3DNodeClick, updateSpritePositions } from '../../visualizations/ki-network-3d';
 import { createGraph2D, update2DGraph } from '../../visualizations/ki-network-2d';
+import { VisNode, VisEdge } from '../../visualizations/ki-network-types';
 import * as THREE from 'three';
 import historyData from '../../visualizations/dna-history-backfill-v26_s1.json';
 
@@ -32,9 +33,8 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
   const graph3DRef = useRef<any>(null);
   const nodeSpritesRef = useRef<WeakMap<object, { sprite: THREE.Object3D, size: number }>>(new WeakMap());
   const network2DRef = useRef<Network | null>(null);
-  const visNodesRef = useRef<DataSet<KiNode, 'id'> | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const visEdgesRef = useRef<DataSet<any, 'id'> | null>(null);
+  const visNodesRef = useRef<DataSet<VisNode, 'id'> | null>(null);
+  const visEdgesRef = useRef<DataSet<VisEdge, 'id'> | null>(null);
 
   const onTimelineDataRef = useRef(onTimelineData);
   const onStatsUpdateRef = useRef(onStatsUpdate);
@@ -94,8 +94,7 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
       const { clientWidth: w, clientHeight: h } = container3DRef.current;
       g3.width(w).height(h);
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (window as any).__DNA_FORCE_REFRESH = () => {
+      window.__DNA_FORCE_REFRESH = () => {
         if (graph3DRef.current) {
           graph3DRef.current.width(container3DRef.current?.clientWidth || 800);
           graph3DRef.current.height(container3DRef.current?.clientHeight || 600);

@@ -10,6 +10,8 @@ const groupLookup: Record<string, number> = {
 declare global {
     interface Window {
         __DEBUG_STYLE_LINK?: string;
+        __DNA_THEME_REGISTRY?: Record<string, string>;
+        __DNA_FORCE_REFRESH?: () => void;
     }
 }
 
@@ -24,10 +26,10 @@ function resolveCssVar(name: string, fallback: string): string {
     const value = getComputedStyle(root).getPropertyValue(name).trim();
     
     // Internal Registry for deep debugging
-    if (!(window as any).__DNA_THEME_REGISTRY) (window as any).__DNA_THEME_REGISTRY = {};
+    if (!window.__DNA_THEME_REGISTRY) window.__DNA_THEME_REGISTRY = {};
     
     if (!value) {
-        (window as any).__DNA_THEME_REGISTRY[name] = `FALLBACK: ${fallback}`;
+        window.__DNA_THEME_REGISTRY[name] = `FALLBACK: ${fallback}`;
         return fallback;
     }
     
@@ -35,11 +37,11 @@ function resolveCssVar(name: string, fallback: string): string {
     const parts = value.split(/[\s,]+/).filter(Boolean);
     if (parts.length === 3 && parts.every(p => !isNaN(Number(p)))) {
         const rgb = `rgb(${parts.join(',')})`;
-        (window as any).__DNA_THEME_REGISTRY[name] = rgb;
+        window.__DNA_THEME_REGISTRY[name] = rgb;
         return rgb;
     }
     
-    (window as any).__DNA_THEME_REGISTRY[name] = value;
+    window.__DNA_THEME_REGISTRY[name] = value;
     return value;
 }
 
