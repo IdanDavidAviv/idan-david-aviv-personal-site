@@ -124,9 +124,9 @@ const DNAOverlaidLogo = () => (
             alt="" 
             className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500 opacity-70 group-hover:opacity-100" 
         />
-        {/* DNA Overlay - Top-Left, Reactive */}
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-            <Dna className="w-5 h-5 idan-david-aviv-gold drop-shadow-[0_0_10px_rgba(251,191,36,0.3)] rotate-[0deg] group-hover:rotate-[15deg] group-hover:scale-150 transition-all duration-700 ease-in-out" />
+        {/* DNA Overlay - Top-Left, Muted to Vibrant Reaction */}
+        <div className="absolute -top-2 group-hover:-top-1 left-0 group-hover:left-1 pointer-events-none transition-all duration-700 ease-in-out">
+            <Dna className="w-5 h-5 text-idan-david-aviv-slate group-hover:text-idan-david-aviv-gold opacity-30 group-hover:opacity-100 mix-blend-screen drop-shadow-[0_0_10px_rgba(251,191,36,0.3)] rotate-[0] group-hover:rotate-[20deg] scale-75 group-hover:scale-125 transition-all duration-700 ease-in-out" />
         </div>
     </div>
 );
