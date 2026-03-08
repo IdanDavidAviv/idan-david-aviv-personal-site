@@ -22,18 +22,28 @@
     /* #ede9fe in RGB */
 
     /* IDAN-DAVID-AVIV Branding (Full Hierarchy) */
-    --idan-david-aviv-blue: 0 0 139;
-    /* Genesis */
-    --idan-david-aviv-gold: 251 191 36;
-    /* Core */
-    --idan-david-aviv-cyan: 34 211 238;
-    /* DNA / Standard */
-    --idan-david-aviv-purple: 168 85 247;
-    /* SRL */
-    --idan-david-aviv-grey: 148 163 184;
-    /* Meta */
-    --idan-david-aviv-red: 239 68 68;
-    /* Alert */
+    --idan-david-aviv-blue: 59 130 246;          /* Systems / Highlight */
+    --idan-david-aviv-blue-genesis: 0 0 139;    /* Deep grounded identity */
+    --idan-david-aviv-blue-equilibrium: 30 65 193; /* Mathematical average */
+
+    --idan-david-aviv-gold: 251 191 36;          /* Core / Highlight */
+    --idan-david-aviv-gold-genesis: 139 90 0;   /* Deep amber authority */
+    --idan-david-aviv-gold-equilibrium: 195 140 18; /* Honey anchor */
+
+    --idan-david-aviv-purple: 168 85 247;        /* SRL / Highlight */
+    --idan-david-aviv-purple-genesis: 75 0 130;  /* Deep INDIGO mystic */
+    --idan-david-aviv-purple-equilibrium: 122 43 189; /* Amethyst Glow */
+
+    --idan-david-aviv-cyan: 34 211 238;          /* DNA / Standard */
+    --idan-david-aviv-grey: 148 163 184;         /* Meta */
+    --idan-david-aviv-red: 239 68 68;            /* Alert */
+
+    /* Themed Deep Backgrounds - Neutralized for Global Atmosphere */
+    --bg-themed-default: transparent;
+    --bg-genesis: var(--bg-themed-default);
+    --bg-core: var(--bg-themed-default);
+    --bg-spirit: var(--bg-themed-default);
+    --bg-meta: var(--bg-themed-default);
   }
 
   body {
@@ -52,6 +62,12 @@
   .text-muted-content {
     color: rgb(var(--text-muted));
   }
+
+  /* Themed Background Utilities */
+  .bg-genesis-themed { background-color: rgb(var(--bg-genesis)); }
+  .bg-core-themed { background-color: rgb(var(--bg-core)); }
+  .bg-spirit-themed { background-color: rgb(var(--bg-spirit)); }
+  .bg-meta-themed { background-color: rgb(var(--bg-meta)); }
 
   /* Starry Background Effect from Spirit Research Lab */
   .mystical-bg {

@@ -18,11 +18,11 @@ export default function Header() {
                 <Link
                     to="/"
                     className={cn(
-                        "px-4 py-2 rounded-full border border-idan-david-aviv-blue/20 bg-idan-david-aviv-blue/10",
-                        "text-sm font-medium text-white hover:bg-idan-david-aviv-blue/20 transition-all",
-                        "backdrop-blur-md flex items-center gap-2 group shadow-[0_0_15px_-3px_rgba(0,0,139,0.9)]"
+                        "px-4 py-2 rounded-full border border-idan-david-aviv-blue/40 bg-idan-david-aviv-blue/10",
+                        "text-sm font-medium text-white hover:bg-idan-david-aviv-blue/20 hover:border-idan-david-aviv-blue/60 transition-all",
+                        "backdrop-blur-md flex items-center gap-2 group shadow-[0_0_20px_-2px_rgba(30,65,193,0.9)]"
                     )}>
-                    <Brain className="w-6 h-6 text-idan-david-aviv-cyan/20 group-hover:rotate-12 transition-transform" />
+                    <Brain className="w-5 h-5 text-idan-david-aviv-blue group-hover:rotate-12 transition-transform" />
                     Me
                 </Link>
                 <Link
@@ -30,7 +30,7 @@ export default function Header() {
                     className={cn(
                         "px-4 py-2 rounded-full border border-idan-david-aviv-gold/20 bg-idan-david-aviv-gold/10",
                         "text-sm font-medium text-white hover:bg-idan-david-aviv-gold/20 transition-all",
-                        "backdrop-blur-md flex items-center gap-2 group shadow-[0_0_15px_-3px_rgba(251,191,36,0.4)]"
+                        "backdrop-blur-md flex items-center gap-2 group shadow-[0_0_16px_-3px_rgba(195,140,18,0.7)]"
                     )}
                 >
                     <Dna className="w-6 h-6 text-idan-david-aviv-gold/60 group-hover:rotate-12 transition-transform" />
@@ -41,7 +41,7 @@ export default function Header() {
                     className={cn(
                         "px-4 py-2 rounded-full border border-idan-david-aviv-purple/20 bg-idan-david-aviv-purple/10",
                         "text-sm font-medium text-white hover:bg-idan-david-aviv-purple/20 transition-all",
-                        "backdrop-blur-md flex items-center gap-2 group shadow-[0_0_15px_-3px_rgba(168,85,247,0.5)]"
+                        "backdrop-blur-md flex items-center gap-2 group shadow-[0_0_15px_-3px_rgba(122,43,189,0.8)]"
                     )}
                 >
                     <FlaskConical className="w-4 h-4 text-idan-david-aviv-purple/60 group-hover:rotate-12 transition-transform" />
