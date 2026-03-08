@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { 
-    Network, RotateCcw, Maximize, Minimize, X, GitCompare, GitGraph, 
-    ChevronRight, ExternalLink, Boxes, Layers 
+import {
+    Network, RotateCcw, Maximize, Minimize, X, GitCompare, GitGraph,
+    ChevronRight, ExternalLink, Boxes, Layers
 } from 'lucide-react'
 import Section from '@/components/ui/Section'
 import { NeuralNetworkGraph } from '@/components/neural/NeuralNetworkGraph'
@@ -209,136 +209,135 @@ export function PromptArchitectureSpace() {
                             </button>
                         </div>
 
-                        <div className="flex-1 overflow-y-auto premium-scrollbar p-3 md:p-4 space-y-2 md:space-y-3 md:min-w-[320px] w-full">
+                        <div className="flex-1 overflow-y-auto premium-scrollbar p-3 md:p-4 space-y-2 md:space-y-3 md:min-w-[320px] w-full flex flex-col items-stretch">
                             {timeline.length > 0 ? (
                                 [...timeline].reverse().map((batch, idx) => {
                                     const isActive = activeEpochTimestamp === batch.id;
                                     const isFlyoutOpen = openFlyoutBatchId === batch.id;
 
-                                    if (batch.type === 'SIGNIFICANT') {
-                                        return (
-                                            <motion.button
-                                                key={batch.id}
-                                                initial={{ opacity: 0, x: -20 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: idx * 0.05 }}
-                                                whileHover={{ scale: 1.02 }}
-                                                whileTap={{ scale: 0.98 }}
-                                                onClick={() => {
-                                                    setActiveEpochTimestamp(batch.id);
-                                                    setOpenFlyoutBatchId(null);
-                                                }}
-                                                className={`w-full flex items-center justify-between px-3 md:px-5 py-3 md:py-4 rounded-xl md:rounded-2xl transition-all border ${isActive
-                                                    ? 'bg-idan-david-aviv-gold/10 border-idan-david-aviv-gold/50 shadow-[0_0_20px_-5px_rgba(251,191,36,0.2)]'
-                                                    : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/20'
-                                                    }`}
-                                            >
-                                                <div className="text-left w-full">
-                                                    <div className="flex items-center justify-between mb-1">
-                                                        <span className="text-[8px] text-idan-david-aviv-gold font-mono tracking-widest uppercase opacity-70">{batch.id}</span>
-                                                    </div>
-                                                    <div className="text-[10px] md:text-[11px] font-bold text-white leading-tight mb-2 truncate pr-2">
-                                                        {batch.label}
-                                                    </div>
-                                                    <div className="flex flex-wrap gap-1.5 opacity-80 scale-90 origin-left">
-                                                        {(() => {
-                                                            let addedNodes = 0, removedNodes = 0, addedLinks = 0, removedLinks = 0;
-                                                            batch.items.forEach(c => {
-                                                                addedNodes += c.delta.nodes.added.length;
-                                                                removedNodes += c.delta.nodes.removed.length;
-                                                                addedLinks += c.delta.links.added.length;
-                                                                removedLinks += c.delta.links.removed.length;
-                                                            });
+                                    return (
+                                        <div key={batch.id} className="w-full space-y-1">
+                                            {batch.type === 'SIGNIFICANT' ? (
+                                                <motion.button
+                                                    initial={{ opacity: 0, x: -20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: idx * 0.05 }}
+                                                    whileHover={{ scale: 1.02 }}
+                                                    whileTap={{ scale: 0.98 }}
+                                                    onClick={() => {
+                                                        setActiveEpochTimestamp(batch.id);
+                                                        setOpenFlyoutBatchId(null);
+                                                    }}
+                                                    className={`w-full flex items-center justify-between gap-3 px-4 md:px-5 py-3 md:py-4 rounded-xl md:rounded-2xl transition-all border ${isActive
+                                                        ? 'bg-idan-david-aviv-gold/10 border-idan-david-aviv-gold/50 shadow-[0_0_20px_-5px_rgba(251,191,36,0.2)]'
+                                                        : 'bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/20'
+                                                        }`}
+                                                >
+                                                    <div className="flextext-left flex-1 min-w-0">
+                                                        <div className="flex items-center justify-between mb-1">
+                                                            <span className="text-[8px] text-idan-david-aviv-gold font-mono tracking-widest uppercase opacity-70">{batch.id}</span>
+                                                        </div>
+                                                        <div className="text-[10px] md:text-[11px] font-bold text-white leading-tight mb-2 truncate pr-2">
+                                                            {batch.label}
+                                                        </div>
+                                                        <div className="flex flex-wrap gap-1.5 opacity-80 scale-90 origin-left">
+                                                            {(() => {
+                                                                let addedNodes = 0, removedNodes = 0, addedLinks = 0, removedLinks = 0;
+                                                                batch.items.forEach(c => {
+                                                                    addedNodes += c.delta.nodes.added.length;
+                                                                    removedNodes += c.delta.nodes.removed.length;
+                                                                    addedLinks += c.delta.links.added.length;
+                                                                    removedLinks += c.delta.links.removed.length;
+                                                                });
 
-                                                            return (
-                                                                <>
-                                                                    {addedNodes > 0 && <span className="text-[8px] text-emerald-400 font-mono">+{addedNodes}N</span>}
-                                                                    {removedNodes > 0 && <span className="text-[8px] text-red-400 font-mono">-{removedNodes}N</span>}
-                                                                    {addedLinks > 0 && <span className="text-[8px] text-blue-400 font-mono">+{addedLinks}L</span>}
-                                                                    {removedLinks > 0 && <span className="text-[8px] text-orange-400 font-mono">-{removedLinks}L</span>}
-                                                                </>
-                                                            )
+                                                                return (
+                                                                    <>
+                                                                        {addedNodes > 0 && <span className="text-[8px] text-emerald-400 font-mono">+{addedNodes}N</span>}
+                                                                        {removedNodes > 0 && <span className="text-[8px] text-red-400 font-mono">-{removedNodes}N</span>}
+                                                                        {addedLinks > 0 && <span className="text-[8px] text-blue-400 font-mono">+{addedLinks}L</span>}
+                                                                        {removedLinks > 0 && <span className="text-[8px] text-orange-400 font-mono">-{removedLinks}L</span>}
+                                                                    </>
+                                                                )
+                                                            })()}
+                                                        </div>
+                                                        {(() => {
+                                                            const total = cumulativeBatches.get(batch.id);
+                                                            return total ? (
+                                                                <div className="flex gap-2 mt-2 pt-2 border-t border-white/5 opacity-40">
+                                                                    <span className="text-[7px] font-mono text-idan-david-aviv-gold uppercase italic">Total: {total.nodes}N / {total.links}L</span>
+                                                                </div>
+                                                            ) : null;
                                                         })()}
                                                     </div>
-                                                    {(() => {
-                                                        const total = cumulativeBatches.get(batch.id);
-                                                        return total ? (
-                                                            <div className="flex gap-2 mt-2 pt-2 border-t border-white/5 opacity-40">
-                                                                <span className="text-[7px] font-mono text-idan-david-aviv-gold uppercase italic">Total: {total.nodes}N / {total.links}L</span>
-                                                            </div>
-                                                        ) : null;
-                                                    })()}
-                                                </div>
-                                                <ChevronRight className={`flex-shrink-0 w-4 h-4 transition-transform ${isActive ? 'text-idan-david-aviv-gold rotate-90' : 'text-white/10'}`} />
-                                            </motion.button>
-                                        )
-                                    }
-
-                                    return (
-                                        <div key={batch.id} className="space-y-1">
-                                            <motion.button
-                                                initial={{ opacity: 0, x: -20 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: idx * 0.05 }}
-                                                whileHover={{ x: 5 }}
-                                                onClick={() => {
-                                                    if (isFlyoutOpen) {
-                                                        const currentIdx = timeline.findIndex(b => b.id === batch.id);
-                                                        const prevSignificant = timeline.slice(0, currentIdx).reverse().find(b => b.type === 'SIGNIFICANT');
-                                                        if (prevSignificant) {
-                                                            setActiveEpochTimestamp(prevSignificant.id);
-                                                        }
-                                                        setOpenFlyoutBatchId(null);
-                                                    } else {
-                                                        setActiveEpochTimestamp(batch.id);
-                                                        setOpenFlyoutBatchId(batch.id);
-                                                    }
-                                                }}
-                                                className={`w-full flex items-center justify-between px-3 md:px-5 py-2 md:py-2.5 rounded-lg md:rounded-xl transition-all border ${isFlyoutOpen
-                                                    ? 'bg-idan-david-aviv-gold/5 border-idan-david-aviv-gold/30'
-                                                    : 'bg-white/5 border-white/5 hover:bg-white/10'
-                                                    }`}
-                                            >
-                                                <div className="flex items-center gap-3">
-                                                    <span className="text-[8px] text-idan-david-aviv-gold/50 font-mono tracking-widest uppercase">{batch.id}</span>
-                                                    <span className="px-1.5 py-0.5 rounded bg-white/5 text-[7px] text-white/40 uppercase font-mono border border-white/5">
-                                                        {batch.items.length} ARCHIVED
-                                                    </span>
-                                                </div>
-                                                <ChevronRight className={`flex-shrink-0 w-3 h-3 transition-transform ${isFlyoutOpen ? 'text-idan-david-aviv-gold rotate-90' : 'text-white/10'}`} />
-                                            </motion.button>
-
-                                            <AnimatePresence>
-                                                {isFlyoutOpen && (
-                                                    <motion.div
-                                                        initial={{ height: 0, opacity: 0 }}
-                                                        animate={{ height: "auto", opacity: 1 }}
-                                                        exit={{ height: 0, opacity: 0 }}
-                                                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                                                        className="overflow-hidden pl-4 border-l-2 border-idan-david-aviv-gold/20 ml-2"
+                                                    <ChevronRight className={`flex-shrink-0 w-3 h-3 md:w-3.5 md:h-3.5 transition-transform ${isActive ? 'text-idan-david-aviv-gold rotate-90' : 'text-white/20'}`} />
+                                                </motion.button>
+                                            ) : (
+                                                <>
+                                                    <motion.button
+                                                        initial={{ opacity: 0, x: -20 }}
+                                                        animate={{ opacity: 1, x: 0 }}
+                                                        transition={{ delay: idx * 0.05 }}
+                                                        whileHover={{ x: 5 }}
+                                                        onClick={() => {
+                                                            if (isFlyoutOpen) {
+                                                                const currentIdx = timeline.findIndex(b => b.id === batch.id);
+                                                                const prevSignificant = timeline.slice(0, currentIdx).reverse().find(b => b.type === 'SIGNIFICANT');
+                                                                if (prevSignificant) {
+                                                                    setActiveEpochTimestamp(prevSignificant.id);
+                                                                }
+                                                                setOpenFlyoutBatchId(null);
+                                                            } else {
+                                                                setActiveEpochTimestamp(batch.id);
+                                                                setOpenFlyoutBatchId(batch.id);
+                                                            }
+                                                        }}
+                                                        className={`w-full flex items-center justify-between gap-3 px-4 md:px-5 py-2 md:py-2.5 rounded-lg md:rounded-xl transition-all border ${isFlyoutOpen
+                                                            ? 'bg-idan-david-aviv-gold/5 border-idan-david-aviv-gold/30'
+                                                            : 'bg-white/5 border-white/5 hover:bg-white/10'
+                                                            }`}
                                                     >
-                                                        <div className="py-2 space-y-3">
-                                                            {batch.items.map((commit: KiDiff) => {
-                                                                return (
-                                                                    <a
-                                                                        key={commit.timestamp}
-                                                                        href={getGitHubLink(commit.label)}
-                                                                        target="_blank"
-                                                                        rel="noopener noreferrer"
-                                                                        className="block w-full text-left group/item transition-all no-underline py-1"
-                                                                    >
-                                                                        <div className="text-[9px] font-mono tracking-tighter text-white/20 mb-0.5 group-hover/item:text-idan-david-aviv-gold/50">{commit.timestamp}</div>
-                                                                        <div className="text-[10px] md:text-[11px] leading-tight italic font-light text-white/40 group-hover/item:text-white/80 flex items-center gap-1.5">
-                                                                            {commit.label}
-                                                                            <ExternalLink className="w-2.5 h-2.5 opacity-0 group-hover/item:opacity-100 transition-opacity text-idan-david-aviv-gold" />
-                                                                        </div>
-                                                                    </a>
-                                                                );
-                                                            })}
+                                                        <div className="flex items-center gap-3 min-w-0 flex-1">
+                                                            <span className="text-[8px] text-idan-david-aviv-gold/50 font-mono tracking-widest uppercase">{batch.id}</span>
+                                                            <span className="px-1.5 py-0.5 rounded bg-white/5 text-[7px] text-white/40 uppercase font-mono border border-white/5 overflow-hidden">
+                                                                {batch.items.length} ARCHIVED
+                                                            </span>
                                                         </div>
-                                                    </motion.div>
-                                                )}
-                                            </AnimatePresence>
+                                                        <ChevronRight className={`flex w-3 h-3 md:w-3.5 md:h-3.5 transition-transform ${isFlyoutOpen ? 'text-idan-david-aviv-gold rotate-90' : 'text-white/20'}`} />
+                                                    </motion.button>
+
+                                                    <AnimatePresence>
+                                                        {isFlyoutOpen && (
+                                                            <motion.div
+                                                                initial={{ height: 0, opacity: 0 }}
+                                                                animate={{ height: "auto", opacity: 1 }}
+                                                                exit={{ height: 0, opacity: 0 }}
+                                                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                                                                className="overflow-hidden pl-4 border-l-2 border-idan-david-aviv-gold/20 ml-2"
+                                                            >
+                                                                <div className="py-2 space-y-3">
+                                                                    {batch.items.map((commit: KiDiff) => {
+                                                                        return (
+                                                                            <a
+                                                                                key={commit.timestamp}
+                                                                                href={getGitHubLink(commit.label)}
+                                                                                target="_blank"
+                                                                                rel="noopener noreferrer"
+                                                                                className="block w-full text-left group/item transition-all no-underline py-1"
+                                                                            >
+                                                                                <div className="text-[9px] font-mono tracking-tighter text-white/20 mb-0.5 group-hover/item:text-idan-david-aviv-gold/50">{commit.timestamp}</div>
+                                                                                <div className="text-[10px] md:text-[11px] leading-tight italic font-light text-white/40 group-hover/item:text-white/80 flex items-center gap-1.5 min-w-0">
+                                                                                    <span className="truncate">{commit.label}</span>
+                                                                                    <ExternalLink className="w-2.5 h-2.5 opacity-0 group-hover/item:opacity-100 transition-opacity text-idan-david-aviv-gold" />
+                                                                                </div>
+                                                                            </a>
+                                                                        );
+                                                                    })}
+                                                                </div>
+                                                            </motion.div>
+                                                        )}
+                                                    </AnimatePresence>
+                                                </>
+                                            )}
                                         </div>
                                     )
                                 })
