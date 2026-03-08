@@ -11,7 +11,7 @@ export default function Header() {
         <motion.header
             initial={{ y: -100 }}
             animate={{ y: 0 }}
-            className="fixed top-0 left-0 right-0 z-[100] h-20 flex items-center justify-between px-6 md:px-12 pointer-events-none"
+            className="fixed top-0 left-0 right-0 z-[500] h-20 flex items-center justify-between px-6 md:px-12 pointer-events-none"
         >
 
             <nav className="flex items-center gap-8 pointer-events-auto">

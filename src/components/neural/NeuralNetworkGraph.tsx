@@ -248,7 +248,7 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
           duration: 0.35,
           ease: "linear"
         }}
-        className="absolute top-5 right-5 z-[200] bg-[#050510]/85 backdrop-blur-xl border border-idan-david-aviv-gold/20 shadow-2xl overflow-hidden max-h-[85vh] flex flex-col"
+        className="absolute top-5 right-5 z-[300] bg-[#050510]/85 backdrop-blur-xl border border-idan-david-aviv-gold/20 shadow-2xl overflow-hidden max-h-[85vh] flex flex-col"
       >
         <AnimatePresence mode="wait">
           {!isLegendExpanded ? (
@@ -282,12 +282,12 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
                 <section>
                   <h4 className="text-[10px] font-bold text-idan-david-aviv-gold uppercase tracking-[0.2em] border-b border-idan-david-aviv-gold/10 pb-2 mb-3">Nodes</h4>
                   <div className="space-y-2">
-                    <LegendItem color="#00008b" label="Genesis (Root)" />
-                    <LegendItem color="#fbbf24" label="Core KIs (Group 1)" />
-                    <LegendItem color="#22d3ee" label="Other KIs (Group 2)" />
-                    <LegendItem color="#a855f7" label="SRL / External" />
-                    <LegendItem color="#ef4444" label="Broken Ref (404)" />
-                    <LegendItem color="#94a3b8" label="Meta/Secondary (Group 0)" />
+                    <LegendItem color="rgb(var(--idan-david-aviv-blue-genesis))" label="Genesis (Root)" />
+                    <LegendItem color="rgb(var(--idan-david-aviv-gold))" label="Core KIs (Group 1)" />
+                    <LegendItem color="rgb(var(--idan-david-aviv-cyan))" label="Other KIs (Group 2)" />
+                    <LegendItem color="rgb(var(--idan-david-aviv-purple))" label="SRL / External" />
+                    <LegendItem color="rgb(var(--idan-david-aviv-red))" label="Broken Ref (404)" />
+                    <LegendItem color="rgb(var(--idan-david-aviv-slate))" label="Meta/Secondary (Group 0)" />
                   </div>
                 </section>
 
@@ -295,23 +295,23 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
                   <h4 className="text-[10px] font-bold text-idan-david-aviv-gold uppercase tracking-[0.2em] border-b border-idan-david-aviv-gold/10 pb-2 mb-3">Link Color</h4>
                   <div className="space-y-2">
                     <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                      <span className="w-5 h-[3px] rounded-full bg-[#00008b]" />
+                      <span className="w-5 h-[3px] rounded-full bg-idan-david-aviv-blue-genesis" style={{ backgroundColor: 'rgb(var(--idan-david-aviv-blue-genesis))' }} />
                       <span>Genesis source</span>
                     </div>
                     <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                      <span className="w-5 h-[3px] rounded-full bg-[#fbbf24]" />
+                      <span className="w-5 h-[3px] rounded-full bg-idan-david-aviv-gold" style={{ backgroundColor: 'rgb(var(--idan-david-aviv-gold))' }} />
                       <span>Core KI target</span>
                     </div>
                     <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                      <span className="w-5 h-[3px] rounded-full bg-[#22d3ee]" />
+                      <span className="w-5 h-[3px] rounded-full bg-idan-david-aviv-cyan" style={{ backgroundColor: 'rgb(var(--idan-david-aviv-cyan))' }} />
                       <span>Other KI target</span>
                     </div>
                     <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                      <span className="w-5 h-[3px] rounded-full bg-[#a855f7]" />
+                      <span className="w-5 h-[3px] rounded-full bg-idan-david-aviv-purple" style={{ backgroundColor: 'rgb(var(--idan-david-aviv-purple))' }} />
                       <span>SRL External Codebase</span>
                     </div>
                     <div className="flex items-center gap-3 text-[10px] text-white/60 font-medium">
-                      <span className="w-5 h-[3px] rounded-full bg-[#ef4444]" />
+                      <span className="w-5 h-[3px] rounded-full bg-idan-david-aviv-red" style={{ backgroundColor: 'rgb(var(--idan-david-aviv-red) / 0.8)' }} />
                       <span>Broken Reference</span>
                     </div>
                   </div>
