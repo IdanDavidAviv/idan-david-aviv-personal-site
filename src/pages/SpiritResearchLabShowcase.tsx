@@ -2,7 +2,8 @@ import { motion } from 'framer-motion'
 import {
 
     ChevronRight,
-    ExternalLink
+    ExternalLink,
+    Dna
 } from 'lucide-react'
 import Section from '@/components/ui/Section'
 
@@ -106,14 +107,29 @@ const ECOSYSTEM = {
             description: 'Source of Truth management with high-integrity Git protocols and collaboration.'
         },
         {
-            name: 'GitHub Actions',
-            role: 'CI/CD Flow',
-            logo: 'https://logo.svgcdn.com/logos/github-actions.svg',
-            link: 'https://github.com/features/actions',
-            description: 'Automated deployment pipelines and quality gate enforcement.'
+            name: 'Antigravity DNA',
+            role: 'Performance Orchestrator',
+            logo: 'CUSTOM_DNA',
+            link: 'https://antigravity.google',
+            description: 'High-integrity fix loops and autonomous session management for self-healing quality gates.'
         }
     ]
 }
+
+const DNAOverlaidLogo = () => (
+    <div className="relative w-full h-full flex items-center justify-center">
+        {/* Antigravity Base Logo */}
+        <img 
+            src="https://svgl.app/library/antigravity.svg" 
+            alt="" 
+            className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-opacity duration-500 opacity-80" 
+        />
+        {/* DNA Overlay */}
+        <div className="absolute inset-0 flex items-center justify-center mix-blend-screen pointer-events-none">
+            <Dna className="w-8 h-8 text-gold-500/60 drop-shadow-[0_0_10px_rgba(251,191,36,0.3)] rotate-12 group-hover:scale-110 transition-transform duration-500" />
+        </div>
+    </div>
+);
 
 import { useEffect } from 'react'
 
@@ -202,7 +218,14 @@ export default function SpiritResearchLabShowcase() {
                                 href="https://spirit-research-lab.com/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="amber-glass premium-glow px-12 py-5 rounded-full text-gold-50 font-bold text-lg transition-all hover:scale-105 hover:brightness-110 active:scale-95 shadow-[0_0_30px_rgba(217,119,6,0.2)] flex items-center justify-center cursor-pointer"
+                                whileHover={{ 
+                                    scale: 1.05, 
+                                    backgroundColor: "#f5a623", 
+                                    boxShadow: "0 20px 40px rgba(224, 128, 0, 0.3)" 
+                                }}
+                                whileTap={{ scale: 0.98 }}
+                                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                                className="bg-[#e08000] text-[#1e1b4b] px-12 py-5 rounded-[1.5rem] font-bold text-lg shadow-[0_4px_20px_rgba(224,128,0,0.3)] flex items-center justify-center cursor-pointer select-none"
                                 aria-label="Experience the Calculator"
                             >
                                 Go see the lab
@@ -239,8 +262,12 @@ export default function SpiritResearchLabShowcase() {
                                     className="glass-card p-10 group border-white/5 hover:border-mystic-400/30 transition-all duration-500"
                                 >
                                     <div className="flex items-center justify-between mb-8">
-                                        <div className="w-16 h-16 rounded-2xl bg-white/[0.03] p-3 flex items-center justify-center border border-white/5 group-hover:bg-white/[0.06] transition-all">
-                                            <img src={agent.logo} alt={agent.name} className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500" />
+                                        <div className="w-16 h-16 rounded-2xl bg-white/[0.03] p-3 flex items-center justify-center border border-white/5 group-hover:bg-white/[0.06] transition-all relative overflow-hidden">
+                                            {agent.logo === 'CUSTOM_DNA' ? (
+                                                <DNAOverlaidLogo />
+                                            ) : (
+                                                <img src={agent.logo} alt={agent.name} className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500" />
+                                            )}
                                         </div>
                                         <a href={agent.link} target="_blank" rel="noopener noreferrer" className="text-mystic-500 hover:text-mystic-300 transition-colors">
                                             <ExternalLink className="w-5 h-5" />
