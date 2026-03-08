@@ -16,10 +16,24 @@ export function DNAHero() {
             {/* Hero Asset Layer */}
             <div className="absolute inset-0 z-0">
                 <img
-                    src="/src/brain/08e85369-4548-4504-802a-0ffd8b770bcf/agent_dna_hero_1772363364179.png"
-                    alt="Agent DNA Neural Helix"
-                    className="w-full h-full object-cover opacity-60 scale-110 blur-[2px]"
+                    src="/assets/dna/hero-helix.png"
+                    alt="Agent DNA Neural Slipstream"
+                    className="w-full h-full object-cover opacity-80"
                 />
+                
+                {/* Premium Grain Overlay */}
+                <div className="absolute inset-0 z-10 pointer-events-none opacity-[0.03] mix-blend-overlay">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <filter id="noiseFilter">
+                            <feTurbulence 
+                                type="fractalNoise" 
+                                baseFrequency="0.65" 
+                                numOctaves="3" 
+                                stitchTiles="stitch" />
+                        </filter>
+                        <rect width="100%" height="100%" filter="url(#noiseFilter)" />
+                    </svg>
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#050510] via-transparent to-transparent opacity-90" />
                 <div className="absolute inset-0 bg-gradient-to-r from-[#050510]/80 via-transparent to-[#050510]/80" />
             </div>
