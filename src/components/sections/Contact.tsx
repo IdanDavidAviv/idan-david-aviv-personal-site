@@ -40,7 +40,7 @@ export default function Contact() {
     <Section id="contact" className="py-32 px-6">
       <div className="max-w-6xl mx-auto space-y-20">
         <div className="text-center space-y-6">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-6xl font-bold text-white tracking-tight"
@@ -49,8 +49,13 @@ export default function Contact() {
             <span className="text-idan-david-aviv-blue">From Vision to Reality</span>
           </motion.h2>
           <p className="text-mystic-400 text-lg max-w-2xl mx-auto font-light leading-relaxed">
-            Whether you&apos;re looking for an AI Architect or a Senior-Level collaboration, 
-            let&apos;s start a conversation that matters.
+            Whether you&apos;re looking for an AI Architect
+            <br />
+            Enterpreneurial collaboration
+            <br />
+            or anything else
+            <br />
+            let&apos;s connect.
           </p>
         </div>
 
@@ -86,7 +91,7 @@ export default function Contact() {
 
         {/* Footer Polish Line */}
         <div className="pt-12 flex justify-center">
-           <div className="h-[1px] w-64 bg-gradient-to-r from-transparent via-idan-david-aviv-blue/20 to-transparent" />
+          <div className="h-[1px] w-64 bg-gradient-to-r from-transparent via-idan-david-aviv-blue/20 to-transparent" />
         </div>
       </div>
     </Section>
