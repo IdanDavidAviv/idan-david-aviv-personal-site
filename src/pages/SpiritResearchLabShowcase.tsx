@@ -128,7 +128,7 @@ export default function SpiritResearchLabShowcase() {
     }, [])
 
     return (
-        <main className="min-h-screen w-full bg-[#0a0514] py-20 px-4 md:px-8 lg:px-12 flex flex-col items-center">
+        <main className="min-h-screen w-full bg-spirit-themed py-20 px-4 md:px-8 lg:px-12 flex flex-col items-center">
             {/* The "Box" containing the Spirit Research Lab World */}
             <motion.div
                 initial={{ opacity: 0, scale: 0.98 }}

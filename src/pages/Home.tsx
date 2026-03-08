@@ -7,7 +7,7 @@ import WorkGrid from '@/components/sections/WorkGrid'
  */
 export default function Home() {
     return (
-        <main className="w-full relative z-10 flex flex-col items-center">
+        <main className="w-full relative z-10 flex flex-col items-center bg-transparent">
             <Hero />
             <About />
             <WorkGrid />

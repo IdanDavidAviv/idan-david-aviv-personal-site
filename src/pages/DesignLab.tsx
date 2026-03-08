@@ -108,7 +108,7 @@ export default function DesignLab() {
     }, [])
 
     return (
-        <main className="pt-24 pb-20 w-full max-w-6xl mx-auto px-6">
+        <main className="pt-24 pb-20 w-full max-w-6xl mx-auto px-6 bg-meta-themed">
             <header className="mb-16 text-center">
                 <h1 className="text-4xl md:text-6xl font-bold text-gradient mb-4">Design Lab</h1>
                 <p className="text-white/60 text-lg">Exploring the next evolution of your visual identity.</p>
