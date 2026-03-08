@@ -122,11 +122,11 @@ const DNAOverlaidLogo = () => (
         <img 
             src="https://svgl.app/library/antigravity.svg" 
             alt="" 
-            className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-opacity duration-500 opacity-80" 
+            className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500 opacity-70 group-hover:opacity-100" 
         />
-        {/* DNA Overlay */}
-        <div className="absolute inset-0 flex items-center justify-center mix-blend-screen pointer-events-none">
-            <Dna className="w-8 h-8 text-gold-500/60 drop-shadow-[0_0_10px_rgba(251,191,36,0.3)] rotate-12 group-hover:scale-110 transition-transform duration-500" />
+        {/* DNA Overlay - Top-Left, Reactive */}
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+            <Dna className="w-5 h-5 idan-david-aviv-gold drop-shadow-[0_0_10px_rgba(251,191,36,0.3)] rotate-[0deg] group-hover:rotate-[15deg] group-hover:scale-150 transition-all duration-700 ease-in-out" />
         </div>
     </div>
 );
