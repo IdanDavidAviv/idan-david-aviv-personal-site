@@ -72,7 +72,7 @@ export default function AntigravityDNAShowcase() {
         setActiveEpochTimestamp(currentEpoch);
         setOpenFlyoutBatchId(null);
         setRefreshKey(prev => prev + 1);
-        
+
         // Artificial "tactile" delay for professional feel
         setTimeout(() => {
             setIsRefreshing(false);
@@ -437,9 +437,9 @@ export default function AntigravityDNAShowcase() {
                             </div>
                             <div>
                                 <h2 className="text-2xl font-bold text-white tracking-tight flex items-center gap-3">
-                                    Neural Explorer
+                                    Prompt Architecture Space
                                 </h2>
-                                <p className="text-idan-david-aviv-gold/40 text-xs uppercase tracking-[0.2em] font-mono mt-1">Antigravity DNA KI Network Interactive Incremental Graph</p>
+                                <p className="text-idan-david-aviv-gold/40 text-xs uppercase tracking-[0.2em] font-mono mt-1">Interactive Neural Traceability Network</p>
                             </div>
                         </div>
 
@@ -497,7 +497,7 @@ export default function AntigravityDNAShowcase() {
                                 x: isSidebarCollapsed ? -320 : 0,
                                 opacity: isSidebarCollapsed ? 0 : 1,
                             }}
-                            transition={{ 
+                            transition={{
                                 type: "spring",
                                 stiffness: 120,
                                 damping: 20,
@@ -681,7 +681,7 @@ export default function AntigravityDNAShowcase() {
                                 <button
                                     onClick={() => setIsSidebarCollapsed(false)}
                                     className="absolute top-6 left-6 z-20 p-3 rounded-xl bg-idan-david-aviv-gold/10 border border-idan-david-aviv-gold/20 text-idan-david-aviv-gold hover:bg-idan-david-aviv-gold/20 transition-all shadow-lg shadow-idan-david-aviv-gold/5 backdrop-blur-md group"
-                                    title="Open DNA REFERENCE GRAPH EVOLUTION"
+                                    title="Open Prompt Architecture Space"
                                 >
                                     <GitCompare className="w-5 h-5" />
                                 </button>
@@ -689,9 +689,9 @@ export default function AntigravityDNAShowcase() {
 
                             {/* Interactive Graph Area Layer */}
                             <div className="flex-1 relative flex flex-col bg-[#050510]">
-                                <motion.div 
+                                <motion.div
                                     className="absolute inset-0 z-40"
-                                    animate={{ 
+                                    animate={{
                                         opacity: isRefreshing ? 1 : 0,
                                         pointerEvents: isRefreshing ? 'auto' : 'none'
                                     }}
@@ -728,16 +728,25 @@ export default function AntigravityDNAShowcase() {
                         </div>
                     </div>
                 </motion.div>
-                <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
+
+                <div className="max-w-7xl mx-auto px-6 mt-20 mb-10">
+                    <div className="flex items-center gap-4">
+                        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-idan-david-aviv-gold/20 to-transparent"></div>
+                        <h3 className="text-idan-david-aviv-gold/60 text-sm font-mono uppercase tracking-[0.3em] px-4">Cognitive Mechanics</h3>
+                        <div className="h-px flex-1 bg-gradient-to-r from-transparent via-idan-david-aviv-gold/20 to-transparent"></div>
+                    </div>
+                </div>
+
+                <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="p-8 rounded-[2rem] bg-white/5 border border-white/5 space-y-4 hover:border-idan-david-aviv-gold/20 transition-all group">
                         <div className="flex items-center gap-3 text-idan-david-aviv-gold mb-2">
                             <div className="p-2 rounded-lg bg-idan-david-aviv-gold/10 group-hover:scale-110 transition-transform">
                                 <Network className="w-5 h-5" />
                             </div>
-                            <h4 className="font-bold uppercase tracking-tight">SSOT Consensus</h4>
+                            <h4 className="font-bold uppercase tracking-tight">Neural Traceability</h4>
                         </div>
                         <p className="text-sm text-idan-david-aviv-gold/40 leading-relaxed font-mono">
-                            Decoupling memory from transient chat logs into persistent, versioned Knowledge Items.
+                            Tailored execution protocols replace model guesswork with precise logic, forging a persistent and customizable cognitive source of truth.
                         </p>
                     </div>
                     <div className="p-8 rounded-[2rem] bg-white/5 border border-white/5 space-y-4 hover:border-idan-david-aviv-gold/20 transition-all group">
@@ -745,10 +754,10 @@ export default function AntigravityDNAShowcase() {
                             <div className="p-2 rounded-lg bg-idan-david-aviv-gold/10 group-hover:scale-110 transition-transform">
                                 <Boxes className="w-5 h-5" />
                             </div>
-                            <h4 className="font-bold uppercase tracking-tight">Interconnected Bridges</h4>
+                            <h4 className="font-bold uppercase tracking-tight">Knowledge Topology</h4>
                         </div>
                         <p className="text-sm text-idan-david-aviv-gold/40 leading-relaxed font-mono">
-                            Logical dependencies between protocols ensure that a change in one domain propagates across all agents.
+                            Cross-referencing between Knowledge Items establishes a resilient network topology, providing a stabilized and predictable context for the model&apos;s reasoning to flow on.
                         </p>
                     </div>
                     <div className="p-8 rounded-[2rem] bg-white/5 border border-white/5 space-y-4 hover:border-idan-david-aviv-gold/20 transition-all group">
@@ -756,10 +765,10 @@ export default function AntigravityDNAShowcase() {
                             <div className="p-2 rounded-lg bg-idan-david-aviv-gold/10 group-hover:scale-110 transition-transform">
                                 <Layers className="w-5 h-5" />
                             </div>
-                            <h4 className="font-bold uppercase tracking-tight">High Fidelity</h4>
+                            <h4 className="font-bold uppercase tracking-tight">Precision Steering</h4>
                         </div>
                         <p className="text-sm text-idan-david-aviv-gold/40 leading-relaxed font-mono">
-                            Enterprise-grade protocols (`GEMINI.md`) acting as the behavioral DNA for all architectural execution.
+                            Agent stabilization offloads the friction of tactical decision making, allowing the user to focus on strategic intent rather than fighting against agentic drift and context rot.
                         </p>
                     </div>
                 </div>
