@@ -5,6 +5,7 @@ import SpiritResearchLabShowcase from '@/pages/SpiritResearchLabShowcase'
 import AntigravityDNAShowcase from '@/pages/AntigravityDNAShowcase'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import GlobalBackground from '@/components/layout/GlobalBackground'
 
 /**
  * Main App Component - Orchestrating the Premium UI story.
@@ -12,7 +13,8 @@ import Footer from '@/components/layout/Footer'
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-basebg text-white selection:bg-accent/30 flex flex-col items-center">
+      <div className="min-h-screen text-white selection:bg-accent/30 flex flex-col items-center">
+        <GlobalBackground />
         {/* Texture Layer */}
         <div className="noise" />
 
