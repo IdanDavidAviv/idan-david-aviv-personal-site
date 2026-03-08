@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import {
 
     ChevronRight,
@@ -110,7 +111,7 @@ const ECOSYSTEM = {
             name: 'Antigravity DNA',
             role: 'Performance Orchestrator',
             logo: 'CUSTOM_DNA',
-            link: 'https://antigravity.google',
+            link: '/antigravity-dna',
             description: 'High-integrity fix loops and autonomous session management for self-healing quality gates.'
         }
     ]
@@ -119,10 +120,10 @@ const ECOSYSTEM = {
 const DNAOverlaidLogo = () => (
     <div className="relative w-full h-full flex items-center justify-center">
         {/* Antigravity Base Logo */}
-        <img 
-            src="https://svgl.app/library/antigravity.svg" 
-            alt="" 
-            className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500 opacity-70 group-hover:opacity-100" 
+        <img
+            src="https://svgl.app/library/antigravity.svg"
+            alt=""
+            className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500 opacity-70 group-hover:opacity-100"
         />
         {/* DNA Overlay - Top-Left, Muted to Vibrant Reaction */}
         <div className="absolute -top-2 group-hover:-top-1 left-0 group-hover:left-1 pointer-events-none transition-all duration-700 ease-in-out">
@@ -195,8 +196,8 @@ export default function SpiritResearchLabShowcase() {
                                 Organizing Spiritual <span className="text-idan-david-aviv-gold">Knowledge</span>.
                             </h1>
                             <p className="text-xl md:text-2xl text-mystic-200 font-light leading-relaxed max-w-3xl mx-auto italic">
-                                A support system for astrological, numerological, and kabalistic 
-                                <br /> 
+                                A support system for astrological, numerological, and kabalistic
+                                <br />
                                 data driven personal research.
                             </p>
                             <p className="text-xl md:text-2xl text-mystic-200 font-light leading-relaxed max-w-3xl mx-auto italic">
@@ -218,10 +219,10 @@ export default function SpiritResearchLabShowcase() {
                                 href="https://spirit-research-lab.com/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                whileHover={{ 
-                                    scale: 1.05, 
-                                    backgroundColor: "#f5a623", 
-                                    boxShadow: "0 20px 40px rgba(224, 128, 0, 0.3)" 
+                                whileHover={{
+                                    scale: 1.05,
+                                    backgroundColor: "#f5a623",
+                                    boxShadow: "0 20px 40px rgba(224, 128, 0, 0.3)"
                                 }}
                                 whileTap={{ scale: 0.98 }}
                                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -269,9 +270,15 @@ export default function SpiritResearchLabShowcase() {
                                                 <img src={agent.logo} alt={agent.name} className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-500" />
                                             )}
                                         </div>
-                                        <a href={agent.link} target="_blank" rel="noopener noreferrer" className="text-mystic-500 hover:text-mystic-300 transition-colors">
-                                            <ExternalLink className="w-5 h-5" />
-                                        </a>
+                                        {agent.link.startsWith('/') ? (
+                                            <Link to={agent.link} className="text-mystic-500 hover:text-mystic-300 transition-colors">
+                                                <ExternalLink className="w-5 h-5" />
+                                            </Link>
+                                        ) : (
+                                            <a href={agent.link} target="_blank" rel="noopener noreferrer" className="text-mystic-500 hover:text-mystic-300 transition-colors">
+                                                <ExternalLink className="w-5 h-5" />
+                                            </a>
+                                        )}
                                     </div>
                                     <div className="space-y-4">
                                         <div className="space-y-1">
