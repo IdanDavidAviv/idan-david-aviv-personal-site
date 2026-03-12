@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"name": "idan-david-aviv-personal-site",
+			"path": "."
+		},
+		{
+			"name": "spirit-research-lab",
+			"path": "../spirit-research-lab"
+		},
+		// {
+		// 	"name": ".gemini",
+		// 	"path": "../../.gemini"
+		// },
+		{
+			"name": "noams-clinic-site",
+			"path": "../Noamsclinicwebsite"
+		}
+	],
+	"settings": {}
+}
