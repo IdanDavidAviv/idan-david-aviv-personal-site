@@ -30,7 +30,7 @@ export function PromptArchitectureSpace() {
     const [timeline, setTimeline] = useState<TimelineBatch[]>([])
     const [activeEpochTimestamp, setActiveEpochTimestamp] = useState<string | null>(null)
     const [currentView, setCurrentView] = useState<'3d' | '2d'>('3d')
-    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => window.innerWidth < 768)
     const [graphStats, setGraphStats] = useState({ nodes: 0, links: 0 })
     const [openFlyoutBatchId, setOpenFlyoutBatchId] = useState<string | null>(null)
     const [refreshKey, setRefreshKey] = useState(0)

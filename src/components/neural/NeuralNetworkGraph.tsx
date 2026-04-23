@@ -247,7 +247,7 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
           duration: 0.35,
           ease: "linear"
         }}
-        className="absolute top-5 right-5 z-[300] bg-[#050510]/85 backdrop-blur-xl border border-idan-david-aviv-gold/20 shadow-2xl overflow-hidden max-h-[85vh] flex flex-col"
+        className="absolute top-5 right-5 z-[230] bg-[#050510]/85 backdrop-blur-xl border border-idan-david-aviv-gold/20 shadow-2xl overflow-hidden max-h-[85vh] flex flex-col"
       >
         <AnimatePresence mode="wait">
           {!isLegendExpanded ? (
