@@ -125,7 +125,7 @@ export function HexNeuralCircuit() {
     }, []);
 
     return (
-        <div className="w-full flex justify-center py-8 pointer-events-none relative">
+        <div className="w-full flex justify-center py-0 -my-8 md:-my-12 pointer-events-none relative z-0">
             <svg width="200" height="160" viewBox="0 0 200 160" fill="none" className="relative z-10">
                 <defs>
                     <filter id="pure-blur" x="-50%" y="-50%" width="200%" height="200%">
