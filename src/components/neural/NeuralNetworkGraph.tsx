@@ -7,7 +7,7 @@ import { createGraph3D, handle3DNodeClick, updateSpritePositions } from '../../v
 import { createGraph2D, update2DGraph } from '../../visualizations/ki-network-2d';
 import { VisNode, VisEdge } from '../../visualizations/ki-network-types';
 import * as THREE from 'three';
-import historyData from '../../visualizations/dna-history-backfill-v26_s1.json';
+import historyData from '../../visualizations/dna-history-backfill-v26_s2.json';
 
 interface NeuralNetworkGraphProps {
   activeEpochTimestamp: string | null;
@@ -282,7 +282,7 @@ export const NeuralNetworkGraph: React.FC<NeuralNetworkGraphProps> = ({
                   <h4 className="text-[10px] font-bold text-idan-david-aviv-gold uppercase tracking-[0.2em] border-b border-idan-david-aviv-gold/10 pb-2 mb-3">Nodes</h4>
                   <div className="space-y-2">
                     <LegendItem color="rgb(var(--idan-david-aviv-blue-genesis))" label="Genesis (Root)" />
-                    <LegendItem color="rgb(var(--idan-david-aviv-gold))" label="Core KIs (Group 1)" />
+                    <LegendItem color="rgb(var(--idan-david-aviv-gold))" label="Virgo DNA (Core)" />
                     <LegendItem color="rgb(var(--idan-david-aviv-cyan))" label="Other KIs (Group 2)" />
                     <LegendItem color="rgb(var(--idan-david-aviv-purple))" label="SRL / External" />
                     <LegendItem color="rgb(var(--idan-david-aviv-red))" label="Broken Ref (404)" />
