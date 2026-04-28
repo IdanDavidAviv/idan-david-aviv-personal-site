@@ -5,12 +5,8 @@
 			"path": "."
 		},
 		{
-			"name": "spirit-research-lab",
-			"path": "../spirit-research-lab"
-		},
-		{
-			"name": "noams-clinic-site",
-			"path": "../Noamsclinicwebsite"
+			"name": "virgo",
+			"path": "../virgo"
 		}
 	],
 	"settings": {}
