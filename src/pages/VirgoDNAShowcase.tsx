@@ -24,8 +24,10 @@ export default function VirgoDNAShowcase() {
         document.title = "Virgo DNA — Unified Neural Network | Idan David-Aviv";
     }, [])
     return (
-        <main className="min-h-screen w-full bg-core-themed pt-28 md:pt-32 pb-20 px-4 md:px-8 lg:px-12 flex flex-col items-center">
-            <DNAHero />
+        <main className="min-h-screen w-full bg-core-themed pt-24 md:pt-32 pb-20 px-4 md:px-8 lg:px-12 flex flex-col items-center">
+            <div className="w-full mb-12 md:mb-20">
+                <DNAHero />
+            </div>
 
             <HexNeuralCircuit />
             <DNAPhilosophy />

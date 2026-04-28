@@ -11,7 +11,7 @@ export function DNAHero() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            className="relative w-full max-w-7xl aspect-[16/10] md:aspect-[21/9] rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl"
+            className="relative w-full max-w-7xl min-h-[70vh] md:min-h-[60vh] rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl flex flex-col items-center justify-center p-4 sm:p-8 md:p-24"
         >
             {/* Hero Asset Layer */}
             <div className="absolute inset-0 z-0">
@@ -39,12 +39,12 @@ export function DNAHero() {
             </div>
 
             {/* Glassmorphism Title Card */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center z-10 p-8 text-center">
+            <div className="relative z-10 w-full flex flex-col items-center justify-center text-center">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5, duration: 0.8 }}
-                    className="p-4 sm:p-6 md:p-12 rounded-[2.5rem] bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_50px_-12px_rgba(34,211,238,0.3)]"
+                    className="p-6 sm:p-8 md:p-12 rounded-[2.5rem] bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_50px_-12px_rgba(34,211,238,0.3)] w-full max-w-4xl mx-auto"
                 >
                     <div className="flex items-center justify-center gap-2 md:gap-4 mb-2 md:mb-4">
                         <Dna className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 text-idan-david-aviv-gold animate-pulse" />
@@ -59,7 +59,22 @@ export function DNAHero() {
                     </h2>
                     
                     <p className="max-w-3xl mx-auto text-idan-david-aviv-gold/70 text-base md:text-lg font-light leading-relaxed">
-                        Stop fighting your tools. Designed for large-scale codebases, Virgo acts as a universal context management codex—elevating any AI from a chaotic assistant into a highly-disciplined, embedded Project Manager. Offload the meta-management, protect your flow state, and build complex systems at the speed of thought.
+                        Designed for large-scale codebases, <br />
+                        Virgo acts as a universal <br />
+                        context management codex<br />
+                        elevating any AI <br />
+                        from a chaotic assistant  <br />
+                        into a highly-disciplined, <br />
+                        embedded Project Manager. <br /><br />
+                        Offload the meta-management, <br />
+                        protect your flow state, <br />
+                        and build complex systems <br />
+                        at the speed of thought. <br /><br />
+
+                        Stop fighting your tools. <br />
+                        They are your partners<br />
+                        help them help you<br />
+                        and build together.
                     </p>
 
                     <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
