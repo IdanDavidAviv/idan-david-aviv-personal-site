@@ -24,5 +24,8 @@
     "linguistic_curator": 0,
     "seo_governance": 0,
     "knowledge_center_hierarchy": 0,
-    "verification_integrity": 2
+    "verification_integrity": 2,
+    "dna_graph_refinement": 1,
+    "loom_meta_governance": 1,
+    "sitrep_ceremony": 1
 }

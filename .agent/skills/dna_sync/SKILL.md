@@ -1,14 +1,14 @@
 ---
 name: dna_sync
-description: Protocol for synchronizing the DNA Knowledge Item network graph with the live site visualization (ki-network.ts). Enforces the Connectivity → Dry-Run → Approval → Wet Fill pipeline.
+description: Protocol for synchronizing the Virgo DNA temporal ledger. Enforces the Audit → Sync → Verify pipeline using the Archaeology Engine.
 ---
 
-# DNA Sync Skill
+# DNA Sync Skill (Virgo DNA Edition)
 
 ## Context
-`dna-connectivity.ts` is the **ground-truth injector** for the KI network visualization in `src/visualizations/ki-network.ts`. It scans the Knowledge Base (`~/.gemini/antigravity/knowledge/`) and `GEMINI.md` to produce a synchronized `kiData` block.
+The Virgo DNA visualization is powered by a **Temporal Ledger** (`src/visualizations/dna-history-backfill-v*.json`). This ledger records every "epoch" (commit) that modifies the Knowledge Base or `GEMINI.md`.
 
-This skill governs the **mandatory 3-phase protocol** for running any synchronization — it must never be shortcut.
+This skill governs the **mandatory 3-phase protocol** for maintaining the graph's integrity.
 
 ## Node Group Convention (Source of Truth)
 
@@ -16,56 +16,46 @@ This skill governs the **mandatory 3-phase protocol** for running any synchroniz
 |---|---|---|
 | `999` | Root Hub (`GEMINI.md`) | Large, solid dark blue |
 | `0` | Ghosts (Untriaged/New KIs) | Small, grey, translucent |
-| `1` | Antigravity DNA (Core Protocols) | Purple |
+| `1` | Virgo DNA (Core Protocols) | Purple |
 | `2` | Personal Site (Visualization Sync) | Cyan |
 | `3` | Spirit Research Lab (Infra) | Amber |
 
 > [!IMPORTANT]
-> Group assignments for non-`GEMINI.md` nodes are **manually maintained** in `ki-network.ts` and **preserved** by the sync script. New KIs default to Group `0` (Ghost) until manually triaged.
+> Group assignments are maintained in `src/visualizations/ki-groups.json`. New KIs default to Group `0` (Ghost) until manually triaged in that file.
 
 ## The 3-Phase Pipeline
 
-### Phase 1 — Audit (Read-Only)
+### Phase 1 — Audit
 ```bash
-npm run dna:connectivity
+npm run dna:audit
 ```
-- Scans all KIs and reports their link counts.
-- **No files modified.** Safe to run at any time.
-- Use output to verify the ground truth before proceeding.
+- Compares the latest JSON ledger against the physical files in the Knowledge Base.
+- Detects **Zombies** (deleted files still in ledger) and **Ghosts** (new files missing from ledger).
+- **MANDATORY**: Fix all "Unregistered" errors in `ki-groups.json` before proceeding.
 
-### Phase 2 — Dry Run (Preview)
+### Phase 2 — Archaeology Sync
 ```bash
-npm run dna:fillsite:dry
+npm run dna:sync
 ```
-- Generates `src/visualizations/ki-network.ts.tmp` with the proposed changes.
-- Prints a full **git diff** of `ki-network.ts` vs `.tmp`.
-- Confirms `GEMINI.md` promotion to Group 999.
-- **MANDATORY GATE**: Review the diff output before proceeding to Phase 3.
+- Incremental update. Extracts the last hash from the ledger and fetches only new commits.
+- Generates a new versioned JSON file in `src/visualizations/`.
+- **MANDATORY GATE**: Ensure the "Virgo Archaeology" log reports successful epoch extraction.
 
-> [!CAUTION]
-> **The Authorization Gate**: You are FORBIDDEN from running Phase 3 without an explicit "GO" from the USER after reviewing the dry-run diff.
-
-### Phase 3 — Wet Fill (Commit)
-```bash
-npm run dna:fillsite
-```
-- Surgically replaces the `kiData` block in `ki-network.ts`.
-- **Preserves all manual group assignments** (reads existing groups from the file).
-- **Forces** `GEMINI.md` to Group 999 regardless of existing value.
-- Deletes `ki-network.ts.tmp` automatically on success.
+### Phase 3 — Visual Verification
+- Open the **Virgo DNA Showcase** page (`/virgo-dna`).
+- Verify that the latest changes are reflected in the "Neural Trace" (the playback graph).
+- Confirm that Group 1 nodes are correctly labeled as **Virgo DNA**.
 
 ## Archaeological Protocol (Flag Economy)
 
-`dna-archaeology.ts` maintains the temporal ledger. Use flags to control provenance:
+`dna-archaeology.ts` is the engine. It supports the following flags:
 
-- **`--fresh`**: Full reconstruction. Wipes data and crawls from Genesis. Use for major logic shifts.
-- **`--sync`**: Incremental update. Extracts hash from existing ledger (v8+) and fetches only missing epochs.
-- **`--partial <n>`**: Windowed crawl. Only processes the most recent `<n>` commits.
-
-### Root Node Governance
-`GEMINI.md` is the absolute root (Group 999). It is included in the **default scope** of all archaeological and connectivity scans. Any change to `GEMINI.md` links automatically triggers an archaeology epoch.
+- **`--sync`**: (Default) Resume from the last known commit.
+- **`--fresh`**: Full reconstruction from Genesis. Use only if history logic changes.
+- **`--partial <n>`**: Process only the most recent `<n>` commits.
+- **`--scope <paths>`**: Comma-separated paths to track (Default: Knowledge Base + `GEMINI.md`).
 
 ## Post-Sync Checklist
-- [ ] Verify `GEMINI.md` is present in the latest archaeology epoch.
-- [ ] Ensure hashes are correctly pinned in ledger labels.
-- [ ] Check for duplicate nodes in `--sync` mode.
+- [ ] Run `dna:audit` to confirm zero inconsistencies.
+- [ ] Verify the new `.json` file is present in `src/visualizations/`.
+- [ ] Check that `PromptArchitectureSpace.tsx` correctly generates GitHub links for new epochs.

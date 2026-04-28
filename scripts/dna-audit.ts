@@ -2,16 +2,19 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 const REPO_PATH = 'C:\\Users\\Idan4\\.gemini';
-const OUTPUT_DIR = 'C:\\Users\\Idan4\\OneDrive\\Desktop\\idan-david-aviv-personal-site\\src\\visualizations';
+const OUTPUT_DIR = path.join(process.cwd(), 'src/visualizations');
 const BASE_NAME = 'dna-history-backfill';
 const KI_ROOT = 'antigravity/knowledge';
 
 function getLatestLedger() {
     const files = fs.readdirSync(OUTPUT_DIR).filter(f => f.startsWith(BASE_NAME) && f.endsWith('.json'));
     const sorted = files.sort((a, b) => {
-        const vA = parseInt(a.match(/-v(\d+)\./)?.[1] || '0');
-        const vB = parseInt(b.match(/-v(\d+)\./)?.[1] || '0');
-        return vB - vA;
+        const vA = parseInt(a.match(/-v(\d+)_/)?.[1] || a.match(/-v(\d+)\./)?.[1] || '0');
+        const vB = parseInt(b.match(/-v(\d+)_/)?.[1] || b.match(/-v(\d+)\./)?.[1] || '0');
+        if (vA !== vB) return vB - vA;
+        const sA = parseInt(a.match(/_s(\d+)\./)?.[1] || '0');
+        const sB = parseInt(b.match(/_s(\d+)\./)?.[1] || '0');
+        return sB - sA;
     });
     const latest = sorted[0];
     if (!latest) throw new Error('No ledger found');
@@ -20,7 +23,7 @@ function getLatestLedger() {
 
 function audit() {
     const { path: ledgerPath, version, filename } = getLatestLedger();
-    console.log(`🔍 Auditing DNA Ledger ${filename} (v${version})...`);
+    console.log(`🔍 Auditing Virgo DNA Ledger ${filename} (v${version})...`);
     const data = JSON.parse(fs.readFileSync(ledgerPath, 'utf8'));
 
     const ledgerNodes = new Set<string>();
@@ -30,7 +33,7 @@ function audit() {
     let totalAddedLinks = 0;
     let totalRemovedLinks = 0;
 
-    data.forEach(epoch => {
+    data.epochs.forEach(epoch => {
         // Nodes
         epoch.delta.nodes.added.forEach(n => {
             ledgerNodes.add(n.id);
@@ -124,13 +127,13 @@ function audit() {
     }
 
     if (zombies.length === 0 && ghosts.length === 0 && unmapped.length === 0) {
-        console.log('✅ DNA Cumulative Integrity matches Physical Reality & Registry.');
+        console.log('✅ Virgo DNA Cumulative Integrity matches Physical Reality & Registry.');
     } else {
         const errors = [];
         if (zombies.length > 0) errors.push(`${zombies.length} zombies`);
         if (ghosts.length > 0) errors.push(`${ghosts.length} ghosts`);
         if (unmapped.length > 0) errors.push(`${unmapped.length} unregistered`);
-        console.log(`❌ DNA Inconsistency detected: ${errors.join(', ')}.`);
+        console.log(`❌ Virgo DNA Inconsistency detected: ${errors.join(', ')}.`);
     }
 }
 

@@ -6,7 +6,7 @@ import * as path from 'path';
 const REPO_PATH = 'C:\\Users\\Idan4\\.gemini';
 const KI_ROOT = 'antigravity/knowledge';
 const GEMINI_RELATIVE = 'GEMINI.md'; // Root node
-const OUTPUT_DIR = 'C:\\Users\\Idan4\\OneDrive\\Desktop\\idan-david-aviv-personal-site\\src\\visualizations';
+const OUTPUT_DIR = path.join(process.cwd(), 'src/visualizations');
 const BASE_NAME = 'dna-history-backfill';
 
 // --- CLI ARGUMENTS ---
@@ -21,7 +21,7 @@ const SCOPE_PATHS = scopeIdx !== -1 ? args[scopeIdx + 1].split(',') : [KI_ROOT, 
 
 if (args.includes('--help')) {
     console.log(`
-DNA Archaeology v0.4
+Virgo Archaeology v0.4
 Usage: tsx scripts/dna-archaeology.ts [flags]
 
 Flags:
@@ -149,12 +149,12 @@ function getLinkLocation(targetId: string, targetPath?: string): 'DNA' | 'SRL' |
 }
 
 /**
- * DNA Archaeology Protocol v0.4
+ * Virgo Archaeology Protocol v0.4
  * Stateful Walk + Intent-Aware Extraction
  */
 async function runArchaeology() {
     process.chdir(REPO_PATH);
-    console.log('🏛️ Initializing DNA Archaeology v0.4 (Stateful Mode)...');
+    console.log('🏛️ Initializing Virgo Archaeology v0.4 (Stateful Mode)...');
 
     const latest = getLatestLedger();
     let startHash: string | null = null;
