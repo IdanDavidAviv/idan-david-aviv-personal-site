@@ -46,28 +46,29 @@ export function DNAHero() {
                     transition={{ delay: 0.5, duration: 0.8 }}
                     className="p-4 sm:p-6 md:p-12 rounded-[2.5rem] bg-white/5 backdrop-blur-xl border border-white/10 shadow-[0_0_50px_-12px_rgba(34,211,238,0.3)]"
                 >
-                    <div className="flex items-center justify-center gap-2 md:gap-4 mb-4 md:mb-6">
+                    <div className="flex items-center justify-center gap-2 md:gap-4 mb-2 md:mb-4">
                         <Dna className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 text-idan-david-aviv-gold animate-pulse" />
-                        <h1 className="text-2xl sm:text-4xl md:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white via-idan-david-aviv-gold to-idan-david-aviv-gold/80 uppercase relative">
+                        <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white via-idan-david-aviv-gold to-idan-david-aviv-gold/80 uppercase relative text-center">
                             Virgo DNA
                         </h1>
                         <Brain className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 text-idan-david-aviv-gold animate-pulse" />
                     </div>
-                    <p className="max-w-2xl mx-auto text-idan-david-aviv-gold/70 text-lg md:text-xl font-light leading-relaxed">
-                        The Foundation of Agent Reliability. <br className="hidden md:block" />
-                        A path-orchestrated ecosystem for 100X deterministic performance.
+                    
+                    <h2 className="text-xl md:text-2xl font-medium text-idan-david-aviv-gold mb-6 tracking-wide drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">
+                        The Cognitive Operating System for AI.
+                    </h2>
+                    
+                    <p className="max-w-3xl mx-auto text-idan-david-aviv-gold/70 text-base md:text-lg font-light leading-relaxed">
+                        Stop fighting your tools. Designed for large-scale codebases, Virgo acts as a universal context management codex—elevating any AI from a chaotic assistant into a highly-disciplined, embedded Project Manager. Offload the meta-management, protect your flow state, and build complex systems at the speed of thought.
                     </p>
 
-                    <div className="mt-8 flex flex-wrap justify-center gap-4">
-                        <span className="px-4 py-1.5 rounded-full bg-idan-david-aviv-gold/20 border border-idan-david-aviv-gold/30 text-idan-david-aviv-gold text-xs font-mono uppercase tracking-widest">
-                            stabilization protocol
-                        </span>
-                        <span className="px-4 py-1.5 rounded-full bg-idan-david-aviv-gold/20 border border-idan-david-aviv-gold/30 text-idan-david-aviv-gold text-xs font-mono uppercase tracking-widest">
-                            path-orchestration
-                        </span>
-                        <span className="px-4 py-1.5 rounded-full bg-idan-david-aviv-gold/20 border border-idan-david-aviv-gold/30 text-idan-david-aviv-gold text-xs font-mono uppercase tracking-widest">
-                            self-maintainability
-                        </span>
+                    <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <a href="#neural-blueprint" className="px-8 py-3 rounded-full bg-idan-david-aviv-gold text-[#050510] font-bold tracking-wide hover:bg-white transition-colors shadow-[0_0_20px_rgba(212,175,55,0.3)]">
+                            Explore the DNA
+                        </a>
+                        <a href="#dna-philosophy" className="px-8 py-3 rounded-full bg-white/5 border border-idan-david-aviv-gold/30 text-white font-medium hover:bg-white/10 transition-colors">
+                            Read the Manifesto
+                        </a>
                     </div>
                 </motion.div>
             </div>

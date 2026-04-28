@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Activity, Network, Cpu, Database, Sparkles, Zap } from 'lucide-react'
+import { Zap, BrainCog, MirrorRectangular, BrainCircuit, Waves, Layers } from 'lucide-react'
 import Section from '@/components/ui/Section'
 
 export function DNAPhilosophy() {
@@ -22,34 +22,34 @@ export function DNAPhilosophy() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <PhilosophyCard
-                    title="Behavioral Stabilization"
-                    description="Shifting from probabilistic guessing to deterministic execution. Codifying identity to eliminate erratic agent behavior."
-                    icon={<Activity className="text-idan-david-aviv-gold" />}
+                    title="The Cognitive OS"
+                    description="Move beyond unstructured chat. Virgo-DNA establishes a programmable environment where the AI natively manages its own skills and workflows."
+                    icon={<BrainCog className="text-idan-david-aviv-gold" />}
                 />
                 <PhilosophyCard
-                    title="Path Orchestration"
-                    description="Designing success through proactive workflows and skills. The agent follows high-integrity roadmaps, not trial-and-error."
-                    icon={<Network className="text-idan-david-aviv-gold" />}
+                    title="Preserving Flow State"
+                    description="Protect your cognitive runway. By actively taming AI unpredictability and hallucinations, the system acts as a shield against noise rather than a source of it."
+                    icon={<Waves className="text-idan-david-aviv-gold" />}
                 />
                 <PhilosophyCard
-                    title="Noise Reduction"
-                    description="Automating 'repetitive nonsense' via code. Freeing the cognitive runtime to focus purely on high-level thinking."
-                    icon={<Cpu className="text-idan-david-aviv-gold" />}
-                />
-                <PhilosophyCard
-                    title="SSOT Consensus"
-                    description="Thinking based on a Source of Truth. The agent audits historical data instead of hallucinating from transient logs."
-                    icon={<Database className="text-idan-david-aviv-gold" />}
-                />
-                <PhilosophyCard
-                    title="Self-Maintainability"
-                    description="A system that audits and improves itself. Zero contextual leakage through crystalline architectural memory."
-                    icon={<Sparkles className="text-idan-david-aviv-gold" />}
-                />
-                <PhilosophyCard
-                    title="100X Performance"
-                    description="Saving time, money, and developer frustration by solving problems once and locking them at the SSOT baseline."
+                    title="Just-In-Time Context"
+                    description="Eliminate context overloading. Virgo dynamically identifies the situation and pulls only the exact Knowledge Items (KIs) required for the task at hand."
                     icon={<Zap className="text-idan-david-aviv-gold" />}
+                />
+                <PhilosophyCard
+                    title="The Glass Box Model"
+                    description="Trust requires transparency. While the AI handles meta-management autonomously, its logic remains entirely observable, allowing you to intervene at any altitude."
+                    icon={<MirrorRectangular className="text-idan-david-aviv-gold" />}
+                />
+                <PhilosophyCard
+                    title="Compound Stability"
+                    description="Solve problems once. By codifying solutions into strict skills, routine tasks execute perfectly every time. The architecture stabilizes as it scales."
+                    icon={<Layers className="text-idan-david-aviv-gold" />}
+                />
+                <PhilosophyCard
+                    title="True Symbiosis"
+                    description="Gain the leverage of an engineering team. You provide the strategic vision and authorization; the AI provides the strict execution and structural memory."
+                    icon={<BrainCircuit className="text-idan-david-aviv-gold" />}
                 />
             </div>
         </Section>

@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
     Network, RotateCcw, Maximize, Minimize, X, GitCompare, GitGraph,
-    ChevronRight, ExternalLink, Boxes, Layers
+    ChevronRight, ExternalLink
 } from 'lucide-react'
 import Section from '@/components/ui/Section'
 import { NeuralNetworkGraph } from '@/components/neural/NeuralNetworkGraph'
@@ -107,7 +107,16 @@ export function PromptArchitectureSpace() {
     }, [isGraphFullscreen])
 
     return (
-        <Section id="neural-explorer">
+        <Section id="neural-explorer" className="pb-0 md:pb-0">
+            <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Visualizing The AI Brain</h2>
+                <div className="max-w-4xl mx-auto px-6">
+                    <p className="text-idan-david-aviv-gold/60 leading-relaxed text-base md:text-lg font-mono">
+                        This interactive graph is a window directly into the AI&apos;s structural brain. By mapping the evolution of complex instruction systems and Knowledge Items (KIs), you can visually glimpse the potential neural paths and logical linkages an AI agent navigates within the stable flow of Virgo-DNA. It showcases how structural protocols evolve over time, transforming opaque prompts into a transparent, navigable network.
+                    </p>
+                </div>
+            </div>
+            
             <div className="relative w-full">
                 {!isGraphFullscreen && (
                     <motion.div
@@ -161,9 +170,9 @@ export function PromptArchitectureSpace() {
                         </div>
                         <div>
                             <h2 className="text-xl md:text-2xl font-bold text-white tracking-tight flex items-center gap-3">
-                                Prompt Architecture Space
+                                Project Linkage Evolution
                             </h2>
-                            <p className="text-idan-david-aviv-gold/40 text-[9px] md:text-xs uppercase tracking-[0.2em] font-mono mt-0.5 md:mt-1">Interactive Neural Traceability Network</p>
+                            <p className="text-idan-david-aviv-gold/40 text-[9px] md:text-xs uppercase tracking-[0.2em] font-mono mt-0.5 md:mt-1">Visualizing The Neural Architecture</p>
                         </div>
                     </div>
 
@@ -451,50 +460,6 @@ export function PromptArchitectureSpace() {
                 </div>
             </motion.div>
         </div>
-
-            <div className="max-w-7xl mx-auto px-6 mt-20 mb-10">
-                <div className="flex items-center gap-4">
-                    <div className="h-px flex-1 bg-gradient-to-r from-transparent via-idan-david-aviv-gold/20 to-transparent"></div>
-                    <h3 className="text-idan-david-aviv-gold/60 text-sm font-mono uppercase tracking-[0.3em] px-4">Cognitive Mechanics</h3>
-                    <div className="h-px flex-1 bg-gradient-to-r from-transparent via-idan-david-aviv-gold/20 to-transparent"></div>
-                </div>
-            </div>
-
-            <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="p-8 rounded-[2rem] bg-white/5 border border-white/5 space-y-4 hover:border-idan-david-aviv-gold/20 transition-all group">
-                    <div className="flex items-center gap-3 text-idan-david-aviv-gold mb-2">
-                        <div className="p-2 rounded-lg bg-idan-david-aviv-gold/10 group-hover:scale-110 transition-transform">
-                            <Network className="w-5 h-5" />
-                        </div>
-                        <h4 className="font-bold uppercase tracking-tight">Neural Traceability</h4>
-                    </div>
-                    <p className="text-sm text-idan-david-aviv-gold/40 leading-relaxed font-mono">
-                        Tailored execution protocols replace model guesswork with precise logic, forging a persistent and customizable cognitive source of truth.
-                    </p>
-                </div>
-                <div className="p-8 rounded-[2rem] bg-white/5 border border-white/5 space-y-4 hover:border-idan-david-aviv-gold/20 transition-all group">
-                    <div className="flex items-center gap-3 text-idan-david-aviv-gold mb-2">
-                        <div className="p-2 rounded-lg bg-idan-david-aviv-gold/10 group-hover:scale-110 transition-transform">
-                            <Boxes className="w-5 h-5" />
-                        </div>
-                        <h4 className="font-bold uppercase tracking-tight">Knowledge Topology</h4>
-                    </div>
-                    <p className="text-sm text-idan-david-aviv-gold/40 leading-relaxed font-mono">
-                        Cross-referencing between Knowledge Items establishes a resilient network topology, providing a stabilized and predictable context for the model&apos;s reasoning to flow on.
-                    </p>
-                </div>
-                <div className="p-8 rounded-[2rem] bg-white/5 border border-white/5 space-y-4 hover:border-idan-david-aviv-gold/20 transition-all group">
-                    <div className="flex items-center gap-3 text-idan-david-aviv-gold mb-2">
-                        <div className="p-2 rounded-lg bg-idan-david-aviv-gold/10 group-hover:scale-110 transition-transform">
-                            <Layers className="w-5 h-5" />
-                        </div>
-                        <h4 className="font-bold uppercase tracking-tight">Precision Steering</h4>
-                    </div>
-                    <p className="text-sm text-idan-david-aviv-gold/40 leading-relaxed font-mono">
-                        Agent stabilization offloads the friction of tactical decision making, allowing the user to focus on strategic intent rather than fighting against agentic drift and context rot.
-                    </p>
-                </div>
-            </div>
         </Section>
     )
 }

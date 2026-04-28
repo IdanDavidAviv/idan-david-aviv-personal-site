@@ -1,38 +1,34 @@
 import React from 'react'
-import { Binary, Activity, Database, Zap } from 'lucide-react'
+import { Activity, Database, Zap } from 'lucide-react'
 import Section from '@/components/ui/Section'
 
 export function CrystallineMemory() {
     return (
         <Section id="crystalline-memory">
             <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Crystalline Memory</h2>
-                <p className="text-idan-david-aviv-gold/40 text-lg uppercase tracking-widest font-mono">The Persistent Knowledge Base</p>
+                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">The Temporal Ledger</h2>
+                <p className="text-idan-david-aviv-gold/40 text-lg uppercase tracking-widest font-mono">Absolute Architectural Memory</p>
             </div>
             <div className="relative mt-12 p-6 md:p-12 rounded-[2.5rem] bg-white/[0.03] backdrop-blur-xl border border-white/10 overflow-hidden">
-                <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none z-0">
-                    <Binary className="w-48 h-48 md:w-64 md:h-64 text-idan-david-aviv-gold" />
-                </div>
-
                 <div className="relative z-10 flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
                     <div className="flex-1 space-y-6">
-                        <h3 className="text-2xl md:text-3xl font-bold text-white">The KI Ecosystem</h3>
+                        <h3 className="text-2xl md:text-3xl font-bold text-white">Zero Context Rot</h3>
                         <p className="text-idan-david-aviv-gold/60 leading-relaxed text-base md:text-lg">
-                            Knowledge Items (KIs) are more than documentation—they are distilled patterns of success.
-                            By decoupling context from transient chat tokens, the project achieves true <strong>Persistent Context</strong>.
+                            Standard AI memory decays as the session grows. Virgo-DNA prevents this by anchoring the agent to a unified management system. By forcing the AI to synchronize both its tactical working state and strategic directives directly to the local file system, context rot is eliminated. 
+                            <strong> A session booted tomorrow has the exact same context as today.</strong>
                         </p>
                         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-                            <MemoryPoint icon={<Activity />} text="Interconnected Bridges: Logical dependencies between domains" />
-                            <MemoryPoint icon={<Database />} text="SSOT Consensus: Real-time synchronization across modules" />
-                            <MemoryPoint icon={<Zap />} text="Knowledge Lock: Enterprise-grade validation" />
+                            <MemoryPoint icon={<Activity />} text="Artifact Ledgers: Immutable records of execution" />
+                            <MemoryPoint icon={<Database />} text="SSOT Consensus: Auditable truth across modules" />
+                            <MemoryPoint icon={<Zap />} text="State Restoration: Instant contextual reboot" />
                         </ul>
                     </div>
 
                     <div className="w-full lg:w-1/3 grid grid-cols-2 gap-3 md:gap-4">
-                        <StatItem label="Active KIs" value="24" />
-                        <StatItem label="Protocols" value="18" />
-                        <StatItem label="Context" value="Persistent" />
-                        <StatItem label="Bridges" value="Structural" />
+                        <StatItem label="Tactical State" value="Loom" />
+                        <StatItem label="Strategic Map" value="Plans" />
+                        <StatItem label="Core Protocols" value="KIs" />
+                        <StatItem label="Context Rot" value="Zero" />
                     </div>
                 </div>
             </div>
