@@ -3,7 +3,7 @@ import { Dna, Brain } from 'lucide-react'
 
 /**
  * DNAHero Component
- * The foundational visual entry point for the Antigravity DNA Showcase.
+ * The foundational visual entry point for the Virgo DNA Showcase.
  */
 export function DNAHero() {
     return (
@@ -49,7 +49,7 @@ export function DNAHero() {
                     <div className="flex items-center justify-center gap-2 md:gap-4 mb-4 md:mb-6">
                         <Dna className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 text-idan-david-aviv-gold animate-pulse" />
                         <h1 className="text-2xl sm:text-4xl md:text-7xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white via-idan-david-aviv-gold to-idan-david-aviv-gold/80 uppercase relative">
-                            Antigravity DNA
+                            Virgo DNA
                         </h1>
                         <Brain className="w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 text-idan-david-aviv-gold animate-pulse" />
                     </div>

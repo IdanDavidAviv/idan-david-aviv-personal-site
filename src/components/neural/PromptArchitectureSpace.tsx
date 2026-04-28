@@ -41,7 +41,7 @@ export function PromptArchitectureSpace() {
         const hashMatch = label.match(/\[([a-f0-9]{7})\]/)
         if (!hashMatch) return '#'
         const hash = hashMatch[1]
-        return `https://github.com/IdanDavidAviv/antigravity-dna/commit/${hash}`
+        return `https://github.com/IdanDavidAviv/virgo-dna/commit/${hash}`
     }
 
     // Automatically close expanded batches when sidebar collapses

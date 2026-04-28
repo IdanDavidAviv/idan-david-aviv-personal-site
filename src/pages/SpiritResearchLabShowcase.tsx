@@ -108,10 +108,10 @@ const ECOSYSTEM = {
             description: 'Source of Truth management with high-integrity Git protocols and collaboration.'
         },
         {
-            name: 'Antigravity DNA',
+            name: 'Virgo DNA',
             role: 'Performance Orchestrator',
             logo: 'CUSTOM_DNA',
-            link: '/antigravity-dna',
+            link: '/virgo-dna',
             description: 'High-integrity fix loops and autonomous session management for self-healing quality gates.'
         }
     ]

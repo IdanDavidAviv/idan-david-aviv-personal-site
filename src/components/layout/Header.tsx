@@ -26,7 +26,7 @@ export default function Header() {
                     Me
                 </Link>
                 <Link
-                    to="/antigravity-dna"
+                    to="/virgo-dna"
                     className={cn(
                         "px-4 py-2 rounded-full border border-idan-david-aviv-gold/20 bg-idan-david-aviv-gold/10",
                         "text-sm font-medium text-white hover:bg-idan-david-aviv-gold/20 transition-all",
@@ -34,7 +34,7 @@ export default function Header() {
                     )}
                 >
                     <Dna className="w-6 h-6 text-idan-david-aviv-gold/60 group-hover:rotate-12 transition-transform" />
-                    Antigravity DNA
+                    Virgo DNA
                 </Link>
                 <Link
                     to="/spirit-research-lab"
