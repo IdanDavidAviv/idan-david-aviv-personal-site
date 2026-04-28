@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { createSmoothPath } from './neural-utils';
 
 const DIAMOND_NODES = [
     { id: 'n0', x: 100, y: 30 },  // Top
@@ -92,7 +93,7 @@ export function DiamondNeuralCircuit() {
     }, []);
 
     return (
-        <div className="w-full flex justify-center py-6 md:py-10 pointer-events-none h-36 relative">
+        <div className="w-full flex justify-center py-8 pointer-events-none relative">
             <svg width="200" height="140" viewBox="0 0 200 140" fill="none" className="relative z-10">
                 <defs>
                     <filter id="pure-blur-small" x="-50%" y="-50%" width="200%" height="200%">
@@ -112,75 +113,55 @@ export function DiamondNeuralCircuit() {
                             stroke="currentColor" 
                             strokeWidth="1" 
                             className="text-idan-david-aviv-gold/5" 
+                            filter="url(#pure-blur-small)"
                         />
                     )
                 })}
                 
                 {/* Active Synaptic Pulses */}
                 {pulses.flatMap(pulse => {
-                    const elements = [];
-                    let accumulatedDelay = 0;
+                    const elements: JSX.Element[] = [];
+                    const routePoints = pulse.route.map(id => DIAMOND_NODES.find(n => n.id === id)!);
+                    
+                    let totalDist = 0;
+                    for (let i = 0; i < routePoints.length - 1; i++) {
+                        totalDist += Math.hypot(routePoints[i+1].x - routePoints[i].x, routePoints[i+1].y - routePoints[i].y);
+                    }
+                    const totalDuration = totalDist * 0.009; 
+                    const d = createSmoothPath(routePoints, 0.8);
 
-                    for (let i = 0; i < pulse.route.length - 1; i++) {
-                        const start = DIAMOND_NODES.find(n => n.id === pulse.route[i])!
-                        const end = DIAMOND_NODES.find(n => n.id === pulse.route[i+1])!
-                        
-                        const dist = Math.hypot(end.x - start.x, end.y - start.y);
-                        const segmentDuration = dist * 0.007; // Constant velocity (~140px/sec)
-                        
-                        const stepDelay = accumulatedDelay;
-                        accumulatedDelay += segmentDuration;
-                        
-                        const segmentId = `${pulse.id}_s${i}`;
+                    // Comet particles using offsetDistance on the smooth path
+                    Array.from({ length: 8 }).forEach((_, trailIdx) => {
+                        const isHead = trailIdx === 0;
+                        const trailDelay = trailIdx * 0.04; 
+                        const opacityPeak = isHead ? 1 : 0.8 * Math.pow(0.8, trailIdx); 
+                        const radius = isHead ? 2.5 : Math.max(0.5, 2.5 - trailIdx * 0.25); 
 
-                        // Line Decaying Trail
                         elements.push(
-                            <motion.line
-                                key={`${segmentId}_line`}
-                                x1={start.x} y1={start.y}
-                                x2={end.x} y2={end.y}
-                                stroke="#FBBF24"
-                                strokeWidth="1.5"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: [0, 0.6, 0] }}
+                            <motion.circle
+                                key={`${pulse.id}_dot_${trailIdx}`}
+                                r={radius}
+                                fill="#FBBF24"
+                                filter="url(#pure-blur-small)"
+                                style={{
+                                    offsetPath: `path('${d}')`,
+                                    cx: 0, 
+                                    cy: 0
+                                } as React.CSSProperties}
+                                initial={{ offsetDistance: "0%", opacity: 0 }}
+                                animate={{ 
+                                    offsetDistance: ["0%", "100%"],
+                                    opacity: [0, opacityPeak, opacityPeak, 0]
+                                }}
                                 transition={{
-                                    duration: segmentDuration * 3,
-                                    delay: stepDelay,
-                                    ease: "easeOut",
-                                    times: [0, 0.1, 1] 
+                                    duration: totalDuration,
+                                    delay: trailDelay,
+                                    ease: "linear",
+                                    times: [0, 0.1, 0.9, 1]
                                 }}
                             />
                         );
-
-                        // Comet Particle System
-                        Array.from({ length: 8 }).forEach((_, trailIdx) => {
-                            const isHead = trailIdx === 0;
-                            const trailDelay = trailIdx * 0.04; 
-                            const opacityPeak = isHead ? 1 : 0.8 * Math.pow(0.8, trailIdx); 
-                            const radius = isHead ? 2.5 : Math.max(0.5, 2.5 - trailIdx * 0.25); 
-
-                            elements.push(
-                                <motion.circle
-                                    key={`${segmentId}_dot_${trailIdx}`}
-                                    r={radius}
-                                    fill="#FBBF24"
-                                    filter="url(#pure-blur-small)"
-                                    initial={{ cx: start.x, cy: start.y, opacity: 0 }}
-                                    animate={{ 
-                                        cx: [start.x, end.x], 
-                                        cy: [start.y, end.y],
-                                        opacity: [0, opacityPeak, opacityPeak, 0]
-                                    }}
-                                    transition={{
-                                        duration: segmentDuration,
-                                        delay: stepDelay + trailDelay,
-                                        ease: "linear",
-                                        times: [0, 0.1, 0.9, 1]
-                                    }}
-                                />
-                            );
-                        });
-                    }
+                    });
                     return elements;
                 })}
 
@@ -192,6 +173,7 @@ export function DiamondNeuralCircuit() {
                         cy={node.y}
                         r={node.id === 'c' ? 1.5 : 2.5}
                         className="fill-idan-david-aviv-gold"
+                        filter="url(#pure-blur-small)"
                         initial={{ opacity: 0.05, scale: 1 }}
                         animate={{ 
                             opacity: [0.05, 0.2, 0.05],

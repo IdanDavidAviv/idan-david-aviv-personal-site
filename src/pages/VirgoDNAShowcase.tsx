@@ -47,7 +47,7 @@ export default function VirgoDNAShowcase() {
             <PromptArchitectureSpace />
 
             {/* Final Footer Label */}
-            <div className="mt-40 mb-20 text-center relative z-10">
+            <div className="mt-16 mb-20 text-center relative z-10">
                 <div className="w-1 h-20 bg-gradient-to-b from-idan-david-aviv-gold/20 to-transparent mx-auto mb-8" />
                 <p className="text-white/20 font-mono text-sm tracking-[1em] uppercase">Virgo-DNA // Distributed Network Architecture</p>
             </div>
