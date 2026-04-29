@@ -45,8 +45,18 @@ The visual identity of Virgo is defined by the provided assets (`virgo_symbol_te
 - **Motifs**: Glowing wireframes, audio waveforms, deep dark backgrounds, and neon luminescence.
 - **Vibe**: Cyberpunk, Synthwave, high-tech, sensory-rich.
 
-## Part 5: The Pillars (Features)
-- **The Agent Narrator**: Listen to implementation plans and code reviews while keeping your eyes on the codebase.
-- **Task Handoffs**: Audible status reports. You don't have to watch a terminal finish a 10-minute task.
-- **Presentations**: Narrate architecture documents or code walkthroughs directly inside VS Code.
-- **Native MCP Integration**: The Virgo MCP server connects to ANY AI agent ecosystem (Cursor, Claude Desktop, Antigravity) and grants them the `say_this_loud` tool to bypass text chat entirely.
+## Part 5: The Pillars (Features & Architecture)
+
+### 1. The Fluent Reading Engine
+- **Structural Slicing & Granular Control:** Markdown is dynamically parsed into interactive **Chapters and Rows**. This affords the developer immense granular control—you can skip a specific paragraph, rewind to re-listen to a complex code block, and scrub through architectural explanations with pinpoint accuracy.
+- **Asynchronous Handoff (Listen on Your Terms):** The agent generates the audio, but the user commands the playback. Snippets are stored in a session history inbox, meaning you are never forced to listen immediately or risk missing context. You hit play when you are cognitively ready.
+- **Continuous Flow:** Virgo supports the reading flow with smart playback retrieval management to accommodate for rate limiting, masking latency and minimizing silence gaps during continuous playback.
+
+### 2. The Native MCP Integration (The Setup)
+- **Seamless Communication:** The Virgo MCP server directly grants connected agents the `say_this_loud` tool, allowing them to bypass traditional text chat and communicate natively via voice.
+- **The Limitation of MCP:** An MCP server alone only allows the user to *ask* the agent to speak. For true, hands-free automation, the agent requires a predefined skill. This sets the stage for the Context Bomb paradigm.
+
+### 3. The "Context Bomb" Paradigm (The Payoff)
+A revolutionary concept of pre-determining what the target agent needs to know for the best results when installing and configuring an AI-supporting application at the target environment.
+- **Agent-Guided Installations:** By hosting an `AGENT_INSTALL_GUIDE.md` in the repo, a standard is created where human users delegate the installation process entirely to the AI. The agent reads the "Context Bomb," determines its environment (External vs. IDE), and orchestrates the setup perfectly.
+- **Agent-Guided Tool Configurability:** Bridging the gap left by standard MCP. Through protocols like `AGENT_GUIDED_PREFERENCES_SKILL_DEFINITION_PROTOCOL.md`, the agent learns when and how to execute the `say_this_loud` tool proactively, enabling hands-free autonomy without requiring manual user requests.

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { VirgoHero } from '@/components/virgo/VirgoHero'
 import { ReadingFatigue } from '@/components/virgo/ReadingFatigue'
-import { CoreUseCases } from '@/components/virgo/CoreUseCases'
+import { VirgoMechanics } from '@/components/virgo/VirgoMechanics'
 import { MCPEcosystem } from '@/components/virgo/MCPEcosystem'
 
 export default function VirgoShowcase() {
@@ -20,7 +20,7 @@ export default function VirgoShowcase() {
             <div className="relative z-10 flex flex-col w-full">
                 <VirgoHero />
                 <ReadingFatigue />
-                <CoreUseCases />
+                <VirgoMechanics />
                 <MCPEcosystem />
             </div>
         </main>
