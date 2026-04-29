@@ -75,10 +75,10 @@
   }
 
   /* Themed Background Utilities */
-  .bg-genesis-themed { background-color: rgb(var(--bg-genesis)); }
-  .bg-core-themed { background-color: rgb(var(--bg-core)); }
-  .bg-spirit-themed { background-color: rgb(var(--bg-spirit)); }
-  .bg-meta-themed { background-color: rgb(var(--bg-meta)); }
+  .bg-genesis-themed { background-color: var(--bg-genesis); }
+  .bg-core-themed { background-color: var(--bg-core); }
+  .bg-spirit-themed { background-color: var(--bg-spirit); }
+  .bg-meta-themed { background-color: var(--bg-meta); }
 
   /* Starry Background Effect from Spirit Research Lab */
   .mystical-bg {
