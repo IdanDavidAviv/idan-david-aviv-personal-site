@@ -289,10 +289,9 @@ export function ReadingFatigue() {
                     {/* Free-Floating Poetic Text - Second Part */}
                     <div className="relative z-10 pt-8 pb-12">
                         <p className="text-white/80 leading-loose font-light text-xl md:text-2xl tracking-wide">
-                            Virgo invites you to<br />
-                            <span className="bg-gradient-to-r from-[#00f0ff] via-blue-400 to-[#cc00ff] bg-clip-text text-transparent font-medium drop-shadow-sm">change your habits</span><br />
-                            and improve your workflow,<br />
-                            by reducing cognitive stress.
+                            Move on to context awareness <br />
+                            instead of wasting time and tokens. <br />
+                            Virgo invites you to <br/><span className="bg-gradient-to-r from-[#00f0ff] via-blue-400 to-[#cc00ff] bg-clip-text text-transparent font-medium drop-shadow-sm">Change Your Mind</span><br />
                         </p>
                     </div>
                 </div>
