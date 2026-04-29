@@ -144,14 +144,14 @@ export function ReadingFatigue() {
                                 {/* User blind input */}
                                 <div className="flex items-center gap-2 pt-2">
                                     <span className="text-zinc-500 text-xs font-mono">&gt;</span>
-                                    <code className="bg-purple-900/40 text-purple-300 px-2 py-0.5 rounded border border-purple-500/30 font-mono text-sm shadow-[0_0_10px_rgba(168,85,247,0.2)]">&quot;GO&quot;</code>
+                                    <code className="bg-purple-900/40 text-purple-300 px-2 py-0.5 rounded border border-purple-500/30 font-mono text-sm shadow-[0_0_10px_rgba(168,85,247,0.2)]">GO</code>
                                     <span className="text-zinc-600 text-xs italic ml-2">&larr; Rubber stamp</span>
                                 </div>
 
                                 {/* Consequence Error */}
                                 <div className="mt-4 pt-4 border-t border-rose-500/10 flex items-start gap-2">
                                     <AlertTriangle className="w-4 h-4 text-rose-500 mt-0.5 shrink-0 animate-pulse" />
-                                    <span className="text-rose-400/90 text-xs font-mono font-bold leading-relaxed">Agent: <br />&gt; Executing hellucinations you missed in the plan.<br />&gt; Brain Meltdown initiated <br />&gt; Resistance is useless... <br /><br />I have successfully established Chaos! <br />Is there anything else you would want me to do?</span>
+                                    <span className="text-rose-400/90 text-xs font-mono leading-relaxed">Agent: <br />&gt; Executing hellucinations you missed in the plan.<br />&gt; Brain Meltdown initiated <br />&gt; Resistance is useless... <br /><br />I have successfully established <span className="font-bold text-rose-500">Chaos!</span> <br />Is there anything else you would want me to do?</span>
                                 </div>
                             </div>
                         </div>
