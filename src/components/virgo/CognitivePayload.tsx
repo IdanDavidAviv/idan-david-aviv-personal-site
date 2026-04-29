@@ -62,11 +62,11 @@ export function CognitivePayload() {
                                         <Sparkles className="w-3 h-3" />
                                         <span>Reading AGENT_INSTALL_GUIDE.md...</span>
                                     </div>
-                                    I've read the installation protocol. Here are your steps:<br/><br/>
+                                    I&apos;ve read the installation protocol. Here are your steps:<br/><br/>
                                     1. Download and install the latest <code>.vsix</code> release.<br/>
                                     2. Click the <strong>MCP Status Badge</strong> in the Virgo panel to auto-configure my connection.<br/>
                                     3. Click inside the Virgo panel to unlock the audio engine.<br/><br/>
-                                    <span className="text-[#00f0ff] font-medium">Tell me when you're ready!</span>
+                                    <span className="text-[#00f0ff] font-medium">Tell me when you&apos;re ready!</span>
                                 </div>
                             </div>
                         </div>

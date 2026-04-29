@@ -3,8 +3,8 @@ import { VirgoHero } from '@/components/virgo/VirgoHero'
 import { ReadingFatigue } from '@/components/virgo/ReadingFatigue'
 import { VirgoMechanics } from '@/components/virgo/VirgoMechanics'
 import { MCPEcosystem } from '@/components/virgo/MCPEcosystem'
-
 import { CognitivePayload } from '@/components/virgo/CognitivePayload'
+import { CollaborationFooter } from '@/components/virgo/CollaborationFooter'
 
 export default function VirgoShowcase() {
     useEffect(() => {
@@ -25,6 +25,7 @@ export default function VirgoShowcase() {
                 <VirgoMechanics />
                 <MCPEcosystem />
                 <CognitivePayload />
+                <CollaborationFooter />
             </div>
         </main>
     )
