@@ -25,13 +25,17 @@ When this cognitive limit is reached, you stop engineering and start blindly app
 
 You can keep your eyes on the codebase, review the actual diffs, and listen to the agent's strategy at the exact same time. It transforms the IDE from a silent text editor into an active pairing session.
 
-## Part 3: Visual Identity & Brand Aesthetic
+## Part 3: The Economic Impact (The Bottom Line)
+Breaking the Hallucination Rollback Loop doesn't just save human sanity—it prevents massive token waste. When developers hit cognitive overload and blindly approve flawed plans, the agent generates chaotic code that inevitably breaks the system. Reversing this damage—debugging, prompting for rollbacks, and rewriting the entire implementation—burns hundreds of dollars locally and millions at scale.
+It requires a behavioral shift from the human to prioritize listening over skimming, but Virgo provides the sensory support to make that shift effortless. The result is total token efficiency.
+
+## Part 4: Visual Identity & Brand Aesthetic
 The visual identity of Virgo is defined by the provided assets (`virgo_symbol_text_orb.png`, `virgo_icon.png`, `virgo_wordmark.png`).
 - **Core Colors**: A striking, high-contrast neon gradient. The spectrum flows from **Electric Cyan** to **Vivid Purple** (`#00f0ff` to `#cc00ff`).
 - **Motifs**: Glowing wireframes, audio waveforms, deep dark backgrounds, and neon luminescence.
 - **Vibe**: Cyberpunk, Synthwave, high-tech, sensory-rich.
 
-## Part 4: The Pillars (Features)
+## Part 5: The Pillars (Features)
 - **The Agent Narrator**: Listen to implementation plans and code reviews while keeping your eyes on the codebase.
 - **Task Handoffs**: Audible status reports. You don't have to watch a terminal finish a 10-minute task.
 - **Presentations**: Narrate architecture documents or code walkthroughs directly inside VS Code.
