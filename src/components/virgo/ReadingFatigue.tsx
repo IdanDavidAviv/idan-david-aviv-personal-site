@@ -107,7 +107,7 @@ export function ReadingFatigue() {
                         {/* Mobile Title (hidden on PC) */}
                         <div className="md:hidden mb-4 text-left">
                             <h3 className="text-xl font-bold text-white mb-2">2. The Cognitive Overload</h3>
-                            <p className="text-white/50 font-light text-sm">Digesting immense amounts of data,<br />and making high-stakes decisions with AI<br /> drives even the best of us to the <br/><span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-purple-400 font-medium">edge of cognitive performance</span>.</p>
+                            <p className="text-white/50 font-light text-sm">Digesting immense amounts of data,<br />and making high-stakes decisions with AI<br /> drives even the best of us to the <br/><span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 from-[30%] to-purple-400 font-medium">edge of cognitive performance</span>.</p>
                         </div>
 
                         {/* Warning Card */}
@@ -172,7 +172,7 @@ export function ReadingFatigue() {
                     {/* PC Title (hidden on Mobile) */}
                     <div className="hidden md:block w-5/12 pl-16 text-left order-3">
                         <h3 className="text-2xl font-bold text-white mb-2">2. The Cognitive Overload</h3>
-                        <p className="text-white/50 font-light leading-relaxed">Digesting immense amounts of data,<br />and making high-stakes decisions with AI<br /> drives even the best of us to the <br/><span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-purple-400 font-medium">edge of cognitive performance</span>.</p>
+                        <p className="text-white/50 font-light leading-relaxed">Digesting immense amounts of data,<br />and making high-stakes decisions with AI<br /> drives even the best of us to the <br/><span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 from-[30%] to-purple-400 font-medium">edge of cognitive performance</span>.</p>
                     </div>
                 </motion.div>
 
