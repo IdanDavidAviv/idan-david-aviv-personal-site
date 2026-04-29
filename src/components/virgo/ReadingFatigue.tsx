@@ -115,13 +115,17 @@ export function ReadingFatigue() {
                             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
                             
                             {/* Header */}
-                            <div className="flex items-center gap-3 mb-5 relative z-10 md:justify-end">
+                            <div className="flex items-center gap-3 mb-3 relative z-10 md:justify-end">
                                 <span className="text-white/80 font-medium text-sm tracking-wide">Cognitive Fatigue</span>
                                 <BrainCircuit className="w-5 h-5 text-purple-400 opacity-80" />
                             </div>
 
+                            <p className="text-white/60 text-sm leading-relaxed relative z-10 md:text-right mb-5">
+                                After an hour, you stop reading the plans. You skim the wall of text and hope for the best.
+                            </p>
+
                             {/* UI Mock: Chat/Terminal interaction */}
-                            <div className="space-y-4 relative z-10 bg-[#09090b]/80 rounded-xl p-4 md:p-5 border border-purple-500/20 mb-4 shadow-inner">
+                            <div className="space-y-4 relative z-10 bg-[#09090b]/80 rounded-xl p-4 md:p-5 border border-purple-500/20 shadow-inner">
                                 {/* Faded Agent Output */}
                                 <div className="space-y-2 opacity-20 select-none">
                                     <div className="h-2 w-full bg-zinc-400 rounded"></div>
@@ -143,10 +147,6 @@ export function ReadingFatigue() {
                                     <span className="text-rose-400/90 text-xs font-mono leading-relaxed">Agent hallucinated.<br/>Rollback loop initiated...</span>
                                 </div>
                             </div>
-                            
-                            <p className="text-white/60 text-sm leading-relaxed relative z-10 md:text-right">
-                                After an hour, you stop reading the plans. You skim the wall of text and hope for the best.
-                            </p>
                         </div>
                     </div>
 
