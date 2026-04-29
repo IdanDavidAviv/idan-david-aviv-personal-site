@@ -46,3 +46,6 @@ pnpm-debug.log*
 #firebase
 .firebase
 .firebase/*
+
+# cv-extractor
+cv-extractor/*
