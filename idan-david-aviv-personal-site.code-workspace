@@ -5,7 +5,6 @@
 			"path": "."
 		},
 		{
-			"name": "virgo",
 			"path": "../virgo"
 		}
 	],

@@ -27,6 +27,18 @@ export default function Header() {
                     Me
                 </Link>
                 <Link
+                    to="/virgo"
+                    className={cn(
+                        "px-4 py-2 rounded-full border border-idan-david-aviv-cyan/20 bg-idan-david-aviv-cyan/10",
+                        "text-sm font-medium text-white hover:bg-idan-david-aviv-cyan/20 transition-all",
+                        "backdrop-blur-md flex items-center gap-2 group shadow-[0_0_15px_-3px_rgba(44,179,241,0.5)]",
+                        "whitespace-nowrap snap-center active:scale-95 touch-manipulation"
+                    )}
+                >
+                    <span className="text-idan-david-aviv-cyan/80 group-hover:rotate-12 transition-transform font-serif font-bold text-base leading-none -mt-0.5">♍︎</span>
+                    Virgo
+                </Link>
+                <Link
                     to="/virgo-dna"
                     className={cn(
                         "px-4 py-2 rounded-full border border-idan-david-aviv-gold/20 bg-idan-david-aviv-gold/10",

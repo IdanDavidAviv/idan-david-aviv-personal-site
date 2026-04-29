@@ -3,6 +3,7 @@ import Home from '@/pages/Home'
 import DesignLab from '@/pages/DesignLab'
 import SpiritResearchLabShowcase from '@/pages/SpiritResearchLabShowcase'
 import VirgoDNAShowcase from '@/pages/VirgoDNAShowcase'
+import VirgoShowcase from '@/pages/VirgoShowcase'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 import GlobalBackground from '@/components/layout/GlobalBackground'
@@ -27,6 +28,7 @@ function App() {
           )}
           <Route path="/spirit-research-lab" element={<SpiritResearchLabShowcase />} />
           <Route path="/virgo-dna" element={<VirgoDNAShowcase />} />
+          <Route path="/virgo" element={<VirgoShowcase />} />
         </Routes>
 
         <Footer />
