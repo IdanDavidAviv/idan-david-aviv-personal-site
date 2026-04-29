@@ -11,7 +11,10 @@ description: The definitive Source of Truth for the "Why" behind the Virgo Audio
 ## Part 1: The Core Problem (The Human - AI Brainrot)
 If you code with an AI agent like a true pro, you know the **Architect Loop**. You ask for a feature, and it generates an implementation plan for approval. Because AI generates code at such high speeds, the development process is constantly accompanied by detailed plans that demand your attention across multiple levels—architecture, logic, and syntax.
 
-The sheer volume of multi-level details you have to read creates a severe **attention bottleneck**. Cognitive limits are reached. You stop engineering and start blindly approving—falling into the **Rubber-Stamp Trap**. Your cognitive load peaks, your working memory drops the context, and you blindly press `"GO"` on the 7th iteration, hoping for the best. Eventually, the AI hallucinates or breaks the system—and the **hallucination rollback loop** begins as you try to un-f*** what it just did.
+### The Anatomy of Cognitive Overload
+The sheer volume of text requires the human to digest immense amounts of data in extremely short time periods. This is compounded by the staggering amount of architectural decisions that must be made on the fly. To make a correct decision at every step, the human must hold a massive, fragile web of context in their working memory. Do you understand how many things can break when that context slips?
+
+When this cognitive limit is reached, you stop engineering and start blindly approving—falling into the **Rubber-Stamp Trap**. Your cognitive load peaks, your working memory drops the context, and you blindly press `"GO"` on the 7th iteration, hoping for the best. Eventually, the AI hallucinates or breaks the system—and the **hallucination rollback loop** begins as you try to un-f*** what it just did.
 
 ### Visual Representation
 - **Phase 1 (The Trigger):** Visualized as a massive stack of markdown files (`architecture_plan.md`, `implementation_plan.md`, `task.md`), demonstrating the sheer volume of text the human is forced to read.

@@ -106,8 +106,8 @@ export function ReadingFatigue() {
                     <div className="pl-16 md:pl-0 md:w-5/12 text-left md:text-right md:pr-16 order-2 md:order-1 w-full mt-2 md:mt-0">
                         {/* Mobile Title (hidden on PC) */}
                         <div className="md:hidden mb-4 text-left">
-                            <h3 className="text-xl font-bold text-white mb-2">2. The Rubber-Stamp Trap</h3>
-                            <p className="text-white/50 font-light text-sm">Cognitive limits are reached.<br />You stop engineering and start blindly approving.</p>
+                            <h3 className="text-xl font-bold text-white mb-2">2. Cognitive Overload</h3>
+                            <p className="text-white/50 font-light text-sm">Digesting immense data under fragile context forces a breaking point.<br />How many things break when you miss one detail?</p>
                         </div>
 
                         {/* Warning Card */}
@@ -121,7 +121,7 @@ export function ReadingFatigue() {
                             </div>
 
                             <p className="text-white/60 text-sm leading-relaxed relative z-10 md:text-right mb-5">
-                                Your cognitive load reaches its absolute limit.<br />You surrender context and blindly approve the plan.
+                                After a while, with the agent doing well <br /> You get tired of reading, you rubber-stamp plans <br /> And trust it blindly
                             </p>
 
                             {/* UI Mock: Chat/Terminal interaction */}
@@ -171,8 +171,8 @@ export function ReadingFatigue() {
 
                     {/* PC Title (hidden on Mobile) */}
                     <div className="hidden md:block w-5/12 pl-16 text-left order-3">
-                        <h3 className="text-2xl font-bold text-white mb-2">2. The Rubber-Stamp Trap</h3>
-                        <p className="text-white/50 font-light leading-relaxed">Cognitive limits are reached.<br />You stop engineering and start blindly approving.</p>
+                        <h3 className="text-2xl font-bold text-white mb-2">2. Cognitive Overload</h3>
+                        <p className="text-white/50 font-light leading-relaxed">Digesting immense data under fragile context forces a breaking point.<br />How many things break when you miss one detail?</p>
                     </div>
                 </motion.div>
 
