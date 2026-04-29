@@ -27,6 +27,16 @@ You can keep your eyes on the codebase, review the actual diffs, and listen to t
 
 ## Part 3: The Economic Impact (The Bottom Line)
 Breaking the Hallucination Rollback Loop doesn't just save human sanity—it prevents massive token waste. When developers hit cognitive overload and blindly approve flawed plans, the agent generates chaotic code that inevitably breaks the system. Reversing this damage—debugging, prompting for rollbacks, and rewriting the entire implementation—burns hundreds of dollars locally and millions at scale.
+
+**The Economic Mantra:**
+> Preventing hallucinations
+> from spiraling out of control
+> Saves you time and money.
+> Virgo invites you to
+> change your habits
+> and improve your workflow,
+> by reducing cognitive load.
+
 It requires a behavioral shift from the human to prioritize listening over skimming, but Virgo provides the sensory support to make that shift effortless. The result is total token efficiency.
 
 ## Part 4: Visual Identity & Brand Aesthetic
