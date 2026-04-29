@@ -31,7 +31,7 @@ export function VirgoMechanics() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="relative h-[400px] md:h-[500px] xl:h-[560px] rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(204,0,255,0.15)] bg-[#0d0d0d]"
+                        className="relative h-[400px] md:h-[500px] xl:h-[744px] rounded-2xl overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(204,0,255,0.15)] bg-[#0d0d0d]"
                     >
                         {/* Glassmorphism Glow Behind */}
                         <div className="absolute inset-0 bg-gradient-to-br from-[#cc00ff]/10 to-[#00f0ff]/10 blur-xl z-0" />
