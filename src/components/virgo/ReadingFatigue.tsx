@@ -28,12 +28,11 @@ export function ReadingFatigue() {
                     viewport={{ once: true, margin: "-10px" }}
                     className="relative flex flex-col md:items-center justify-start md:justify-center mb-24 group"
                 >
-                    <div className="absolute left-0 md:left-1/2 md:-ml-6 w-12 h-12 rounded-full bg-black border-2 border-zinc-600/50 group-hover:border-zinc-500 shadow-[0_0_15px_rgba(82,82,91,0.2)] group-hover:shadow-[0_0_30px_rgba(82,82,91,0.4)] flex items-center justify-center z-10 transition-all duration-300 bg-zinc-800/30 backdrop-blur-md">
+                    <div className="absolute top-0 left-0 md:left-1/2 md:-ml-6 w-12 h-12 rounded-full bg-black border-2 border-zinc-600/50 group-hover:border-zinc-500 shadow-[0_0_15px_rgba(82,82,91,0.2)] group-hover:shadow-[0_0_30px_rgba(82,82,91,0.4)] flex items-center justify-center z-10 transition-all duration-300 bg-zinc-800/30 backdrop-blur-md">
                         <Terminal className="w-5 h-5 text-zinc-400" />
                     </div>
 
                     <div className="pl-16 md:pl-0 md:mt-16 w-full text-left md:text-center z-10">
-                        <h3 className="text-xl md:text-2xl font-bold text-white mb-2">0. The Trigger</h3>
                         <p className="text-white/50 font-light text-sm md:text-base max-w-md md:mx-auto glass-card p-4 rounded-xl border border-zinc-700/50 bg-zinc-800/20 backdrop-blur-sm shadow-[0_4px_30px_rgba(0,0,0,0.2)]">
                             You ask for a feature - it generates an implementation plan for approval.
                         </p>
