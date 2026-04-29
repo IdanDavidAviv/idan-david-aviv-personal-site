@@ -17,15 +17,9 @@ export function VirgoHero() {
             >
                 {/* Text Content */}
                 <div className="flex-1 text-center flex flex-col items-center">
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#00f0ff]/10 border border-[#00f0ff]/20 mb-6">
-                        <Mic className="w-4 h-4 text-[#00f0ff]" />
-                        <span className="text-xs font-semibold text-[#00f0ff] uppercase tracking-wider">♍︎ • Virgo</span>
-                    </div>
-
-                    <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-                        <span className="text-white">AI that</span>
-                        <br className="hidden md:block" />
-                        <span className="bg-gradient-to-r from-[#00f0ff] to-[#cc00ff] bg-clip-text text-transparent drop-shadow-sm">talks to YOU.</span>
+                    <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight flex flex-col items-center gap-4 md:gap-6">
+                        <img src="/assets/virgo/virgo_symbol_text_orb.png" alt="Virgo" className="h-40 md:h-56 w-auto object-contain drop-shadow-[0_0_20px_rgba(204,0,255,0.3)] mb-2" />
+                        <span className="bg-gradient-to-r from-[#00f0ff] to-[#cc00ff] bg-clip-text text-transparent drop-shadow-sm">AI that talks to YOU.</span>
                     </h1>
 
                     <p className="text-lg md:text-xl text-white/60 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
@@ -45,20 +39,6 @@ export function VirgoHero() {
                     </div>
                 </div>
 
-                {/* Hero Asset */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1, delay: 0.2 }}
-                    className="flex-1 w-full max-w-md relative"
-                >
-                    <div className="absolute inset-0 bg-gradient-to-tr from-[#00f0ff]/20 to-[#cc00ff]/20 blur-3xl rounded-full" />
-                    <img
-                        src="/assets/virgo/virgo_symbol_text_orb.png"
-                        alt="Virgo Neon Symbol"
-                        className="w-full h-auto object-contain relative z-10 drop-shadow-[0_0_30px_rgba(204,0,255,0.4)]"
-                    />
-                </motion.div>
             </motion.div>
         </section>
     )
