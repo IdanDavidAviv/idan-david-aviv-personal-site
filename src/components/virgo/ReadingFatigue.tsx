@@ -244,7 +244,7 @@ export function ReadingFatigue() {
                 transition={{ delay: 0.6 }}
                 className="relative flex justify-center mt-0 group z-20"
             >
-                <div className="w-full text-center relative max-w-2xl mx-auto">
+                <div className="w-full text-center relative max-w-2xl mx-auto flex flex-col items-center">
                     {/* Node Icon EXACTLY on spine endpoint */}
                     <motion.div
                         animate={{
@@ -261,16 +261,38 @@ export function ReadingFatigue() {
                         <TrendingUp className="w-7 h-7 text-emerald-400" />
                     </motion.div>
 
-                    {/* Free-Floating Poetic Text */}
-                    <div className="relative z-10 pt-16 pb-12">
+                    {/* The Card - Shrink-wrapped around the first part */}
+                    <div className="inline-flex flex-col items-center text-center py-10 px-8 md:px-12 rounded-3xl border border-emerald-500/10 bg-black/40 shadow-[0_0_15px_rgba(16,185,129,0.1)] group-hover:border-emerald-500/30 transition-all duration-300 backdrop-blur-md relative z-20 overflow-hidden glass-card max-w-xl mx-auto mt-0 w-full">
+                        
+                        {/* Breathing Background Glow */}
+                        <motion.div
+                            animate={{ opacity: [0.05, 0.15, 0.05] }}
+                            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 via-teal-500/10 to-cyan-500/20 blur-2xl"
+                        />
+
+                        {/* Animated Top Border */}
+                        <motion.div
+                            animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
+                            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                            className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 bg-[length:200%_auto]"
+                        />
+
+                        <div className="relative z-10 pt-4">
+                            <p className="text-white/90 leading-relaxed font-light text-lg md:text-xl">
+                                Preventing hallucinations<br/>from spiraling out of control <br />
+                                <span className="text-emerald-400 font-medium drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] block mt-4 text-2xl md:text-3xl">Saves you time and money.</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Free-Floating Poetic Text - Second Part */}
+                    <div className="relative z-10 pt-8 pb-12">
                         <p className="text-white/80 leading-loose font-light text-xl md:text-2xl tracking-wide">
-                            Preventing hallucinations<br />
-                            from spiraling out of control<br />
-                            <span className="text-emerald-400 font-medium drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] block my-4 text-2xl md:text-3xl">Saves you time and money.</span>
                             Virgo invites you to<br />
                             <span className="text-emerald-400 font-medium drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">change your habits</span><br />
                             and improve your workflow,<br />
-                            by reducing cognitive load.
+                            by reducing cognitive stress.
                         </p>
                     </div>
                 </div>
