@@ -18,7 +18,7 @@ export function ReadingFatigue() {
                     whileInView={{ height: '100%' }}
                     viewport={{ once: true, margin: "-10px" }}
                     transition={{ duration: 1.5, ease: "easeInOut" }}
-                    className="absolute left-[23px] md:left-1/2 md:-ml-[1px] top-6 w-[2px] bg-gradient-to-b from-zinc-600/80 via-rose-500/50 to-[#00f0ff]"
+                    className="absolute left-[23px] md:left-1/2 md:-ml-[1px] top-6 w-[2px] bg-gradient-to-b from-zinc-600/80 via-purple-500/50 to-[#00f0ff]"
                 />
 
                 {/* Step 0: The Trigger */}
@@ -111,17 +111,19 @@ export function ReadingFatigue() {
                         </div>
                         
                         {/* Warning Card */}
-                        <div className="glass-card p-6 md:p-8 rounded-3xl border-t border-t-rose-500/30 border border-rose-500/10 bg-gradient-to-b from-rose-500/5 to-transparent relative overflow-hidden group-hover:shadow-[0_4px_30px_rgba(244,63,94,0.15)] transition-all text-left md:text-right">
-                            <div className="absolute inset-0 bg-gradient-to-br from-rose-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <FileText className="w-8 h-8 text-rose-500/80 mb-4 opacity-70 group-hover:opacity-100 transition-opacity inline-block md:float-right md:ml-4" />
+                        <div className="glass-card p-6 md:p-8 rounded-3xl border-t border-t-purple-500/30 border border-purple-500/10 bg-gradient-to-b from-purple-500/10 to-rose-500/5 relative overflow-hidden group-hover:shadow-[0_4px_30px_rgba(168,85,247,0.15)] transition-all text-left md:text-right">
+                            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <FileText className="w-8 h-8 text-purple-400 mb-4 opacity-70 group-hover:opacity-100 transition-opacity inline-block md:float-right md:ml-4" />
                             <p className="text-white/70 text-sm leading-relaxed relative z-10 clear-both">
-                                After an hour, you stop reading the plans. You skim the wall of text, blindly type <code className="bg-zinc-800/80 text-rose-300/80 px-1.5 py-0.5 rounded border border-rose-500/20 font-mono">&quot;GO&quot;</code>, and hope for the best. The hallucination rollback loop begins.
+                                After an hour, you stop reading the plans. You skim the wall of text, blindly type <code className="bg-purple-900/40 text-purple-300 px-1.5 py-0.5 rounded border border-purple-500/30 font-mono">&quot;GO&quot;</code>, and hope for the best. The hallucination rollback loop begins.
                             </p>
                         </div>
                     </div>
 
-                    <div className="absolute left-0 md:left-1/2 md:-ml-6 w-12 h-12 rounded-full bg-black border-2 border-rose-500/30 group-hover:border-rose-500/80 shadow-[0_0_15px_rgba(244,63,94,0.2)] flex items-center justify-center z-10 transition-all duration-300 bg-rose-500/5 backdrop-blur-md order-1 md:order-2">
-                        <RefreshCcw className="w-5 h-5 text-rose-500/80" />
+                    <div className="absolute left-0 md:left-1/2 md:-ml-6 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500/50 to-rose-500/50 group-hover:from-purple-500 group-hover:to-rose-500 p-[2px] shadow-[0_0_15px_rgba(168,85,247,0.2)] z-10 transition-all duration-300 order-1 md:order-2 flex items-center justify-center">
+                        <div className="w-full h-full bg-black rounded-full flex items-center justify-center bg-purple-500/10 backdrop-blur-md">
+                            <RefreshCcw className="w-5 h-5 text-purple-400" />
+                        </div>
                     </div>
 
                     {/* PC Title (hidden on Mobile) */}
