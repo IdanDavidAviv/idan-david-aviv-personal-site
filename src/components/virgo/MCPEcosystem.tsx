@@ -27,7 +27,7 @@ const ecosystemFeatures = [
 export function MCPEcosystem() {
     return (
         <section className="relative py-24 px-6 md:px-12 bg-black/40 border-y border-white/5 z-10">
-            <div className="max-w-7xl mx-auto flex flex-col xl:flex-row gap-16 items-center">
+            <div className="max-w-7xl mx-auto flex flex-col xl:flex-row-reverse gap-16 items-center">
 
                 {/* Left Side: Narrative Header + Video Asset */}
                 <div className="w-full xl:w-1/2 flex flex-col gap-8">

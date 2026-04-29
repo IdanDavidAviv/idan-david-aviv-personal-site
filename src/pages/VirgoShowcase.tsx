@@ -4,6 +4,8 @@ import { ReadingFatigue } from '@/components/virgo/ReadingFatigue'
 import { VirgoMechanics } from '@/components/virgo/VirgoMechanics'
 import { MCPEcosystem } from '@/components/virgo/MCPEcosystem'
 
+import { CognitivePayload } from '@/components/virgo/CognitivePayload'
+
 export default function VirgoShowcase() {
     useEffect(() => {
         document.title = "Virgo — AI That Talks To You | Idan David-Aviv";
@@ -22,6 +24,7 @@ export default function VirgoShowcase() {
                 <ReadingFatigue />
                 <VirgoMechanics />
                 <MCPEcosystem />
+                <CognitivePayload />
             </div>
         </main>
     )
