@@ -106,8 +106,8 @@ export function ReadingFatigue() {
                     <div className="pl-16 md:pl-0 md:w-5/12 text-left md:text-right md:pr-16 order-2 md:order-1 w-full mt-2 md:mt-0">
                         {/* Mobile Title (hidden on PC) */}
                         <div className="md:hidden mb-4 text-left">
-                            <h3 className="text-xl font-bold text-white mb-2">2. Cognitive Overload</h3>
-                            <p className="text-white/50 font-light text-sm">Digesting immense data under fragile context forces a breaking point.<br />How many things break when you miss one detail?</p>
+                            <h3 className="text-xl font-bold text-white mb-2">2. The Cognitive Overload</h3>
+                            <p className="text-white/50 font-light text-sm">Digesting immense amounts of data,<br />and making high-stakes decisions with AI<br /> drives even the best of us to the <br/><span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-purple-400 font-medium">edge of cognitive performance</span>.</p>
                         </div>
 
                         {/* Warning Card */}
@@ -171,8 +171,8 @@ export function ReadingFatigue() {
 
                     {/* PC Title (hidden on Mobile) */}
                     <div className="hidden md:block w-5/12 pl-16 text-left order-3">
-                        <h3 className="text-2xl font-bold text-white mb-2">2. Cognitive Overload</h3>
-                        <p className="text-white/50 font-light leading-relaxed">Digesting immense data under fragile context forces a breaking point.<br />How many things break when you miss one detail?</p>
+                        <h3 className="text-2xl font-bold text-white mb-2">2. The Cognitive Overload</h3>
+                        <p className="text-white/50 font-light leading-relaxed">Digesting immense amounts of data,<br />and making high-stakes decisions with AI<br /> drives even the best of us to the <br/><span className="bg-clip-text text-transparent bg-gradient-to-r from-rose-500 to-purple-400 font-medium">edge of cognitive performance</span>.</p>
                     </div>
                 </motion.div>
 
