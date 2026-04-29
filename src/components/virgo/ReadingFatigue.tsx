@@ -26,16 +26,15 @@ export function ReadingFatigue() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-10px" }}
-                    className="relative flex flex-col md:items-center justify-start md:justify-center mb-24 group"
+                    className="relative flex justify-center mb-24 group z-20"
                 >
-                    <div className="absolute top-0 left-0 md:left-1/2 md:-ml-6 w-12 h-12 rounded-full bg-black border-2 border-zinc-600/50 group-hover:border-zinc-500 shadow-[0_0_15px_rgba(82,82,91,0.2)] group-hover:shadow-[0_0_30px_rgba(82,82,91,0.4)] flex items-center justify-center z-10 transition-all duration-300 bg-zinc-800/30 backdrop-blur-md">
-                        <Terminal className="w-5 h-5 text-zinc-400" />
-                    </div>
-
-                    <div className="pl-16 md:pl-0 md:mt-16 w-full text-left md:text-center z-10">
-                        <p className="text-white/50 font-light text-sm md:text-base max-w-md md:mx-auto glass-card p-4 rounded-xl border border-zinc-700/50 bg-zinc-800/20 backdrop-blur-sm shadow-[0_4px_30px_rgba(0,0,0,0.2)]">
-                            You ask for a feature - it generates an implementation plan for approval.
-                        </p>
+                    <div className="w-full text-left md:text-center">
+                        <div className="flex md:inline-flex items-center text-white/80 font-light text-sm md:text-base max-w-md mx-auto py-2 pr-4 pl-0 md:px-6 md:py-4 rounded-2xl border-2 border-zinc-600/50 bg-black/80 shadow-[0_0_15px_rgba(82,82,91,0.2)] group-hover:border-zinc-500 group-hover:shadow-[0_0_30px_rgba(82,82,91,0.4)] transition-all duration-300 backdrop-blur-md relative z-20">
+                            <div className="w-12 h-12 shrink-0 flex items-center justify-center md:w-auto md:h-auto md:mr-3">
+                                <Terminal className="w-5 h-5 text-zinc-400" />
+                            </div>
+                            <span className="flex-1">You ask for a feature - it generates <br />an implementation plan for approval.</span>
+                        </div>
                     </div>
                 </motion.div>
 
@@ -48,7 +47,7 @@ export function ReadingFatigue() {
                 >
                     <div className="hidden md:block w-5/12 text-right pr-16">
                         <h3 className="text-2xl font-bold text-white mb-2">1. The Attention Bottleneck</h3>
-                        <p className="text-white/50 font-light leading-relaxed">AI generates code at such high speeds, and if your <br />development process is accompanied by detailed plans <br /> it demands your attention across multiple levels.</p>
+                        <p className="text-white/50 font-light leading-relaxed">AI generate plan based code at high speed, <br />requires your attention across multiple <br />levels of detail and logic.</p>
                     </div>
 
                     <div className="absolute left-0 md:left-1/2 md:-ml-6 w-12 h-12 rounded-full bg-black border-2 border-zinc-600/50 group-hover:border-zinc-500 shadow-[0_0_15px_rgba(82,82,91,0.2)] group-hover:shadow-[0_0_30px_rgba(82,82,91,0.4)] flex items-center justify-center z-10 transition-all duration-300 bg-zinc-800/30 backdrop-blur-md">
@@ -58,7 +57,7 @@ export function ReadingFatigue() {
                     <div className="pl-16 md:pl-0 md:w-5/12 md:pl-16 w-full">
                         <div className="md:hidden mb-4">
                             <h3 className="text-xl font-bold text-white">1. The Attention Bottleneck</h3>
-                            <p className="text-white/50 font-light text-sm">AI generates code at such high speeds, and if your development process <br /> is accompanied by detailed plans <br /> it demands your attention across multiple levels.</p>
+                            <p className="text-white/50 font-light text-sm">AI that generate plan based code at high speed, <br />requires your attention across multiple <br />levels of detail and logic.</p>
                         </div>
                         <div className="relative mr-2 md:mr-4 mt-2">
                             {/* Background Cards for Stacked Effect */}
