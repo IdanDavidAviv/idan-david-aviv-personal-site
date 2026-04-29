@@ -18,7 +18,7 @@ export function ReadingFatigue() {
                     whileInView={{ height: '100%' }}
                     viewport={{ once: true, margin: "-10px" }}
                     transition={{ duration: 1.5, ease: "easeInOut" }}
-                    className="absolute left-[23px] md:left-1/2 md:-ml-[1px] top-6 w-[2px] bg-gradient-to-b from-zinc-600/80 via-red-500/50 to-[#00f0ff]"
+                    className="absolute left-[23px] md:left-1/2 md:-ml-[1px] top-6 w-[2px] bg-gradient-to-b from-zinc-600/80 via-rose-500/50 to-[#00f0ff]"
                 />
 
                 {/* Step 0: The Trigger */}
@@ -47,7 +47,7 @@ export function ReadingFatigue() {
                 >
                     <div className="hidden md:block w-5/12 text-right pr-16">
                         <h3 className="text-2xl font-bold text-white mb-2">1. The Attention Bottleneck</h3>
-                        <p className="text-white/50 font-light leading-relaxed">AI Agents generate plan based code at high speed, <br />requires your attention across multiple <br />levels of detail and logic.</p>
+                        <p className="text-white/50 font-light leading-relaxed">AI Agents generate plan-based code at high speed,<br />requiring your attention across multiple<br />levels of detail and logic.</p>
                     </div>
 
                     <div className="absolute left-0 md:left-1/2 md:-ml-6 w-12 h-12 rounded-full bg-black border-2 border-zinc-600/50 group-hover:border-zinc-500 shadow-[0_0_15px_rgba(82,82,91,0.2)] group-hover:shadow-[0_0_30px_rgba(82,82,91,0.4)] flex items-center justify-center z-10 transition-all duration-300 bg-zinc-800/30 backdrop-blur-md">
@@ -57,7 +57,7 @@ export function ReadingFatigue() {
                     <div className="pl-16 md:pl-0 md:w-5/12 md:pl-16 w-full">
                         <div className="md:hidden mb-4">
                             <h3 className="text-xl font-bold text-white">1. The Attention Bottleneck</h3>
-                            <p className="text-white/50 font-light text-sm">AI Agents generate plan based code at high speed, <br />requires your attention across multiple <br />levels of detail and logic.</p>
+                            <p className="text-white/50 font-light text-sm">AI Agents generate plan-based code at high speed,<br />requiring your attention across multiple<br />levels of detail and logic.</p>
                         </div>
                         <div className="relative mr-2 md:mr-4 mt-2">
                             {/* Background Cards for Stacked Effect */}
@@ -103,21 +103,29 @@ export function ReadingFatigue() {
                     transition={{ delay: 0.2 }}
                     className="relative flex flex-col md:flex-row items-start md:items-center justify-between mb-24 group"
                 >
-                    <div className="pl-16 md:pl-0 md:w-5/12 text-left md:text-right md:pr-16 order-2 md:order-1 w-full mt-6 md:mt-0">
-                        <div className="glass-card p-8 rounded-3xl border border-red-500/20 bg-red-500/5 relative overflow-hidden group-hover:shadow-[0_4px_30px_rgba(239,68,68,0.1)] transition-all">
-                            <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <FileText className="w-8 h-8 text-red-500 mb-4 opacity-70 group-hover:opacity-100 transition-opacity inline-block md:float-right md:ml-4" />
+                    <div className="pl-16 md:pl-0 md:w-5/12 text-left md:text-right md:pr-16 order-2 md:order-1 w-full mt-2 md:mt-0">
+                        {/* Mobile Title (hidden on PC) */}
+                        <div className="md:hidden mb-4 text-left">
+                            <h3 className="text-xl font-bold text-white mb-2">2. Decision Overload</h3>
+                            <p className="text-white/50 font-light text-sm">Context is lost.<br />You become a rubber-stamper instead of an engineer.</p>
+                        </div>
+                        
+                        {/* Warning Card */}
+                        <div className="glass-card p-6 md:p-8 rounded-3xl border-t border-t-rose-500/30 border border-rose-500/10 bg-gradient-to-b from-rose-500/5 to-transparent relative overflow-hidden group-hover:shadow-[0_4px_30px_rgba(244,63,94,0.15)] transition-all text-left md:text-right">
+                            <div className="absolute inset-0 bg-gradient-to-br from-rose-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <FileText className="w-8 h-8 text-rose-500/80 mb-4 opacity-70 group-hover:opacity-100 transition-opacity inline-block md:float-right md:ml-4" />
                             <p className="text-white/70 text-sm leading-relaxed relative z-10 clear-both">
-                                After an hour, you stop reading the plans. You skim the wall of text, blindly type <code className="bg-red-500/10 text-red-300 px-1.5 py-0.5 rounded border border-red-500/20">&quot;GO&quot;</code>, and hope for the best. The hallucination rollback loop begins.
+                                After an hour, you stop reading the plans. You skim the wall of text, blindly type <code className="bg-zinc-800/80 text-rose-300/80 px-1.5 py-0.5 rounded border border-rose-500/20 font-mono">&quot;GO&quot;</code>, and hope for the best. The hallucination rollback loop begins.
                             </p>
                         </div>
                     </div>
 
-                    <div className="absolute left-0 md:left-1/2 md:-ml-6 w-12 h-12 rounded-full bg-black border-2 border-red-500/40 group-hover:border-red-500 shadow-[0_0_15px_rgba(239,68,68,0.3)] flex items-center justify-center z-10 transition-all duration-300 bg-red-500/10 backdrop-blur-md order-1 md:order-2">
-                        <RefreshCcw className="w-5 h-5 text-red-500" />
+                    <div className="absolute left-0 md:left-1/2 md:-ml-6 w-12 h-12 rounded-full bg-black border-2 border-rose-500/30 group-hover:border-rose-500/80 shadow-[0_0_15px_rgba(244,63,94,0.2)] flex items-center justify-center z-10 transition-all duration-300 bg-rose-500/5 backdrop-blur-md order-1 md:order-2">
+                        <RefreshCcw className="w-5 h-5 text-rose-500/80" />
                     </div>
 
-                    <div className="pl-16 md:pl-0 md:w-5/12 md:pl-16 order-3 w-full">
+                    {/* PC Title (hidden on Mobile) */}
+                    <div className="hidden md:block w-5/12 pl-16 text-left order-3">
                         <h3 className="text-2xl font-bold text-white mb-2">2. Decision Overload</h3>
                         <p className="text-white/50 font-light leading-relaxed">Context is lost.<br />You become a rubber-stamper instead of an engineer.</p>
                     </div>
