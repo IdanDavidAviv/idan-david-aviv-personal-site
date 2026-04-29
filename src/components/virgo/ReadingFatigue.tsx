@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { FileText, Headphones, MessageSquareCode, RefreshCcw, Terminal } from 'lucide-react'
+import { FileText, Headphones, MessageSquareCode, RefreshCcw, Terminal, BrainCircuit, AlertTriangle } from 'lucide-react'
 
 export function ReadingFatigue() {
     return (
@@ -111,11 +111,41 @@ export function ReadingFatigue() {
                         </div>
                         
                         {/* Warning Card */}
-                        <div className="glass-card p-6 md:p-8 rounded-3xl border-t border-t-purple-500/30 border border-purple-500/10 bg-gradient-to-b from-purple-500/10 from-[80%] to-rose-500/5 relative overflow-hidden group-hover:shadow-[0_4px_30px_rgba(168,85,247,0.15)] transition-all text-left md:text-right">
+                        <div className="glass-card p-6 md:p-8 rounded-3xl border-t border-t-purple-500/30 border border-purple-500/10 bg-gradient-to-b from-purple-500/10 from-[80%] to-rose-500/5 relative overflow-hidden group-hover:shadow-[0_4px_30px_rgba(168,85,247,0.15)] transition-all text-left">
                             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            <FileText className="w-8 h-8 text-purple-400 mb-4 opacity-70 group-hover:opacity-100 transition-opacity inline-block md:float-right md:ml-4" />
-                            <p className="text-white/70 text-sm leading-relaxed relative z-10 clear-both">
-                                After an hour, you stop reading the plans. You skim the wall of text, blindly type <code className="bg-purple-900/40 text-purple-300 px-1.5 py-0.5 rounded border border-purple-500/30 font-mono">&quot;GO&quot;</code>, and hope for the best. The hallucination rollback loop begins.
+                            
+                            {/* Header */}
+                            <div className="flex items-center gap-3 mb-5 relative z-10 md:justify-end">
+                                <span className="text-white/80 font-medium text-sm tracking-wide">Cognitive Fatigue</span>
+                                <BrainCircuit className="w-5 h-5 text-purple-400 opacity-80" />
+                            </div>
+
+                            {/* UI Mock: Chat/Terminal interaction */}
+                            <div className="space-y-4 relative z-10 bg-[#09090b]/80 rounded-xl p-4 md:p-5 border border-purple-500/20 mb-4 shadow-inner">
+                                {/* Faded Agent Output */}
+                                <div className="space-y-2 opacity-20 select-none">
+                                    <div className="h-2 w-full bg-zinc-400 rounded"></div>
+                                    <div className="h-2 w-11/12 bg-zinc-400 rounded"></div>
+                                    <div className="h-2 w-4/5 bg-zinc-400 rounded"></div>
+                                    <div className="h-2 w-5/6 bg-zinc-400 rounded"></div>
+                                </div>
+                                
+                                {/* User blind input */}
+                                <div className="flex items-center gap-2 pt-2">
+                                    <span className="text-zinc-500 text-xs font-mono">&gt;</span>
+                                    <code className="bg-purple-900/40 text-purple-300 px-2 py-0.5 rounded border border-purple-500/30 font-mono text-sm shadow-[0_0_10px_rgba(168,85,247,0.2)]">&quot;GO&quot;</code>
+                                    <span className="text-zinc-600 text-xs italic ml-2">&larr; Rubber stamp</span>
+                                </div>
+
+                                {/* Consequence Error */}
+                                <div className="mt-4 pt-4 border-t border-rose-500/10 flex items-start gap-2">
+                                    <AlertTriangle className="w-4 h-4 text-rose-500 mt-0.5 shrink-0 animate-pulse" />
+                                    <span className="text-rose-400/90 text-xs font-mono leading-relaxed">Agent hallucinated.<br/>Rollback loop initiated...</span>
+                                </div>
+                            </div>
+                            
+                            <p className="text-white/60 text-sm leading-relaxed relative z-10 md:text-right">
+                                After an hour, you stop reading the plans. You skim the wall of text and hope for the best.
                             </p>
                         </div>
                     </div>
@@ -124,7 +154,7 @@ export function ReadingFatigue() {
                         <div className="w-full h-full bg-[#160a22] rounded-full flex items-center justify-center">
                             <svg width="0" height="0" className="absolute">
                                 <linearGradient id="purpleRose" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop stopColor="#a855f7" offset="80%" /> {/* purple-500 */}
+                                    <stop stopColor="#a855f7" offset="70%" /> {/* purple-500 */}
                                     <stop stopColor="#f43f5e" offset="100%" /> {/* rose-500 */}
                                 </linearGradient>
                             </svg>
