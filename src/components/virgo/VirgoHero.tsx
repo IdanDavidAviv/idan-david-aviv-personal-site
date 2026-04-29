@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Github, Mic } from 'lucide-react'
+import { Github } from 'lucide-react'
 
 export function VirgoHero() {
     return (
