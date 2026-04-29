@@ -151,7 +151,7 @@ export function ReadingFatigue() {
                                 {/* Consequence Error */}
                                 <div className="mt-4 pt-4 border-t border-rose-500/10 flex items-start gap-2">
                                     <AlertTriangle className="w-4 h-4 text-rose-500 mt-0.5 shrink-0 animate-pulse" />
-                                    <span className="text-rose-400/90 text-xs font-mono leading-relaxed">Agent hallucinated.<br/>Rollback loop initiated...</span>
+                                    <span className="text-rose-400/90 text-xs font-mono leading-relaxed">&gt; Agent: Executing hellucinations you missed in the plan.<br/>&gt; [Rollback Rabbit Hole initiated 🫠]</span>
                                 </div>
                             </div>
                         </div>
