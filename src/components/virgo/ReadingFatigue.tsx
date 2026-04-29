@@ -121,11 +121,18 @@ export function ReadingFatigue() {
                             </div>
 
                             <p className="text-white/60 text-sm leading-relaxed relative z-10 md:text-right mb-5">
-                                After an hour, you stop reading the plans. You skim the wall of text and hope for the best.
+                                After an hour, you stop reading the plans.<br />You skim the wall of text and hope for the best.
                             </p>
 
                             {/* UI Mock: Chat/Terminal interaction */}
                             <div className="space-y-4 relative z-10 bg-[#09090b]/80 rounded-xl p-4 md:p-5 border border-purple-500/20 shadow-inner">
+                                {/* File Header */}
+                                <div className="flex items-center gap-2 pb-3 border-b border-zinc-800/50 mb-3">
+                                    <FileText className="w-3.5 h-3.5 text-zinc-500" />
+                                    <span className="text-zinc-400 text-xs font-mono">implementation_plan.md</span>
+                                    <span className="text-[10px] text-zinc-500 bg-zinc-900/80 px-1.5 py-0.5 rounded border border-zinc-800 ml-auto md:ml-0">v7</span>
+                                </div>
+
                                 {/* Faded Agent Output */}
                                 <div className="space-y-2 opacity-20 select-none">
                                     <div className="h-2 w-full bg-zinc-400 rounded"></div>
