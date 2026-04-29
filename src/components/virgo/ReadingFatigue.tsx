@@ -290,7 +290,7 @@ export function ReadingFatigue() {
                     <div className="relative z-10 pt-8 pb-12">
                         <p className="text-white/80 leading-loose font-light text-xl md:text-2xl tracking-wide">
                             Move on to context awareness <br />
-                            instead of wasting time and tokens. <br />
+                            instead of wasting time and tokens. <br /><br />
                             Virgo invites you to <br/><span className="bg-gradient-to-r from-[#00f0ff] via-blue-400 to-[#cc00ff] bg-clip-text text-transparent font-medium drop-shadow-sm">Change Your Mind</span><br />
                         </p>
                     </div>
