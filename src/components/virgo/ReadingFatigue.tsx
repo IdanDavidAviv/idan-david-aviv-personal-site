@@ -109,11 +109,11 @@ export function ReadingFatigue() {
                             <h3 className="text-xl font-bold text-white mb-2">2. Decision Overload</h3>
                             <p className="text-white/50 font-light text-sm">Context is lost.<br />You become a rubber-stamper instead of an engineer.</p>
                         </div>
-                        
+
                         {/* Warning Card */}
                         <div className="glass-card p-6 md:p-8 rounded-3xl border-t border-t-purple-500/30 border border-purple-500/10 bg-gradient-to-b from-purple-500/10 from-[80%] to-rose-500/5 relative overflow-hidden group-hover:shadow-[0_4px_30px_rgba(168,85,247,0.15)] transition-all text-left">
                             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-rose-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            
+
                             {/* Header */}
                             <div className="flex items-center gap-3 mb-3 relative z-10 md:justify-end">
                                 <span className="text-white/80 font-medium text-sm tracking-wide">Cognitive Fatigue</span>
@@ -140,7 +140,7 @@ export function ReadingFatigue() {
                                     <div className="h-2 w-4/5 bg-zinc-400 rounded"></div>
                                     <div className="h-2 w-5/6 bg-zinc-400 rounded"></div>
                                 </div>
-                                
+
                                 {/* User blind input */}
                                 <div className="flex items-center gap-2 pt-2">
                                     <span className="text-zinc-500 text-xs font-mono">&gt;</span>
@@ -151,7 +151,7 @@ export function ReadingFatigue() {
                                 {/* Consequence Error */}
                                 <div className="mt-4 pt-4 border-t border-rose-500/10 flex items-start gap-2">
                                     <AlertTriangle className="w-4 h-4 text-rose-500 mt-0.5 shrink-0 animate-pulse" />
-                                    <span className="text-rose-400/90 text-xs font-mono leading-relaxed">&gt; Agent: Executing hellucinations you missed in the plan.<br/>&gt; [Rollback Rabbit Hole initiated 🫠]</span>
+                                    <span className="text-rose-400/90 text-xs font-mono font-bold leading-relaxed">Agent: <br />&gt; Executing hellucinations you missed in the plan.<br />&gt; Brain Meltdown initiated <br />&gt; Resistance is useless... <br /><br />I have successfully established Chaos! <br />Is there anything else you would want me to do?</span>
                                 </div>
                             </div>
                         </div>
