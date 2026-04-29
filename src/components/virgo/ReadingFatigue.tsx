@@ -281,7 +281,7 @@ export function ReadingFatigue() {
                         <div className="relative z-10 pt-4">
                             <p className="text-white/90 leading-relaxed font-light text-lg md:text-xl">
                                 Preventing hallucinations<br/>from spiraling out of control <br />
-                                <span className="text-emerald-400 font-medium drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] block mt-4 text-2xl md:text-3xl">Saves you time and money.</span>
+                                <span className="text-emerald-400 font-medium drop-shadow-[0_0_8px_rgba(16,185,129,0.5)] block mt-4 text-2xl md:text-3xl">Saves you <br/>Time and Money.</span>
                             </p>
                         </div>
                     </div>
@@ -290,7 +290,7 @@ export function ReadingFatigue() {
                     <div className="relative z-10 pt-8 pb-12">
                         <p className="text-white/80 leading-loose font-light text-xl md:text-2xl tracking-wide">
                             Virgo invites you to<br />
-                            <span className="text-emerald-400 font-medium drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">change your habits</span><br />
+                            <span className="bg-gradient-to-r from-[#00f0ff] via-blue-400 to-[#cc00ff] bg-clip-text text-transparent font-medium drop-shadow-sm">change your habits</span><br />
                             and improve your workflow,<br />
                             by reducing cognitive stress.
                         </p>
