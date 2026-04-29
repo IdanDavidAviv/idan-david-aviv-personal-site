@@ -198,7 +198,7 @@ export function ReadingFatigue() {
                             ],
                             borderColor: ['rgba(0,240,255,0.4)', 'rgba(204,0,255,0.5)', 'rgba(0,240,255,0.4)']
                         }}
-                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
                         className="absolute -left-2 md:left-1/2 md:-ml-8 w-16 h-16 rounded-full bg-black/80 border-2 flex items-center justify-center z-10 backdrop-blur-md"
                     >
                         <Headphones className="w-7 h-7 text-white" />
@@ -217,14 +217,14 @@ export function ReadingFatigue() {
                             {/* Breathing Background Glow */}
                             <motion.div 
                                 animate={{ opacity: [0.1, 0.25, 0.1] }} 
-                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
                                 className="absolute inset-0 bg-gradient-to-br from-[#00f0ff] via-blue-500 to-[#cc00ff] blur-2xl" 
                             />
                             
                             {/* Animated Top Border */}
                             <motion.div 
                                 animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
-                                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
                                 className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#00f0ff] via-blue-400 to-[#cc00ff] bg-[length:200%_auto]" 
                             />
                             
