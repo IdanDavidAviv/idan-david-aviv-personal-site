@@ -106,8 +106,8 @@ export function ReadingFatigue() {
                     <div className="pl-16 md:pl-0 md:w-5/12 text-left md:text-right md:pr-16 order-2 md:order-1 w-full mt-2 md:mt-0">
                         {/* Mobile Title (hidden on PC) */}
                         <div className="md:hidden mb-4 text-left">
-                            <h3 className="text-xl font-bold text-white mb-2">2. Decision Overload</h3>
-                            <p className="text-white/50 font-light text-sm">Context is lost.<br />You become a rubber-stamper instead of an engineer.</p>
+                            <h3 className="text-xl font-bold text-white mb-2">2. The Rubber-Stamp Trap</h3>
+                            <p className="text-white/50 font-light text-sm">Cognitive limits are reached.<br />You stop engineering and start blindly approving.</p>
                         </div>
 
                         {/* Warning Card */}
@@ -116,12 +116,12 @@ export function ReadingFatigue() {
 
                             {/* Header */}
                             <div className="flex items-center gap-3 mb-3 relative z-10 md:justify-end">
-                                <span className="text-white/80 font-medium text-sm tracking-wide">Cognitive Fatigue</span>
+                                <span className="text-white/80 font-medium text-sm tracking-wide">The Breaking Point</span>
                                 <BrainCircuit className="w-5 h-5 text-purple-400 opacity-80" />
                             </div>
 
                             <p className="text-white/60 text-sm leading-relaxed relative z-10 md:text-right mb-5">
-                                After an hour, you stop reading the plans.<br />You skim the wall of text and hope for the best.
+                                After an hour, the wall of text becomes invisible.<br />You surrender your context and just hope for the best.
                             </p>
 
                             {/* UI Mock: Chat/Terminal interaction */}
@@ -145,7 +145,7 @@ export function ReadingFatigue() {
                                 <div className="flex items-center gap-2 pt-2">
                                     <span className="text-zinc-500 text-xs font-mono">&gt;</span>
                                     <code className="bg-purple-900/40 text-purple-300 px-2 py-0.5 rounded border border-purple-500/30 font-mono text-sm shadow-[0_0_10px_rgba(168,85,247,0.2)]">GO</code>
-                                    <span className="text-zinc-600 text-xs italic ml-2">&larr; Rubber stamp</span>
+                                    <span className="text-zinc-600 text-xs italic ml-2">&larr; Blind press at the 7th plan iteration</span>
                                 </div>
 
                                 {/* Consequence Error */}
@@ -171,8 +171,8 @@ export function ReadingFatigue() {
 
                     {/* PC Title (hidden on Mobile) */}
                     <div className="hidden md:block w-5/12 pl-16 text-left order-3">
-                        <h3 className="text-2xl font-bold text-white mb-2">2. Decision Overload</h3>
-                        <p className="text-white/50 font-light leading-relaxed">Context is lost.<br />You become a rubber-stamper instead of an engineer.</p>
+                        <h3 className="text-2xl font-bold text-white mb-2">2. The Rubber-Stamp Trap</h3>
+                        <p className="text-white/50 font-light leading-relaxed">Cognitive limits are reached.<br />You stop engineering and start blindly approving.</p>
                     </div>
                 </motion.div>
 

@@ -11,7 +11,7 @@ description: The definitive Source of Truth for the "Why" behind the Virgo Audio
 ## Part 1: The Core Problem (The Human - AI Brainrot)
 If you code with an AI agent like a true pro, you know the **Architect Loop**. You ask for a feature, and it generates an implementation plan for approval. Because AI generates code at such high speeds, the development process is constantly accompanied by detailed plans that demand your attention across multiple levels—architecture, logic, and syntax.
 
-The sheer volume of multi-level details you have to read creates a severe **attention bottleneck** and decision overload. Fatigue sets in quickly. Context is lost, and you become a rubber-stamper instead of an engineer. You stop reading the plans. You just skim the wall of text, blindly type `"GO"`, and hope for the best. Eventually, the AI hallucinates or breaks the system—and the **hallucination rollback loop** begins as you try to un-f*** what it just did.
+The sheer volume of multi-level details you have to read creates a severe **attention bottleneck**. Cognitive limits are reached. You stop engineering and start blindly approving—falling into the **Rubber-Stamp Trap**. You stop reading the plans. You just skim the wall of text, blindly press `"GO"` on the 7th iteration, and hope for the best. Eventually, the AI hallucinates or breaks the system—and the **hallucination rollback loop** begins as you try to un-f*** what it just did.
 
 ### Visual Representation
 - **Phase 1 (The Trigger):** Visualized as a massive stack of markdown files (`architecture_plan.md`, `implementation_plan.md`, `task.md`), demonstrating the sheer volume of text the human is forced to read.
