@@ -47,7 +47,7 @@ export function ReadingFatigue() {
                 >
                     <div className="hidden md:block w-5/12 text-right pr-16">
                         <h3 className="text-2xl font-bold text-white mb-2">1. The Attention Bottleneck</h3>
-                        <p className="text-white/50 font-light leading-relaxed">AI generate plan based code at high speed, <br />requires your attention across multiple <br />levels of detail and logic.</p>
+                        <p className="text-white/50 font-light leading-relaxed">AI Agents generate plan based code at high speed, <br />requires your attention across multiple <br />levels of detail and logic.</p>
                     </div>
 
                     <div className="absolute left-0 md:left-1/2 md:-ml-6 w-12 h-12 rounded-full bg-black border-2 border-zinc-600/50 group-hover:border-zinc-500 shadow-[0_0_15px_rgba(82,82,91,0.2)] group-hover:shadow-[0_0_30px_rgba(82,82,91,0.4)] flex items-center justify-center z-10 transition-all duration-300 bg-zinc-800/30 backdrop-blur-md">
@@ -57,7 +57,7 @@ export function ReadingFatigue() {
                     <div className="pl-16 md:pl-0 md:w-5/12 md:pl-16 w-full">
                         <div className="md:hidden mb-4">
                             <h3 className="text-xl font-bold text-white">1. The Attention Bottleneck</h3>
-                            <p className="text-white/50 font-light text-sm">AI that generate plan based code at high speed, <br />requires your attention across multiple <br />levels of detail and logic.</p>
+                            <p className="text-white/50 font-light text-sm">AI Agents generate plan based code at high speed, <br />requires your attention across multiple <br />levels of detail and logic.</p>
                         </div>
                         <div className="relative mr-2 md:mr-4 mt-2">
                             {/* Background Cards for Stacked Effect */}
