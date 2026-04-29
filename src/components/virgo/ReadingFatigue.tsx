@@ -11,7 +11,7 @@ export function ReadingFatigue() {
                 </p>
             </div>
 
-            <div className="relative">
+            <div className="relative pb-16">
                 {/* Connecting Spine */}
                 <motion.div
                     initial={{ height: 0 }}
@@ -242,10 +242,26 @@ export function ReadingFatigue() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-10px" }}
                 transition={{ delay: 0.6 }}
-                className="relative flex justify-center mt-12 group z-20"
+                className="relative flex justify-center mt-0 group z-20"
             >
-                <div className="w-full text-center">
-                    <div className="flex flex-col items-center text-center max-w-4xl mx-auto py-10 px-6 md:px-16 rounded-3xl border border-emerald-500/10 bg-black/40 shadow-[0_0_15px_rgba(16,185,129,0.1)] group-hover:border-emerald-500/30 transition-all duration-300 backdrop-blur-md relative z-20 overflow-hidden glass-card">
+                <div className="w-full text-center relative max-w-4xl mx-auto">
+                    {/* Node Icon positioned OUTSIDE the card, overlapping top edge */}
+                    <motion.div
+                        animate={{
+                            boxShadow: [
+                                '0 0 20px rgba(16,185,129,0.3), inset 0 0 10px rgba(16,185,129,0.2)',
+                                '0 0 40px rgba(20,184,166,0.4), inset 0 0 20px rgba(20,184,166,0.3)',
+                                '0 0 20px rgba(16,185,129,0.3), inset 0 0 10px rgba(16,185,129,0.2)'
+                            ],
+                            borderColor: ['rgba(16,185,129,0.4)', 'rgba(20,184,166,0.5)', 'rgba(16,185,129,0.4)']
+                        }}
+                        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                        className="absolute top-0 left-[23px] md:left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-[#09090b] border-2 flex items-center justify-center z-30"
+                    >
+                        <TrendingUp className="w-7 h-7 text-emerald-400" />
+                    </motion.div>
+
+                    <div className="flex flex-col items-center text-center py-10 px-6 md:px-16 rounded-3xl border border-emerald-500/10 bg-black/40 shadow-[0_0_15px_rgba(16,185,129,0.1)] group-hover:border-emerald-500/30 transition-all duration-300 backdrop-blur-md relative z-20 overflow-hidden glass-card">
                         
                         {/* Breathing Background Glow */}
                         <motion.div
@@ -261,23 +277,7 @@ export function ReadingFatigue() {
                             className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 bg-[length:200%_auto]"
                         />
 
-                        {/* Node Icon */}
-                        <motion.div
-                            animate={{
-                                boxShadow: [
-                                    '0 0 20px rgba(16,185,129,0.3), inset 0 0 10px rgba(16,185,129,0.2)',
-                                    '0 0 40px rgba(20,184,166,0.4), inset 0 0 20px rgba(20,184,166,0.3)',
-                                    '0 0 20px rgba(16,185,129,0.3), inset 0 0 10px rgba(16,185,129,0.2)'
-                                ],
-                                borderColor: ['rgba(16,185,129,0.4)', 'rgba(20,184,166,0.5)', 'rgba(16,185,129,0.4)']
-                            }}
-                            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                            className="w-16 h-16 rounded-full bg-black/80 border-2 flex items-center justify-center relative z-10 mb-8"
-                        >
-                            <TrendingUp className="w-7 h-7 text-emerald-400" />
-                        </motion.div>
-
-                        <div className="relative z-10">
+                        <div className="relative z-10 pt-4">
                             <p className="text-white/90 leading-relaxed font-light text-lg md:text-xl">
                                 Preventing the hallucination rollback loop saves hundreds of dollars in wasted tokens monthly for individuals—and millions worldwide. It requires a <span className="text-emerald-400 font-medium drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">behavioral change</span>, but Virgo provides the tools to make it effortless.
                             </p>
@@ -286,7 +286,6 @@ export function ReadingFatigue() {
                 </div>
             </motion.div>
 
-            </div>
         </section>
     )
 }
