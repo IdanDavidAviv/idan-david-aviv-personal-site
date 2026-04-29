@@ -241,18 +241,11 @@ export function ReadingFatigue() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-10px" }}
                     transition={{ delay: 0.6 }}
-                    className="relative flex flex-col md:flex-row items-start md:items-center justify-between group mt-16 md:mt-24"
+                    className="relative flex justify-center mt-16 md:mt-24 group z-20"
                 >
-                    <div className="pl-16 md:pl-0 md:w-5/12 md:pr-16 w-full text-left md:text-right order-2 md:order-1">
-                        <div className="md:hidden mb-6 text-left">
-                            <h3 className="text-2xl font-bold text-white mb-2">4. The Bottom Line</h3>
-                            <p className="bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 bg-clip-text text-transparent font-medium text-lg drop-shadow-sm">Total token efficiency.</p>
-                        </div>
-
-                        <motion.div
-                            whileHover={{ y: -5 }}
-                            className="glass-card rounded-3xl p-8 md:p-10 border border-emerald-500/10 bg-black/40 relative overflow-hidden transition-all duration-300 text-left"
-                        >
+                    <div className="w-full text-left md:text-center">
+                        <div className="flex flex-col md:flex-row md:inline-flex items-start md:items-center text-white/80 font-light text-sm md:text-base max-w-4xl mx-auto py-6 pr-6 pl-2 md:px-10 md:py-8 rounded-3xl border border-emerald-500/10 bg-black/40 shadow-[0_0_15px_rgba(16,185,129,0.1)] group-hover:border-emerald-500/30 transition-all duration-300 backdrop-blur-md relative z-20 text-left overflow-hidden">
+                            
                             {/* Breathing Background Glow */}
                             <motion.div
                                 animate={{ opacity: [0.05, 0.15, 0.05] }}
@@ -267,30 +260,34 @@ export function ReadingFatigue() {
                                 className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 bg-[length:200%_auto]"
                             />
 
-                            <p className="text-white/90 leading-relaxed font-light relative z-10 text-lg">
-                                Preventing the hallucination rollback loop saves hundreds of dollars in wasted tokens monthly for individuals—and millions worldwide. It requires a <span className="text-emerald-400 font-medium drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">behavioral change</span>, but Virgo provides the tools to make it effortless.
-                            </p>
-                        </motion.div>
-                    </div>
+                            {/* Icon aligning with spine on mobile */}
+                            <div className="w-[50px] shrink-0 flex items-center justify-center md:w-auto md:h-auto md:mr-8 mb-6 md:mb-0 relative z-10">
+                                <motion.div
+                                    animate={{
+                                        boxShadow: [
+                                            '0 0 20px rgba(16,185,129,0.3), inset 0 0 10px rgba(16,185,129,0.2)',
+                                            '0 0 40px rgba(20,184,166,0.4), inset 0 0 20px rgba(20,184,166,0.3)',
+                                            '0 0 20px rgba(16,185,129,0.3), inset 0 0 10px rgba(16,185,129,0.2)'
+                                        ],
+                                        borderColor: ['rgba(16,185,129,0.4)', 'rgba(20,184,166,0.5)', 'rgba(16,185,129,0.4)']
+                                    }}
+                                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                                    className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-black/80 border-2 flex items-center justify-center"
+                                >
+                                    <TrendingUp className="w-6 h-6 md:w-7 md:h-7 text-emerald-400" />
+                                </motion.div>
+                            </div>
 
-                    <motion.div
-                        animate={{
-                            boxShadow: [
-                                '0 0 20px rgba(16,185,129,0.3), inset 0 0 10px rgba(16,185,129,0.2)',
-                                '0 0 40px rgba(20,184,166,0.4), inset 0 0 20px rgba(20,184,166,0.3)',
-                                '0 0 20px rgba(16,185,129,0.3), inset 0 0 10px rgba(16,185,129,0.2)'
-                            ],
-                            borderColor: ['rgba(16,185,129,0.4)', 'rgba(20,184,166,0.5)', 'rgba(16,185,129,0.4)']
-                        }}
-                        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                        className="absolute -left-2 md:left-1/2 md:-ml-8 w-16 h-16 rounded-full bg-black/80 border-2 flex items-center justify-center z-10 backdrop-blur-md order-1 md:order-2"
-                    >
-                        <TrendingUp className="w-7 h-7 text-emerald-400" />
-                    </motion.div>
-
-                    <div className="hidden md:block w-5/12 pl-16 text-left order-3">
-                        <h3 className="text-3xl font-bold text-white mb-3">4. The Bottom Line</h3>
-                        <p className="bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 bg-clip-text text-transparent font-medium text-xl drop-shadow-sm">Total token efficiency.</p>
+                            <div className="flex-1 relative z-10 pl-4 md:pl-0">
+                                <div className="mb-4">
+                                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 md:mb-3">4. The Bottom Line</h3>
+                                    <p className="bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-500 bg-clip-text text-transparent font-medium text-lg md:text-xl drop-shadow-sm">Total token efficiency.</p>
+                                </div>
+                                <p className="text-white/90 leading-relaxed font-light text-lg">
+                                    Preventing the hallucination rollback loop saves hundreds of dollars in wasted tokens monthly for individuals—and millions worldwide. It requires a <span className="text-emerald-400 font-medium drop-shadow-[0_0_8px_rgba(16,185,129,0.5)]">behavioral change</span>, but Virgo provides the tools to make it effortless.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </motion.div>
 
