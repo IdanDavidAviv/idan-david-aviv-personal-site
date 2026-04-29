@@ -122,7 +122,13 @@ export function ReadingFatigue() {
 
                     <div className="absolute left-0 md:left-1/2 md:-ml-6 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500/40 to-rose-500/40 group-hover:from-purple-500/80 group-hover:to-rose-500/80 p-[2px] shadow-[0_0_15px_rgba(168,85,247,0.2)] group-hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] z-10 transition-all duration-300 order-1 md:order-2 flex items-center justify-center">
                         <div className="w-full h-full bg-[#160a22] rounded-full flex items-center justify-center">
-                            <RefreshCcw className="w-5 h-5 text-purple-400 group-hover:text-purple-300 transition-colors duration-300" strokeWidth={2.5} />
+                            <svg width="0" height="0" className="absolute">
+                                <linearGradient id="purpleRose" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop stopColor="#a855f7" offset="0%" /> {/* purple-500 */}
+                                    <stop stopColor="#f43f5e" offset="100%" /> {/* rose-500 */}
+                                </linearGradient>
+                            </svg>
+                            <RefreshCcw className="w-5 h-5 transition-transform duration-500 group-hover:rotate-180" strokeWidth={2.5} color="url(#purpleRose)" />
                         </div>
                     </div>
 
