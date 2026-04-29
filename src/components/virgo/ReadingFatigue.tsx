@@ -185,28 +185,51 @@ export function ReadingFatigue() {
                     className="relative flex flex-col md:flex-row items-start md:items-center justify-between group"
                 >
                     <div className="hidden md:block w-5/12 text-right pr-16">
-                        <h3 className="text-3xl font-bold text-white mb-3 drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">3. The Vocal Collaborator</h3>
-                        <p className="text-[#00f0ff]/70 font-light leading-relaxed text-lg">Virgo shatters the loop.</p>
+                        <h3 className="text-3xl font-bold text-white mb-3">3. The Vocal Collaborator</h3>
+                        <p className="bg-gradient-to-r from-[#00f0ff] via-blue-400 to-[#cc00ff] bg-clip-text text-transparent font-medium text-xl drop-shadow-sm">Virgo shatters the loop.</p>
                     </div>
 
-                    <div className="absolute -left-2 md:left-1/2 md:-ml-8 w-16 h-16 rounded-full bg-black border-2 border-[#00f0ff] shadow-[0_0_30px_rgba(0,240,255,0.5)] flex items-center justify-center z-10 bg-[#00f0ff]/10 backdrop-blur-md">
-                        <Headphones className="w-7 h-7 text-[#00f0ff]" />
-                    </div>
+                    <motion.div 
+                        animate={{ 
+                            boxShadow: [
+                                '0 0 20px rgba(0,240,255,0.3), inset 0 0 10px rgba(0,240,255,0.2)', 
+                                '0 0 40px rgba(204,0,255,0.4), inset 0 0 20px rgba(204,0,255,0.3)', 
+                                '0 0 20px rgba(0,240,255,0.3), inset 0 0 10px rgba(0,240,255,0.2)'
+                            ],
+                            borderColor: ['rgba(0,240,255,0.4)', 'rgba(204,0,255,0.5)', 'rgba(0,240,255,0.4)']
+                        }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                        className="absolute -left-2 md:left-1/2 md:-ml-8 w-16 h-16 rounded-full bg-black/80 border-2 flex items-center justify-center z-10 backdrop-blur-md"
+                    >
+                        <Headphones className="w-7 h-7 text-white" />
+                    </motion.div>
 
                     <div className="pl-16 md:pl-0 md:w-5/12 md:pl-16 w-full">
                         <div className="md:hidden mb-6">
-                            <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-[0_0_10px_rgba(0,240,255,0.5)]">3. The Vocal Collaborator</h3>
-                            <p className="text-[#00f0ff]/70 font-light">Virgo shatters the loop.</p>
+                            <h3 className="text-2xl font-bold text-white mb-2">3. The Vocal Collaborator</h3>
+                            <p className="bg-gradient-to-r from-[#00f0ff] via-blue-400 to-[#cc00ff] bg-clip-text text-transparent font-medium text-lg drop-shadow-sm">Virgo shatters the loop.</p>
                         </div>
 
                         <motion.div
                             whileHover={{ y: -5 }}
-                            className="glass-card rounded-3xl p-8 md:p-10 border border-[#00f0ff]/30 bg-[#00f0ff]/10 relative overflow-hidden shadow-[0_4px_40px_rgba(0,240,255,0.15)] hover:shadow-[0_4px_60px_rgba(0,240,255,0.25)] transition-all duration-300"
+                            className="glass-card rounded-3xl p-8 md:p-10 border border-white/5 bg-black/40 relative overflow-hidden transition-all duration-300"
                         >
-                            <div className="absolute inset-0 bg-gradient-to-br from-[#00f0ff]/10 to-[#cc00ff]/10" />
-                            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#00f0ff] to-[#cc00ff]" />
-                            <p className="text-white/90 leading-relaxed font-light relative z-10">
-                                You keep your eyes on the codebase, review the actual diffs, and listen to the agent&apos;s strategy at the exact same time. The IDE transforms from a silent text editor into an active, high-bandwidth pairing session.
+                            {/* Breathing Background Glow */}
+                            <motion.div 
+                                animate={{ opacity: [0.1, 0.25, 0.1] }} 
+                                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                className="absolute inset-0 bg-gradient-to-br from-[#00f0ff] via-blue-500 to-[#cc00ff] blur-2xl" 
+                            />
+                            
+                            {/* Animated Top Border */}
+                            <motion.div 
+                                animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
+                                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                                className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-[#00f0ff] via-blue-400 to-[#cc00ff] bg-[length:200%_auto]" 
+                            />
+                            
+                            <p className="text-white/90 leading-relaxed font-light relative z-10 text-lg">
+                                You keep your eyes on the codebase, review the actual diffs, and <span className="text-white font-medium drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">listen to the agent&apos;s strategy</span> at the exact same time. The IDE transforms from a silent text editor into an active, high-bandwidth pairing session.
                             </p>
                         </motion.div>
                     </div>
