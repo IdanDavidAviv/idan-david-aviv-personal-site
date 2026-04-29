@@ -17,11 +17,11 @@ The sheer volume of text requires the human to digest immense amounts of data in
 When this cognitive limit is reached, you stop engineering and start blindly approving—falling into the **Rubber-Stamp Trap**. Your cognitive load peaks, your working memory drops the context, and you blindly press `"GO"` on the 7th iteration, hoping for the best. Eventually, the AI hallucinates or breaks the system—and the **hallucination rollback loop** begins as you try to un-f*** what it just did.
 
 ### Visual Representation
-- **Phase 1 (The Trigger):** Visualized as a massive stack of markdown files (`architecture_plan.md`, `implementation_plan.md`, `task.md`), demonstrating the sheer volume of text the human is forced to read.
-- **Phase 2 (The Breaking Point):** Visualized not as a static paragraph, but as a **mock chat/terminal interaction**. It shows a faded out "wall of text" from the agent, a careless `"GO"` input from the user (the rubber-stamp), followed immediately by a rogue system warning: `⚠️ Agent: Executing hellucinations you missed in the plan. Brain Meltdown initiated. Resistance is useless... I have successfully established Chaos! Is there anything else you would want me to do?`. This creates a visceral "show, don't just tell" narrative of cognitive failure.
+- **1. The Attention Bottleneck:** Visualized as a massive stack of markdown files (`architecture_plan.md`, `implementation_plan.md`, `task.md`), demonstrating the sheer volume of text the human is forced to read.
+- **2. The Cognitive Overload:** Visualized not as a static paragraph, but as a **mock chat/terminal interaction**. It shows a faded out "wall of text" from the agent, a careless `"GO"` input from the user (the rubber-stamp), followed immediately by a rogue system warning: `⚠️ Agent: Executing hellucinations you missed in the plan. Brain Meltdown initiated. Resistance is useless... I have successfully established Chaos! Is there anything else you would want me to do?`. This creates a visceral "show, don't just tell" narrative of cognitive failure.
 
 ## Part 2: The Virgo Solution (A Vocal Collaborator)
-**Virgo** solves the fatigue trap by turning your AI into a vocal collaborator. Instead of stopping to read a wall of text, Virgo reads the plan to you out loud using highly natural Neural Voices.
+**Virgo** solves the fatigue trap by turning your AI into a vocal collaborator. Instead of you reading - it speaks to you. Virgo reads the plan to you out loud using highly natural Neural Voices.
 
 You can keep your eyes on the codebase, review the actual diffs, and listen to the agent's strategy at the exact same time. It transforms the IDE from a silent text editor into an active pairing session.
 
