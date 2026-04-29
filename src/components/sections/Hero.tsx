@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { personalInfo } from '@/data/content'
 import Section from '@/components/ui/Section'
 
 /**
@@ -38,7 +37,7 @@ export default function Hero() {
               transition={{ delay: 0.2, duration: 1 }}
               className="text-6xl md:text-[8rem] font-bold tracking-[-0.05em] leading-[0.85] text-white"
             >
-               {personalInfo.name.split(' ').map((word, i) => (
+               {"Idan David-Aviv".split(' ').map((word, i) => (
                 <span key={i} className={i === 0 ? "text-white" : "text-idan-david-aviv-blue/50 block md:inline"}>
                   {word}{' '}
                 </span>
@@ -51,7 +50,7 @@ export default function Hero() {
               transition={{ delay: 0.5, duration: 1 }}
               className="text-lg md:text-2xl text-idan-david-aviv-blue font-light tracking-[0.4em] uppercase"
             >
-              {personalInfo.title}
+              AI Architect · Neuro-Inspired Engineer · Builder
             </motion.p>
           </div>
 
@@ -62,9 +61,14 @@ export default function Hero() {
             className="max-w-3xl mx-auto space-y-16 text-center"
           >
             <div className="text-lg md:text-xl text-white/70 font-light leading-relaxed tracking-tight space-y-2">
-              {personalInfo.summary.split(',').map((part, i) => (
+              {[
+                "Building AI systems that feel alive.",
+                "Operating on a tri-part engine of Neuroscience",
+                "Systems Architecture",
+                "and Visionary Human-AI Symbiosis."
+              ].map((part, i) => (
                 <span key={i} className="block">
-                  {part.trim()}
+                  {part}
                 </span>
               ))}
             </div>

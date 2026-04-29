@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { contentData } from '@/data/content'
 import Section from '@/components/ui/Section'
 import GlassCard from '@/components/ui/GlassCard'
 import { cn } from '@/lib/utils'
@@ -21,7 +20,23 @@ const getCardColor = (index: number) => {
 };
 
 export default function WorkGrid() {
-  const rankedWork = contentData.ranked || []
+  const rankedWork = [
+      {
+          section: "Founder & CTO",
+          text: 'Leading R&D, product, and business initiatives using an "AI First Principles Design Methodology." Designing e2e systems from scratch.',
+          year: "Present"
+      },
+      {
+          section: "Tech Lead & Senior Data Scientist",
+          text: "Spearheaded data strategy and collaborated with domain experts to translate intuitive knowledge into concrete AI analysis.",
+          year: "Previous"
+      },
+      {
+          section: "Algorithms / Signal Processing",
+          text: "Developed advanced diagnostic algorithms for ultrasound and fMRI workflows.",
+          year: "Previous"
+      }
+  ];
 
   return (
     <Section id="work" className="space-y-12">

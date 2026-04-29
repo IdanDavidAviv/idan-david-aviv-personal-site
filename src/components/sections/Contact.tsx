@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import { Mail, MessageCircle, Linkedin, ChevronRight } from 'lucide-react'
-import { personalInfo } from '@/data/content'
 import Section from '@/components/ui/Section'
 import { cn } from '@/lib/utils'
 
@@ -14,15 +13,15 @@ export default function Contact() {
       name: 'WhatsApp',
       icon: <MessageCircle className="w-5 h-5 text-green-400" />,
       value: "Let's chat directly",
-      href: `https://wa.me/${personalInfo.contact.whatsapp.replace(/\+/g, '')}`,
+      href: `https://wa.me/972542475705`,
       color: 'hover:border-green-500/40 hover:bg-green-500/5',
       glow: 'group-hover:drop-shadow-[0_0_15px_rgba(74,222,128,0.3)]'
     },
     {
       name: 'Email',
       icon: <Mail className="w-5 h-5 text-idan-david-aviv-blue" />,
-      value: personalInfo.contact.email,
-      href: `mailto:${personalInfo.contact.email}`,
+      value: "idaneurosc@gmail.com",
+      href: `mailto:idaneurosc@gmail.com`,
       color: 'hover:border-idan-david-aviv-blue/40 hover:bg-idan-david-aviv-blue/5',
       glow: 'group-hover:drop-shadow-[0_0_15px_rgba(30,65,193,0.3)]'
     },
@@ -30,7 +29,7 @@ export default function Contact() {
       name: 'LinkedIn',
       icon: <Linkedin className="w-5 h-5 text-blue-400" />,
       value: 'Professional Network',
-      href: personalInfo.contact.linkedin,
+      href: "https://www.linkedin.com/in/idandavidaviv/",
       color: 'hover:border-blue-500/40 hover:bg-blue-500/5',
       glow: 'group-hover:drop-shadow-[0_0_15px_rgba(59,130,246,0.3)]'
     }
