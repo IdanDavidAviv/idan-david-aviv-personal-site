@@ -121,7 +121,7 @@ export function ReadingFatigue() {
                             </div>
 
                             <p className="text-white/60 text-sm leading-relaxed relative z-10 md:text-right mb-5">
-                                After an hour, the wall of text becomes invisible.<br />You surrender your context and just hope for the best.
+                                Your cognitive load reaches its absolute limit.<br />You surrender context and blindly approve the plan.
                             </p>
 
                             {/* UI Mock: Chat/Terminal interaction */}
