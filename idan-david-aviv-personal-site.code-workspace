@@ -3,9 +3,6 @@
 		{
 			"name": "idan-david-aviv-personal-site",
 			"path": "."
-		},
-		{
-			"path": "../virgo"
 		}
 	],
 	"settings": {}
