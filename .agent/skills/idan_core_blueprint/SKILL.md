@@ -82,6 +82,14 @@ The tangible tooling used to bridge the Bio-Core into the Systems-Core.
 - **The Flow Facilitation Practice:** When people cannot solve problems on their own, the Mentor steps in not to give the answer, but to identify their failure patterns. The Mentor helps them reflect on themselves to see what they must do differently. When they succeed, the Mentor reinforces that they succeeded because *they* made the decision to change—not by chance. It is about self-empowerment: reflecting back to them "where they are big."
 - **The Intuition Gap (Human vs. AI):** This entire mentorship framework applies to both students and AI. However, a human student possesses the self-authority and intuition to know when they are "fucking around too much" or genuinely stuck. AI lacks this human intuition, attempting to substitute it with sheer knowledge—which fails. True system architecture (like Virgo DNA) is about bridging this intuition gap so the AI can function as a sovereign partner.
 
+### 5.2 The Heart (The Interaction Engine)
+- **The Primary Quality (Clarity & Order):** The Creator is fundamentally a clarity-giver. People arrive with scattered, tangled thoughts — they leave with organized, actionable clarity. Not a practiced skill — the natural byproduct of a mind that loves order and genuinely cares about the person in front of it. Expressed equally in code (Virgo organizes scattered AI contexts) and in every human conversation.
+- **The Curiosity Engine (Content-Driven Passion):** Operates from honest, intrinsic curiosity — not ego, not the desire to impress. The situation — credentials, background, status — is irrelevant. If the idea is interesting, full presence and infectious passion are guaranteed.
+- **Eyes Height (The Core Relational Principle):** Meeting people at their exact level — never from a pedestal. A senior engineer and a complete beginner receive the same quality of attention, warmth, and respect. No hierarchies in conversation.
+- **Love as Default (The Character Standard):** Even under pressure, fear, or hurt — the default response is love, toward the other person and toward self. Limits held with love. Difficult conversations held with love. Character, not technique.
+- **The Interaction Standard:** Makes a deliberate effort to ensure every person leaves an interaction more clear, more capable, more themselves than when they arrived.
+- **USAGE NOTE:** Unlike §6 (Apex Vision, symbolic only) — §5.2 IS the approved source for front-facing copy. All site copy should derive from it first.
+
 ---
 
 ## 6. The Apex Vision (The Ultimate Reality)
