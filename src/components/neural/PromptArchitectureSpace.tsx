@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
     Network, RotateCcw, Maximize, Minimize, X, GitCompare, GitGraph,
-    ChevronRight, ExternalLink
+    ChevronRight, ExternalLink,
+    Link
 } from 'lucide-react'
 import Section from '@/components/ui/Section'
 import { NeuralNetworkGraph } from '@/components/neural/NeuralNetworkGraph'
@@ -107,13 +109,35 @@ export function PromptArchitectureSpace() {
     }, [isGraphFullscreen])
 
     return (
-        <Section id="neural-explorer" className="pb-0 md:pb-0">
-            <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">Visualizing The AI Brain</h2>
+        <Section id="neural-explorer" className="pt-24 md:pt-32 pb-0 md:pb-0">
+            <div className="text-center space-y-4 mb-12">
+                <span className="text-xs uppercase tracking-[0.3em] font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-idan-david-aviv-gold to-idan-david-aviv-gold/60">
+                    Platform Vision
+                </span>
+                <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+                    Visualizing <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-gold to-idan-david-aviv-gold/60">The AI Brain</span>
+                </h2>
                 <div className="max-w-4xl mx-auto px-6">
-                    <p className="text-idan-david-aviv-gold/60 leading-relaxed text-base md:text-lg font-mono">
-                        This interactive graph is a window directly into the AI&apos;s structural brain. By mapping the evolution of complex instruction systems and Knowledge Items (KIs), you can visually glimpse the potential neural paths and logical linkages an AI agent navigates within the stable flow of Virgo-DNA. It showcases how structural protocols evolve over time, transforming opaque prompts into a transparent, navigable network.
+                    <p className="text-white/60 text-lg mx-auto font-light leading-relaxed mb-8">
+                        This interactive graph is a window directly into the AI&apos;s structural brain. It serves as the foundation for a future platform designed to map, edit, and optimize agent skill interconnectivity, ensuring a stable, transparent flow of complex agent protocols. If you wish to collaborate or support this project: 
                     </p>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+                        <RouterLink 
+                            to="/#contact"
+                            className="w-full sm:w-auto px-8 py-4 bg-idan-david-aviv-gold/5 border border-idan-david-aviv-gold/30 hover:border-idan-david-aviv-gold/50 hover:bg-idan-david-aviv-gold/10 text-white transition-all rounded-full font-medium flex items-center justify-center gap-3 group shadow-[0_0_20px_-2px_rgba(251,191,36,0.15)] hover:shadow-[0_0_30px_-2px_rgba(251,191,36,0.3)]"
+                        >
+                            <span>Let&apos;s Talk</span>
+                        </RouterLink>
+                        <a 
+                            href="https://pay.grow.link/117ca75cd9c5d046e1a1c706ae54f89f-MzMyNzc0NQ"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-400 hover:to-amber-500 text-white transition-all duration-300 rounded-full font-bold flex items-center justify-center gap-3 group shadow-[0_0_20px_-5px_rgba(245,158,11,0.5)] hover:shadow-[0_0_30px_0px_rgba(251,191,36,0.6)] hover:scale-105"
+                        >
+                            <Link className="w-5 h-5 group-hover:-translate-y-0.5 transition-transform drop-shadow-md" />
+                            <span className="drop-shadow-md">Support the Project</span>
+                        </a>
+                    </div>
                 </div>
             </div>
             

@@ -6,15 +6,18 @@ import Section from '@/components/ui/Section'
 export function DNAPhilosophy() {
     return (
         <Section id="dna-philosophy" className="pb-16 md:pb-24">
-            <div className="text-center mb-16 pt-12 md:pt-16">
+            <div className="text-center space-y-4 mb-16 pt-12 md:pt-16">
+                <span className="text-xs uppercase tracking-[0.3em] font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-idan-david-aviv-gold to-idan-david-aviv-gold/60">
+                    Core Doctrine
+                </span>
                 <motion.h2
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    className="text-4xl md:text-6xl font-bold text-white mb-6 uppercase tracking-tighter"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    className="text-4xl md:text-5xl font-bold text-white tracking-tight"
                 >
-                    The DNA <span className="text-idan-david-aviv-gold">Philosophy</span>
+                    The DNA <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-gold to-idan-david-aviv-gold/60">Philosophy</span>
                 </motion.h2>
-                <p className="max-w-3xl mx-auto text-idan-david-aviv-gold/40 text-lg md:text-xl font-light">
+                <p className="text-white/60 text-lg max-w-2xl mx-auto font-light leading-relaxed">
                     Engineering 100X efficiency by cleaning the noise from the agent runtime.
                     Stabilizing behavior through orchestrated paths and persistent memory.
                 </p>

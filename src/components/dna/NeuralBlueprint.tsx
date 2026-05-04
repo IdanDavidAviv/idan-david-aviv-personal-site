@@ -5,9 +5,16 @@ import Section from '@/components/ui/Section'
 export function NeuralBlueprint() {
     return (
         <Section id="neural-blueprint" className="pb-16 md:pb-24">
-            <div className="text-center mb-12 pt-12 md:pt-16">
-                <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">The Cognitive Loop</h2>
-                <p className="text-idan-david-aviv-gold/40 text-lg uppercase tracking-widest font-mono">How Virgo-DNA executes complex operations with absolute structural integrity.</p>
+            <div className="text-center space-y-4 mb-12 pt-12 md:pt-16">
+                <span className="text-xs uppercase tracking-[0.3em] font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-idan-david-aviv-gold to-idan-david-aviv-gold/60">
+                    Execution Protocol
+                </span>
+                <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
+                    The <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-gold to-idan-david-aviv-gold/60">Cognitive Loop</span>
+                </h2>
+                <p className="text-white/60 text-lg max-w-2xl mx-auto font-light leading-relaxed">
+                    How Virgo-DNA executes complex operations with absolute structural integrity.
+                </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">

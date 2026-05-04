@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import Section from '@/components/ui/Section'
 
 /**
@@ -92,15 +93,15 @@ export default function Hero() {
         transition={{ delay: 1.5, duration: 1 }}
         className="mt-8 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 z-30 relative"
       >
-        <a
-          href="#contact"
+        <Link
+          to="/#contact"
           className="px-8 py-4 rounded-2xl bg-gradient-to-r from-idan-david-aviv-cyan/10 to-idan-david-aviv-blue/10 border border-idan-david-aviv-blue/30 hover:bg-white/5 hover:border-idan-david-aviv-blue/50 text-white font-medium tracking-wide flex items-center justify-center gap-3 transition-all duration-500 group backdrop-blur-md shadow-[0_0_20px_-5px_rgba(59,130,246,0.2)] hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.4)]"
         >
           Start a Conversation
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 group-hover:translate-x-1 transition-transform">
             <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
           </svg>
-        </a>
+        </Link>
 
         <div className="flex items-center gap-4">
           <span className="text-white/30 text-xs font-light tracking-widest uppercase hidden sm:block">Or standard CV?</span>

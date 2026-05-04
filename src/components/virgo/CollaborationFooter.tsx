@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Github } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 export function CollaborationFooter() {
     return (
@@ -28,12 +29,12 @@ export function CollaborationFooter() {
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
-                        <a
-                            href="/#contact"
+                        <Link
+                            to="/#contact"
                             className="w-full sm:w-auto px-8 py-4 bg-idan-david-aviv-blue/10 border border-idan-david-aviv-blue/40 hover:border-idan-david-aviv-blue/60 hover:bg-idan-david-aviv-blue/20 text-white transition-all rounded-full font-medium flex items-center justify-center gap-3 group shadow-[0_0_20px_-2px_rgba(30,65,193,0.5)]"
                         >
                             <span>Contact Idan David-Aviv</span>
-                        </a>
+                        </Link>
 
                         <a
                             href="https://github.com/IdanDavidAviv/virgo"
