@@ -31,36 +31,36 @@ export default function WorkGrid() {
           text: "Mapping the intersection of biology, neuroscience, and Kabbalistic systems to decode human intuition.",
           status: "Live",
           route: "/spirit-research-lab",
-          image: "/assets/srl-monogram-no-bg.png",
+          image: "/assets/flask-only-no-bg.png",
           theme: "srl"
       }
   ];
 
   const getThemeClasses = (theme: string) => {
     switch (theme) {
-      case "virgo":
+      case "virgo": // Cyan
         return {
-          border: "border-[#cc00ff]/20 hover:border-[#cc00ff]/50",
-          shadow: "hover:shadow-[0_0_40px_-10px_rgba(204,0,255,0.3)]",
-          text: "group-hover:text-[#cc00ff]",
-          glow: "bg-[#cc00ff]/20",
-          badge: "text-[#cc00ff] border-[#cc00ff]/20 bg-[#cc00ff]/5"
+          border: "border-idan-david-aviv-cyan/20 hover:border-idan-david-aviv-cyan/50",
+          shadow: "hover:shadow-[0_0_40px_-10px_rgba(44,179,241,0.3)]",
+          text: "group-hover:text-idan-david-aviv-cyan",
+          glow: "bg-idan-david-aviv-cyan/20",
+          badge: "text-idan-david-aviv-cyan border-idan-david-aviv-cyan/20 bg-idan-david-aviv-cyan/5"
         };
-      case "dna":
+      case "dna": // Gold
         return {
-          border: "border-[#22d3ee]/20 hover:border-[#22d3ee]/50",
-          shadow: "hover:shadow-[0_0_40px_-10px_rgba(34,211,238,0.3)]",
-          text: "group-hover:text-[#22d3ee]",
-          glow: "bg-[#22d3ee]/20",
-          badge: "text-[#22d3ee] border-[#22d3ee]/20 bg-[#22d3ee]/5"
+          border: "border-idan-david-aviv-gold/20 hover:border-idan-david-aviv-gold/50",
+          shadow: "hover:shadow-[0_0_40px_-10px_rgba(251,191,36,0.3)]",
+          text: "group-hover:text-idan-david-aviv-gold",
+          glow: "bg-idan-david-aviv-gold/20",
+          badge: "text-idan-david-aviv-gold border-idan-david-aviv-gold/20 bg-idan-david-aviv-gold/5"
         };
-      case "srl":
+      case "srl": // Purple
         return {
-          border: "border-[#f5a623]/20 hover:border-[#f5a623]/50",
-          shadow: "hover:shadow-[0_0_40px_-10px_rgba(245,166,35,0.3)]",
-          text: "group-hover:text-[#f5a623]",
-          glow: "bg-[#f5a623]/20",
-          badge: "text-[#f5a623] border-[#f5a623]/20 bg-[#f5a623]/5"
+          border: "border-idan-david-aviv-purple/20 hover:border-idan-david-aviv-purple/50",
+          shadow: "hover:shadow-[0_0_40px_-10px_rgba(168,85,247,0.3)]",
+          text: "group-hover:text-idan-david-aviv-purple",
+          glow: "bg-idan-david-aviv-purple/20",
+          badge: "text-idan-david-aviv-purple border-idan-david-aviv-purple/20 bg-idan-david-aviv-purple/5"
         };
       default:
         return {
