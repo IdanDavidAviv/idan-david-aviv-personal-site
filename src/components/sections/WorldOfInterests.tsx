@@ -102,16 +102,18 @@ export default function WorldOfInterests() {
                                         {KNOWLEDGE_STRUCTURE.map((group, idx) => (
                                             <div key={idx} className="flex flex-col space-y-4">
                                                 {/* Group Header */}
-                                                <div className="flex flex-col items-center text-center space-y-1 mb-3">
-                                                    <div className={cn("p-2 rounded-lg mb-2", group.bg, group.border, "border")}>
-                                                        <group.icon className={cn("w-5 h-5", group.color)} />
-                                                    </div>
+                                                <div className="flex flex-col space-y-3 mb-2">
                                                     <span className={cn("text-[11px] font-bold tracking-[0.2em] uppercase opacity-80", group.color)}>
                                                         {group.supTitle}
                                                     </span>
-                                                    <h4 className="text-white/90 font-medium text-[13px] tracking-wide uppercase">
-                                                        {group.title}
-                                                    </h4>
+                                                    <div className="flex items-center gap-3">
+                                                        <div className={cn("p-2 rounded-lg", group.bg, group.border, "border")}>
+                                                            <group.icon className={cn("w-4 h-4", group.color)} />
+                                                        </div>
+                                                        <h4 className="text-white/90 font-medium text-[13px] tracking-wide uppercase">
+                                                            {group.title}
+                                                        </h4>
+                                                    </div>
                                                 </div>
                                                 
                                                 {/* Items List */}
