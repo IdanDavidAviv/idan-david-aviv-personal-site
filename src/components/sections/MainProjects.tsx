@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
  * WorkGrid Section - Displays ranked experience and projects.
  * Powered by high-integrity Zod-validated data.
  */
-export default function WorkGrid() {
+export default function MainProjects() {
   const projects = [
     {
       section: "Virgo",
@@ -75,7 +75,7 @@ export default function WorkGrid() {
 
   return (
     <Section id="work" className="space-y-12">
-      <h2 className="text-3xl font-bold text-gradient inline-block">Sovereign Architectures</h2>
+      <h2 className="text-3xl font-bold text-gradient inline-block">Main Projects</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((item, index) => {
           const theme = getThemeClasses(item.theme);

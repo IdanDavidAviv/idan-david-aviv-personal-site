@@ -1,6 +1,6 @@
 import Hero from '@/components/sections/Hero'
 import About from '@/components/sections/About'
-import WorkGrid from '@/components/sections/WorkGrid'
+import MainProjects from '@/components/sections/MainProjects'
 import WorldOfInterests from '@/components/sections/WorldOfInterests'
 import Contact from '@/components/sections/Contact'
 
@@ -12,7 +12,7 @@ export default function Home() {
         <main className="w-full relative z-10 flex flex-col items-center bg-transparent">
             <Hero />
             <About />
-            <WorkGrid />
+            <MainProjects />
             <WorldOfInterests />
             <Contact />
         </main>
