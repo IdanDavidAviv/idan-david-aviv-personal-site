@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import Section from '@/components/ui/Section'
 import GlassCard from '@/components/ui/GlassCard'
 import { cn } from '@/lib/utils'
@@ -20,29 +21,32 @@ const getCardColor = (index: number) => {
 };
 
 export default function WorkGrid() {
-  const rankedWork = [
+  const projects = [
       {
-          section: "Founder & CTO",
-          text: 'Leading R&D, product, and business initiatives using an "AI First Principles Design Methodology." Designing e2e systems from scratch.',
-          year: "Present"
+          section: "Virgo",
+          text: "AI that speaks to you. A custom interface converting your AI into a sovereign vocal collaborator.",
+          status: "Deployed",
+          route: "/virgo"
       },
       {
-          section: "Tech Lead & Senior Data Scientist",
-          text: "Spearheaded data strategy and collaborated with domain experts to translate intuitive knowledge into concrete AI analysis.",
-          year: "Previous"
+          section: "Virgo DNA",
+          text: "Deterministic agentic architecture. The underlying neural structure ensuring high-integrity AI execution.",
+          status: "Active",
+          route: "/virgo-dna"
       },
       {
-          section: "Algorithms / Signal Processing",
-          text: "Developed advanced diagnostic algorithms for ultrasound and fMRI workflows.",
-          year: "Previous"
+          section: "Spirit Research Lab",
+          text: "Mapping the intersection of biology, neuroscience, and Kabbalistic systems to decode human intuition.",
+          status: "Research",
+          route: "/spirit-research-lab"
       }
   ];
 
   return (
     <Section id="work" className="space-y-12">
-      <h2 className="text-3xl font-bold text-gradient inline-block">Experience & Projects</h2>
+      <h2 className="text-3xl font-bold text-gradient inline-block">Sovereign Architectures</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {rankedWork.map((item, index) => {
+        {projects.map((item, index) => {
           const cardColor = getCardColor(index);
           return (
             <motion.div
@@ -52,18 +56,19 @@ export default function WorkGrid() {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
             >
-              <GlassCard className={cn(
-                "h-full group transition-all duration-500",
-                "hover:-translate-y-1",
-                `hover:border-${cardColor}/30 hover:shadow-[0_8px_30px_rgba(var(--${cardColor}),0.15),0_0_15px_rgba(var(--${cardColor}),0.4)]`
-              )}>
-                <div className="flex justify-between items-start mb-4">
-                  <span className={cn(
-                    "text-xs font-mono uppercase tracking-widest px-2 py-1 rounded-md border",
-                    `text-${cardColor} bg-${cardColor}/10 border-${cardColor}/20`
-                  )}>
-                    {item.year}
-                  </span>
+              <Link to={item.route} className="block h-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-idan-david-aviv-blue rounded-3xl">
+                <GlassCard className={cn(
+                  "h-full group transition-all duration-500",
+                  "hover:-translate-y-1",
+                  `hover:border-${cardColor}/30 hover:shadow-[0_8px_30px_rgba(var(--${cardColor}),0.15),0_0_15px_rgba(var(--${cardColor}),0.4)]`
+                )}>
+                  <div className="flex justify-between items-start mb-4">
+                    <span className={cn(
+                      "text-xs font-mono uppercase tracking-widest px-2 py-1 rounded-md border",
+                      `text-${cardColor} bg-${cardColor}/10 border-${cardColor}/20`
+                    )}>
+                      {item.status}
+                    </span>
                   <div className="relative flex items-center justify-center">
                     <div className={cn(
                       "absolute w-3 h-3 rounded-full opacity-40 animate-pulse-slow",
@@ -84,7 +89,8 @@ export default function WorkGrid() {
                 <p className="text-muted-content text-sm leading-relaxed">
                   {item.text}
                 </p>
-              </GlassCard>
+                </GlassCard>
+              </Link>
             </motion.div>
           );
         })}
