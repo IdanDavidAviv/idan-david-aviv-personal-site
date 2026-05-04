@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 export function CollaborationFooter() {
     return (
-        <section className="relative py-24 px-6 md:px-12 bg-[#050505] border-t border-white/5 z-10 overflow-hidden">
+        <section className="relative pt-8 md:pt-12 pb-24 px-6 md:px-12 bg-[#050505] border-t border-white/5 z-10 overflow-hidden">
             {/* Ambient Glow */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[1px] bg-gradient-to-r from-transparent via-idan-david-aviv-blue/40 to-transparent" />
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-idan-david-aviv-blue/5 blur-[120px] rounded-full pointer-events-none" />

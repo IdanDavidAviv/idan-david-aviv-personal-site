@@ -3,7 +3,7 @@ import { FileText, Headphones, MessageSquareCode, RefreshCcw, Terminal, BrainCir
 
 export function ReadingFatigue() {
     return (
-        <section className="relative py-12 md:py-16 px-6 md:px-12 z-10 max-w-6xl mx-auto">
+        <section className="relative pt-12 md:pt-16 pb-4 md:pb-8 px-6 md:px-12 z-10 max-w-6xl mx-auto">
             <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">The Human - AI <br />Brainrot</h2>
                 <p className="text-lg text-white/50 max-w-3xl mx-auto font-light">

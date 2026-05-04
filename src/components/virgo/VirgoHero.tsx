@@ -3,7 +3,7 @@ import { Github } from 'lucide-react'
 
 export function VirgoHero() {
     return (
-        <section className="relative min-h-[90vh] flex flex-col items-center justify-center pt-24 px-6 md:px-12 overflow-hidden">
+        <section className="relative min-h-[60vh] md:min-h-[85vh] flex flex-col items-center justify-center pt-16 md:pt-24 pb-12 md:pb-16 px-6 md:px-12 overflow-hidden">
             {/* Ambient Background Glow */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40">
                 <div className="w-[800px] h-[800px] bg-gradient-to-br from-[#00f0ff]/20 via-[#cc00ff]/20 to-transparent rounded-full blur-[120px]" />
