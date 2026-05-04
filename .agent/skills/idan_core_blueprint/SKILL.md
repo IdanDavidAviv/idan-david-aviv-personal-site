@@ -16,7 +16,7 @@ The Creator operates on a philosophy that transcends the sterile division of "bi
   - Engineering, Artificial Intelligence (AI)
   - Human Mind & Human Experience
   - Mental Health & Emotional Work
-  - Classical Kabbalah (Zohar, Sefer Yetzira, HaARI)
+  - Classical Kabbalah (Sefer Yetzira, HaARI, Zohar)
   - Practical Kabbalah (Shap-Tie Method)
   - Astrology & Numerology
 - **The Coalescence:** The Creator's "fields of interest" and "professional fields" coalesce entirely. There is no separation between the spiritual researcher and the AI architect; the multidimensional search fields are the exact engine powering the professional output.

@@ -7,19 +7,21 @@ import { cn } from '@/lib/utils'
 const KNOWLEDGE_STRUCTURE = [
     {
         title: "The Biological & Behavioral Core",
+        subtitle: "The Source",
         icon: Activity,
         color: "text-idan-david-aviv-blue",
         bg: "bg-idan-david-aviv-blue/10",
         border: "border-idan-david-aviv-blue/20",
         items: [
-            "Life Sciences",
-            "Soft Sciences",
-            "Human Mind & Human Experience",
-            "Mental Health & Emotional Work"
+            "Nature and people",
+            "Natural Sciences",
+            "The Human Mind & Human Experience",
+            "Emotional Work"
         ]
     },
     {
         title: "The Structural & Systems Core",
+        subtitle: "The Body",
         icon: Dna,
         color: "text-idan-david-aviv-cyan",
         bg: "bg-idan-david-aviv-cyan/10",
@@ -27,18 +29,21 @@ const KNOWLEDGE_STRUCTURE = [
         items: [
             "Exact Sciences",
             "Engineering",
-            "Artificial Intelligence (AI)"
+            "Artificial Intelligence (AI)",
+            "Software & Hardware Architectures",
+            "Systemic Thinking & Design"
         ]
     },
     {
         title: "The Metaphysical & Diagnostic Core",
+        subtitle: "The Context",
         icon: Sparkles,
         color: "text-idan-david-aviv-purple",
         bg: "bg-idan-david-aviv-purple/10",
         border: "border-idan-david-aviv-purple/20",
         items: [
             "Classical Kabbalah (Zohar, Sefer Yetzira, HaARI)",
-            "Practical Kabbalah (Shap-Tie Method)",
+            "Practical Kabbalah (Shabtay Method)",
             "Astrology",
             "Numerology"
         ]
@@ -67,7 +72,7 @@ export default function WorldOfInterests() {
                             </div>
                             <div className="text-left">
                                 <h3 className="text-xl md:text-2xl font-medium text-white/90">
-                                    World of Interests
+                                    Sources of inspiration
                                 </h3>
                                 <p className="text-white/50 text-sm md:text-base font-light mt-1">
                                     Expand to explore the multidimensional knowledge architecture
@@ -97,13 +102,16 @@ export default function WorldOfInterests() {
                                         {KNOWLEDGE_STRUCTURE.map((group, idx) => (
                                             <div key={idx} className="flex flex-col space-y-4">
                                                 {/* Group Header */}
-                                                <div className="flex items-center gap-3">
-                                                    <div className={cn("p-2 rounded-lg", group.bg, group.border, "border")}>
-                                                        <group.icon className={cn("w-4 h-4", group.color)} />
+                                                <div className="flex flex-col items-center text-center space-y-2 mb-2">
+                                                    <div className={cn("p-2 rounded-lg mb-1", group.bg, group.border, "border")}>
+                                                        <group.icon className={cn("w-5 h-5", group.color)} />
                                                     </div>
-                                                    <h4 className="text-white/80 font-medium text-sm tracking-wide uppercase">
+                                                    <h4 className="text-white/90 font-medium text-[13px] tracking-wide uppercase">
                                                         {group.title}
                                                     </h4>
+                                                    <span className={cn("text-[11px] font-bold tracking-[0.2em] uppercase opacity-80", group.color)}>
+                                                        {group.subtitle}
+                                                    </span>
                                                 </div>
                                                 
                                                 {/* Items List */}
