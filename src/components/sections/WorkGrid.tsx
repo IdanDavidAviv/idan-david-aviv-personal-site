@@ -10,30 +10,30 @@ import { cn } from '@/lib/utils'
  */
 export default function WorkGrid() {
   const projects = [
-      {
-          section: "Virgo",
-          text: "AI that speaks to you. A custom interface converting your AI into a sovereign vocal collaborator.",
-          status: "Live",
-          route: "/virgo",
-          image: "/assets/virgo/virgo_icon.png",
-          theme: "virgo"
-      },
-      {
-          section: "Virgo DNA",
-          text: "Deterministic agentic architecture. The underlying neural structure ensuring high-integrity AI execution.",
-          status: "Dev",
-          route: "/virgo-dna",
-          image: "/assets/dna/hero-helix.png",
-          theme: "dna"
-      },
-      {
-          section: "Spirit Research Lab",
-          text: "Mapping the intersection of biology, neuroscience, and Kabbalistic systems to decode human intuition.",
-          status: "Live",
-          route: "/spirit-research-lab",
-          image: "/assets/flask-only-no-bg.png",
-          theme: "srl"
-      }
+    {
+      section: "Virgo",
+      text: "AI that speaks to you.\nA custom interface converting your AI into a sovereign vocal collaborator.",
+      status: "Live",
+      route: "/virgo",
+      image: "/assets/virgo/virgo_icon.png",
+      theme: "virgo"
+    },
+    {
+      section: "Virgo DNA",
+      text: "Distributed Network Architecture.\nCore project for AI-stream flow facilitation. Allows you to focus on the idea, while Virgo handles the details.",
+      status: "STABLE-Dev",
+      route: "/virgo-dna",
+      image: "/assets/dna/hero-helix.png",
+      theme: "dna"
+    },
+    {
+      section: "Spirit Research Lab",
+      text: "Mapping the intersection of biology, neuroscience, and Kabbalistic systems to decode human intuition.",
+      status: "Live",
+      route: "/spirit-research-lab",
+      image: "/assets/flask-only-no-bg.png",
+      theme: "srl"
+    }
   ];
 
   const getThemeClasses = (theme: string) => {
@@ -110,13 +110,13 @@ export default function WorkGrid() {
 
                   {/* Image Asset */}
                   <div className="w-32 h-32 mb-8 mt-6 relative flex items-center justify-center">
-                    <img 
-                      src={item.image} 
+                    <img
+                      src={item.image}
                       alt={item.section}
                       className="w-full h-full object-contain filter drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] group-hover:scale-110 group-hover:drop-shadow-[0_0_25px_rgba(255,255,255,0.2)] transition-all duration-700 ease-out"
                     />
                   </div>
-                  
+
                   {/* Title & Text */}
                   <h3 className={cn(
                     "text-2xl font-bold mb-4 transition-colors duration-500 text-white",
@@ -124,7 +124,7 @@ export default function WorkGrid() {
                   )}>
                     {item.section}
                   </h3>
-                  <p className="text-white/60 text-sm leading-relaxed max-w-[280px]">
+                  <p className="text-white/60 text-sm leading-relaxed max-w-[280px] whitespace-pre-line">
                     {item.text}
                   </p>
                 </GlassCard>
