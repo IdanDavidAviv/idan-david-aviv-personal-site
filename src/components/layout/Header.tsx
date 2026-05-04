@@ -14,7 +14,7 @@ export default function Header() {
             className="fixed top-0 left-0 right-0 z-[500] h-20 flex items-center justify-between px-6 md:px-12 pointer-events-none"
         >
 
-            <nav className="flex items-center gap-3 md:gap-8 pointer-events-auto overflow-x-auto hide-scrollbar snap-x w-full max-w-full px-2 sm:px-0 pb-2 -mb-2">
+            <nav className="flex items-center gap-3 md:gap-8 pointer-events-auto overflow-x-auto hide-scrollbar snap-x w-full max-w-full px-4 sm:px-2 py-6 -my-6">
                 <Link
                     to="/"
                     className={cn(
