@@ -11,8 +11,14 @@ export function VirgoVideoPlayer({ src, className = "" }: VirgoVideoPlayerProps)
     const [isPlaying, setIsPlaying] = useState(false)
     const [isMuted, setIsMuted] = useState(true) // Initialize muted
     const [progress, setProgress] = useState(0)
+    const [hasInteracted, setHasInteracted] = useState(false)
+
+    const handleInteraction = () => {
+        if (!hasInteracted) setHasInteracted(true)
+    }
 
     const togglePlay = () => {
+        handleInteraction()
         if (videoRef.current) {
             if (isPlaying) {
                 videoRef.current.pause()
@@ -24,6 +30,7 @@ export function VirgoVideoPlayer({ src, className = "" }: VirgoVideoPlayerProps)
     }
 
     const stopVideo = () => {
+        handleInteraction()
         if (videoRef.current) {
             videoRef.current.pause()
             videoRef.current.currentTime = 0
@@ -32,6 +39,7 @@ export function VirgoVideoPlayer({ src, className = "" }: VirgoVideoPlayerProps)
     }
 
     const toggleMute = () => {
+        handleInteraction()
         if (videoRef.current) {
             videoRef.current.muted = !isMuted
             setIsMuted(!isMuted)
@@ -71,7 +79,7 @@ export function VirgoVideoPlayer({ src, className = "" }: VirgoVideoPlayerProps)
             />
 
             {/* Floating HUD Controls */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-black/60 backdrop-blur-md border border-white/10 rounded-full px-6 py-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className={`absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-4 bg-black/60 backdrop-blur-md border border-white/10 rounded-full px-6 py-3 transition-opacity duration-300 ${!hasInteracted ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
                 {/* Play/Pause */}
                 <button 
                     onClick={togglePlay}

@@ -26,7 +26,7 @@ const ecosystemFeatures = [
 
 export function MCPEcosystem() {
     return (
-        <section className="relative py-24 px-6 md:px-12 bg-black/40 border-y border-white/5 z-10">
+        <section className="relative py-12 md:py-16 px-6 md:px-12 bg-black/40 border-y border-white/5 z-10">
             <div className="max-w-7xl mx-auto flex flex-col xl:flex-row-reverse gap-16 items-center">
 
                 {/* Left Side: Narrative Header + Video Asset */}
@@ -45,8 +45,11 @@ export function MCPEcosystem() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true, margin: "-100px" }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="w-full"
+                        className="w-full flex flex-col gap-3"
                     >
+                        <div className="text-white/40 uppercase tracking-widest font-semibold text-xs ml-2">
+                            Play Video example:
+                        </div>
                         <VirgoVideoPlayer 
                             src="/assets/virgo/virgo_mcp_showcase.mp4" 
                             className="w-full aspect-[4/3] md:aspect-video"

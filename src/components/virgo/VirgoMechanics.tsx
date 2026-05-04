@@ -21,7 +21,7 @@ const mechanics = [
 
 export function VirgoMechanics() {
     return (
-        <section className="relative py-24 px-6 md:px-12 bg-black/20 border-y border-white/5 z-10">
+        <section className="relative py-12 md:py-16 px-6 md:px-12 bg-black/20 border-y border-white/5 z-10">
             <div className="max-w-7xl mx-auto flex flex-col xl:flex-row gap-16 items-center">
 
                 {/* Side A: The Dashboard UI Asset */}

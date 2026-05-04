@@ -3,8 +3,8 @@ import { FileText, Headphones, MessageSquareCode, RefreshCcw, Terminal, BrainCir
 
 export function ReadingFatigue() {
     return (
-        <section className="relative py-32 px-6 md:px-12 z-10 max-w-6xl mx-auto">
-            <div className="text-center mb-24">
+        <section className="relative py-12 md:py-16 px-6 md:px-12 z-10 max-w-6xl mx-auto">
+            <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">The Human - AI <br />Brainrot</h2>
                 <p className="text-lg text-white/50 max-w-3xl mx-auto font-light">
                     If you code with an AI agent, like a true pro, <br />you know the <span className="text-purple-400">Architect Loop</span>.
@@ -26,7 +26,7 @@ export function ReadingFatigue() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-10px" }}
-                    className="relative flex justify-center mb-24 group z-20"
+                    className="relative flex justify-center mb-12 group z-20"
                 >
                     <div className="w-full text-left md:text-center">
                         <div className="flex md:inline-flex items-center text-white/80 font-light text-sm md:text-base max-w-md mx-auto py-2 pr-4 pl-0 md:px-6 md:py-4 rounded-2xl border-2 border-zinc-600/50 bg-black/80 shadow-[0_0_15px_rgba(82,82,91,0.2)] group-hover:border-zinc-500 group-hover:shadow-[0_0_30px_rgba(82,82,91,0.4)] transition-all duration-300 backdrop-blur-md relative z-20">
@@ -43,7 +43,7 @@ export function ReadingFatigue() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
-                    className="relative flex flex-col md:flex-row items-start md:items-center justify-between mb-24 group"
+                    className="relative flex flex-col md:flex-row items-start md:items-center justify-between mb-12 group"
                 >
                     <div className="hidden md:block w-5/12 text-right pr-16">
                         <h3 className="text-2xl font-bold text-white mb-2">1. The Attention Bottleneck</h3>
@@ -101,7 +101,7 @@ export function ReadingFatigue() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: "-10px" }}
                     transition={{ delay: 0.2 }}
-                    className="relative flex flex-col md:flex-row items-start md:items-center justify-between mb-24 group"
+                    className="relative flex flex-col md:flex-row items-start md:items-center justify-between mb-12 group"
                 >
                     <div className="pl-16 md:pl-0 md:w-5/12 text-left md:text-right md:pr-16 order-2 md:order-1 w-full mt-2 md:mt-0">
                         {/* Mobile Title (hidden on PC) */}
