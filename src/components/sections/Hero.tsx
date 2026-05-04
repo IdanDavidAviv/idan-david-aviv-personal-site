@@ -50,7 +50,7 @@ export default function Hero() {
               transition={{ delay: 0.5, duration: 1 }}
               className="text-lg md:text-2xl text-idan-david-aviv-blue font-light tracking-[0.4em] uppercase"
             >
-              AI Architect · Neuro-Inspired Engineer · Builder
+              AI Architect · Neuro-Inspired Engineer · Mentor
             </motion.p>
           </div>
 
@@ -62,10 +62,9 @@ export default function Hero() {
           >
             <div className="text-lg md:text-xl text-white/70 font-light leading-relaxed tracking-tight space-y-2">
               {[
-                "Building AI systems that feel alive.",
-                "Operating on a tri-part engine of Neuroscience",
-                "Systems Architecture",
-                "and Visionary Human-AI Symbiosis."
+                "Architecting high-fidelity user experiences",
+                "Building sovereign agentic AI systems",
+                "Designing tools that support flow and self-expression"
               ].map((part, i) => (
                 <span key={i} className="block">
                   {part}
