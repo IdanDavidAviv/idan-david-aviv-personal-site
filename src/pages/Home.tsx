@@ -2,6 +2,7 @@ import Hero from '@/components/sections/Hero'
 import About from '@/components/sections/About'
 import MainProjects from '@/components/sections/MainProjects'
 import WorldOfInterests from '@/components/sections/WorldOfInterests'
+import Services from '@/components/sections/Services'
 import Contact from '@/components/sections/Contact'
 
 /**
@@ -14,6 +15,7 @@ export default function Home() {
             <About />
             <MainProjects />
             <WorldOfInterests />
+            <Services />
             <Contact />
         </main>
     )
