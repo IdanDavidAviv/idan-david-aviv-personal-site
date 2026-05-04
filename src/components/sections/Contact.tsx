@@ -58,15 +58,15 @@ export default function Contact() {
       <div className="max-w-4xl mx-auto">
 
         {/* Header */}
-        <div className="text-center space-y-6">
+        <div className="text-center space-y-6 px-4">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="text-4xl md:text-5xl font-bold text-white tracking-tight"
           >
-            Bridge the Gap <br />
+            Stay Relevant in the present<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue">
-              From Vision to Reality
+              Get Ready for the Future
             </span>
           </motion.h2>
           <motion.p
@@ -75,8 +75,10 @@ export default function Contact() {
             transition={{ delay: 0.1 }}
             className="text-white/60 text-lg max-w-xl mx-auto font-light leading-relaxed"
           >
-            Looking to translate your vision into an AI-enabled reality? <br className="hidden md:block" />
-            Reach out and let&apos;s connect first to see how we can bring your vision to life.
+            Whether you want a <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue font-medium">highly-personalized website</span>, <br className="hidden md:block" />
+            An <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue font-medium">Autonomous AI Agent</span>, a set of <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue font-medium">custom AI tools</span>, <br className="hidden md:block" />
+            or <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue font-medium">1-on-1 mentorship</span> to create clarity in your life,<br className="hidden md:block" />
+            reach out and <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan via-idan-david-aviv-blue via-[40%] to-idan-david-aviv-gold to-[65%] font-medium">let&apos;s get started:</span>
           </motion.p>
         </div>
 
