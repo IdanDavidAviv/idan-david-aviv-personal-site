@@ -8,9 +8,9 @@ import Section from '@/components/ui/Section'
 export default function Hero() {
 
   return (
-    <Section 
-      id="hero" 
-      fullWidth 
+    <Section
+      id="hero"
+      fullWidth
       className="relative flex flex-col items-center justify-center min-h-screen py-20 px-4 bg-transparent"
     >
       <motion.div
@@ -21,30 +21,30 @@ export default function Hero() {
       >
         {/* Core Glow behind card */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-idan-david-aviv-blue/20 blur-[120px] rounded-full pointer-events-none z-0" />
-        
+
         <div className="relative w-full h-full bg-[#050510]/60 backdrop-blur-[60px] rounded-[3.4rem] py-20 px-8 md:px-16 flex flex-col items-center justify-center border border-white/5 space-y-12 z-10 transition-colors duration-1000">
           {/* Pulsing Border Accent */}
-          <motion.div 
+          <motion.div
             animate={{ opacity: [0.05, 0.2, 0.05] }}
             transition={{ duration: 40, repeat: Infinity, ease: "easeInOut" }}
             className="absolute inset-0 rounded-[3.4rem] border border-idan-david-aviv-blue pointer-events-none"
           />
 
           <div className="space-y-4 text-center">
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2, duration: 1 }}
               className="text-6xl md:text-[8rem] font-bold tracking-[-0.05em] leading-[0.85] text-white"
             >
-               {"Idan David-Aviv".split(' ').map((word, i) => (
+              {"Idan David-Aviv".split(' ').map((word, i) => (
                 <span key={i} className={i === 0 ? "text-white" : "text-idan-david-aviv-blue/50 block md:inline"}>
                   {word}{' '}
                 </span>
               ))}
             </motion.h1>
-            
-            <motion.p 
+
+            <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5, duration: 1 }}
@@ -54,7 +54,7 @@ export default function Hero() {
             </motion.p>
           </div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.9 }}
             transition={{ delay: 1, duration: 1.5 }}
@@ -77,12 +77,33 @@ export default function Hero() {
               <div className="h-[1px] w-64 bg-gradient-to-r from-transparent via-idan-david-aviv-blue/50 to-transparent relative z-10" />
               <div className="absolute top-0 h-[2px] w-96 bg-idan-david-aviv-blue/40 blur-xl rounded-full -translate-y-1/2" />
               <div className="absolute top-0 h-[1px] w-56 bg-idan-david-aviv-blue/60 shadow-[0_0_30px_5px_rgba(59,130,246,0.6)]" />
-              
+
               {/* Minimal Gold Spark (The "Spirit" hint) */}
               <div className="absolute top-0 h-[4px] w-1 bg-idan-david-aviv-gold blur-[1px] rounded-full left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-60" />
             </div>
           </motion.div>
         </div>
+      </motion.div>
+
+      {/* LinkedIn Engagement Filter */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 1 }}
+        className="mt-12 flex flex-row items-center justify-center gap-6 z-30 relative"
+      >
+        <span className="text-white/40 text-sm font-light tracking-wide uppercase">Looking for a standard CV?</span>
+        <a
+          href="https://www.linkedin.com/in/idandavidaviv/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#0A66C2]/50 text-white font-medium flex items-center justify-center gap-3 transition-all group backdrop-blur-md shadow-[0_0_15px_-3px_rgba(10,102,194,0.1)] hover:shadow-[0_0_20px_-3px_rgba(10,102,194,0.3)]"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 group-hover:-translate-y-1 transition-transform text-[#0A66C2]">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+          </svg>
+          Connect on LinkedIn
+        </a>
       </motion.div>
     </Section>
   )
