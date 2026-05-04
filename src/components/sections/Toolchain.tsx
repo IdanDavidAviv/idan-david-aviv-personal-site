@@ -29,7 +29,7 @@ export default function Toolchain() {
   ]
 
   return (
-    <Section id="toolchain" className="py-24 px-6 relative">
+    <Section id="toolchain" className="py-6 px-6 relative">
       <div className="max-w-5xl mx-auto">
         <div className="text-center space-y-6 mb-16">
           <span className="text-xs uppercase tracking-[0.3em] font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-idan-david-aviv-gold to-idan-david-aviv-gold/60">
