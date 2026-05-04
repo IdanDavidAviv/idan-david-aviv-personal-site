@@ -16,7 +16,7 @@ const KNOWLEDGE_STRUCTURE = [
             "Nature and people",
             "Natural Sciences",
             "The Human Mind & Human Experience",
-            "Emotional Work"
+
         ]
     },
     {
@@ -27,11 +27,10 @@ const KNOWLEDGE_STRUCTURE = [
         bg: "bg-idan-david-aviv-cyan/10",
         border: "border-idan-david-aviv-cyan/20",
         items: [
-            "Exact Sciences",
-            "Engineering",
             "Artificial Intelligence (AI)",
-            "Software & Hardware Architectures",
-            "Systemic Thinking & Design"
+            "Data Science, Machine & Deep Learning",
+            "Software & System Architectures",
+            "Exact Sciences & Engineering"
         ]
     },
     {
@@ -42,10 +41,9 @@ const KNOWLEDGE_STRUCTURE = [
         bg: "bg-idan-david-aviv-purple/10",
         border: "border-idan-david-aviv-purple/20",
         items: [
-            "Classical Kabbalah (Zohar, Sefer Yetzira, HaARI)",
-            "Practical Kabbalah (Shabtay Method)",
-            "Astrology",
-            "Numerology"
+            "Emotional Work & Intuition",
+            "Classical & Practical Kabbalah",
+            "Astrology & Numerology"
         ]
     }
 ]
@@ -56,7 +54,7 @@ export default function WorldOfInterests() {
     return (
         <Section id="world-of-interests" className="pb-32 px-6">
             <div className="w-full max-w-5xl mx-auto flex flex-col items-center">
-                
+
                 <div className="w-full rounded-2xl border border-white/5 bg-white/[0.02] overflow-hidden transition-all duration-500">
                     {/* The Single Collapsible Header */}
                     <button
@@ -75,7 +73,10 @@ export default function WorldOfInterests() {
                                     Sources of inspiration
                                 </h3>
                                 <p className="text-white/50 text-sm md:text-base font-light mt-1">
-                                    Expand to explore the multidimensional knowledge architecture
+                                    On my quest to discover the world, I find many points of view and fields of interest. <br />
+                                    They often interact in unexpected ways, and help me look deeper into the misteries of life, the universe, and everything.
+                                    <br />
+                                    I invite you to take a look, and maybe you&apos;ll find something interesting/inspiring to you as well.
                                 </p>
                             </div>
                         </div>
@@ -97,7 +98,7 @@ export default function WorldOfInterests() {
                                 exit={{ height: 0, opacity: 0 }}
                                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} // smooth spring-like ease
                             >
-                                <div className="p-6 md:p-8 pt-0 border-t border-white/5 mt-4">
+                                <div className="p-6 md:p-8 pt-0 mt-4">
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                                         {KNOWLEDGE_STRUCTURE.map((group, idx) => (
                                             <div key={idx} className="flex flex-col space-y-4">
@@ -115,7 +116,7 @@ export default function WorldOfInterests() {
                                                         </h4>
                                                     </div>
                                                 </div>
-                                                
+
                                                 {/* Items List */}
                                                 <ul className="flex flex-col space-y-2">
                                                     {group.items.map((item, i) => (
