@@ -4,8 +4,8 @@ import Section from '@/components/ui/Section'
 
 export function CrystallineMemory() {
     return (
-        <Section id="crystalline-memory">
-            <div className="text-center mb-12">
+        <Section id="crystalline-memory" className="pb-16 md:pb-24">
+            <div className="text-center mb-12 pt-12 md:pt-16">
                 <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">The Temporal Ledger</h2>
                 <p className="text-idan-david-aviv-gold/40 text-lg uppercase tracking-widest font-mono">Absolute Architectural Memory</p>
             </div>

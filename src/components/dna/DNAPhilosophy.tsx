@@ -5,8 +5,8 @@ import Section from '@/components/ui/Section'
 
 export function DNAPhilosophy() {
     return (
-        <Section id="dna-philosophy">
-            <div className="text-center mb-16">
+        <Section id="dna-philosophy" className="pb-16 md:pb-24">
+            <div className="text-center mb-16 pt-12 md:pt-16">
                 <motion.h2
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
