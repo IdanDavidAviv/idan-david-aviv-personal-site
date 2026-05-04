@@ -7,7 +7,7 @@ description: The definitive Source of Truth for the Creator's identity, professi
 
 > [!CAUTION]
 > **THE OBSCURITY CONSTRAINT (ZERO LEAKAGE MANDATE)**
-> The mystical, biological, and Kabbalistic concepts defined in this blueprint (e.g., Alchemical Anchor, Shap-Tie, Water/Air/Fire/Earth) are the **invisible backend engine**. They represent the hidden structure of how the Creator thinks and calculates. 
+> The mystical, biological, and Kabbalistic concepts defined in this blueprint (e.g., Alchemical Anchor, Shabtai, Water/Air/Fire/Earth) are the **invisible backend engine**. They represent the hidden structure of how the Creator thinks and calculates. 
 > **CRITICAL RULE:** The agent MUST NEVER leak these specific terms into public-facing UI copy or literal product descriptions. They are strictly for the agent's internal understanding to guide systemic architecture and professional tone (e.g., clarity, flow, systems design).
 > **ROUTING MANDATE:** Whenever translating this blueprint into front-facing site copy or Call-to-Actions (CTAs), the agent MUST route the operation through the [`manifesto_router`](../manifesto_router/SKILL.md) skill to ensure proper philosophical translation and obscurement.
 
@@ -23,7 +23,7 @@ The Creator operates on a philosophy that transcends the sterile division of "bi
   - Human Mind & Human Experience
   - Mental Health & Emotional Work
   - Classical Kabbalah (Sefer Yetzira, HaARI, Zohar)
-  - Practical Kabbalah (Shap-Tie Method)
+  - Practical Kabbalah (Shabtai Method)
   - Astrology & Numerology
 - **The Coalescence:** The Creator's "fields of interest" and "professional fields" coalesce entirely. There is no separation between the spiritual researcher and the AI architect; the multidimensional search fields are the exact engine powering the professional output.
 - **The Alchemical Formula (The Anchor):** To prevent diverging to infinity, this vastness is anchored into a precise elemental logic: Deep **Intuition (Water)** combines with rigorous, multi-domain **Knowledge (Air)**. This synthesis ignites immense **Action (Fire)**, and ultimately, the **Body (Earth)**—the biological and motional reality—feels and holds the absolute truth.
@@ -129,8 +129,8 @@ While the Creator's capabilities span deep mystical diagnosis and personal growt
 - **The Offering:** Building bespoke, agentic workflows and advanced LLM pipelines that operate with high sovereignty and minimal hallucination.
 - **The Value:** Automating complex, multi-layered tasks with systemic reliability, acting as a true "Jarvis" for the client's operational needs.
 
-### 7.4 The Personal Diagnosis (Shap-Tie Method)
-- **The Offering:** A highly focused, personal diagnostic service utilizing the Kabbalistic Shap-Tie method.
+### 7.4 The Personal Diagnosis (Shabtai Method)
+- **The Offering:** A highly focused, personal diagnostic service utilizing the Kabbalistic Shabtai method.
 - **The Value:** While the Creator navigates infinite search fields (astrology, numerology, biology), this specific service distills that multidimensional perspective into a concrete, actionable Kabbalistic diagnosis to help individuals identify their blockages and exploit their full potential.
 
 ---

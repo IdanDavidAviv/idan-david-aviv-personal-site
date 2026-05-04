@@ -10,7 +10,7 @@ The Manifesto Router is responsible for ensuring that all Call-to-Actions (CTAs)
 
 ## 🔗 Bi-Directional Routing (The Universal Translation Layer)
 - **Governed By:** [`idan_core_blueprint`](../idan_core_blueprint/SKILL.md), [`virgo_manifesto`](../virgo_manifesto/SKILL.md), and [`virgo_dna_manifesto`](../virgo_dna_manifesto/SKILL.md). This router possesses no philosophy of its own; it derives its logic strictly from the Creator's blueprints.
-- **The Obscurity Constraint:** (Specific to `idan_core_blueprint`) Never expose internal mystical terms ("Shap-Tie", "Alchemical Anchor", "Sovereign Identity") in the frontend UI. The router must translate these into concrete, heart-forward, premium copy.
+- **The Obscurity Constraint:** (Specific to `idan_core_blueprint`) Never expose internal mystical terms ("Shabtai", "Alchemical Anchor", "Sovereign Identity") in the frontend UI. The router must translate these into concrete, heart-forward, premium copy.
 - **Trigger:** Whenever the agent is tasked with writing or updating Call-to-Actions (CTAs), Hero text, or engagement funnels based on *any* of the manifestos, it MUST route its generation through this skill to ensure the copy acts as a "Deep Alignment Funnel" rather than generic marketing.
 
 ## Global CTA Routing Rules
