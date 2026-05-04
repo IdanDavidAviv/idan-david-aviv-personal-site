@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useMemo } from 'react'
 import Section from '@/components/ui/Section'
 import GlassCard from '@/components/ui/GlassCard'
 import { motion } from 'framer-motion'
-import { Play, Pause } from 'lucide-react'
+import { Play, Pause, RotateCcw } from 'lucide-react'
 
 // Define the type for the timestamp data
 type WordTimestamp = {
@@ -46,6 +46,15 @@ export default function About() {
   const handleEnded = () => {
     setIsPlaying(false);
     setCurrentTime(0);
+  };
+
+  const handleRestart = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      audioRef.current.pause();
+      setIsPlaying(false);
+      setCurrentTime(0);
+    }
   };
 
   // Pre-process audio data into paragraphs based on the '\n\n' delimiter preserved by Edge TTS
@@ -108,7 +117,22 @@ export default function About() {
           onEnded={handleEnded}
         />
 
-        <GlassCard className="max-w-3xl leading-relaxed text-lg space-y-4">
+        <GlassCard className="max-w-3xl leading-relaxed text-lg relative">
+          {audioData.length > 0 && (
+            <button 
+              onClick={handleRestart} 
+              disabled={currentTime === 0}
+              className={`absolute top-2 right-2 p-2 transition-all duration-300 focus:outline-none ${
+                currentTime > 0 
+                  ? 'text-white/60 hover:text-white hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.8)] cursor-pointer' 
+                  : 'text-white/20 cursor-default'
+              }`}
+              aria-label="Restart narrative"
+            >
+              <RotateCcw className="w-5 h-5" />
+            </button>
+          )}
+
           {paragraphs.length > 0 ? (
             paragraphs.map((para, i) => (
               <p key={i} className={i === 2 ? "text-base italic" : ""}>

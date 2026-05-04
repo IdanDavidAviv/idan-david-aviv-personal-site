@@ -11,7 +11,7 @@ export default function Hero() {
     <Section
       id="hero"
       fullWidth
-      className="relative flex flex-col items-center justify-center min-h-[90vh] pt-20 pb-8 px-4 bg-transparent"
+      className="relative flex flex-col items-center justify-center min-h-0 md:min-h-[90vh] pt-28 md:pt-20 pb-0 md:pb-8 px-4 bg-transparent"
     >
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -22,7 +22,7 @@ export default function Hero() {
         {/* Core Glow behind card */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-idan-david-aviv-blue/20 blur-[120px] rounded-full pointer-events-none z-0" />
 
-        <div className="relative w-full h-full bg-[#050510]/60 backdrop-blur-[60px] rounded-[3.4rem] py-20 px-8 md:px-16 flex flex-col items-center justify-center border border-white/5 space-y-12 z-10 transition-colors duration-1000">
+        <div className="relative w-full h-full bg-[#050510]/60 backdrop-blur-[60px] rounded-[3.4rem] py-8 md:py-20 px-4 md:px-16 flex flex-col items-center justify-center border border-white/5 space-y-6 md:space-y-12 z-10 transition-colors duration-1000">
           {/* Pulsing Border Accent */}
           <motion.div
             animate={{ opacity: [0.05, 0.2, 0.05] }}
@@ -58,12 +58,12 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.9 }}
             transition={{ delay: 1, duration: 1.5 }}
-            className="max-w-3xl mx-auto space-y-16 text-center"
+            className="max-w-3xl mx-auto space-y-8 md:space-y-16 text-center"
           >
-            <div className="text-lg md:text-xl text-white/70 font-light leading-relaxed tracking-tight space-y-2">
+            <div className="text-lg md:text-xl text-white/70 font-light leading-relaxed tracking-tight space-y-1 md:space-y-2 max-w-sm md:max-w-none mx-auto text-balance">
               {[
-                "Architecting high-fidelity user experiences",
-                "Building sovereign agentic AI systems",
+                "Architecting AI for Human Centered Interactions",
+                "Building sovereign and autonomous AI systems",
                 "Designing tools that support flow and self-expression"
               ].map((part, i) => (
                 <span key={i} className="block">
@@ -85,25 +85,37 @@ export default function Hero() {
         </div>
       </motion.div>
 
-      {/* LinkedIn Engagement Filter */}
+      {/* Engagement CTAs */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.5, duration: 1 }}
-        className="mt-12 flex flex-row items-center justify-center gap-6 z-30 relative"
+        className="mt-8 md:mt-12 flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 z-30 relative"
       >
-        <span className="text-white/40 text-sm font-light tracking-wide uppercase">Looking for a standard CV?</span>
         <a
-          href="https://www.linkedin.com/in/idandavidaviv/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#0A66C2]/50 text-white font-medium flex items-center justify-center gap-3 transition-all group backdrop-blur-md shadow-[0_0_15px_-3px_rgba(10,102,194,0.1)] hover:shadow-[0_0_20px_-3px_rgba(10,102,194,0.3)]"
+          href="#contact"
+          className="px-8 py-4 rounded-2xl bg-gradient-to-r from-idan-david-aviv-cyan/10 to-idan-david-aviv-blue/10 border border-idan-david-aviv-blue/30 hover:bg-white/5 hover:border-idan-david-aviv-blue/50 text-white font-medium tracking-wide flex items-center justify-center gap-3 transition-all duration-500 group backdrop-blur-md shadow-[0_0_20px_-5px_rgba(59,130,246,0.2)] hover:shadow-[0_0_30px_-5px_rgba(59,130,246,0.4)]"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 group-hover:-translate-y-1 transition-transform text-[#0A66C2]">
-            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+          Start a Conversation
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5 group-hover:translate-x-1 transition-transform">
+            <path fillRule="evenodd" d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z" clipRule="evenodd" />
           </svg>
-          Connect on LinkedIn
         </a>
+
+        <div className="flex items-center gap-4">
+          <span className="text-white/30 text-xs font-light tracking-widest uppercase hidden sm:block">Or standard CV?</span>
+          <a
+            href="https://www.linkedin.com/in/idandavidaviv/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-5 py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-[#0A66C2]/50 text-white/80 text-sm font-medium flex items-center justify-center gap-3 transition-all group backdrop-blur-md shadow-[0_0_15px_-3px_rgba(10,102,194,0.05)] hover:shadow-[0_0_20px_-3px_rgba(10,102,194,0.2)]"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform text-[#0A66C2]">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+            </svg>
+            LinkedIn
+          </a>
+        </div>
       </motion.div>
     </Section>
   )
