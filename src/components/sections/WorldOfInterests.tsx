@@ -1,113 +1,127 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, Brain, Dna, Telescope, Sparkles } from 'lucide-react'
+import { ChevronDown, Brain, Dna, Sparkles, Activity } from 'lucide-react'
 import Section from '@/components/ui/Section'
 import { cn } from '@/lib/utils'
 
-const INTERESTS = [
+const KNOWLEDGE_STRUCTURE = [
     {
-        id: "neuroscience",
-        title: "Biology & Neuroscience",
-        icon: Brain,
+        title: "The Biological & Behavioral Core",
+        icon: Activity,
         color: "text-idan-david-aviv-blue",
         bg: "bg-idan-david-aviv-blue/10",
         border: "border-idan-david-aviv-blue/20",
-        content: "Understanding the foundational wetware. Exploring neuroplasticity, dopamine regulation, and how biological states govern cognitive output and flow."
+        items: [
+            "Life Sciences",
+            "Soft Sciences",
+            "Human Mind & Human Experience",
+            "Mental Health & Emotional Work"
+        ]
     },
     {
-        id: "kabbalah",
-        title: "The Shap-Tie Method (Kabbalah)",
-        icon: Sparkles,
-        color: "text-idan-david-aviv-purple",
-        bg: "bg-idan-david-aviv-purple/10",
-        border: "border-idan-david-aviv-purple/20",
-        content: "A systematic approach to breaking down reality into fundamental energetic components. Using ancient structural frameworks as high-level data models for human intuition."
-    },
-    {
-        id: "astrology",
-        title: "Astrology & Cosmic Rhythms",
-        icon: Telescope,
-        color: "text-idan-david-aviv-gold",
-        bg: "bg-idan-david-aviv-gold/10",
-        border: "border-idan-david-aviv-gold/20",
-        content: "Mapping macro-environmental variables. Recognizing the overarching patterns in time that influence micro-interactions, turning intuitive sense into actionable data."
-    },
-    {
-        id: "systems",
-        title: "Deterministic Agentic Systems",
+        title: "The Structural & Systems Core",
         icon: Dna,
         color: "text-idan-david-aviv-cyan",
         bg: "bg-idan-david-aviv-cyan/10",
         border: "border-idan-david-aviv-cyan/20",
-        content: "Translating abstract philosophies and chaotic workflows into strict, reliable, and deeply structured autonomous AI architectures."
+        items: [
+            "Exact Sciences",
+            "Engineering",
+            "Artificial Intelligence (AI)"
+        ]
+    },
+    {
+        title: "The Metaphysical & Diagnostic Core",
+        icon: Sparkles,
+        color: "text-idan-david-aviv-purple",
+        bg: "bg-idan-david-aviv-purple/10",
+        border: "border-idan-david-aviv-purple/20",
+        items: [
+            "Classical Kabbalah (Zohar, Sefer Yetzira, HaARI)",
+            "Practical Kabbalah (Shap-Tie Method)",
+            "Astrology",
+            "Numerology"
+        ]
     }
 ]
 
 export default function WorldOfInterests() {
-    const [openId, setOpenId] = useState<string | null>(null);
-
-    const toggleInterest = (id: string) => {
-        setOpenId(openId === id ? null : id);
-    };
+    const [isOpen, setIsOpen] = useState(false);
 
     return (
         <Section id="world-of-interests" className="pb-32 px-6">
-            <div className="w-full max-w-4xl mx-auto flex flex-col items-center">
-                <div className="text-center mb-12 space-y-4">
-                    <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white/90">
-                        World of Interests
-                    </h2>
-                    <p className="text-white/50 text-lg font-light max-w-2xl mx-auto">
-                        The multidimensional fields driving the underlying architecture.
-                    </p>
-                </div>
-
-                <div className="w-full space-y-4">
-                    {INTERESTS.map((interest) => (
-                        <div
-                            key={interest.id}
-                            className="w-full rounded-2xl border border-white/5 bg-white/[0.02] overflow-hidden transition-all duration-300"
-                        >
-                            <button
-                                onClick={() => toggleInterest(interest.id)}
-                                className={cn(
-                                    "w-full flex items-center justify-between p-6 cursor-pointer hover:bg-white/[0.04] transition-colors",
-                                    openId === interest.id && "bg-white/[0.04]"
-                                )}
-                            >
-                                <div className="flex items-center gap-4">
-                                    <div className={cn("p-3 rounded-xl", interest.bg, interest.border, "border")}>
-                                        <interest.icon className={cn("w-6 h-6", interest.color)} />
-                                    </div>
-                                    <h3 className="text-lg md:text-xl font-medium text-white/90">
-                                        {interest.title}
-                                    </h3>
-                                </div>
-                                <motion.div
-                                    animate={{ rotate: openId === interest.id ? 180 : 0 }}
-                                    transition={{ duration: 0.3 }}
-                                    className="p-2"
-                                >
-                                    <ChevronDown className="w-5 h-5 text-white/40" />
-                                </motion.div>
-                            </button>
-
-                            <AnimatePresence>
-                                {openId === interest.id && (
-                                    <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: "auto", opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                                    >
-                                        <div className="p-6 pt-0 text-white/60 leading-relaxed font-light">
-                                            {interest.content}
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
+            <div className="w-full max-w-5xl mx-auto flex flex-col items-center">
+                
+                <div className="w-full rounded-2xl border border-white/5 bg-white/[0.02] overflow-hidden transition-all duration-500">
+                    {/* The Single Collapsible Header */}
+                    <button
+                        onClick={() => setIsOpen(!isOpen)}
+                        className={cn(
+                            "w-full flex items-center justify-between p-6 md:p-8 cursor-pointer hover:bg-white/[0.04] transition-colors",
+                            isOpen && "bg-white/[0.04]"
+                        )}
+                    >
+                        <div className="flex items-center gap-4">
+                            <div className="p-3 rounded-xl bg-white/5 border border-white/10">
+                                <Brain className="w-6 h-6 text-white/80" />
+                            </div>
+                            <div className="text-left">
+                                <h3 className="text-xl md:text-2xl font-medium text-white/90">
+                                    World of Interests
+                                </h3>
+                                <p className="text-white/50 text-sm md:text-base font-light mt-1">
+                                    Expand to explore the multidimensional knowledge architecture
+                                </p>
+                            </div>
                         </div>
-                    ))}
+                        <motion.div
+                            animate={{ rotate: isOpen ? 180 : 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="p-2"
+                        >
+                            <ChevronDown className="w-6 h-6 text-white/40" />
+                        </motion.div>
+                    </button>
+
+                    {/* The Expanded Content Area */}
+                    <AnimatePresence>
+                        {isOpen && (
+                            <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }} // smooth spring-like ease
+                            >
+                                <div className="p-6 md:p-8 pt-0 border-t border-white/5 mt-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                                        {KNOWLEDGE_STRUCTURE.map((group, idx) => (
+                                            <div key={idx} className="flex flex-col space-y-4">
+                                                {/* Group Header */}
+                                                <div className="flex items-center gap-3">
+                                                    <div className={cn("p-2 rounded-lg", group.bg, group.border, "border")}>
+                                                        <group.icon className={cn("w-4 h-4", group.color)} />
+                                                    </div>
+                                                    <h4 className="text-white/80 font-medium text-sm tracking-wide uppercase">
+                                                        {group.title}
+                                                    </h4>
+                                                </div>
+                                                
+                                                {/* Items List */}
+                                                <ul className="flex flex-col space-y-2">
+                                                    {group.items.map((item, i) => (
+                                                        <li key={i} className="flex items-start gap-2 text-white/60 text-sm leading-relaxed font-light">
+                                                            <span className="text-white/20 mt-1">•</span>
+                                                            {item}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </div>
             </div>
         </Section>

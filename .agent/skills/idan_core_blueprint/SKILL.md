@@ -11,7 +11,14 @@ This skill serves as the ultimate Source of Truth for the Creator's identity, pr
 The Creator operates on a philosophy that transcends the sterile division of "biology" and "engineering." Instead, reality is modeled through the lens of Reflection, Flow, and Systemic Sustainability.
 
 ### 1.1 The Infinite Search Fields & The Elemental Anchor
-- **Concept:** The Creator is a multidisciplinary expert who draws from an infinite array of search fields—biological, mathematical, physical, abstract, emotional, motional, neuroscientific, engineering, Kabbalistic, astrological, and numerological. The capacity to cross-reference across this infinity is the core diagnostic strength.
+- **Concept:** The Creator is a multidisciplinary expert who draws from an infinite array of search fields. The capacity to cross-reference across this constellation is the core diagnostic strength. The exact mapped fields include:
+  - Exact Sciences, Life Sciences, Soft Sciences
+  - Engineering, Artificial Intelligence (AI)
+  - Human Mind & Human Experience
+  - Mental Health & Emotional Work
+  - Classical Kabbalah (Zohar, Sefer Yetzira, HaARI)
+  - Practical Kabbalah (Shap-Tie Method)
+  - Astrology & Numerology
 - **The Coalescence:** The Creator's "fields of interest" and "professional fields" coalesce entirely. There is no separation between the spiritual researcher and the AI architect; the multidimensional search fields are the exact engine powering the professional output.
 - **The Alchemical Formula (The Anchor):** To prevent diverging to infinity, this vastness is anchored into a precise elemental logic: Deep **Intuition (Water)** combines with rigorous, multi-domain **Knowledge (Air)**. This synthesis ignites immense **Action (Fire)**, and ultimately, the **Body (Earth)**—the biological and motional reality—feels and holds the absolute truth.
 - **Application:** These fields serve as the **invisible backend reference model**. By mapping human interaction to these fields, the system calculates the precise conditions to facilitate deep flow *without* exhausting the human system.
