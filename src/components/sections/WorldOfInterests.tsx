@@ -72,11 +72,11 @@ export default function WorldOfInterests() {
                                 <h3 className="text-xl md:text-2xl font-medium text-white/90">
                                     Sources of inspiration
                                 </h3>
-                                <p className="text-white/50 text-sm md:text-base font-light mt-1">
-                                    On my quest to discover the world, I find many points of view and fields of interest. <br />
-                                    They often interact in unexpected ways, and help me look deeper into the misteries of life, the universe, and everything.
+                                <p className="text-white/50 text-sm md:text-base font-light mt-1 leading-relaxed">
+                                    On my journey, I&apos;ve collected a wide range of interests—from artificial intelligence to the depths of human consciousness. <br />
+                                    I love seeing how these seemingly different worlds connect in unexpected ways to help make sense of the bigger picture.
                                     <br />
-                                    I invite you to take a look, and maybe you&apos;ll find something interesting/inspiring to you as well.
+                                    I invite you to explore the fields that inspire me. Maybe you&apos;ll find something that sparks your curiosity too.
                                 </p>
                             </div>
                         </div>

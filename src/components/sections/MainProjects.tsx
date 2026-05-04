@@ -75,7 +75,12 @@ export default function MainProjects() {
 
   return (
     <Section id="work" className="space-y-12">
-      <h2 className="text-3xl font-bold text-gradient inline-block">Main Projects</h2>
+      <div className="space-y-4">
+        <h2 className="text-3xl font-bold text-gradient inline-block">Main Projects</h2>
+        <p className="text-white/60 text-lg max-w-2xl font-light leading-relaxed">
+          High-integrity systems built to facilitate flow, eliminate cognitive drag, and bridge the gap between human intuition and machine capability.
+        </p>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((item, index) => {
           const theme = getThemeClasses(item.theme);
