@@ -27,18 +27,19 @@ export default function VirgoDNAShowcase() {
         document.title = "Virgo DNA — Unified Neural Network | Idan David-Aviv";
     }, [])
     return (
-        <main className="min-h-screen w-full bg-core-themed pt-24 md:pt-32 pb-20 px-4 md:px-8 lg:px-12 flex flex-col items-center">
-            <div className="w-full mb-12 md:mb-20">
+        <main className="min-h-screen w-full bg-core-themed pt-24 md:pt-32 pb-4 px-4 md:px-8 lg:px-12 flex flex-col items-center">
+            <div className="w-full mb-2 md:mb-6">
                 <DNAHero />
             </div>
 
-            <HexNeuralCircuit />
-
+            <div id="interactive-circuits" className="w-full -mt-6">
+                <HexNeuralCircuit />
+            </div>
             {/* Practical Core (Centralized) */}
-            <div className="w-full relative mt-8 mb-8 flex flex-col items-center">
+            <div className="w-full relative mt-0 flex flex-col items-center">
                 {/* Massive ambient core glow */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-6xl h-[150%] bg-idan-david-aviv-gold/5 blur-[150px] rounded-[100%] pointer-events-none -z-20" />
-                
+
                 <div className="w-full max-w-6xl">
                     <Toolchain />
                 </div>
@@ -48,17 +49,20 @@ export default function VirgoDNAShowcase() {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="w-full max-w-3xl mx-auto flex flex-col items-center text-center pt-12 pb-24 px-6 relative z-20"
+                    className="w-full max-w-3xl mx-auto flex flex-col items-center text-center pt-12 pb-12 px-6 relative z-20 space-y-4"
                 >
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white tracking-wide">
-                        Let&apos;s Build <span className="text-idan-david-aviv-gold">Your Agent</span>
+                    <span className="text-xs uppercase tracking-[0.3em] font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-idan-david-aviv-gold to-idan-david-aviv-gold/60">
+                        Initiate Deployment
+                    </span>
+                    <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-2">
+                        Let&apos;s Build <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-gold to-idan-david-aviv-gold/60">Your Agent</span>
                     </h2>
 
-                    <p className="text-white/70 text-lg leading-relaxed mb-10 font-light">
+                    <p className="text-white/60 text-lg max-w-2xl mx-auto font-light leading-relaxed mb-10">
                         I use this core DNA to build custom AI agents for high-performing professionals. Instead of generic tools, I take these advanced capabilities and wire them directly into your workflow, creating a dedicated, sovereign agent that handles exactly what you need.
                     </p>
 
-                    <Link 
+                    <Link
                         to="/#contact"
                         className="px-8 py-4 bg-[#050510]/80 hover:bg-idan-david-aviv-gold/10 text-white border border-white/10 hover:border-idan-david-aviv-gold/50 rounded-full transition-all duration-500 font-medium tracking-wide flex items-center gap-3 group backdrop-blur-md shadow-[0_0_20px_rgba(255,255,255,0.02)] hover:shadow-[0_0_30px_rgba(251,191,36,0.2)]"
                     >
@@ -68,6 +72,10 @@ export default function VirgoDNAShowcase() {
                         </svg>
                     </Link>
                 </motion.div>
+            </div>
+
+            <div className="w-full mt-4 -mb-8 relative z-0">
+                <HexNeuralCircuit />
             </div>
 
             <DNAPhilosophy />
@@ -86,11 +94,12 @@ export default function VirgoDNAShowcase() {
 
             <PyramidNeuralCircuit />
 
-            <PromptArchitectureSpace />
-
+            <div id="support-vision" className="w-full">
+                <PromptArchitectureSpace />
+            </div>
             {/* Final Footer Label */}
-            <div className="mt-24 mb-20 text-center relative z-10">
-                <p className="text-white/20 font-mono text-sm tracking-[1em] uppercase">Virgo-DNA // Distributed Network Architecture</p>
+            <div className="mt-12 text-center relative z-10">
+                <p className="text-white/20 font-mono text-xs tracking-[0.5em] md:tracking-[1em] uppercase">Virgo-DNA // Distributed Network Architecture</p>
             </div>
         </main>
     );
