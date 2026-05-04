@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 const KNOWLEDGE_STRUCTURE = [
     {
         title: "The Biological & Behavioral Core",
-        subtitle: "The Source",
+        supTitle: "The Source",
         icon: Activity,
         color: "text-idan-david-aviv-blue",
         bg: "bg-idan-david-aviv-blue/10",
@@ -21,7 +21,7 @@ const KNOWLEDGE_STRUCTURE = [
     },
     {
         title: "The Structural & Systems Core",
-        subtitle: "The Body",
+        supTitle: "The Body",
         icon: Dna,
         color: "text-idan-david-aviv-cyan",
         bg: "bg-idan-david-aviv-cyan/10",
@@ -36,7 +36,7 @@ const KNOWLEDGE_STRUCTURE = [
     },
     {
         title: "The Metaphysical & Diagnostic Core",
-        subtitle: "The Context",
+        supTitle: "The Context",
         icon: Sparkles,
         color: "text-idan-david-aviv-purple",
         bg: "bg-idan-david-aviv-purple/10",
@@ -102,16 +102,16 @@ export default function WorldOfInterests() {
                                         {KNOWLEDGE_STRUCTURE.map((group, idx) => (
                                             <div key={idx} className="flex flex-col space-y-4">
                                                 {/* Group Header */}
-                                                <div className="flex flex-col items-center text-center space-y-2 mb-2">
-                                                    <div className={cn("p-2 rounded-lg mb-1", group.bg, group.border, "border")}>
+                                                <div className="flex flex-col items-center text-center space-y-1 mb-3">
+                                                    <div className={cn("p-2 rounded-lg mb-2", group.bg, group.border, "border")}>
                                                         <group.icon className={cn("w-5 h-5", group.color)} />
                                                     </div>
+                                                    <span className={cn("text-[11px] font-bold tracking-[0.2em] uppercase opacity-80", group.color)}>
+                                                        {group.supTitle}
+                                                    </span>
                                                     <h4 className="text-white/90 font-medium text-[13px] tracking-wide uppercase">
                                                         {group.title}
                                                     </h4>
-                                                    <span className={cn("text-[11px] font-bold tracking-[0.2em] uppercase opacity-80", group.color)}>
-                                                        {group.subtitle}
-                                                    </span>
                                                 </div>
                                                 
                                                 {/* Items List */}
