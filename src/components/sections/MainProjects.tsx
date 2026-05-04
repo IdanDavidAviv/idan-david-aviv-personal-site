@@ -150,7 +150,7 @@ export default function MainProjects() {
           href="#contact"
           className="px-8 py-4 bg-[#050510]/80 hover:bg-idan-david-aviv-blue/10 text-white border border-white/10 hover:border-idan-david-aviv-blue/50 rounded-full transition-all duration-500 font-medium tracking-wide flex items-center gap-3 group backdrop-blur-md shadow-[0_0_20px_rgba(255,255,255,0.02)] hover:shadow-[0_0_30px_rgba(44,179,241,0.2)]"
         >
-          collaborative ideas
+          Collaborators, press here
           <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform text-white/50 group-hover:text-idan-david-aviv-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>

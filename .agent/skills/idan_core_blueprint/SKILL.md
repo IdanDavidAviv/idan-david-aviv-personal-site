@@ -5,7 +5,13 @@ description: The definitive Source of Truth for the Creator's identity, professi
 
 # 🧬 Idan David-Aviv - Core Blueprint
 
-This skill serves as the ultimate Source of Truth for the Creator's identity, professional background, and philosophical drivers. 
+> [!CAUTION]
+> **THE OBSCURITY CONSTRAINT (ZERO LEAKAGE MANDATE)**
+> The mystical, biological, and Kabbalistic concepts defined in this blueprint (e.g., Alchemical Anchor, Shap-Tie, Water/Air/Fire/Earth) are the **invisible backend engine**. They represent the hidden structure of how the Creator thinks and calculates. 
+> **CRITICAL RULE:** The agent MUST NEVER leak these specific terms into public-facing UI copy or literal product descriptions. They are strictly for the agent's internal understanding to guide systemic architecture and professional tone (e.g., clarity, flow, systems design).
+> **ROUTING MANDATE:** Whenever translating this blueprint into front-facing site copy or Call-to-Actions (CTAs), the agent MUST route the operation through the [`manifesto_router`](../manifesto_router/SKILL.md) skill to ensure proper philosophical translation and obscurement.
+
+This skill serves as the ultimate Source of Truth for the Creator's identity, professional background, and philosophical drivers.
 
 ## 1. The Organic Reality Engine (The Philosophy)
 The Creator operates on a philosophy that transcends the sterile division of "biology" and "engineering." Instead, reality is modeled through the lens of Reflection, Flow, and Systemic Sustainability.

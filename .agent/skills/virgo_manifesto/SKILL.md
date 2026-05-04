@@ -7,6 +7,7 @@ description: The definitive Source of Truth for the "Why" behind the Virgo Audio
 
 > [!NOTE]
 > This skill serves as the definitive Source of Truth for the Virgo Audio Extension. It governs the visual aesthetic and the UI copywriting for the showcase page.
+> **ROUTING MANDATE:** Whenever translating this manifesto into front-facing site copy or Call-to-Actions (CTAs), the agent MUST route the operation through the [`manifesto_router`](../manifesto_router/SKILL.md) skill to ensure the copy aligns with the Deep Alignment Funnel and premium aesthetics.
 
 ## Part 1: The Core Problem (The Human - AI Brainrot)
 If you code with an AI agent like a true pro, you know the **Architect Loop**. You ask for a feature, and it generates an implementation plan for approval. Because AI generates code at such high speeds, the development process is constantly accompanied by detailed plans that demand your attention across multiple levels—architecture, logic, and syntax.
