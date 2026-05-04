@@ -1,6 +1,7 @@
 import Hero from '@/components/sections/Hero'
 import About from '@/components/sections/About'
 import WorkGrid from '@/components/sections/WorkGrid'
+import WorldOfInterests from '@/components/sections/WorldOfInterests'
 import Contact from '@/components/sections/Contact'
 
 /**
@@ -12,6 +13,7 @@ export default function Home() {
             <Hero />
             <About />
             <WorkGrid />
+            <WorldOfInterests />
             <Contact />
         </main>
     )
