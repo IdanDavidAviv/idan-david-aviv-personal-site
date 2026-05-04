@@ -1,0 +1,662 @@
+[
+  {
+    "part": "Hi, ",
+    "start": 88,
+    "end": 328
+  },
+  {
+    "part": "I'm ",
+    "start": 338,
+    "end": 482
+  },
+  {
+    "part": "Idan. ",
+    "start": 492,
+    "end": 828
+  },
+  {
+    "part": "I'm ",
+    "start": 1319,
+    "end": 1473
+  },
+  {
+    "part": "driven ",
+    "start": 1482,
+    "end": 1742
+  },
+  {
+    "part": "by ",
+    "start": 1751,
+    "end": 1867
+  },
+  {
+    "part": "a ",
+    "start": 1876,
+    "end": 1924
+  },
+  {
+    "part": "genuine ",
+    "start": 1934,
+    "end": 2300
+  },
+  {
+    "part": "curiosity ",
+    "start": 2309,
+    "end": 2819
+  },
+  {
+    "part": "about ",
+    "start": 2828,
+    "end": 3030
+  },
+  {
+    "part": "the ",
+    "start": 3040,
+    "end": 3117
+  },
+  {
+    "part": "fundamental ",
+    "start": 3126,
+    "end": 3578
+  },
+  {
+    "part": "nature ",
+    "start": 3588,
+    "end": 3857
+  },
+  {
+    "part": "of ",
+    "start": 3867,
+    "end": 3924
+  },
+  {
+    "part": "things - ",
+    "start": 3934,
+    "end": 4165
+  },
+  {
+    "part": "whether ",
+    "start": 4175,
+    "end": 4367
+  },
+  {
+    "part": "that's ",
+    "start": 4376,
+    "end": 4540
+  },
+  {
+    "part": "a ",
+    "start": 4550,
+    "end": 4598
+  },
+  {
+    "part": "complex ",
+    "start": 4607,
+    "end": 4982
+  },
+  {
+    "part": "AI ",
+    "start": 4992,
+    "end": 5232
+  },
+  {
+    "part": "architecture, ",
+    "start": 5242,
+    "end": 5828
+  },
+  {
+    "part": "the ",
+    "start": 6126,
+    "end": 6203
+  },
+  {
+    "part": "neuroscience ",
+    "start": 6213,
+    "end": 6809
+  },
+  {
+    "part": "of ",
+    "start": 6819,
+    "end": 6886
+  },
+  {
+    "part": "the ",
+    "start": 6896,
+    "end": 6944
+  },
+  {
+    "part": "human ",
+    "start": 6953,
+    "end": 7184
+  },
+  {
+    "part": "brain, ",
+    "start": 7194,
+    "end": 7482
+  },
+  {
+    "part": "the ",
+    "start": 7828,
+    "end": 7886
+  },
+  {
+    "part": "human ",
+    "start": 7896,
+    "end": 8107
+  },
+  {
+    "part": "experience, ",
+    "start": 8117,
+    "end": 8694
+  },
+  {
+    "part": "or ",
+    "start": 8973,
+    "end": 9098
+  },
+  {
+    "part": "just ",
+    "start": 9107,
+    "end": 9367
+  },
+  {
+    "part": "any ",
+    "start": 9376,
+    "end": 9549
+  },
+  {
+    "part": "interesting ",
+    "start": 9559,
+    "end": 9944
+  },
+  {
+    "part": "conversation. ",
+    "start": 9953,
+    "end": 10588
+  },
+  {
+    "part": "I ",
+    "start": 11090,
+    "end": 11215
+  },
+  {
+    "part": "love ",
+    "start": 11225,
+    "end": 11455
+  },
+  {
+    "part": "learning ",
+    "start": 11465,
+    "end": 11773
+  },
+  {
+    "part": "and ",
+    "start": 11782,
+    "end": 11849
+  },
+  {
+    "part": "sharing ",
+    "start": 11859,
+    "end": 12176
+  },
+  {
+    "part": "my ",
+    "start": 12186,
+    "end": 12282
+  },
+  {
+    "part": "knowledge ",
+    "start": 12292,
+    "end": 12744
+  },
+  {
+    "part": "and ",
+    "start": 12753,
+    "end": 12849
+  },
+  {
+    "part": "experiences.\n\n",
+    "start": 12859,
+    "end": 13600
+  },
+  {
+    "part": "I ",
+    "start": 14101,
+    "end": 14217
+  },
+  {
+    "part": "have ",
+    "start": 14226,
+    "end": 14351
+  },
+  {
+    "part": "a ",
+    "start": 14361,
+    "end": 14438
+  },
+  {
+    "part": "deep ",
+    "start": 14448,
+    "end": 14688
+  },
+  {
+    "part": "love ",
+    "start": 14698,
+    "end": 14909
+  },
+  {
+    "part": "for ",
+    "start": 14919,
+    "end": 15034
+  },
+  {
+    "part": "complexity, ",
+    "start": 15044,
+    "end": 15592
+  },
+  {
+    "part": "and ",
+    "start": 15948,
+    "end": 16073
+  },
+  {
+    "part": "an ",
+    "start": 16082,
+    "end": 16188
+  },
+  {
+    "part": "even ",
+    "start": 16198,
+    "end": 16448
+  },
+  {
+    "part": "bigger ",
+    "start": 16457,
+    "end": 16698
+  },
+  {
+    "part": "love ",
+    "start": 16707,
+    "end": 16948
+  },
+  {
+    "part": "for ",
+    "start": 16957,
+    "end": 17101
+  },
+  {
+    "part": "untangling ",
+    "start": 17111,
+    "end": 17563
+  },
+  {
+    "part": "it. ",
+    "start": 17573,
+    "end": 17774
+  },
+  {
+    "part": "Whether ",
+    "start": 18286,
+    "end": 18526
+  },
+  {
+    "part": "I'm ",
+    "start": 18536,
+    "end": 18651
+  },
+  {
+    "part": "working ",
+    "start": 18661,
+    "end": 18930
+  },
+  {
+    "part": "on ",
+    "start": 18940,
+    "end": 19036
+  },
+  {
+    "part": "a ",
+    "start": 19046,
+    "end": 19084
+  },
+  {
+    "part": "system ",
+    "start": 19094,
+    "end": 19401
+  },
+  {
+    "part": "architecture ",
+    "start": 19411,
+    "end": 19949
+  },
+  {
+    "part": "or ",
+    "start": 19959,
+    "end": 20065
+  },
+  {
+    "part": "helping ",
+    "start": 20075,
+    "end": 20325
+  },
+  {
+    "part": "someone ",
+    "start": 20334,
+    "end": 20613
+  },
+  {
+    "part": "navigate ",
+    "start": 20623,
+    "end": 20978
+  },
+  {
+    "part": "challenges, ",
+    "start": 20988,
+    "end": 21517
+  },
+  {
+    "part": "I ",
+    "start": 21892,
+    "end": 21930
+  },
+  {
+    "part": "love ",
+    "start": 21940,
+    "end": 22151
+  },
+  {
+    "part": "finding ",
+    "start": 22161,
+    "end": 22430
+  },
+  {
+    "part": "the ",
+    "start": 22440,
+    "end": 22517
+  },
+  {
+    "part": "elegant ",
+    "start": 22526,
+    "end": 22834
+  },
+  {
+    "part": "solution ",
+    "start": 22844,
+    "end": 23248
+  },
+  {
+    "part": "to ",
+    "start": 23257,
+    "end": 23344
+  },
+  {
+    "part": "every ",
+    "start": 23353,
+    "end": 23584
+  },
+  {
+    "part": "situation.\n\n",
+    "start": 23594,
+    "end": 24200
+  },
+  {
+    "part": "I ",
+    "start": 24701,
+    "end": 24855
+  },
+  {
+    "part": "really ",
+    "start": 24865,
+    "end": 25144
+  },
+  {
+    "part": "believe ",
+    "start": 25153,
+    "end": 25451
+  },
+  {
+    "part": "in ",
+    "start": 25461,
+    "end": 25528
+  },
+  {
+    "part": "meeting ",
+    "start": 25538,
+    "end": 25730
+  },
+  {
+    "part": "people ",
+    "start": 25740,
+    "end": 26019
+  },
+  {
+    "part": "exactly ",
+    "start": 26028,
+    "end": 26442
+  },
+  {
+    "part": "where ",
+    "start": 26451,
+    "end": 26615
+  },
+  {
+    "part": "they ",
+    "start": 26625,
+    "end": 26750
+  },
+  {
+    "part": "are. ",
+    "start": 26759,
+    "end": 26990
+  },
+  {
+    "part": "If ",
+    "start": 27492,
+    "end": 27598
+  },
+  {
+    "part": "something ",
+    "start": 27607,
+    "end": 27886
+  },
+  {
+    "part": "you ",
+    "start": 27896,
+    "end": 27982
+  },
+  {
+    "part": "see ",
+    "start": 27992,
+    "end": 28155
+  },
+  {
+    "part": "here ",
+    "start": 28165,
+    "end": 28300
+  },
+  {
+    "part": "sparks ",
+    "start": 28309,
+    "end": 28607
+  },
+  {
+    "part": "a ",
+    "start": 28617,
+    "end": 28665
+  },
+  {
+    "part": "thought, ",
+    "start": 28675,
+    "end": 28963
+  },
+  {
+    "part": "or ",
+    "start": 29232,
+    "end": 29376
+  },
+  {
+    "part": "if ",
+    "start": 29386,
+    "end": 29482
+  },
+  {
+    "part": "you ",
+    "start": 29492,
+    "end": 29549
+  },
+  {
+    "part": "just ",
+    "start": 29559,
+    "end": 29790
+  },
+  {
+    "part": "want ",
+    "start": 29800,
+    "end": 29915
+  },
+  {
+    "part": "to ",
+    "start": 29925,
+    "end": 29973
+  },
+  {
+    "part": "chat ",
+    "start": 29982,
+    "end": 30203
+  },
+  {
+    "part": "about ",
+    "start": 30213,
+    "end": 30405
+  },
+  {
+    "part": "a ",
+    "start": 30415,
+    "end": 30453
+  },
+  {
+    "part": "weird ",
+    "start": 30463,
+    "end": 30665
+  },
+  {
+    "part": "idea, ",
+    "start": 30675,
+    "end": 31021
+  },
+  {
+    "part": "I'd ",
+    "start": 31300,
+    "end": 31482
+  },
+  {
+    "part": "love ",
+    "start": 31492,
+    "end": 31694
+  },
+  {
+    "part": "to ",
+    "start": 31703,
+    "end": 31790
+  },
+  {
+    "part": "connect. ",
+    "start": 31800,
+    "end": 32194
+  },
+  {
+    "part": "I ",
+    "start": 32696,
+    "end": 32792
+  },
+  {
+    "part": "make ",
+    "start": 32801,
+    "end": 32974
+  },
+  {
+    "part": "an ",
+    "start": 32984,
+    "end": 33071
+  },
+  {
+    "part": "effort ",
+    "start": 33080,
+    "end": 33311
+  },
+  {
+    "part": "to ",
+    "start": 33321,
+    "end": 33407
+  },
+  {
+    "part": "ensure ",
+    "start": 33417,
+    "end": 33734
+  },
+  {
+    "part": "every ",
+    "start": 33744,
+    "end": 33917
+  },
+  {
+    "part": "interaction ",
+    "start": 33926,
+    "end": 34359
+  },
+  {
+    "part": "is ",
+    "start": 34369,
+    "end": 34465
+  },
+  {
+    "part": "a ",
+    "start": 34475,
+    "end": 34523
+  },
+  {
+    "part": "good ",
+    "start": 34532,
+    "end": 34648
+  },
+  {
+    "part": "one, ",
+    "start": 34657,
+    "end": 34830
+  },
+  {
+    "part": "so ",
+    "start": 35090,
+    "end": 35234
+  },
+  {
+    "part": "please ",
+    "start": 35244,
+    "end": 35532
+  },
+  {
+    "part": "don't ",
+    "start": 35542,
+    "end": 35715
+  },
+  {
+    "part": "hesitate ",
+    "start": 35725,
+    "end": 36109
+  },
+  {
+    "part": "to ",
+    "start": 36119,
+    "end": 36196
+  },
+  {
+    "part": "reach ",
+    "start": 36205,
+    "end": 36407
+  },
+  {
+    "part": "out.",
+    "start": 36417,
+    "end": 36628
+  }
+]
