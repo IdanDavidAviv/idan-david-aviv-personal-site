@@ -32,7 +32,7 @@ export default function VirgoDNAShowcase() {
                 <DNAHero />
             </div>
 
-            <div id="interactive-circuits" className="w-full -mt-6">
+            <div id="interactive-circuits" className="w-full pt-16 md:pt-12 pb-8 md:pb-10">
                 <HexNeuralCircuit />
             </div>
             {/* Practical Core (Centralized) */}
@@ -74,7 +74,7 @@ export default function VirgoDNAShowcase() {
                 </motion.div>
             </div>
 
-            <div className="w-full mt-4 -mb-8 relative z-0">
+            <div className="w-full pt-8 md:pt-4 relative z-0">
                 <HexNeuralCircuit />
             </div>
 
