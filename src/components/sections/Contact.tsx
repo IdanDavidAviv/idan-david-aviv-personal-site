@@ -5,13 +5,13 @@ import Section from '@/components/ui/Section'
 import { cn } from '@/lib/utils'
 
 const LinkedinIcon = ({ className }: { className?: string }) => (
-  <svg 
-    xmlns="http://www.w3.org/2000/svg" 
-    viewBox="0 0 24 24" 
-    fill="currentColor" 
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
     className={className}
   >
-    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zM7.119 20.452H3.554V9h3.565v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zM7.119 20.452H3.554V9h3.565v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
   </svg>
 )
 
@@ -54,8 +54,8 @@ export default function Contact() {
   ]
 
   return (
-    <Section id="contact" className="py-32 px-6 relative">
-      <div className="max-w-4xl mx-auto space-y-16">
+    <Section id="contact" className="py-0 px-6 relative">
+      <div className="max-w-4xl mx-auto">
 
         {/* Header */}
         <div className="text-center space-y-6">
@@ -113,7 +113,7 @@ export default function Contact() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
-          className="flex flex-col items-center space-y-6 pt-12 pb-4"
+          className="flex flex-col items-center space-y-6 pt-8 pb-4"
         >
           <div className="h-[1px] w-12 bg-white/10" />
           <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/40">
@@ -135,7 +135,7 @@ export default function Contact() {
             href="https://calendly.com/idandavidaviv"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col md:flex-row items-center justify-between gap-8 p-8 md:p-10 rounded-3xl border border-white/10 bg-[#050510]/80 backdrop-blur-md hover:bg-white/[0.03] hover:border-white/20 transition-all duration-500 overflow-hidden"
+            className="flex flex-col md:flex-row items-center justify-between gap-8 p-8 rounded-3xl border border-white/10 bg-[#050510]/80 backdrop-blur-md hover:bg-white/[0.03] hover:border-white/20 transition-all duration-500 overflow-hidden"
           >
             <div className="flex items-center gap-6">
               <div className="p-5 rounded-2xl bg-gradient-to-br from-idan-david-aviv-cyan/10 to-idan-david-aviv-blue/10 border border-white/5">
@@ -146,7 +146,7 @@ export default function Contact() {
                   Introduction Call
                 </h3>
                 <p className="text-white/50 text-sm font-light">
-                  A focused, high-integrity container to explore alignment.
+                  A focused container to explore collaboration opportunities.
                 </p>
               </div>
             </div>

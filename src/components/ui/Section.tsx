@@ -16,7 +16,7 @@ export default function Section({ children, className, id, fullWidth = false }: 
         <section
             id={id}
             className={cn(
-                "py-20 px-6",
+                "py-8 px-6",
                 !fullWidth && "max-w-6xl mx-auto",
                 className
             )}

@@ -11,7 +11,7 @@ export default function Hero() {
     <Section
       id="hero"
       fullWidth
-      className="relative flex flex-col items-center justify-center min-h-screen py-20 px-4 bg-transparent"
+      className="relative flex flex-col items-center justify-center min-h-[90vh] pt-20 pb-8 px-4 bg-transparent"
     >
       <motion.div
         initial={{ opacity: 0, y: 30 }}

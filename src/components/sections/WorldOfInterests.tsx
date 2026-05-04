@@ -52,7 +52,7 @@ export default function WorldOfInterests() {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <Section id="world-of-interests" className="pb-32 px-6">
+        <Section id="world-of-interests" className="pb-16 px-6">
             <div className="w-full max-w-5xl mx-auto flex flex-col items-center">
 
                 <div className="w-full rounded-2xl border border-white/5 bg-white/[0.02] overflow-hidden transition-all duration-500">
