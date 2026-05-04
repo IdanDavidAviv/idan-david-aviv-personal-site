@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { DNAHero } from '@/components/dna/DNAHero'
+import Toolchain from '@/components/sections/Toolchain'
 import { PromptArchitectureSpace } from '@/components/neural/PromptArchitectureSpace'
 import { CrystallineMemory } from '@/components/dna/CrystallineMemory'
 import { DNAPhilosophy } from '@/components/dna/DNAPhilosophy'
@@ -44,6 +45,12 @@ export default function VirgoDNAShowcase() {
 
             <div className="w-full">
                 <CrystallineMemory />
+            </div>
+
+            <PentagonNeuralCircuit />
+
+            <div className="w-full max-w-6xl mt-12 mb-12">
+                <Toolchain />
             </div>
 
             <PyramidNeuralCircuit />
