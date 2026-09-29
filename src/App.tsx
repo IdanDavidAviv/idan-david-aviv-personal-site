@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import Home from '@/pages/Home'
+import AIBrainPage from '@/pages/AIBrainPage'
 import DesignLab from '@/pages/DesignLab'
 import SpiritResearchLabShowcase from '@/pages/SpiritResearchLabShowcase'
 import VirgoDNAShowcase from '@/pages/VirgoDNAShowcase'
@@ -59,6 +60,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/ai-brain" element={<AIBrainPage />} />
           {import.meta.env.DEV && (
             <Route path="/design-lab" element={<DesignLab />} />
           )}

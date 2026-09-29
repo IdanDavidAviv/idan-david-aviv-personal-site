@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { Brain, Dna, FlaskConical } from 'lucide-react'
+import { Brain, Dna, FlaskConical, Sparkles } from 'lucide-react'
 
 /**
  * Global Header - Minimalist, floating navigation.
@@ -25,6 +25,18 @@ export default function Header() {
                     )}>
                     <Brain className="w-5 h-5 text-idan-david-aviv-blue group-hover:rotate-12 transition-transform" />
                     Me
+                </Link>
+                <Link
+                    to="/ai-brain"
+                    className={cn(
+                        "px-4 py-2 rounded-full border border-idan-david-aviv-cyan/30 bg-idan-david-aviv-cyan/10",
+                        "text-sm font-medium text-white hover:bg-idan-david-aviv-cyan/20 hover:border-idan-david-aviv-cyan/50 transition-all",
+                        "backdrop-blur-md flex items-center gap-2 group shadow-[0_0_18px_-2px_rgba(44,179,241,0.6)]",
+                        "whitespace-nowrap snap-center active:scale-95 touch-manipulation"
+                    )}
+                >
+                    <Sparkles className="w-4 h-4 text-idan-david-aviv-cyan group-hover:rotate-12 transition-transform" />
+                    AI Brain
                 </Link>
                 <Link
                     to="/virgo"
