@@ -18,24 +18,24 @@ export default function Header() {
                 <Link
                     to="/"
                     className={cn(
-                        "px-4 py-2 rounded-full border border-idan-david-aviv-blue/40 bg-idan-david-aviv-blue/10",
-                        "text-sm font-medium text-white hover:bg-idan-david-aviv-blue/20 hover:border-idan-david-aviv-blue/60 transition-all",
-                        "backdrop-blur-md flex items-center gap-2 group shadow-[0_0_20px_-2px_rgba(30,65,193,0.9)]",
+                        "px-4 py-2 rounded-full border border-[#1d4ed8]/60 bg-[#1d4ed8]/15",
+                        "text-sm font-medium text-white hover:bg-[#1d4ed8]/25 hover:border-[#1d4ed8]/80 transition-all",
+                        "backdrop-blur-md flex items-center gap-2 group shadow-[0_0_22px_-2px_rgba(29,78,216,0.9)]",
                         "whitespace-nowrap snap-center active:scale-95 touch-manipulation"
                     )}>
-                    <Brain className="w-5 h-5 text-idan-david-aviv-blue group-hover:rotate-12 transition-transform" />
+                    <Brain className="w-5 h-5 text-[#60a5fa] group-hover:rotate-12 transition-transform" />
                     Me
                 </Link>
                 <Link
                     to="/ai-brain"
                     className={cn(
-                        "px-4 py-2 rounded-full border border-idan-david-aviv-cyan/30 bg-idan-david-aviv-cyan/10",
-                        "text-sm font-medium text-white hover:bg-idan-david-aviv-cyan/20 hover:border-idan-david-aviv-cyan/50 transition-all",
-                        "backdrop-blur-md flex items-center gap-2 group shadow-[0_0_18px_-2px_rgba(44,179,241,0.6)]",
+                        "px-4 py-2 rounded-full border border-white/80 bg-white/15",
+                        "text-sm font-semibold text-white hover:bg-white/25 hover:border-white transition-all",
+                        "backdrop-blur-md flex items-center gap-2 group shadow-[0_0_25px_rgba(255,255,255,0.55)]",
                         "whitespace-nowrap snap-center active:scale-95 touch-manipulation"
                     )}
                 >
-                    <Sparkles className="w-4 h-4 text-idan-david-aviv-cyan group-hover:rotate-12 transition-transform" />
+                    <Sparkles className="w-4 h-4 text-white group-hover:rotate-12 transition-transform" />
                     AI Brain
                 </Link>
                 <Link
