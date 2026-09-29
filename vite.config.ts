@@ -13,6 +13,10 @@ const __dirname = dirname(__filename);
  * Includes path aliases and custom terminal logging for high-integrity debugging.
  */
 export default defineConfig({
+  server: {
+    host: true,
+    port: 5173,
+  },
   plugins: [
     react(),
     {
