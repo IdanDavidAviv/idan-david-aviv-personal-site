@@ -3,19 +3,9 @@ import { Database, Network, ShieldCheck, CheckCircle2, Zap, RefreshCw, Layers, F
 
 export default function AIBrainBento() {
   return (
-    <section className="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
+    <section className="pt-6 sm:pt-10 pb-16 sm:pb-20 px-4 sm:px-6 max-w-6xl mx-auto">
       {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.05] border border-white/10 text-xs sm:text-sm font-medium text-white/80 mb-4"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-idan-david-aviv-cyan" />
-          <span>ארכיטקטורת המערכת</span>
-        </motion.div>
-
+      <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
