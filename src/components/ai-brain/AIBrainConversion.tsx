@@ -32,7 +32,7 @@ export default function AIBrainConversion() {
             className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue text-white font-medium text-base shadow-[0_0_35px_rgba(44,179,241,0.4)] hover:shadow-[0_0_50px_rgba(44,179,241,0.6)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 group"
           >
             <Calendar className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-            <span>בואו נמפה את מוח ה-AI בעסק שלכם</span>
+            <span>בואו נמפה את מוח ה-AI לעסק שלכם</span>
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           </a>
 

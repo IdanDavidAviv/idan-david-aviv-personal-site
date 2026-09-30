@@ -103,11 +103,11 @@ export default function AIBrainBento() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-2xl sm:text-4xl font-bold text-white tracking-tight mb-4"
+          className="text-2xl sm:text-4xl font-bold text-white tracking-tight mb-4 space-y-1.5"
         >
-          שלושת עמודי התווך שהופכים AI <br className="hidden sm:block" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan via-white to-idan-david-aviv-blue">
-            לעוזר עסקי אמיתי
+          <span className="block">אוקיי אז</span>
+          <span className="block text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan from-25% via-white via-50% to-idan-david-aviv-blue to-75%">
+            מה זה בתכלס?
           </span>
         </motion.h2>
 
@@ -116,9 +116,10 @@ export default function AIBrainBento() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="text-sm sm:text-base text-white/60 leading-relaxed font-light"
+          className="text-sm sm:text-base text-white/60 leading-relaxed font-light max-w-2xl mx-auto"
         >
-          שילוב מובנה בין זיכרון ארגוני, חיבור למערכות ומשילות הדוקה:
+          סך הכול שלושה חלקים: הזיכרון של העסק, החיבור למערכות שלכם <br />
+          ומערכת הנחיות לשליטה מלאה.
         </motion.p>
       </div>
 
@@ -148,7 +149,7 @@ export default function AIBrainBento() {
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
                     <h3 className="text-lg sm:text-xl font-bold text-white">
-                      המוח והזיכרון
+                      הזיכרון העסקי
                     </h3>
                     <ChevronDown
                       className={`w-4 h-4 text-idan-david-aviv-cyan transition-transform duration-300 ${
@@ -157,7 +158,8 @@ export default function AIBrainBento() {
                     />
                   </div>
                   <p className="text-xs sm:text-sm text-idan-david-aviv-cyan font-medium">
-                    מערכת זיכרון מובנית שמרכזת את ה-DNA של העסק <br />
+                    מערכת זיכרון מובנית שמרכזת את ה-DNA של העסק{' '}
+                    <br className="sm:hidden" />
                     ומתעדכנת יחד איתו
                   </p>
                 </div>
@@ -235,7 +237,7 @@ export default function AIBrainBento() {
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
                     <h3 className="text-lg sm:text-xl font-bold text-white">
-                      הצנרת וחיבור הכלים
+                      מערכות ומקורות מידע
                     </h3>
                     <ChevronDown
                       className={`w-4 h-4 text-idan-david-aviv-blue transition-transform duration-300 ${
@@ -334,7 +336,7 @@ export default function AIBrainBento() {
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg sm:text-xl font-bold text-white">
-                    הנחיות עבודה ומשילות
+                    מערכת הנחיות לסוכן העסקי
                   </h3>
                   <ChevronDown
                     className={`w-4 h-4 text-purple-400 transition-transform duration-300 ${
@@ -343,7 +345,8 @@ export default function AIBrainBento() {
                   />
                 </div>
                 <p className="text-xs sm:text-sm text-purple-400 font-medium">
-                  סוכן שמנתח את הנתונים, מציג סיכום והצעות לביצוע <br />
+                  סוכן שמנתח את הנתונים, מציג סיכום והצעות לביצוע{' '}
+                  <br className="sm:hidden" />
                   וממתין לאישור
                 </p>
               </div>

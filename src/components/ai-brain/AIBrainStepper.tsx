@@ -9,9 +9,8 @@ export default function AIBrainStepper() {
   const steps = [
     {
       number: '01',
-      title: 'מיפוי ראשוני ובדיקת היתכנות',
-      shortTitle: 'מיפוי והיתכנות',
-      time: '30 דק\' (חינם)',
+      tag: 'שיחה ראשונית',
+      title: 'מבינים מה העסק צריך',
       icon: <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-idan-david-aviv-cyan" />,
       description: 'בשיחה ממוקדת נבין יחד את תהליכי העבודה ומקורות המידע, ונבדוק האם ואיך נכון לבנות עבורכם מוח AI בעל אימפקט תפעולי ממשי.',
       accent: 'border-idan-david-aviv-cyan/30 bg-idan-david-aviv-cyan/5 text-idan-david-aviv-cyan',
@@ -28,9 +27,8 @@ export default function AIBrainStepper() {
     },
     {
       number: '02',
-      title: 'התאמה ובנייה מאחורי הקלעים',
-      shortTitle: 'בנייה מאחורי הקלעים',
-      time: 'הקמת תשתיות המוח',
+      tag: 'ללא הפרעה',
+      title: 'מחברים את המערכות',
       icon: <Cpu className="w-4 h-4 sm:w-5 sm:h-5 text-idan-david-aviv-blue" />,
       description: 'בזמן שהעסק פועל כרגיל אנחנו מקימים את מערכת המוח ומחברים אותה למערכות העסקיות שלכם.',
       accent: 'border-idan-david-aviv-blue/30 bg-idan-david-aviv-blue/5 text-idan-david-aviv-blue',
@@ -47,9 +45,8 @@ export default function AIBrainStepper() {
     },
     {
       number: '03',
-      title: 'חיבור לצ\'אט ועלייה לאוויר',
-      shortTitle: 'עלייה לאוויר בצ\'אט',
-      time: 'עם סוכן AI',
+      tag: 'יוצאים לדרך',
+      title: 'מתחילים לעבוד עם הסוכן',
       icon: <Rocket className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />,
       description: 'מחברים את מוח ה-AI ישירות לאייג\'נט שאתם כבר מכירים, או שעוזרים לכם לבחור אחד שמתאים יותר לצרכים שלכם, ויוצאים לדרך.',
       accent: 'border-emerald-500/30 bg-emerald-500/5 text-emerald-400',
@@ -114,7 +111,7 @@ export default function AIBrainStepper() {
                 <div key={step.number} className="relative flex flex-col items-center text-center">
                   {/* Step Card / Station Node */}
                   <div
-                    className={`relative w-full rounded-2xl sm:rounded-3xl border p-2.5 sm:p-6 transition-all duration-200 cursor-pointer select-none flex flex-col items-center justify-between min-h-[110px] sm:min-h-[145px] ${
+                    className={`relative w-full rounded-2xl sm:rounded-3xl border p-2 sm:p-5 transition-all duration-200 cursor-pointer select-none flex flex-col items-center justify-between min-h-[125px] sm:min-h-[155px] ${
                       isActive
                         ? `${step.theme.activeCard} z-20`
                         : `bg-white/[0.02] border-white/10 ${step.theme.hoverCard}`
@@ -130,25 +127,25 @@ export default function AIBrainStepper() {
                       }
                     }}
                   >
-                    {/* Top: Icon + Number */}
-                    <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-1 sm:mb-3">
-                      <div className={`p-1.5 sm:p-2 rounded-xl border ${step.accent}`}>
-                        {step.icon}
-                      </div>
+                    {/* Top: Header Row (Number + Tag) */}
+                    <div className="w-full flex items-center justify-between mb-1.5">
                       <span className="text-xs sm:text-base font-bold font-mono text-white/40">
                         {step.number}
                       </span>
+                      <span className={`text-[9px] sm:text-xs font-medium px-1.5 py-0.5 sm:px-2 rounded-md border ${step.theme.badge}`}>
+                        {step.tag}
+                      </span>
                     </div>
 
-                    {/* Title */}
-                    <h3 className="text-[11px] sm:text-base font-bold text-white mb-1.5 leading-snug tracking-tight">
-                      {step.shortTitle}
-                    </h3>
+                    {/* Center: Icon */}
+                    <div className={`p-1.5 sm:p-2 rounded-xl border my-auto ${step.accent}`}>
+                      {step.icon}
+                    </div>
 
-                    {/* Badge */}
-                    <span className={`text-[9px] sm:text-xs font-medium px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg border ${step.theme.badge}`}>
-                      {step.time}
-                    </span>
+                    {/* Bottom: Title */}
+                    <h3 className="text-xs sm:text-base font-bold text-white mt-1.5 leading-snug tracking-tight">
+                      {step.title}
+                    </h3>
 
                     {/* Directional Arrow between steps (desktop only) */}
                     {idx < steps.length - 1 && (

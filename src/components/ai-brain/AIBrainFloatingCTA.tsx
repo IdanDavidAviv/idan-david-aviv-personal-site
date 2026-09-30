@@ -47,7 +47,7 @@ export default function AIBrainFloatingCTA() {
             className="flex-1 px-4 py-2.5 rounded-full bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue text-white text-xs sm:text-sm font-medium flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-all text-center"
           >
             <Calendar className="w-4 h-4 shrink-0" />
-            <span className="truncate">מיפוי מוח AI (30 דקות)</span>
+            <span className="truncate">מיפוי מוח AI לעסק</span>
             <ArrowLeft className="w-3.5 h-3.5 shrink-0" />
           </a>
         </motion.div>
