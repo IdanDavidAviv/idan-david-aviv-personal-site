@@ -41,13 +41,13 @@ export default function AIBrainRealityCheck() {
   }, [])
 
   return (
-    <section className="pt-2 sm:pt-4 pb-6 sm:pb-8 px-4 sm:px-6 max-w-4xl mx-auto relative">
+    <section className={`pt-2 sm:pt-4 pb-6 sm:pb-8 px-4 sm:px-6 max-w-4xl mx-auto relative ${activeId !== null ? 'z-30' : 'z-10'}`}>
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
-        className="rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-2xl p-6 sm:p-10 relative shadow-2xl"
+        className={`rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-2xl p-6 sm:p-10 relative shadow-2xl ${activeId !== null ? 'z-40' : 'z-10'}`}
       >
         {/* Glow - isolated in overflow-hidden inner layer so popovers never get clipped */}
         <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
@@ -73,7 +73,7 @@ export default function AIBrainRealityCheck() {
                 key={idx}
                 className={`relative flex items-center gap-3 p-3.5 sm:p-5 rounded-2xl border transition-all duration-200 cursor-pointer select-none group min-h-[72px] sm:min-h-[82px] ${
                   isActive
-                    ? 'bg-emerald-500/[0.08] border-emerald-500/50 shadow-lg shadow-emerald-950/30 z-30'
+                    ? 'bg-emerald-500/[0.08] border-emerald-500/50 shadow-lg shadow-emerald-950/30 z-40'
                     : 'bg-white/[0.02] border-white/5 hover:border-emerald-500/30 hover:bg-emerald-500/[0.03]'
                 }`}
                 onClick={() => setActiveId(isActive ? null : idx)}
@@ -103,7 +103,7 @@ export default function AIBrainRealityCheck() {
                       exit={{ opacity: 0, x: '-50%', y: 4, scale: 0.97 }}
                       transition={{ duration: 0.15, ease: 'easeOut' }}
                       style={{ left: '50%' }}
-                      className="absolute z-30 w-[95%] sm:w-full min-w-[210px] max-w-xs top-full mt-3 p-3.5 sm:p-4 rounded-2xl bg-[#041d14]/95 backdrop-blur-2xl border border-emerald-500/40 shadow-[0_12px_36px_rgba(0,0,0,0.85)] shadow-emerald-950/60 text-center pointer-events-auto"
+                      className="absolute z-50 w-[95%] sm:w-full min-w-[210px] max-w-xs top-full mt-3 p-3.5 sm:p-4 rounded-2xl bg-[#041d14]/95 backdrop-blur-2xl border border-emerald-500/40 shadow-[0_12px_36px_rgba(0,0,0,0.85)] shadow-emerald-950/60 text-center pointer-events-auto"
                       onClick={(e) => e.stopPropagation()}
                     >
                       {/* Directional Arrow Pointer - Centered */}

@@ -86,7 +86,7 @@ export default function AIBrainStepper() {
   }, [])
 
   return (
-    <section className="pt-16 sm:pt-20 pb-2 sm:pb-4 px-4 sm:px-6 max-w-5xl mx-auto relative">
+    <section className={`pt-6 sm:pt-8 pb-2 sm:pb-4 px-4 sm:px-6 max-w-5xl mx-auto relative ${activeStep !== null ? 'z-30' : 'z-10'}`}>
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
         <motion.h2
@@ -104,7 +104,7 @@ export default function AIBrainStepper() {
       </div>
 
       {/* 3 Stations Process Flow Container (Unboxed, Floating) */}
-      <div ref={containerRef} className="relative mb-6 sm:mb-8">
+      <div ref={containerRef} className={`relative mb-6 sm:mb-8 ${activeStep !== null ? 'z-40' : 'z-10'}`}>
         {/* 3 Stations Side-by-Side in 1 Row (Mobile & Desktop) */}
         <div className="grid grid-cols-3 gap-2.5 sm:gap-6">
             {steps.map((step, idx) => {
@@ -171,7 +171,7 @@ export default function AIBrainStepper() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 4, scale: 0.98 }}
                 transition={{ duration: 0.15, ease: 'easeOut' }}
-                className={`absolute top-full mt-3 inset-x-0 z-30 p-4 sm:p-5 rounded-2xl ${steps[activeStep].theme.bg} backdrop-blur-2xl border ${steps[activeStep].theme.border} shadow-[0_16px_40px_rgba(0,0,0,0.9)] ${steps[activeStep].theme.shadow} text-center pointer-events-auto`}
+                className={`absolute top-full mt-3 inset-x-0 z-50 p-4 sm:p-5 rounded-2xl ${steps[activeStep].theme.bg} backdrop-blur-2xl border ${steps[activeStep].theme.border} shadow-[0_16px_40px_rgba(0,0,0,0.9)] ${steps[activeStep].theme.shadow} text-center pointer-events-auto`}
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Dynamic Arrow Pointer - Mathematically Aligned to Active Column Center */}
@@ -212,7 +212,7 @@ export default function AIBrainStepper() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="text-center mt-6 sm:mt-8"
+        className="text-center mt-6 sm:mt-8 relative z-0"
       >
         <h3 className="text-xl sm:text-3xl font-bold tracking-tight text-white leading-tight">
           ויש לכם מוח עסקי <br />
