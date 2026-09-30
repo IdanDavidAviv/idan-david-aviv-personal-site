@@ -1,0 +1,33 @@
+# Robots.txt for Idan David Aviv Portfolio & AI Ecosystem
+# Open access for Search Engines and AI Inference Agents
+
+User-agent: *
+Allow: /
+
+# Dedicated AI Inference & Answer Engine Crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# AI Context & Structured Knowledge Endpoints
+# Specifications for LLMs (Anthropic / OpenAI / Perplexity standard)
+# Core Architectural Summary: /llms.txt
+# Full Knowledge Base: /llms-full.txt
+# Flagship AI Brain Markdown Twin: /ai-brain.md
