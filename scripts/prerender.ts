@@ -7,6 +7,8 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 const distDir = path.resolve(rootDir, 'dist');
 
+import { aiBrainContent } from '../src/data/aiBrainContent.ts';
+
 /**
  * Lightweight Semantic Prerendering Engine (Node/TSX Native - Zero Puppeteer Dependency)
  * Injects clean semantic DOM into static HTML for each route in /dist.
@@ -18,6 +20,65 @@ interface RoutePrerenderConfig {
   description: string;
   markdownTwinUrl: string;
   semanticHtml: string;
+}
+
+function getAiBrainSemanticHtml(): string {
+  const { hero, problem, solution, bento, stepper, conversion } = aiBrainContent;
+
+  return `
+      <main id="main-content" class="semantic-prerender">
+        <header>
+          <h1>${hero.title} — ${hero.subtitle}</h1>
+          <p>${hero.lead}</p>
+          <div class="chat-hook">
+            <span>${hero.chatHook.preTitle}</span>
+            <p>${hero.chatHook.title}</p>
+          </div>
+        </header>
+
+        <section id="the-problem">
+          <h2>${problem.title}</h2>
+          <p>${problem.description}</p>
+        </section>
+
+        <section id="the-solution">
+          <h2>${solution.title}</h2>
+          <p>${solution.description}</p>
+        </section>
+
+        <section id="bento-overview">
+          <h2>${bento.headline.line1} ${bento.headline.line2}</h2>
+          <p>${bento.subtitle.line1} ${bento.subtitle.line2}</p>
+          
+          <div class="bento-cards">
+            ${bento.cards.map((card) => `
+              <article class="bento-card">
+                <h3>${card.title}</h3>
+                <p>${card.subtitle}</p>
+                <ul>
+                  ${card.items.map(item => `<li><strong>${item.title}:</strong> ${item.desc}</li>`).join('')}
+                </ul>
+              </article>
+            `).join('')}
+          </div>
+        </section>
+
+        <section id="stepper-process">
+          <h2>${stepper.title}</h2>
+          <ol>
+            ${stepper.stations.map(st => `
+              <li><strong>שלב ${st.number} — ${st.tag}:</strong> ${st.title} — ${st.description}</li>
+            `).join('')}
+          </ol>
+        </section>
+
+        <section id="booking-cta">
+          <h2>${conversion.cta}</h2>
+          <p>שיחת אפיון (Calendly): <a href="${conversion.calendlyUrl}">קביעת שיחה ביומן</a></p>
+          <p>שיחת וואטסאפ מהירה: <a href="${conversion.whatsappUrl}">${conversion.whatsappPhone}</a></p>
+        </section>
+      </main>
+  `;
 }
 
 const routesConfig: RoutePrerenderConfig[] = [
@@ -70,50 +131,10 @@ const routesConfig: RoutePrerenderConfig[] = [
   },
   {
     path: '/ai-brain',
-    title: 'מוח AI לעסקים — ארכיטקטורת נתוני אמת וסוכנים | עידן דוד אביב',
-    description: 'ארכיטקטורת Business AI Brain ריבונית המחברת את כל הידע והמערכות של העסק למנועי AI עם 100% נתוני אמת וללא הזיות.',
+    title: aiBrainContent.meta.title,
+    description: aiBrainContent.meta.description,
     markdownTwinUrl: '/ai-brain.md',
-    semanticHtml: `
-      <main id="main-content" class="semantic-prerender">
-        <header>
-          <h1>מוח AI מותאם אישית לעסק — Business AI Brain</h1>
-          <p>ארכיטקטורת נתוני אמת וסוכנים אוטונומיים שמכירה את העסק שלכם מבפנים.</p>
-        </header>
-
-        <section id="the-problem">
-          <h2>הבעיה: הפיצול והזיות ה-AI הגנרי</h2>
-          <p>שימוש ב-ChatGPT או Claude רגיל מנותק מנהלי העסק, המחירונים וה-CRM, וגורם להזיות ולבזבוז שעות עבודה.</p>
-        </section>
-
-        <section id="the-solution">
-          <h2>הפתרון: מוח עסקי ריבוני (Sovereign Brain)</h2>
-          <p>חיבור ישיר של Google Drive, Monday, Excel, ומערכות CRM למנועי שפה מתקדמים עם 100% נתוני אמת ואפס הזיות.</p>
-          
-          <h3>ארבעת עמודי התווך של המוח:</h3>
-          <ul>
-            <li><strong>זיכרון עסקי מתועד (Business Memory & Docs):</strong> שליפת נתונים מדויקת מנהלי עבודה, מחירונים והיסטוריית שירות.</li>
-            <li><strong>צנרת פעולה וכלים (Action Pipeline):</strong> ביצוע פעולות אוטונומיות — הפקת הצעות מחיר, עדכון משימות ב-Monday, וניסוח מענה ללקוח.</li>
-            <li><strong>משילות אנושית (Human-in-the-Loop):</strong> הסוכן מכין והבעלים מאשר בלחיצת כפתור אחת. שום פעולה קריטית אינה יוצאת ללא בקרה.</li>
-            <li><strong>סוכנים מתואמים (Multi-Agent Swarm):</strong> רשת סוכנים ייעודיים העובדים בסינרגיה מלאה.</li>
-          </ul>
-        </section>
-
-        <section id="stepper-process">
-          <h2>תהליך ההטמעה בשלושה שלבים</h2>
-          <ol>
-            <li><strong>שלב 01 — אבחון ומיפוי ארכיטקטוני:</strong> מיפוי מקורות המידע וצווארי הבקבוק בעסק.</li>
-            <li><strong>שלב 02 — התקנה, כיול וצנרת נתונים:</strong> הקמת הזיכרון הריבוני וחיבור הכלים.</li>
-            <li><strong>שלב 03 — הטמעה בצוות ושיגור חי:</strong> תרגול תרחישי אמת ומעבר לעבודה שוטפת שמייצרת חיסכון שבועי עצום.</li>
-          </ol>
-        </section>
-
-        <section id="booking-cta">
-          <h2>תיאום פגישת אפיון אסטרטגית</h2>
-          <p>שיחת אפיון (Calendly): <a href="https://calendly.com/idandavidaviv/discovery">קביעת שיחה ביומן</a></p>
-          <p>שיחת וואטסאפ מהירה: <a href="https://wa.me/972545585590">054-5585590</a></p>
-        </section>
-      </main>
-    `,
+    semanticHtml: getAiBrainSemanticHtml(),
   },
   {
     path: '/spirit-research-lab',

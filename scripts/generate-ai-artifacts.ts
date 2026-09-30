@@ -8,6 +8,8 @@ const rootDir = path.resolve(__dirname, '..');
 const publicDir = path.resolve(rootDir, 'public');
 const distDir = path.resolve(rootDir, 'dist');
 
+import { aiBrainContent } from '../src/data/aiBrainContent.ts';
+
 /**
  * Clean Markdown Artifacts Generator for AI Inference & LLM Standards (llms.txt)
  * Generates zero-noise, high-density Markdown twins for open-web AI agents.
@@ -40,33 +42,32 @@ For complete technical specifications, architectural layers, and curriculum deta
 - Official Website: https://idan-david-aviv.web.app
 `;
 
-// 2. Content for /ai-brain.md (The Sovereign AI Brain Flagship Twin)
-const aiBrainMdContent = `# מוח AI מותאם אישית לעסק — ארכיטקטורת נתוני אמת וסוכנים אוטונומיים
-> פיתוח והטמעה: עידן דוד אביב | ארכיטקט מערכות בינה מלאכותית
+// 2. Content for /ai-brain.md (Dynamically derived from SSOT: src/data/aiBrainContent.ts)
+const { hero, problem, solution, bento, stepper, conversion } = aiBrainContent;
 
-## הבעיה: הפיצול המערכתי והזיות ה-AI הגנרי
-בעלי עסקים וארגונים משתמשים בכלים כמו ChatGPT או Claude כ"איים מבודדים". כתוצאה מכך:
-1. המודל אינו מכיר את נהלי העסק, המחירונים, ה-CRM או היסטוריית הפרויקטים.
-2. מתרחשות הזיות (Hallucinations) וטעויות חמורות בתשובות ללקוחות או בהחלטות תפעוליות.
-3. זמן יקר מתבזבז על העתק-הדבק של מסמכים ופרומפטים שחוזרים על עצמם.
+const aiBrainMdContent = `# ${hero.title} — ${hero.subtitle}
+> פיתוח והטמעה: עידן דוד אביב | ארכיטקט מערכות בינה מלאכותית ומערכות סוכנים
 
-## הפתרון: Business AI Brain (מוח עסקי ריבוני)
-ארכיטקטורה המחברת את כל הידע, המסמכים והכלים של העסק ישירות למנועי AI מתקדמים עם 100% נתוני אמת ומשילות אנושית מלאה.
+${hero.lead}
 
-### ארבעת עמודי התווך של המוח:
-1. **זיכרון ארגוני מאומת (Business Memory & Docs):** חיבור ישיר ל-Google Drive, תיקיות נהלים, גיליונות Excel, והיסטוריית שירות. המוח שולף עובדות מדויקות בלבד.
-2. **צנרת פעולה וכלים (Action Pipeline & Tool Orchestration):** המוח לא רק עונה על שאלות, אלא מסוגל לבצע פעולות: הפקת טיוטת הצעת מחיר ב-CRM, עדכון סטטוס ב-Monday, או שליחת סיכום מסודר ללקוח.
-3. **משילות ואבטחה (Human-in-the-Loop Governance):** המודל מכין — הבעלים או מנהל הצוות מאשר בלחיצת כפתור אחת. שום פעולה קריטית אינה יוצאת ללא אישור.
-4. **עבודה רב-סוכנית מתואמת (Multi-Agent Swarm):** סוכן מחקר, סוכן ניסוח, וסוכן בקרת איכות שעובדים בסנכרון מלא על פי הפרוטוקולים של העסק.
+## ${problem.title}
+${problem.description}
 
-### שלבי ההטמעה:
-- **שלב 01 — אבחון ומיפוי ארכיטקטוני (Deep System Audit):** זיהוי צווארי הבקבוק, מקורות המידע והכלים הפעילים בעסק.
-- **שלב 02 — התקנה, כיול וצנרת נתונים (Installation & Pipeline Build):** הקמת הזיכרון הריבוני, חיבור ה-APIs וקביעת גבולות הגזרה והאבטחה.
-- **שלב 03 — הטמעה בצוות ושיגור חי (Calibration & Go-Live):** הדרכת הצוות, תרגול תרחישי אמת, ומעבר לעבודה שוטפת שחוסכת עשרות שעות שבועיות.
+## ${solution.title}
+${solution.description}
 
-### יצירת קשר ותיאום פגישת אפיון:
-- שיחת אפיון (Calendly): https://calendly.com/idandavidaviv/discovery
-- ואטסאפ ישיר: https://wa.me/972545585590
+## ${bento.headline.line1} ${bento.headline.line2}
+${bento.subtitle.line1} ${bento.subtitle.line2}
+
+${bento.cards.map((card, idx) => `### ${idx + 1}. ${card.title} (${card.subtitle})
+${card.items.map(item => `- **${item.title}:** ${item.desc}`).join('\n')}`).join('\n\n')}
+
+## ${stepper.title}
+${stepper.stations.map(st => `- **שלב ${st.number} — ${st.tag}:** ${st.title} — ${st.description}`).join('\n')}
+
+## ${conversion.cta}
+- שיחת אפיון (Calendly): ${conversion.calendlyUrl}
+- וואטסאפ ישיר: ${conversion.whatsappUrl} (${conversion.whatsappPhone})
 `;
 
 // 3. Content for /about.md
