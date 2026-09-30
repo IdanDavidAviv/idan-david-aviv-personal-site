@@ -1,122 +1,225 @@
-import { motion } from 'framer-motion'
-import { Sparkles, Compass, Cpu, Rocket } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Compass, Cpu, Rocket, X, ArrowLeft } from 'lucide-react'
 
 export default function AIBrainStepper() {
+  const [activeStep, setActiveStep] = useState<number | null>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+
   const steps = [
     {
       number: '01',
       title: 'מיפוי ראשוני ובדיקת היתכנות',
-      time: '30–60 דק\'',
-      icon: <Compass className="w-5 h-5 text-idan-david-aviv-cyan" />,
-      description: 'בשיחה ממוקדת אנחנו בודקים יחד האם המערכות וסוג המידע שלכם מתאימים לבניית מוח AI, מבינים איפה הכאב התפעולי הכי דחוף, ומוודאים שיש פה היתכנות לאימפקט עסקי אמיתי.',
+      shortTitle: 'מיפוי והיתכנות',
+      time: '30 דק\' (חינם)',
+      icon: <Compass className="w-4 h-4 sm:w-5 sm:h-5 text-idan-david-aviv-cyan" />,
+      description: 'בשיחה ממוקדת נבין יחד את תהליכי העבודה ומקורות המידע, ונבדוק האם ואיך נכון לבנות עבורכם מוח AI בעל אימפקט תפעולי ממשי.',
       accent: 'border-idan-david-aviv-cyan/30 bg-idan-david-aviv-cyan/5 text-idan-david-aviv-cyan',
+      theme: {
+        bg: 'bg-[#031d24]/95',
+        border: 'border-idan-david-aviv-cyan/40',
+        shadow: 'shadow-cyan-950/60',
+        text: 'text-cyan-100/90',
+        closeHover: 'text-cyan-400/60 hover:text-cyan-300 hover:bg-cyan-500/10',
+        activeCard: 'border-idan-david-aviv-cyan/50 bg-cyan-500/[0.08] shadow-cyan-950/30',
+        hoverCard: 'hover:border-idan-david-aviv-cyan/30 hover:bg-cyan-500/[0.03]',
+        badge: 'text-idan-david-aviv-cyan bg-cyan-500/10 border-cyan-500/20'
+      }
     },
     {
       number: '02',
       title: 'התאמה ובנייה מאחורי הקלעים',
-      time: 'אפס התעסקות טכנית מהצד שלכם',
-      icon: <Cpu className="w-5 h-5 text-idan-david-aviv-blue" />,
-      description: 'בזמן שאתם ממשיכים לנהל את העסק כרגיל, אנחנו מקימים את מערכת הזיכרון המרכזית ומחברים את הצנרת ישירות למקורות המידע שלכם (Drive, CRM, אקסלים ומסמכים). אתם לא צריכים להתעסק בקוד, בהגדרות טכניות או בחיבורים.',
+      shortTitle: 'בנייה מאחורי הקלעים',
+      time: 'הקמת תשתיות המוח',
+      icon: <Cpu className="w-4 h-4 sm:w-5 sm:h-5 text-idan-david-aviv-blue" />,
+      description: 'בזמן שהעסק פועל כרגיל אנחנו מקימים את מערכת המוח ומחברים אותה למערכות העסקיות שלכם.',
       accent: 'border-idan-david-aviv-blue/30 bg-idan-david-aviv-blue/5 text-idan-david-aviv-blue',
+      theme: {
+        bg: 'bg-[#05142b]/95',
+        border: 'border-idan-david-aviv-blue/40',
+        shadow: 'shadow-blue-950/60',
+        text: 'text-blue-100/90',
+        closeHover: 'text-blue-400/60 hover:text-blue-300 hover:bg-blue-500/10',
+        activeCard: 'border-idan-david-aviv-blue/50 bg-blue-500/[0.08] shadow-blue-950/30',
+        hoverCard: 'hover:border-idan-david-aviv-blue/30 hover:bg-blue-500/[0.03]',
+        badge: 'text-idan-david-aviv-blue bg-blue-500/10 border-blue-500/20'
+      }
     },
     {
       number: '03',
-      title: 'הטמעה במערכת ועלייה לאוויר',
-      time: 'חיבור ישיר לצ\'אט שלכם',
-      icon: <Rocket className="w-5 h-5 text-emerald-400" />,
-      description: 'מחברים את מוח ה-AI ישירות לסביבת הצ\'אט שאתם כבר רגילים לעבוד איתה (ChatGPT, Claude, Google Gemini או כל כלי אחר), מוודאים שהוא פועל ב-100% לפי הסטנדרט שלכם, ויוצאים לדרך.',
+      title: 'חיבור לצ\'אט ועלייה לאוויר',
+      shortTitle: 'עלייה לאוויר בצ\'אט',
+      time: 'עם סוכן AI',
+      icon: <Rocket className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />,
+      description: 'מחברים את מוח ה-AI ישירות לאייג\'נט שאתם כבר מכירים, או שעוזרים לכם לבחור אחד שמתאים יותר לצרכים שלכם, ויוצאים לדרך.',
       accent: 'border-emerald-500/30 bg-emerald-500/5 text-emerald-400',
+      theme: {
+        bg: 'bg-[#041d14]/95',
+        border: 'border-emerald-500/40',
+        shadow: 'shadow-emerald-950/60',
+        text: 'text-emerald-100/90',
+        closeHover: 'text-emerald-400/60 hover:text-emerald-300 hover:bg-emerald-500/10',
+        activeCard: 'border-emerald-500/50 bg-emerald-500/[0.08] shadow-emerald-950/30',
+        hoverCard: 'hover:border-emerald-500/30 hover:bg-emerald-500/[0.03]',
+        badge: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20'
+      }
     }
   ]
 
-  return (
-    <section className="py-20 px-4 sm:px-6 max-w-6xl mx-auto">
-      {/* Section Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.05] border border-white/10 text-xs sm:text-sm font-medium text-white/80 mb-4"
-        >
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-          <span>איך זה עובד בפועל</span>
-        </motion.div>
+  // Dismiss on click outside or Escape
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setActiveStep(null)
+      }
+    }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActiveStep(null)
+    }
 
+    document.addEventListener('pointerdown', handleClickOutside)
+    window.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('pointerdown', handleClickOutside)
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [])
+
+  return (
+    <section className="pt-16 sm:pt-20 pb-2 sm:pb-4 px-4 sm:px-6 max-w-5xl mx-auto relative">
+      {/* Section Header */}
+      <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-2xl sm:text-4xl font-bold text-white tracking-tight mb-4"
+          transition={{ duration: 0.5 }}
+          className="text-2xl sm:text-4xl font-bold text-white tracking-tight leading-tight"
         >
-          שלושה שלבים פשוטים — <br className="hidden sm:block" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan via-white to-idan-david-aviv-blue">
-            ויש לכם מוח עסקי שעובד בשבילכם
+          אז מה עושים? <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue">
+            שלושה שלבים פשוטים
           </span>
         </motion.h2>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="text-sm sm:text-base text-white/60 leading-relaxed font-light"
-        >
-          תהליך ממוקד והדרגתי שמייצר ערך מהרגע הראשון, וממשיך להתפתח יחד עם העסק שלכם.
-        </motion.p>
       </div>
 
-      {/* Stepper Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        {steps.map((step, idx) => (
-          <motion.div
-            key={step.number}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: idx * 0.15 }}
-            className="rounded-3xl border border-white/10 bg-white/[0.02] backdrop-blur-xl p-6 sm:p-7 flex flex-col justify-between relative overflow-hidden group hover:border-white/20 transition-all duration-300"
-          >
-            <div>
-              <div className="flex items-center justify-between gap-4 mb-5">
-                <span className="text-3xl sm:text-4xl font-black text-white/20 group-hover:text-white/30 transition-colors font-mono">
-                  {step.number}
-                </span>
-                <div className={`p-2.5 rounded-xl border ${step.accent}`}>
-                  {step.icon}
+      {/* 3 Stations Process Flow Container (Unboxed, Floating) */}
+      <div ref={containerRef} className="relative mb-6 sm:mb-8">
+        {/* 3 Stations Side-by-Side in 1 Row (Mobile & Desktop) */}
+        <div className="grid grid-cols-3 gap-2.5 sm:gap-6">
+            {steps.map((step, idx) => {
+              const isActive = activeStep === idx
+
+              return (
+                <div key={step.number} className="relative flex flex-col items-center text-center">
+                  {/* Step Card / Station Node */}
+                  <div
+                    className={`relative w-full rounded-2xl sm:rounded-3xl border p-2.5 sm:p-6 transition-all duration-200 cursor-pointer select-none flex flex-col items-center justify-between min-h-[110px] sm:min-h-[145px] ${
+                      isActive
+                        ? `${step.theme.activeCard} z-20`
+                        : `bg-white/[0.02] border-white/10 ${step.theme.hoverCard}`
+                    }`}
+                    onClick={() => setActiveStep(isActive ? null : idx)}
+                    role="button"
+                    tabIndex={0}
+                    aria-expanded={isActive}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        setActiveStep(isActive ? null : idx)
+                      }
+                    }}
+                  >
+                    {/* Top: Icon + Number */}
+                    <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-1 sm:mb-3">
+                      <div className={`p-1.5 sm:p-2 rounded-xl border ${step.accent}`}>
+                        {step.icon}
+                      </div>
+                      <span className="text-xs sm:text-base font-bold font-mono text-white/40">
+                        {step.number}
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-[11px] sm:text-base font-bold text-white mb-1.5 leading-snug tracking-tight">
+                      {step.shortTitle}
+                    </h3>
+
+                    {/* Badge */}
+                    <span className={`text-[9px] sm:text-xs font-medium px-1.5 py-0.5 sm:px-2.5 sm:py-1 rounded-md sm:rounded-lg border ${step.theme.badge}`}>
+                      {step.time}
+                    </span>
+
+                    {/* Directional Arrow between steps (desktop only) */}
+                    {idx < steps.length - 1 && (
+                      <div className="hidden sm:block absolute -left-4 top-1/2 -translate-y-1/2 text-white/20 z-10 pointer-events-none">
+                        <ArrowLeft className="w-4 h-4" />
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
+              )
+            })}
+          </div>
 
-              <h3 className="text-base sm:text-lg font-bold text-white mb-1">
-                {step.title}
-              </h3>
-              <div className="text-xs font-medium text-white/50 mb-4 pb-2 border-b border-white/5">
-                {step.time}
-              </div>
+          {/* Dynamic Contextual Floating Popover - Absolute Overlay (Zero Layout Shift) */}
+          <AnimatePresence>
+            {activeStep !== null && (
+              <motion.div
+                key={activeStep}
+                initial={{ opacity: 0, y: 6, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 4, scale: 0.98 }}
+                transition={{ duration: 0.15, ease: 'easeOut' }}
+                className={`absolute top-full mt-3 inset-x-0 z-30 p-4 sm:p-5 rounded-2xl ${steps[activeStep].theme.bg} backdrop-blur-2xl border ${steps[activeStep].theme.border} shadow-[0_16px_40px_rgba(0,0,0,0.9)] ${steps[activeStep].theme.shadow} text-center pointer-events-auto`}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Dynamic Arrow Pointer - Mathematically Aligned to Active Column Center */}
+                <div
+                  className={`absolute -top-1.5 w-3.5 h-3.5 ${steps[activeStep].theme.bg} border-t border-l ${steps[activeStep].theme.border} rotate-45 transition-all duration-300 ${
+                    activeStep === 0
+                      ? 'right-[calc(16.67%-7px)]'
+                      : activeStep === 1
+                      ? 'left-[calc(50%-7px)]'
+                      : 'left-[calc(16.67%-7px)]'
+                  }`}
+                />
 
-              <p className="text-xs sm:text-sm text-white/70 leading-relaxed font-light">
-                {step.description}
-              </p>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+                <div className="relative max-w-2xl mx-auto">
+                  <p className={`text-xs sm:text-base ${steps[activeStep].theme.text} leading-relaxed font-light text-center px-4 sm:px-8`}>
+                    {steps[activeStep].description}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setActiveStep(null)
+                    }}
+                    className={`absolute -top-1 end-0 p-1 rounded-lg transition-colors ${steps[activeStep].theme.closeHover}`}
+                    aria-label="סגירה"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-      {/* Bottom Closing Banner */}
+      {/* Bottom Closing Heading / Bridge to Reality Check */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.3 }}
-        className="rounded-2xl p-4 sm:p-5 bg-gradient-to-r from-idan-david-aviv-cyan/10 via-idan-david-aviv-blue/10 to-purple-500/10 border border-white/10 text-center max-w-4xl mx-auto"
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="text-center mt-6 sm:mt-8"
       >
-        <p className="text-xs sm:text-sm text-white/80 font-medium flex items-center justify-center gap-2">
-          <Sparkles className="w-4 h-4 text-idan-david-aviv-cyan shrink-0" />
-          <span>
-            מערכת חיה שצומחת עם העסק — קליטת נהלים חדשים, חיבור מקורות מידע נוספים והרחבת יכולות — בליווי שלנו לאורך כל הדרך.
+        <h3 className="text-xl sm:text-3xl font-bold tracking-tight text-white leading-tight">
+          ויש לכם מוח עסקי <br />
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-idan-david-aviv-cyan">
+            שעובד בשבילכם וצומח עם העסק
           </span>
-        </p>
+        </h3>
       </motion.div>
     </section>
   )

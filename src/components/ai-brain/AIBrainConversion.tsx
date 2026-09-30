@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion'
-import { Calendar, MessageCircle, ArrowLeft, Sparkles } from 'lucide-react'
+import { Calendar, MessageCircle, ArrowLeft } from 'lucide-react'
 
 export default function AIBrainConversion() {
   return (
-    <section className="py-20 px-4 sm:px-6 max-w-4xl mx-auto">
+    <section className="pt-2 sm:pt-4 pb-20 px-4 sm:px-6 max-w-4xl mx-auto">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -14,10 +14,6 @@ export default function AIBrainConversion() {
         {/* Ambient Top Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-48 bg-idan-david-aviv-cyan/20 blur-3xl rounded-full pointer-events-none -z-10" />
 
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/[0.05] border border-white/10 text-xs sm:text-sm font-medium text-white/80 mb-6">
-          <Sparkles className="w-3.5 h-3.5 text-idan-david-aviv-cyan" />
-          <span>בדיקת היתכנות ללא התחייבות</span>
-        </div>
 
         <h2 className="text-2xl sm:text-4xl font-bold text-white tracking-tight mb-4">
           רוצים לבדוק איך זה עובד אצלכם בעסק?
@@ -36,7 +32,7 @@ export default function AIBrainConversion() {
             className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue text-white font-medium text-base shadow-[0_0_35px_rgba(44,179,241,0.4)] hover:shadow-[0_0_50px_rgba(44,179,241,0.6)] hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 group"
           >
             <Calendar className="w-5 h-5 group-hover:rotate-12 transition-transform" />
-            <span>קביעת שיחת מיפוי והיתכנות (30 דק&apos;)</span>
+            <span>בואו נמפה את מוח ה-AI בעסק שלכם</span>
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
           </a>
 
@@ -47,8 +43,15 @@ export default function AIBrainConversion() {
             className="w-full sm:w-auto px-7 py-4 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-white/20 text-white/90 font-medium text-base backdrop-blur-md active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 text-white hover:text-green-400 group"
           >
             <MessageCircle className="w-5 h-5 text-green-400 group-hover:scale-110 transition-transform" />
-            <span>שליחת הודעה בוואטסאפ</span>
+            <span>פשוט דברו איתי בוואטסאפ</span>
           </a>
+        </div>
+
+        {/* Micro Trust Anchors */}
+        <div className="mt-8 pt-6 border-t border-white/5 flex items-center justify-center gap-3 sm:gap-4 text-xs text-white/40 font-medium text-center">
+          <span>30 דקות בזום ללא עלות</span>
+          <span className="text-white/20">|</span>
+          <span>100% סודיות עסקית</span>
         </div>
       </motion.div>
     </section>
