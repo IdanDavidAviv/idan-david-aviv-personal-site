@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Calendar, MessageCircle, ArrowLeft } from 'lucide-react'
+import { Calendar, MessageCircle, ArrowLeft, Paperclip } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 export default function AIBrainHero() {
@@ -32,7 +32,7 @@ export default function AIBrainHero() {
   ]
 
   return (
-    <section className="relative pt-12 pb-16 px-4 sm:px-6 max-w-6xl mx-auto text-center">
+    <section className="relative pt-12 pb-4 sm:pb-6 px-4 sm:px-6 max-w-6xl mx-auto text-center">
       {/* Background Ambient Glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-gradient-to-tr from-idan-david-aviv-cyan/15 via-idan-david-aviv-blue/20 to-transparent blur-3xl rounded-full pointer-events-none -z-10" />
 
@@ -265,10 +265,35 @@ export default function AIBrainHero() {
             )}
           </AnimatePresence>
         </div>
+
+        {/* Realistic AI Chat Input Bar */}
+        <div className="px-4 sm:px-7 py-3 sm:py-3.5 border-t border-white/[0.08] bg-white/[0.01]">
+          <div className="relative flex items-center rounded-2xl bg-white/[0.03] border border-white/10 px-3.5 sm:px-4 py-2 sm:py-2.5 focus-within:border-idan-david-aviv-cyan/50 focus-within:bg-white/[0.05] focus-within:shadow-[0_0_20px_rgba(44,179,241,0.15)] transition-all duration-200">
+            {/* Attachment icon */}
+            <div className="text-white/40 p-1 me-1.5 shrink-0 select-none">
+              <Paperclip className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            </div>
+
+            {/* Input field */}
+            <input
+              type="text"
+              readOnly
+              placeholder="שאלו כל שאלה על העסק, הנהלים או הנתונים..."
+              className="w-full bg-transparent text-xs sm:text-sm text-white/90 placeholder:text-white/35 focus:outline-none cursor-default select-none"
+            />
+
+            {/* Send Button */}
+            <div className="flex items-center gap-1.5 ms-2 shrink-0">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue flex items-center justify-center text-black shadow-md shadow-cyan-950/50 cursor-pointer hover:opacity-90 active:scale-95 transition-all">
+                <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#050510]" />
+              </div>
+            </div>
+          </div>
+        </div>
       </motion.div>
 
       {/* Decoupled Floating Supported Agents Integration Dock */}
-      <div className="mt-6 sm:mt-8 flex justify-center">
+      <div className="mt-3.5 sm:mt-4.5 flex justify-center">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}

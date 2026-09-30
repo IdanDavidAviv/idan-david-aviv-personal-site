@@ -3,13 +3,13 @@ import { Calendar, MessageCircle, ArrowLeft } from 'lucide-react'
 
 export default function AIBrainConversion() {
   return (
-    <section className="pt-2 sm:pt-4 pb-20 px-4 sm:px-6 max-w-4xl mx-auto">
+    <section className="pt-2 sm:pt-4 pb-4 sm:pb-6 px-4 sm:px-6 max-w-4xl mx-auto relative z-0">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="relative rounded-3xl border border-white/15 bg-gradient-to-b from-[#050510] to-[#080820] backdrop-blur-2xl p-8 sm:p-12 text-center overflow-hidden shadow-[0_0_60px_rgba(44,179,241,0.15)]"
+        className="relative z-0 rounded-3xl border border-white/15 bg-gradient-to-b from-[#050510] to-[#080820] backdrop-blur-2xl p-8 sm:p-12 text-center overflow-hidden shadow-[0_0_60px_rgba(44,179,241,0.15)]"
       >
         {/* Ambient Top Glow */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-48 bg-idan-david-aviv-cyan/20 blur-3xl rounded-full pointer-events-none -z-10" />

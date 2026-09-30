@@ -34,7 +34,7 @@ export default function AIBrainContrast() {
       },
       after: {
         id: 'operations-after',
-        title: 'הסוכן יודע בדיוק מה נמצא איפה',
+        title: 'הסוכן יודע מה נמצא איפה',
         subtitle: 'ובמקום לחפש עיוור הוא מוצא מהר',
         description: 'שואלים את מוח העסק בשפה חופשית ומקבלים מיד את המידע המדויק — יחד עם הצעות מעשיות להמשך פעולה שהסוכן מכין עבורכם (ניסוח טיוטות, עדכון שדות והכנת משימות).'
       }
@@ -77,7 +77,7 @@ export default function AIBrainContrast() {
   }, [])
 
   return (
-    <section className="pt-16 sm:pt-20 pb-8 sm:pb-12 px-4 sm:px-6 max-w-6xl mx-auto relative">
+    <section className="pt-6 sm:pt-8 pb-8 sm:pb-12 px-4 sm:px-6 max-w-6xl mx-auto relative">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
         <motion.h2
