@@ -86,7 +86,8 @@ export function runAIAudit(): boolean {
     console.log('\n🌐 [Prerender Verification] Auditing static HTML files in /dist...');
     const routesToCheck = [
       { name: 'Home (/)', file: path.join(distDir, 'index.html') },
-      { name: 'AI Brain (/ai-brain)', file: path.join(distDir, 'ai-brain', 'index.html') },
+      { name: 'AI Brain (dir: /ai-brain/index.html)', file: path.join(distDir, 'ai-brain', 'index.html') },
+      { name: 'AI Brain (clean: /ai-brain.html)', file: path.join(distDir, 'ai-brain.html') },
     ];
 
     for (const route of routesToCheck) {

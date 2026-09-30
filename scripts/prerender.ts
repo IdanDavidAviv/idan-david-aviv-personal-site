@@ -213,13 +213,20 @@ export function runPrerender() {
       fs.writeFileSync(indexHtmlPath, routeHtml, 'utf8');
       console.log('   ✓ Injected semantic prerender for / (dist/index.html)');
     } else {
-      const routeSubdir = path.join(distDir, route.path.replace(/^\//, ''));
+      const cleanPath = route.path.replace(/^\//, '');
+      const routeSubdir = path.join(distDir, cleanPath);
       if (!fs.existsSync(routeSubdir)) {
         fs.mkdirSync(routeSubdir, { recursive: true });
       }
+      // 1. Write [route]/index.html for directory requests (/ai-brain/)
       const routeFilePath = path.join(routeSubdir, 'index.html');
       fs.writeFileSync(routeFilePath, routeHtml, 'utf8');
-      console.log(`   ✓ Injected semantic prerender for ${route.path} (${path.relative(rootDir, routeFilePath)})`);
+
+      // 2. Write [route].html for direct cleanUrls requests (/ai-brain)
+      const cleanHtmlPath = path.join(distDir, `${cleanPath}.html`);
+      fs.writeFileSync(cleanHtmlPath, routeHtml, 'utf8');
+
+      console.log(`   ✓ Injected semantic prerender for ${route.path} (${path.relative(rootDir, routeFilePath)} & ${cleanPath}.html)`);
     }
   }
 
