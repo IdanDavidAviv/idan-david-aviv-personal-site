@@ -7,7 +7,18 @@ import { test, expect } from '@playwright/test';
 test('Home Page Smoke Test', async ({ page }) => {
     await page.goto('/');
 
-    // Basic check for title or main heading
-    // Adjust selector based on actual app content
-    await expect(page).toHaveTitle(/Idan David[- ]Aviv/i);
+    // Basic check for title or main heading (supports both Hebrew and English variants)
+    await expect(page).toHaveTitle(/עידן דוד אביב|Idan David[- ]Aviv/i);
+});
+
+test('AI Brain Page Smoke & Semantic DOM Test', async ({ page }) => {
+    await page.goto('/ai-brain');
+
+    // Verify page title contains AI Brain and Idan
+    await expect(page).toHaveTitle(/מוח AI לעסק|מוח AI לעסקים|AI Brain|עידן דוד אביב/i);
+
+    // Verify that primary semantic heading exists and is visible
+    const heading = page.locator('h1');
+    await expect(heading).toBeVisible();
+    await expect(heading).toContainText(/AI|מוח/i);
 });
