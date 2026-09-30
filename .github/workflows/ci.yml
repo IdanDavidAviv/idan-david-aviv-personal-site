@@ -3,11 +3,11 @@
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [ master, dev, develop ]
     paths-ignore:
       - '.agent/**'
   pull_request:
-    branches: [ master ]
+    branches: [ master, dev ]
     paths-ignore:
       - '.agent/**'
 
