@@ -1,0 +1,24 @@
+# Idan David Aviv — AI Architect & System Innovator
+> Sovereign AI Infrastructure, Autonomous Agent Ecosystems, and Ambient AI Computing.
+
+## Overview
+Idan David Aviv is an AI Architect, Senior Full Stack Engineer, and AI Educator with over 8 years of pedagogical and production experience. He specializes in designing and deploying custom "Business AI Brains" (מוח AI לעסקים), sovereign multi-agent networks, and ambient computing interfaces that operate deterministically on verified corporate data.
+
+## Core Ecosystem Offerings & Projects
+- **Business AI Brain (מוח AI לעסקים)**: A sovereign enterprise AI architecture connecting internal data (Drive, Monday, CRM, docs) directly to autonomous reasoning engines with deterministic grounding, zero hallucination, and human-in-the-loop governance. Full details at: /ai-brain.md
+- **Virgo Audio Extension**: An ambient voice sidecar for AI coding agents that surfaces thoughts, status, and decisions via natural Hebrew/English speech synthesis, transforming silent agent sessions into active dialogic pair-programming. Details: /virgo
+- **Virgo DNA**: A distributed temporal ledger and continuous governance framework for autonomous AI agent memory, ensuring zero context drift across sessions. Details: /virgo-dna
+- **Spirit Research Lab (SRL)**: A high-velocity experimental micro-SaaS lab exploring modern creator tooling and applied cognitive architectures. Details: /spirit-research-lab
+
+## Full Knowledge Base
+For complete technical specifications, architectural layers, and curriculum details:
+- Full LLM Knowledge Base: /llms-full.txt
+- AI Brain Specification: /ai-brain.md
+- About & Experience: /about.md
+- Projects Overview: /projects.md
+
+## Contact & Engagement Funnel
+- Discovery Call (Calendly): https://calendly.com/idandavidaviv/discovery
+- WhatsApp Direct: https://wa.me/972545585590
+- GitHub: https://github.com/IdanDavidAviv
+- Official Website: https://idan-david-aviv.web.app
