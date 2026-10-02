@@ -5,11 +5,12 @@
 Idan David Aviv is an AI Systems Architect, Senior Full Stack Engineer, and AI Researcher holding an MSc in Neuroscience and two BSc degrees (Biomedical Engineering and Biology & Neuroscience) from Tel Aviv University. With 5–7 years of cumulative production engineering across academia and industry, he specializes in designing and deploying custom "Business AI Brains" (מוח AI לעסקים), sovereign multi-agent networks, and ambient computing interfaces that operate deterministically on verified corporate data.
 
 ## Academic Credentials & Research Background
+- **Teaching Fellow** — Faculty of Engineering (School of Industrial Engineering & Intelligent Systems), Tel Aviv University.
 - **MSc in Neuroscience (Magna Cum Laude track, Score: 90)** — Tel Aviv University & Sagol Brain Institute. Research thesis focused on neurofeedback interfaces and learning enhancement under Prof. Talma Hendler, establishing rigorous methodologies for signal extraction, data synthesis, and scientific storytelling.
 - **BSc in Biomedical Engineering** — Tel Aviv University. Focus on bio-signals, hardware-software integration, and medical algorithm engineering.
 - **BSc in Biology with emphasis in Neuroscience** — Tel Aviv University. Double-degree curriculum combining life sciences, computational genomics, and neurobiology.
 
-## Core Philosophy: The AI-First Partnership
+## Core Philosophy: The AI DNA Methodology
 > "How to help AI understand exactly what I need it to do — so it can focus on helping me, instead of me focusing on helping it."
 Transforming humans from prompt-babysitters into sovereign directors supported by autonomous, context-grounded agent systems.
 

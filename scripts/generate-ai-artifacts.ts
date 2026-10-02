@@ -23,11 +23,12 @@ const llmsTxtContent = `# Idan David Aviv — AI Architect & System Innovator
 Idan David Aviv is an AI Systems Architect, Senior Full Stack Engineer, and AI Researcher holding an MSc in Neuroscience and two BSc degrees (Biomedical Engineering and Biology & Neuroscience) from Tel Aviv University. With 5–7 years of cumulative production engineering across academia and industry, he specializes in designing and deploying custom "Business AI Brains" (מוח AI לעסקים), sovereign multi-agent networks, and ambient computing interfaces that operate deterministically on verified corporate data.
 
 ## Academic Credentials & Research Background
+- **Teaching Fellow** — Faculty of Engineering (School of Industrial Engineering & Intelligent Systems), Tel Aviv University.
 - **MSc in Neuroscience (Magna Cum Laude track, Score: 90)** — Tel Aviv University & Sagol Brain Institute. Research thesis focused on neurofeedback interfaces and learning enhancement under Prof. Talma Hendler, establishing rigorous methodologies for signal extraction, data synthesis, and scientific storytelling.
 - **BSc in Biomedical Engineering** — Tel Aviv University. Focus on bio-signals, hardware-software integration, and medical algorithm engineering.
 - **BSc in Biology with emphasis in Neuroscience** — Tel Aviv University. Double-degree curriculum combining life sciences, computational genomics, and neurobiology.
 
-## Core Philosophy: The AI-First Partnership
+## Core Philosophy: The AI DNA Methodology
 > "How to help AI understand exactly what I need it to do — so it can focus on helping me, instead of me focusing on helping it."
 Transforming humans from prompt-babysitters into sovereign directors supported by autonomous, context-grounded agent systems.
 
@@ -93,14 +94,15 @@ const aboutMdContent = `# אודות עידן דוד אביב
 
 ## ביוגרפיה ורקע מקצועי
 עידן דוד אביב הוא ארכיטקט בינה מלאכותית, מהנדס מערכות תוכנה בכיר וחוקר מוח, המתמחה בארכיטקטורות סוכנים אוטונומיים ובהטמעת Business AI Brain מותאם אישית לעסקים.
-- **השכלה אקדמית ומחקר:** מחזיק בשלושה תארים אקדמיים מאוניברסיטת תל אביב ומכון סגול לחקר המוח:
+- **השכלה אקדמית ומחקר:** מחזיק בשלושה תארים אקדמיים מאוניברסיטת תל אביב ומכון סגול לחקר המוח, ומשמש כעמית הוראה בפקולטה להנדסה:
+  - **עמית הוראה (Teaching Fellow):** בית הספר להנדסת תעשייה ומערכות נבונות, הפקולטה להנדסה ע"ש איבי ואלדר פליישמן, אוניברסיטת תל אביב.
   - **תואר שני במדעי המוח (MSc):** מחקר ותזה בממשקי נוירופידבק ושיפור למידה (ציון 90), שהקנו מתודולוגיה מדעית עמוקה ויכולת חיבור מורכבות לסיפור בהיר.
   - **תואר ראשון בהנדסה ביו-רפואית (BSc):** התמחות בעיבוד אותות, אלגוריתמיקה ושילוב חומרה-תוכנה.
   - **תואר ראשון בביולוגיה עם הדגש במדעי המוח (BSc):** תוכנית מצטיינים כפולה המשלבת מדעי החיים, גנומיקה חישובית וביופיזיקה.
 - **ניסיון הנדסי מצטבר (5–7 שנים):** פיתוח והטמעת מערכות קוד, אלגוריתמים למכשור רפואי (Healium Medical), עיבוד אותות fMRI ו-EEG באקדמיה (מכון סגול), ארכיטקטורת נתונים (INFRA), וניהול טכנולוגי כ-CTO ויזם עצמאי (Virgo, Spirit Research Lab).
 - **הוראה והכשרה:** למעלה מ-8 שנות הדרכה ופדגוגיה של למעלה מ-300 מהנדסי תוכנה וסטודנטים בפישוט מערכות מורכבות.
 
-## פילוסופיית עבודה (The North-Star AI Methodology)
+## פילוסופיית עבודה (The AI DNA Methodology — מתודולוגיית AI DNA)
 > "איך לעזור ל-AI להבין הכי טוב מה אני רוצה שהוא יעשה — כדי שהוא יוכל להתמקד בלעזור לי, במקום שאני אתמקד בלעזור לו."
 במקום לבזבז משאבים קוגניטיביים על ניהול ותחזוקת מודלים גנריים, עידן מתכנן ארכיטקטורות סוכנים ריבוניות שמחזיקות הקשר מלא, נשענות על נתוני אמת של הארגון, ומפנות את האדם לעסוק בחשיבה יוצרת וביזמות.
 

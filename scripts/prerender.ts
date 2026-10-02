@@ -131,9 +131,10 @@ const routesConfig: RoutePrerenderConfig[] = [
         </header>
         
         <section id="academic-credentials">
-          <h2>השכלה אקדמית, מחקר ותזה (Academic Credentials & Research)</h2>
-          <p>עידן דוד אביב מחזיק בשלושה תארים אקדמיים מאוניברסיטת תל אביב ומכון סגול לחקר המוח:</p>
+          <h2>השכלה אקדמית, הוראה ומחקר (Academic Credentials & Research)</h2>
+          <p>עידן דוד אביב משמש כעמית הוראה בפקולטה להנדסה ומחזיק בשלושה תארים אקדמיים מאוניברסיטת תל אביב ומכון סגול לחקר המוח:</p>
           <ul>
+            <li><strong>עמית הוראה (Teaching Fellow)</strong> — בית הספר להנדסת תעשייה ומערכות נבונות, הפקולטה להנדסה ע&quot;ש איבי ואלדר פליישמן, אוניברסיטת תל אביב.</li>
             <li><strong>MSc במדעי המוח (Neuroscience)</strong> — אוניברסיטת תל אביב ומכון סגול לחקר המוח (ציון 90). מחקר ותזה בממשקי נוירופידבק (Neurofeedback) ושיפור למידה בהנחיית פרופ' טלמה הנדלר.</li>
             <li><strong>BSc בהנדסה ביו-רפואית (Biomedical Engineering)</strong> — אוניברסיטת תל אביב. התמחות בעיבוד אותות, אלגוריתמיקה ושילוב חומרה-תוכנה.</li>
             <li><strong>BSc בביולוגיה עם הדגש במדעי המוח (Biology & Neuroscience)</strong> — אוניברסיטת תל אביב. תוכנית כפולה המשלבת מדעי החיים, גנומיקה חישובית וביופיזיקה.</li>
@@ -143,7 +144,7 @@ const routesConfig: RoutePrerenderConfig[] = [
         <section id="engineering-experience">
           <h2>ניסיון הנדסי מצטבר ומתודולוגיית עבודה (Experience & Philosophy)</h2>
           <p><strong>ניסיון מצטבר:</strong> 5 עד 7 שנות ניסיון מעשי בפיתוח מערכות תוכנה, עיבוד אותות, אלגוריתמים למכשור רפואי (Healium), ארכיטקטורת נתונים (INFRA), וניהול טכנולוגי כ-CTO ויזם עצמאי (Virgo, Spirit Research Lab).</p>
-          <p><strong>The North-Star AI Methodology:</strong> &quot;איך לעזור ל-AI להבין הכי טוב מה אני רוצה שהוא יעשה — כדי שהוא יוכל להתמקד בלעזור לי, במקום שאני אתמקד בלעזור לו.&quot; תכנון סוכנים ריבוניים עם הקשר מלא המייתרים תלות בבייביסיטר של פרומפטים ומפנים את האדם ליצירה ולצמיחה.</p>
+          <p><strong>The AI DNA Methodology (מתודולוגיית AI DNA):</strong> &quot;איך לעזור ל-AI להבין הכי טוב מה אני רוצה שהוא יעשה — כדי שהוא יוכל להתמקד בלעזור לי, במקום שאני אתמקד בלעזור לו.&quot; תכנון סוכנים ריבוניים עם הקשר מלא המייתרים תלות בבייביסיטר של פרומפטים ומפנים את האדם ליצירה ולצמיחה.</p>
         </section>
 
         <section id="services-overview">
@@ -278,15 +279,26 @@ export function runPrerender() {
       '@type': 'Person',
       '@id': 'https://idan-david-aviv.web.app/#person',
       'name': 'עידן דוד אביב',
-      'alternateName': 'Idan David Aviv',
+      'alternateName': [
+        'Idan David Aviv',
+        'Idan David-Aviv',
+        'עידן דוד אביב לביא',
+        'Idan David Aviv Lavi',
+      ],
       'url': 'https://idan-david-aviv.web.app/',
       'image': 'https://idan-david-aviv.web.app/assets/og-cover.jpg',
       'jobTitle': 'AI Systems Architect & Senior Full Stack Engineer',
-      'description': 'ארכיטקט בינה מלאכותית, מערכות סוכנים אוטונומיים ו-Business AI Brain. בעל תואר שני במדעי המוח (MSc) ושני תארי BSc: בהנדסה ביו-רפואית ובביולוגיה עם הדגש במדעי המוח.',
+      'description': 'ארכיטקט בינה מלאכותית, מערכות סוכנים אוטונומיים ו-Business AI Brain. עמית הוראה בפקולטה להנדסה באוניברסיטת תל אביב, בעל תואר שני במדעי המוח (MSc) ושני תארי BSc: בהנדסה ביו-רפואית ובביולוגיה עם הדגש במדעי המוח.',
       'sameAs': [
         'https://github.com/IdanDavidAviv',
         'https://www.linkedin.com/in/idan-david-aviv/',
+        'https://engineering.tau.ac.il/profile/lavi',
       ],
+      'affiliation': {
+        '@type': 'EducationalOrganization',
+        'name': 'Faculty of Engineering, Tel Aviv University',
+        'url': 'https://engineering.tau.ac.il/',
+      },
       'alumniOf': [
         {
           '@type': 'EducationalOrganization',
@@ -334,6 +346,7 @@ export function runPrerender() {
         'Multi-Agent Systems',
         'Agentic Workflows',
         'Business AI Architecture',
+        'The AI DNA Methodology',
         'Neuroscience',
         'Neurofeedback',
         'Biomedical Engineering',
