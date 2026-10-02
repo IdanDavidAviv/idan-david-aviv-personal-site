@@ -23,7 +23,7 @@ interface RoutePrerenderConfig {
 }
 
 function getAiBrainSemanticHtml(): string {
-  const { hero, problem, solution, bento, stepper, conversion } = aiBrainContent;
+  const { hero, contrast, bento, stepper, realityCheck, conversion } = aiBrainContent;
 
   return `
       <main id="main-content" class="semantic-prerender">
@@ -33,17 +33,28 @@ function getAiBrainSemanticHtml(): string {
           <div class="chat-hook">
             <span>${hero.chatHook.preTitle}</span>
             <p>${hero.chatHook.title}</p>
+            <p>${hero.chatHook.processTag}</p>
           </div>
         </header>
 
-        <section id="the-problem">
-          <h2>${problem.title}</h2>
-          <p>${problem.description}</p>
-        </section>
-
-        <section id="the-solution">
-          <h2>${solution.title}</h2>
-          <p>${solution.description}</p>
+        <section id="the-contrast">
+          <h2>${contrast.title}</h2>
+          <p>${contrast.lead}</p>
+          <div class="contrast-pairs">
+            ${contrast.pairs.map((pair) => `
+              <article class="contrast-pair">
+                <h3>${pair.category}</h3>
+                <div class="before">
+                  <h4>לפני (AI כללי): ${pair.before.title} (${pair.before.subtitle})</h4>
+                  <p>${pair.before.description}</p>
+                </div>
+                <div class="after">
+                  <h4>אחרי (מוח עסקי): ${pair.after.title} (${pair.after.subtitle})</h4>
+                  <p>${pair.after.description}</p>
+                </div>
+              </article>
+            `).join('')}
+          </div>
         </section>
 
         <section id="bento-overview">
@@ -72,8 +83,18 @@ function getAiBrainSemanticHtml(): string {
           </ol>
         </section>
 
+        <section id="reality-check">
+          <h2>${realityCheck.title}</h2>
+          <ul>
+            ${realityCheck.points.map(pt => `
+              <li><strong>${pt.title}:</strong> ${pt.description}</li>
+            `).join('')}
+          </ul>
+        </section>
+
         <section id="booking-cta">
           <h2>${conversion.cta}</h2>
+          <p>${conversion.description}</p>
           <p>שיחת אפיון (Calendly): <a href="${conversion.calendlyUrl}">קביעת שיחה ביומן</a></p>
           <p>שיחת וואטסאפ מהירה: <a href="${conversion.whatsappUrl}">${conversion.whatsappPhone}</a></p>
         </section>
