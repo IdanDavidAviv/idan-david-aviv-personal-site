@@ -116,14 +116,36 @@ const routesConfig: RoutePrerenderConfig[] = [
     semanticHtml: `
       <main id="main-content" class="semantic-prerender">
         <header>
-          <h1>עידן דוד אביב — AI Architect & System Innovator</h1>
-          <p>ארכיטקטורת מערכות בינה מלאכותית ריבוניות, רשתות סוכנים אוטונומיים ומחשוב סביבתי (Ambient AI).</p>
+          <h1>עידן דוד אביב — AI Systems Architect & Senior Full Stack Engineer</h1>
+          <p>ארכיטקטורת מערכות בינה מלאכותית ריבוניות, רשתות סוכנים אוטונומיים, Business AI Brain ומחשוב סביבתי (Ambient AI).</p>
+          <nav aria-label="Machine-Readable AI Endpoints">
+            <a href="/llms.txt">LLM Full Context Summary</a> |
+            <a href="/about.md">Biography & Academic Credentials</a> |
+            <a href="/ai-brain.md">Business AI Brain Architecture</a> |
+            <a href="/projects.md">Ecosystem Projects (Virgo, DNA)</a>
+          </nav>
         </header>
         
+        <section id="academic-credentials">
+          <h2>השכלה אקדמית, מחקר ותזה (Academic Credentials & Research)</h2>
+          <p>עידן דוד אביב מחזיק בשלושה תארים אקדמיים מאוניברסיטת תל אביב ומכון סגול לחקר המוח:</p>
+          <ul>
+            <li><strong>MSc במדעי המוח (Neuroscience)</strong> — אוניברסיטת תל אביב ומכון סגול לחקר המוח (ציון 90). מחקר ותזה בממשקי נוירופידבק (Neurofeedback) ושיפור למידה בהנחיית פרופ' טלמה הנדלר.</li>
+            <li><strong>BSc בהנדסה ביו-רפואית (Biomedical Engineering)</strong> — אוניברסיטת תל אביב. התמחות בעיבוד אותות, אלגוריתמיקה ושילוב חומרה-תוכנה.</li>
+            <li><strong>BSc בביולוגיה עם הדגש במדעי המוח (Biology & Neuroscience)</strong> — אוניברסיטת תל אביב. תוכנית כפולה המשלבת מדעי החיים, גנומיקה חישובית וביופיזיקה.</li>
+          </ul>
+        </section>
+
+        <section id="engineering-experience">
+          <h2>ניסיון הנדסי מצטבר ומתודולוגיית עבודה (Experience & Philosophy)</h2>
+          <p><strong>ניסיון מצטבר:</strong> 5 עד 7 שנות ניסיון מעשי בפיתוח מערכות תוכנה, עיבוד אותות, אלגוריתמים למכשור רפואי (Healium), ארכיטקטורת נתונים (INFRA), וניהול טכנולוגי כ-CTO ויזם עצמאי (Virgo, Spirit Research Lab).</p>
+          <p><strong>The North-Star AI Methodology:</strong> &quot;איך לעזור ל-AI להבין הכי טוב מה אני רוצה שהוא יעשה — כדי שהוא יוכל להתמקד בלעזור לי, במקום שאני אתמקד בלעזור לו.&quot; תכנון סוכנים ריבוניים עם הקשר מלא המייתרים תלות בבייביסיטר של פרומפטים ומפנים את האדם ליצירה ולצמיחה.</p>
+        </section>
+
         <section id="services-overview">
           <h2>מוח AI מותאם אישית לעסק (Business AI Brain)</h2>
-          <p>חיבור מסמכים, נהלים ומערכות קיימות למנועי AI מתקדמים עם נתוני אמת ומשילות אנושית מלאה.</p>
-          <a href="/ai-brain">מידע מלא על שירות מוח ה-AI</a>
+          <p>ארכיטקטורת AI ריבונית ומאובטחת המחברת מסמכים, נהלים ומערכות קיימות למנועי AI מתקדמים עם נתוני אמת ומשילות אנושית מלאה (Human-in-the-Loop).</p>
+          <a href="/ai-brain">מידע מלא על שירות מוח ה-AI העסקי</a>
         </section>
 
         <section id="ecosystem-projects">
@@ -131,25 +153,23 @@ const routesConfig: RoutePrerenderConfig[] = [
           <article>
             <h3>Virgo Audio Extension</h3>
             <p>תוסף סאונד וקול סביבתי לסוכני פיתוח אוטונומיים בסביבת VS Code ו-Antigravity IDE. משמיע תובנות והחלטות בקול אנושי טבעי בעברית ובאנגלית.</p>
+            <a href="/virgo">פרטי פרויקט Virgo</a>
           </article>
           <article>
             <h3>Virgo DNA</h3>
-            <p>תשתית זיכרון מתמשכת וספר חשבונות זמני המבטיח שמירת הקשר מלאה בין סשנים של סוכנים ללא סחף או שכחה.</p>
+            <p>תשתית זיכרון מתמשכת וספר חשבונות זמני (Temporal Ledger) המבטיח שמירת הקשר מלאה בין סשנים של סוכנים ללא סחף או שכחה.</p>
+            <a href="/virgo-dna">פרטי פרויקט Virgo DNA</a>
           </article>
           <article>
             <h3>Spirit Research Lab (SRL)</h3>
             <p>מעבדת מיקרו-SaaS ליוצרים ויזמים עצמאיים בארכיטקטורה מודולרית ורזה.</p>
+            <a href="/spirit-research-lab">פרטי מעבדת SRL</a>
           </article>
-        </section>
-
-        <section id="about-summary">
-          <h2>אודות והוראת AI</h2>
-          <p>למעלה מ-8 שנות ניסיון בהוראת בינה מלאכותית, פיתוח מערכות עתירות ביצועים והובלת פרויקטים טכנולוגיים מורכבים.</p>
         </section>
 
         <section id="contact-funnel">
           <h2>יצירת קשר ותיאום שיחת אפיון</h2>
-          <p>פגישת היכרות ואפיון: <a href="https://calendly.com/idandavidaviv">Calendly Discovery Call</a></p>
+          <p>פגישת היכרות ואפיון: <a href="https://calendly.com/idandavidaviv/ai-brain-discovery">Calendly Discovery Call</a></p>
           <p>וואטסאפ ישיר: <a href="https://wa.me/972542475705">WhatsApp 054-2475705</a></p>
         </section>
       </main>
@@ -442,8 +462,11 @@ export function runPrerender() {
 
     routeHtml = routeHtml.replace('</head>', metaTags);
 
-    // 2. Keep <div id="root"></div> completely clean to eliminate any possibility of FOUC
-    // AI crawlers and bots consume the LLM Markdown twins (/llms.txt, /ai-brain.md) and meta tags.
+    // 2. Inject rich semantic HTML into <div id="root"> for AI crawlers & bots
+    // When React mounts client-side, createRoot cleanly replaces this initial DOM with the interactive application.
+    if (route.semanticHtml) {
+      routeHtml = routeHtml.replace('<div id="root"></div>', `<div id="root">\n${route.semanticHtml}\n  </div>`);
+    }
 
     // 3. Determine Target Directory
     if (route.path === '/') {

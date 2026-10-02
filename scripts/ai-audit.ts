@@ -98,12 +98,12 @@ export function runAIAudit(): boolean {
         continue;
       }
       const html = fs.readFileSync(route.file, 'utf8');
-      if (!html.includes('<div id="root"></div>')) {
+      if (!/<div[^>]*id=["']root["'][^>]*>/i.test(html)) {
         issues.push({ file: route.name, type: 'CORRUPTED_ROOT_DOM', detail: 'Root container missing or malformed.' });
       } else if (!html.includes('<title>') || !html.includes('name="description"')) {
         issues.push({ file: route.name, type: 'MISSING_META_TAGS', detail: 'Essential meta tags missing in head.' });
       } else {
-        console.log(`   ✓ ${route.name} — Clean root DOM & rich metadata verified (Zero-FOUC)`);
+        console.log(`   ✓ ${route.name} — Rich root DOM & metadata verified`);
       }
     }
 
