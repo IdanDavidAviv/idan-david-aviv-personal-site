@@ -98,18 +98,17 @@ export function runAIAudit(): boolean {
         continue;
       }
       const html = fs.readFileSync(route.file, 'utf8');
-      if (html.includes('<div id="root"></div>')) {
-        issues.push({ file: route.name, type: 'EMPTY_ROOT_DOM', detail: 'Root DOM is empty! Semantic HTML not injected.' });
-      } else if (!html.includes('<main id="main-content"')) {
-        issues.push({ file: route.name, type: 'MISSING_SEMANTIC_MAIN', detail: 'Semantic <main> container missing in prerender.' });
+      if (!html.includes('<div id="root"></div>')) {
+        issues.push({ file: route.name, type: 'CORRUPTED_ROOT_DOM', detail: 'Root container missing or malformed.' });
+      } else if (!html.includes('<title>') || !html.includes('name="description"')) {
+        issues.push({ file: route.name, type: 'MISSING_META_TAGS', detail: 'Essential meta tags missing in head.' });
       } else {
-        console.log(`   ✓ ${route.name} — Rich semantic HTML present in initial DOM`);
+        console.log(`   ✓ ${route.name} — Clean root DOM & rich metadata verified (Zero-FOUC)`);
       }
     }
 
-    // Parity Gatekeeper: Verify exact synchronization between SSOT and dist artifacts
+    // Parity Gatekeeper: Verify exact synchronization between SSOT and Markdown Twin (/ai-brain.md)
     console.log('\n🔒 [Parity Gatekeeper] Verifying 100% synchronization between SSOT and dist artifacts...');
-    const aiBrainHtmlFile = path.join(distDir, 'ai-brain', 'index.html');
     const aiBrainMdFile = path.join(distDir, 'ai-brain.md');
 
     const requiredFingerprints = [
@@ -128,29 +127,6 @@ export function runAIAudit(): boolean {
       'חיסכון שבועי עצום',
       'ארבעת עמודי התווך של המוח',
     ];
-
-    if (fs.existsSync(aiBrainHtmlFile)) {
-      const htmlContent = fs.readFileSync(aiBrainHtmlFile, 'utf8');
-      for (const fp of requiredFingerprints) {
-        if (!htmlContent.includes(fp.value)) {
-          issues.push({
-            file: 'dist/ai-brain/index.html',
-            type: 'PARITY_DESYNC_MISSING_FINGERPRINT',
-            detail: `Required SSOT fingerprint "${fp.name}" ('${fp.value}') is missing from prerendered HTML!`,
-          });
-        }
-      }
-      for (const obs of forbiddenObsoleteStrings) {
-        if (htmlContent.includes(obs)) {
-          issues.push({
-            file: 'dist/ai-brain/index.html',
-            type: 'PARITY_DESYNC_OBSOLETE_STRING',
-            detail: `Forbidden obsolete string "${obs}" found in prerendered HTML!`,
-          });
-        }
-      }
-      console.log('   ✓ dist/ai-brain/index.html — SSOT Parity Gatekeeper verified');
-    }
 
     if (fs.existsSync(aiBrainMdFile)) {
       const mdContent = fs.readFileSync(aiBrainMdFile, 'utf8');

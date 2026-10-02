@@ -245,11 +245,8 @@ export function runPrerender() {
 
     routeHtml = routeHtml.replace('</head>', metaTags);
 
-    // 2. Inject Semantic Stripped HTML into <div id="root"></div> (Hidden from human visual DOM to prevent FOUC)
-    routeHtml = routeHtml.replace(
-      '<div id="root"></div>',
-      `<div id="root"><div style="display:none" aria-hidden="true">${route.semanticHtml}</div></div>`
-    );
+    // 2. Keep <div id="root"></div> completely clean to eliminate any possibility of FOUC
+    // AI crawlers and bots consume the LLM Markdown twins (/llms.txt, /ai-brain.md) and meta tags.
 
     // 3. Determine Target Directory
     if (route.path === '/') {
