@@ -18,7 +18,7 @@ export default function AIBrainPage() {
   }, [])
 
   return (
-    <div dir="rtl" className="w-full min-h-screen pt-24 pb-8 sm:pb-10 selection:bg-idan-david-aviv-cyan/30 text-white">
+    <div dir="rtl" className="w-full min-h-screen pt-24 sm:pt-20 pb-8 sm:pb-10 selection:bg-idan-david-aviv-cyan/30 text-white">
       <AIBrainHero />
       <AIBrainContrast />
       <AIBrainBento />

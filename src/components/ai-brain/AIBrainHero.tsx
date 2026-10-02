@@ -32,9 +32,24 @@ export default function AIBrainHero() {
   ]
 
   return (
-    <section className="relative pt-12 pb-4 sm:pb-6 px-4 sm:px-6 max-w-6xl mx-auto text-center">
+    <section className="relative pt-0 sm:pt-1 pb-4 sm:pb-6 px-4 sm:px-6 max-w-6xl mx-auto text-center">
       {/* Background Ambient Glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-96 h-96 bg-gradient-to-tr from-idan-david-aviv-cyan/15 via-idan-david-aviv-blue/20 to-transparent blur-3xl rounded-full pointer-events-none -z-10" />
+
+      {/* Brain Visual Anchor */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.7, ease: 'easeOut' }}
+        className="relative mx-auto mb-1 sm:mb-2 w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 flex items-center justify-center pointer-events-none select-none"
+      >
+        <img
+          src="/assets/ai-brain/hero-brain.png"
+          alt="Business AI Brain — מוח AI מותאם אישית לעסק"
+          className="w-full h-full object-contain drop-shadow-[0_0_25px_rgba(0,240,255,0.35)]"
+          loading="eager"
+        />
+      </motion.div>
 
       {/* Main Headline */}
       <motion.h1
