@@ -24,11 +24,15 @@ interface RoutePrerenderConfig {
   ogImage?: string;
 }
 
+// Zero-FOUC Visually-Hidden Invariant: Hide semantic prerender from human eyes while maintaining 100% readability for AI scrapers
+const SEMANTIC_CONTAINER_ATTRS =
+  'class="semantic-prerender sr-only" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;"';
+
 function getAiBrainSemanticHtml(): string {
   const { hero, contrast, bento, stepper, realityCheck, conversion } = aiBrainContent;
 
   return `
-      <main id="main-content" class="semantic-prerender">
+      <main id="main-content" ${SEMANTIC_CONTAINER_ATTRS}>
         <header>
           <h1>${hero.title} — ${hero.subtitle}</h1>
           <p>${hero.lead}</p>
@@ -114,7 +118,7 @@ const routesConfig: RoutePrerenderConfig[] = [
     markdownTwinUrl: '/llms.txt',
     ogImage: 'https://idan-david-aviv.web.app/assets/og-cover.jpg',
     semanticHtml: `
-      <main id="main-content" class="semantic-prerender">
+      <main id="main-content" ${SEMANTIC_CONTAINER_ATTRS}>
         <header>
           <h1>עידן דוד אביב — AI Systems Architect & Senior Full Stack Engineer</h1>
           <p>ארכיטקטורת מערכות בינה מלאכותית ריבוניות, רשתות סוכנים אוטונומיים, Business AI Brain ומחשוב סביבתי (Ambient AI).</p>
@@ -191,7 +195,7 @@ const routesConfig: RoutePrerenderConfig[] = [
     markdownTwinUrl: '/projects.md',
     ogImage: 'https://idan-david-aviv.web.app/assets/og-cover.jpg',
     semanticHtml: `
-      <main id="main-content" class="semantic-prerender">
+      <main id="main-content" ${SEMANTIC_CONTAINER_ATTRS}>
         <header>
           <h1>Spirit Research Lab (SRL)</h1>
           <p>מעבדת מחקר ופיתוח למיקרו-SaaS וארכיטקטורות סוכנים אוטונומיות.</p>
@@ -210,7 +214,7 @@ const routesConfig: RoutePrerenderConfig[] = [
     markdownTwinUrl: '/projects.md',
     ogImage: 'https://idan-david-aviv.web.app/assets/og-cover.jpg',
     semanticHtml: `
-      <main id="main-content" class="semantic-prerender">
+      <main id="main-content" ${SEMANTIC_CONTAINER_ATTRS}>
         <header>
           <h1>Virgo Audio Extension</h1>
           <p>ממשק שמע וצליל סביבתי (Ambient Voice) לסוכני תכנות אוטונומיים.</p>
@@ -229,7 +233,7 @@ const routesConfig: RoutePrerenderConfig[] = [
     markdownTwinUrl: '/projects.md',
     ogImage: 'https://idan-david-aviv.web.app/assets/og-cover.jpg',
     semanticHtml: `
-      <main id="main-content" class="semantic-prerender">
+      <main id="main-content" ${SEMANTIC_CONTAINER_ATTRS}>
         <header>
           <h1>Virgo DNA</h1>
           <p>תשתית זיכרון מתמשכת וספר חשבונות זמני (Temporal Ledger) עבור סוכני AI.</p>

@@ -19,6 +19,9 @@ This skill governs how open-web AI models (ChatGPT, Claude, Gemini, Perplexity, 
 - For bots that fetch raw HTML (`GET /ai-brain`), `scripts/prerender.ts` injects a clean semantic DOM (`<main>`, `<h1>`, `<h2>`, `<p>`, `<ul>`) directly into `<div id="root">`.
 - This ensures immediate 100% readability even if JavaScript execution is disabled or times out.
 - **Firebase Clean URLs Invariant**: `cleanUrls: true` must remain enabled in `firebase.json` so `/ai-brain` serves `dist/ai-brain/index.html` statically.
+- **The Zero-FOUC Visually-Hidden Invariant (Anti-Flash Rule)**: To prevent Flash of Unstyled Content (FOUC) when human visitors load the SPA in a browser, ALL prerendered semantic containers injected into `<div id="root">` MUST be visually hidden from the human eye using inline `sr-only` styles:
+  `class="semantic-prerender sr-only" style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;"`
+  This guarantees that the browser renders 0 visible pixels before React mounts, while AI bots, scrapers, and accessibility screen readers retain 100% immediate DOM readability on the initial HTTP response. When React's `createRoot` executes client-side, this container is cleanly replaced with zero trace left in the active DOM.
 
 ### 3. Open AI Robots Governance (`robots.txt`)
 - Dedicated `Allow: /` rules for `GPTBot`, `ChatGPT-User`, `ClaudeBot`, `Google-Extended`, `PerplexityBot`, `CCBot`, and `Bytespider`.
@@ -30,6 +33,7 @@ Whenever building or deploying the site, the agent MUST run the audit script to 
 2. No dirty patterns (Tailwind leakages, raw SVGs, scripts) are present.
 3. Obscurity Constraint is honored (never leak internal mystical terms like "Shabtai" or "Alchemical Anchor" into public LLM feeds).
 4. Prerendered HTML in `dist/` contains non-empty root DOM with semantic containers.
+5. **Zero-FOUC Invariant Enforcement**: All semantic prerender containers in `dist/` MUST enforce the `sr-only` clipping style (`clip: rect(0, 0, 0, 0)`) to protect human visual experience.
 
 ## 4. Build Pipeline Hook
 The build script in `package.json` enforces continuous synchronization:

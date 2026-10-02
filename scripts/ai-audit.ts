@@ -102,8 +102,14 @@ export function runAIAudit(): boolean {
         issues.push({ file: route.name, type: 'CORRUPTED_ROOT_DOM', detail: 'Root container missing or malformed.' });
       } else if (!html.includes('<title>') || !html.includes('name="description"')) {
         issues.push({ file: route.name, type: 'MISSING_META_TAGS', detail: 'Essential meta tags missing in head.' });
+      } else if (html.includes('id="main-content"') && (!html.includes('sr-only') || !html.includes('clip: rect(0, 0, 0, 0)'))) {
+        issues.push({
+          file: route.name,
+          type: 'ZERO_FOUC_VIOLATION',
+          detail: 'Prerendered semantic container is missing visually-hidden sr-only inline styling (potential human visual flash).',
+        });
       } else {
-        console.log(`   ✓ ${route.name} — Rich root DOM & metadata verified`);
+        console.log(`   ✓ ${route.name} — Rich root DOM, metadata & Zero-FOUC styling verified`);
       }
     }
 
