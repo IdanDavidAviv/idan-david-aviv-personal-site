@@ -249,7 +249,109 @@ export function runPrerender() {
     const ogImg = route.ogImage || 'https://idan-david-aviv.web.app/assets/og-cover.jpg';
     const canonicalUrl = `https://idan-david-aviv.web.app${route.path === '/' ? '' : route.path}`;
 
-    // Generate JSON-LD Schemas (Schema.org)
+    // Generate Rich JSON-LD Schemas (Schema.org)
+    const personSchema: Record<string, unknown> = {
+      '@type': 'Person',
+      '@id': 'https://idan-david-aviv.web.app/#person',
+      'name': 'עידן דוד אביב',
+      'alternateName': 'Idan David Aviv',
+      'url': 'https://idan-david-aviv.web.app/',
+      'image': 'https://idan-david-aviv.web.app/assets/og-cover.jpg',
+      'jobTitle': 'AI Systems Architect & Senior Full Stack Engineer',
+      'description': 'ארכיטקט בינה מלאכותית, מערכות סוכנים אוטונומיים ו-Business AI Brain. בעל תואר שני במדעי המוח (MSc) ושני תארי BSc: בהנדסה ביו-רפואית ובביולוגיה עם הדגש במדעי המוח.',
+      'sameAs': [
+        'https://github.com/IdanDavidAviv',
+        'https://www.linkedin.com/in/idan-david-aviv/',
+      ],
+      'alumniOf': [
+        {
+          '@type': 'EducationalOrganization',
+          'name': 'Tel Aviv University',
+          'url': 'https://www.tau.ac.il/',
+        },
+        {
+          '@type': 'ResearchOrganization',
+          'name': 'Sagol Brain Institute',
+          'url': 'https://www.sagolbrain.org/',
+        },
+      ],
+      'hasCredential': [
+        {
+          '@type': 'EducationalOccupationalCredential',
+          'name': 'MSc in Neuroscience',
+          'credentialCategory': 'degree',
+          'recognizedBy': {
+            '@type': 'EducationalOrganization',
+            'name': 'Tel Aviv University',
+          },
+        },
+        {
+          '@type': 'EducationalOccupationalCredential',
+          'name': 'BSc in Biomedical Engineering',
+          'credentialCategory': 'degree',
+          'recognizedBy': {
+            '@type': 'EducationalOrganization',
+            'name': 'Tel Aviv University',
+          },
+        },
+        {
+          '@type': 'EducationalOccupationalCredential',
+          'name': 'BSc in Biology & Neuroscience',
+          'credentialCategory': 'degree',
+          'recognizedBy': {
+            '@type': 'EducationalOrganization',
+            'name': 'Tel Aviv University',
+          },
+        },
+      ],
+      'knowsAbout': [
+        'Artificial Intelligence',
+        'Autonomous AI Agents',
+        'Multi-Agent Systems',
+        'Agentic Workflows',
+        'Business AI Architecture',
+        'Neuroscience',
+        'Neurofeedback',
+        'Biomedical Engineering',
+        'Systems Architecture',
+        'Full Stack Engineering',
+      ],
+    };
+
+    const professionalServiceSchema: Record<string, unknown> = {
+      '@type': 'ProfessionalService',
+      '@id': 'https://idan-david-aviv.web.app/#service',
+      'name': 'Business AI Brain & Autonomous Systems — עידן דוד אביב',
+      'url': 'https://idan-david-aviv.web.app/ai-brain',
+      'description': 'ארכיטקטורת Business AI Brain ריבונית, הטמעת סוכנים אוטונומיים וחיבור נתוני אמת של עסקים למנועי AI בשליטה מלאה.',
+      'provider': {
+        '@id': 'https://idan-david-aviv.web.app/#person',
+      },
+      'telephone': '+972542475705',
+      'areaServed': [
+        {
+          '@type': 'Country',
+          'name': 'Israel',
+        },
+        {
+          '@type': 'AdministrativeArea',
+          'name': 'Worldwide',
+        },
+      ],
+      'availableChannel': [
+        {
+          '@type': 'ServiceChannel',
+          'serviceUrl': 'https://calendly.com/idandavidaviv/ai-brain-discovery',
+          'name': 'שיחת אפיון (Calendly)',
+        },
+        {
+          '@type': 'ServiceChannel',
+          'serviceUrl': 'https://wa.me/972542475705',
+          'name': 'וואטסאפ מהיר',
+        },
+      ],
+    };
+
     const schemaGraph: Record<string, unknown>[] = [
       {
         '@type': 'WebSite',
@@ -258,40 +360,11 @@ export function runPrerender() {
         'name': 'עידן דוד אביב — ארכיטקט בינה מלאכותית ומערכות סוכנים',
         'description': 'ארכיטקטורת Business AI Brain ריבונית, מערכות סוכנים אוטונומיים ו-Ambient AI.',
       },
-      {
-        '@type': 'Person',
-        '@id': 'https://idan-david-aviv.web.app/#person',
-        'name': 'עידן דוד אביב',
-        'alternateName': 'Idan David Aviv',
-        'url': 'https://idan-david-aviv.web.app/',
-        'jobTitle': 'AI Architect & Autonomous Systems Innovator',
-        'knowsAbout': [
-          'Artificial Intelligence',
-          'Autonomous Agents',
-          'Multi-Agent Systems',
-          'Business AI Architecture',
-          'Neural Networks',
-        ],
-        'sameAs': [
-          'https://github.com/IdanDavidAviv',
-        ],
-      },
+      personSchema,
+      professionalServiceSchema,
     ];
 
     if (route.path === '/ai-brain') {
-      schemaGraph.push({
-        '@type': 'ProfessionalService',
-        '@id': 'https://idan-david-aviv.web.app/ai-brain#service',
-        'name': 'Business AI Brain — מוח AI מותאם אישית לעסק',
-        'url': 'https://idan-david-aviv.web.app/ai-brain',
-        'description': 'ארכיטקטורת Business AI Brain ריבונית המחברת את כל הידע והמערכות של העסק למנועי AI עם נתוני אמת ובשליטה מלאה.',
-        'provider': {
-          '@id': 'https://idan-david-aviv.web.app/#person',
-        },
-        'telephone': '+972542475705',
-        'areaServed': 'IL',
-      });
-
       schemaGraph.push({
         '@type': 'FAQPage',
         '@id': 'https://idan-david-aviv.web.app/ai-brain#faq',
@@ -303,6 +376,38 @@ export function runPrerender() {
             'text': item.answer,
           },
         })),
+      });
+    }
+
+    if (route.path === '/virgo') {
+      schemaGraph.push({
+        '@type': 'SoftwareApplication',
+        '@id': 'https://idan-david-aviv.web.app/virgo#app',
+        'name': 'Virgo Audio Extension',
+        'operatingSystem': 'VS Code, Antigravity IDE, Windows, macOS, Linux',
+        'applicationCategory': 'DeveloperApplication',
+        'description': 'תוסף שמע סביבתי ודיאלוג קולי בעברית ובאנגלית לסוכני תכנות אוטונומיים בסביבת VS Code ו-Antigravity IDE.',
+        'author': {
+          '@id': 'https://idan-david-aviv.web.app/#person',
+        },
+        'offers': {
+          '@type': 'Offer',
+          'price': '0',
+          'priceCurrency': 'USD',
+        },
+      });
+    }
+
+    if (route.path === '/virgo-dna') {
+      schemaGraph.push({
+        '@type': 'SoftwareApplication',
+        '@id': 'https://idan-david-aviv.web.app/virgo-dna#app',
+        'name': 'Virgo DNA',
+        'applicationCategory': 'DeveloperApplication',
+        'description': 'תשתית זיכרון מתמשכת וספר חשבונות זמני (Temporal Ledger) המבטיח שמירת הקשר מלאה בין סשנים של סוכני AI ללא סחף.',
+        'author': {
+          '@id': 'https://idan-david-aviv.web.app/#person',
+        },
       });
     }
 
