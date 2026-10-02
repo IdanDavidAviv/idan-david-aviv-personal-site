@@ -18,6 +18,7 @@ interface RoutePrerenderConfig {
   path: string;
   title: string;
   description: string;
+  keywords?: string;
   markdownTwinUrl: string;
   semanticHtml: string;
   ogImage?: string;
@@ -108,7 +109,8 @@ const routesConfig: RoutePrerenderConfig[] = [
   {
     path: '/',
     title: 'עידן דוד אביב — ארכיטקט בינה מלאכותית ומערכות סוכנים',
-    description: 'אתר אישי של עידן דוד אביב — ארכיטקטורת מוח AI לעסקים, סוכנים אוטונומיים, תוסף השמע Virgo ומעבדת החדשנות Spirit Research Lab.',
+    description: 'עידן דוד אביב — ארכיטקט בינה מלאכותית ומערכות סוכנים אוטונומיים. הטמעת Business AI Brain מותאם אישית לעסקים, חיבור מאובטח למערכות ליבה ואוטומציה עסקית מתקדמת.',
+    keywords: 'עידן דוד אביב, ארכיטקט AI, הטמעת בינה מלאכותית לעסקים, Business AI Brain, סוכני AI אוטונומיים, אוטומציה עסקית, חיבור AI ל-CRM, מערכות מולטי סוכנים, מוח AI לעסק, AI Architect Israel',
     markdownTwinUrl: '/llms.txt',
     ogImage: 'https://idan-david-aviv.web.app/assets/og-cover.jpg',
     semanticHtml: `
@@ -157,6 +159,7 @@ const routesConfig: RoutePrerenderConfig[] = [
     path: '/ai-brain',
     title: aiBrainContent.meta.title,
     description: aiBrainContent.meta.description,
+    keywords: aiBrainContent.meta.keywords,
     markdownTwinUrl: '/ai-brain.md',
     ogImage: 'https://idan-david-aviv.web.app/assets/og-ai-brain.jpg',
     semanticHtml: getAiBrainSemanticHtml(),
@@ -236,6 +239,7 @@ export function runPrerender() {
     // 1. Clean out existing meta tags to prevent duplication
     routeHtml = routeHtml.replace(/<title>.*?<\/title>/, `<title>${route.title}</title>`);
     routeHtml = routeHtml.replace(/<meta name="description"[^>]*>/gi, '');
+    routeHtml = routeHtml.replace(/<meta name="keywords"[^>]*>/gi, '');
     routeHtml = routeHtml.replace(/<link rel="canonical"[^>]*>/gi, '');
     routeHtml = routeHtml.replace(/<meta property="og:[^>]*>/gi, '');
     routeHtml = routeHtml.replace(/<meta name="twitter:[^>]*>/gi, '');
@@ -287,6 +291,19 @@ export function runPrerender() {
         'telephone': '+972542475705',
         'areaServed': 'IL',
       });
+
+      schemaGraph.push({
+        '@type': 'FAQPage',
+        '@id': 'https://idan-david-aviv.web.app/ai-brain#faq',
+        'mainEntity': aiBrainContent.faq.map((item) => ({
+          '@type': 'Question',
+          'name': item.question,
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': item.answer,
+          },
+        })),
+      });
     }
 
     const jsonLdScript = `\n  <script type="application/ld+json">\n${JSON.stringify({ '@context': 'https://schema.org', '@graph': schemaGraph }, null, 2)}\n  </script>`;
@@ -295,7 +312,7 @@ export function runPrerender() {
     const metaTags = `
   <!-- SEO & Canonical -->
   <meta name="description" content="${route.description}" />
-  <link rel="canonical" href="${canonicalUrl}" />
+  ${route.keywords ? `<meta name="keywords" content="${route.keywords}" />\n  ` : ''}<link rel="canonical" href="${canonicalUrl}" />
 
   <!-- OpenGraph / Social Sharing -->
   <meta property="og:type" content="website" />
