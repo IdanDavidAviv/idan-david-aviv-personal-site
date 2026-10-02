@@ -73,12 +73,13 @@ export default function Contact() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-white/60 text-lg max-w-xl mx-auto font-light leading-relaxed"
+            className="text-white/60 text-sm sm:text-base md:text-lg max-w-2xl mx-auto font-light leading-relaxed"
           >
-            Whether you want a <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue font-medium">highly-personalized website</span>, <br className="hidden md:block" />
-            An <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue font-medium">Autonomous AI Agent</span>, a set of <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue font-medium">custom AI tools</span>, <br className="hidden md:block" />
-            or <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue font-medium">1-on-1 mentorship</span> to create clarity in your life,<br className="hidden md:block" />
-            reach out and <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan via-idan-david-aviv-blue via-[40%] to-idan-david-aviv-gold to-[65%] font-medium">let&apos;s get started:</span>
+            Whether you&apos;re looking to deploy a <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue font-medium inline-block">Business AI Brain</span>, <br className="hidden md:block" />
+            architect <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue font-medium inline-block">autonomous multi-agent systems</span>, <br className="hidden md:block" />
+            integrate AI with your <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue font-medium inline-block">core infrastructure</span>, <br className="hidden md:block" />
+            or seek <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan to-idan-david-aviv-blue font-medium inline-block">strategic technical advisory</span> for your roadmap, <br className="hidden md:block" />
+            reach out and <span className="text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan via-idan-david-aviv-blue via-[40%] to-idan-david-aviv-gold to-[65%] font-medium inline-block">let&apos;s build:</span>
           </motion.p>
         </div>
 
