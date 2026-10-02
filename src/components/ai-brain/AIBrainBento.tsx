@@ -116,10 +116,14 @@ export default function AIBrainBento() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          className="text-sm sm:text-base text-white/60 leading-relaxed font-light max-w-2xl mx-auto"
+          className="text-sm sm:text-base text-white/70 leading-relaxed font-light max-w-2xl mx-auto"
         >
-          סך הכול שלושה חלקים: הזיכרון של העסק, החיבור למערכות שלכם <br />
+          סך הכול שלושה חלקים: הזיכרון של העסק, החיבור למערכות שלכם <br className="hidden sm:inline" />
           ומערכת הנחיות לשליטה מלאה.
+          <span className="block mt-2 text-white/90 font-normal">
+            לא צריך להחליף את המערכות הקיימות <br />
+            בונים שכבת AI מעל מה שכבר עובד בעסק.
+          </span>
         </motion.p>
       </div>
 

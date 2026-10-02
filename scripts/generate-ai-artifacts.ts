@@ -67,7 +67,7 @@ ${card.items.map(item => `- **${item.title}:** ${item.desc}`).join('\n')}`).join
 ${stepper.stations.map(st => `- **שלב ${st.number} — ${st.tag}:** ${st.title} — ${st.description}`).join('\n')}
 
 ## ${realityCheck.title}
-${realityCheck.points.map(pt => `- **${pt.title}:** ${pt.description}`).join('\n')}
+${realityCheck.subtitle ? `${realityCheck.subtitle}\n\n` : ''}${realityCheck.points.map(pt => `- **${pt.title}:** ${pt.description}`).join('\n')}
 
 ## ${conversion.cta}
 - שיחת אפיון (Calendly): ${conversion.calendlyUrl}

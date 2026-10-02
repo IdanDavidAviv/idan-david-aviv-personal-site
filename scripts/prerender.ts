@@ -85,6 +85,7 @@ function getAiBrainSemanticHtml(): string {
 
         <section id="reality-check">
           <h2>${realityCheck.title}</h2>
+          ${realityCheck.subtitle ? `<p>${realityCheck.subtitle}</p>` : ''}
           <ul>
             ${realityCheck.points.map(pt => `
               <li><strong>${pt.title}:</strong> ${pt.description}</li>
