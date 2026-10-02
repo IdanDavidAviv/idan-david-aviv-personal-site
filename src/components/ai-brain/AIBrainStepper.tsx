@@ -46,9 +46,9 @@ export default function AIBrainStepper() {
     {
       number: '03',
       tag: 'יוצאים לדרך',
-      title: 'מתחילים לעבוד עם הסוכן',
+      title: 'מפעילים ומרחיבים בהדרגה',
       icon: <Rocket className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" />,
-      description: 'מחברים את מוח ה-AI ישירות לאייג\'נט שאתם כבר מכירים, או שעוזרים לכם לבחור אחד שמתאים יותר לצרכים שלכם, ויוצאים לדרך.',
+      description: 'מתחילים מתהליך עסקי מוגדר אחד בעל אימפקט גבוה, מודדים את החיסכון בזמן ובעבודה הידנית, ומשם מרחיבים לתהליכים נוספים בקצב שלכם.',
       accent: 'border-emerald-500/30 bg-emerald-500/5 text-emerald-400',
       theme: {
         bg: 'bg-[#041d14]/95',
