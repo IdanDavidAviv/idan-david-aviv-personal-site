@@ -1,10 +1,10 @@
 /**
  * Single Source of Truth (SSOT) for Business AI Brain Content
+ * 1:1 Mirror of the live website components (/ai-brain)
  * Consumed by:
- * 1. React client components (/ai-brain)
- * 2. Prerender script (scripts/prerender.ts -> semantic HTML for crawlers & bots)
- * 3. AI Markdown Twin generator (scripts/generate-ai-artifacts.ts -> /ai-brain.md)
- * 4. CI Parity Gatekeeper (scripts/ai-audit.ts)
+ * 1. Prerender script (scripts/prerender.ts -> semantic HTML for crawlers & bots)
+ * 2. AI Markdown Twin generator (scripts/generate-ai-artifacts.ts -> /ai-brain.md)
+ * 3. CI Parity Gatekeeper (scripts/ai-audit.ts)
  */
 
 export interface StationStep {
@@ -15,37 +15,137 @@ export interface StationStep {
 }
 
 export interface BentoCard {
+  id: string;
   title: string;
   subtitle: string;
+  badge: string;
   items: Array<{ title: string; desc: string }>;
+}
+
+export interface ContrastPair {
+  id: string;
+  category: string;
+  before: {
+    title: string;
+    subtitle: string;
+    description: string;
+  };
+  after: {
+    title: string;
+    subtitle: string;
+    description: string;
+  };
+}
+
+export interface RealityCheckPoint {
+  title: string;
+  description: string;
 }
 
 export const aiBrainContent = {
   meta: {
     title: 'מוח AI לעסקים — ארכיטקטורת נתוני אמת וסוכנים | עידן דוד אביב',
-    description: 'ארכיטקטורת Business AI Brain ריבונית המחברת את כל הידע והמערכות של העסק למנועי AI עם 100% נתוני אמת וללא הזיות.',
+    description: 'ארכיטקטורת Business AI Brain ריבונית המחברת את כל הידע והמערכות של העסק למנועי AI עם נתוני אמת ובשליטה מלאה.',
   },
 
   hero: {
     title: 'מוח AI מותאם אישית לעסק',
     subtitle: 'Business AI Brain',
-    lead: 'ארכיטקטורת נתוני אמת וסוכנים אוטונומיים שמכירה את העסק שלכם מבפנים, ומאפשרת לכם לפעול מהר יותר, על בסיס נתוני האמת שלכם ובשליטה מלאה.',
+    lead: 'מחברים את הידע, הנהלים והמערכות שכבר קיימים בעסק למערכת AI שמבינה את ההקשר העסקי, מנתחת מידע ומכינה פעולות לביצוע — בשליטה ובאישור שלכם.',
     chatHook: {
       preTitle: 'רוצים לראות דוגמה?',
       title: 'הנה צ\'אט עם סוכן AI עם המוח העסקי',
+      processTag: 'מבין את ההקשר ← מצליב נתונים ← מכין פעולה ומחכה לאישור',
     },
+    scenarios: [
+      {
+        id: 'status',
+        name: 'תמונת מצב תפעולית',
+        userQuery: 'תן לי תמונת מצב על הפניות מהשבוע האחרון, ואיפה יש משימות שדורשות תשומת לב שלי.',
+        systemActions: [
+          'סריקת 12 לידים ב-CRM',
+          'הצלבת תסריט שירות ומחירון 2026'
+        ],
+        summary: 'תמונת מצב שבועית (12 פניות בסך הכול): 9 פניות טופלו ותואמו בהצלחה לשיחת אפיון ראשונית. 3 פניות ממתינות לאישורך (חברת אלפא: הצעת מחיר 14,500 ₪, ד"ר לוי: זמני אספקה, טק-סולושנס: שוטף+60).',
+        nextStepTitle: 'הצעות להמשך:',
+        nextStepQuestion: 'האם להכין טיוטות מענה מותאמות ללקוחות ולעדכן ב-CRM?'
+      },
+      {
+        id: 'meeting',
+        name: 'הכנה לפגישה',
+        userQuery: 'יש לי עוד שעה שיחה עם לקוח חשוב. תזכיר לי מה הסיכום הקודם איתו, מה הנוהל שלנו לגבי החרגות, ומה אנחנו מציעים לו היום?',
+        systemActions: [
+          'שליפת סיכום פגישה מ-Drive',
+          'קריאת נוהל התקשרות והחרגות',
+          'סנכרון יומן Google Calendar'
+        ],
+        summary: 'תקציר לקראת הפגישה ב-14:00 (חברת נקסוס / רועי): סיכום קודם (12.9) על פיילוט לצוות המכירות עם אינטגרציה ל-ERP. מדיניות החרגות: אין אישור לחרוג משוטף+30 ללא אישור הנהלה, הנחת פיילוט עד 10%. הצעת ערך להיום: התממשקות ישירה ל-ERP דרך API קיים ללא עלות פיתוח מותאם.',
+        nextStepTitle: 'הצעות להמשך:',
+        nextStepQuestion: 'האם להפיק עבורך תקציר מנהלים ממוקד לנייד ולסנכרן את הדגשים לכרטיס הלקוח ב-CRM לפני הפגישה?'
+      }
+    ],
+    supportedAgents: ['ChatGPT / OpenAI', 'Google Gemini', 'Claude & Claude Code', 'xAI Grok'],
     cta: 'בואו נמפה את מוח ה-AI לעסק שלכם',
     whatsappCta: 'פשוט דברו איתי בוואטסאפ',
   },
 
+  contrast: {
+    title: 'יש לנו כבר AI — למה צריך להוסיף לו מוח?',
+    lead: 'כי מודל שפה כללי יודע לענות יפה ולתת הרגשה טובה, אבל אם הוא לא מחובר למערכות שלכם — הוא מנחש ומחרטט אתכם. הנה מה שמשתנה כשהסוכן מעוגן ישירות בנתוני האמת של העסק:',
+    pairs: [
+      {
+        id: 'accuracy',
+        category: 'אמינות המידע',
+        before: {
+          title: 'ה-AI הכללי ממציא נתונים',
+          subtitle: 'ככל שמתארכת השיחה',
+          description: 'מודלים ציבוריים עונים תשובות כלליות ולעיתים מנחשים עובדות כי הם לא מחוברים למציאות של העסק שלכם. קשה להסתמך עליהם בתהליכי עבודה בלי לבדוק כל פרט בעצמכם.'
+        },
+        after: {
+          title: 'מסתמך על זיכרון ונתוני האמת',
+          subtitle: 'ומציע ניתוח של התוצאות שנשלפו',
+          description: 'אפיון מעמיק של ה-DNA העסקי ועיגון ישיר במערכות נתוני האמת ונהלי העבודה המאושרים שלכם. הסוכן נשען אך ורק על המידע האמיתי — אפס ניחושים.'
+        }
+      },
+      {
+        id: 'operations',
+        category: 'התפעול השוטף',
+        before: {
+          title: 'חיפוש קבצים וניווט בין מערכות',
+          subtitle: 'יכול לשרוף שעות של עבודה',
+          description: 'שעות יקרות שנשרפות בכל שבוע על חיפוש מסמכים בדרייב, מעבר בין קובצי אקסל שונים, העתקה ידנית של מידע והסברים שחוזרים על עצמם שוב ושוב.'
+        },
+        after: {
+          title: 'הסוכן יודע מה נמצא איפה',
+          subtitle: 'ובמקום לחפש עיוור הוא מוצא מהר',
+          description: 'שואלים את מוח העסק בשפה חופשית ומקבלים מיד את המידע המדויק — יחד עם הצעות מעשיות להמשך פעולה שהסוכן מכין עבורכם (ניסוח טיוטות, עדכון שדות והכנת משימות).'
+        }
+      },
+      {
+        id: 'control',
+        category: 'שליטה וניהול',
+        before: {
+          title: 'שמירה על שליטה בעסק',
+          subtitle: 'גוזלת זמן, משאבים ותשומת לב',
+          description: 'כדי להחזיק שליטה אמיתית במה שקורה בעסק נדרש מאמץ מתמשך: לפנות לעובדים שונים, לבדוק בכמה מערכות במקביל ולהשקיע זמן יקר בהצלבת נתונים רק כדי לדעת איפה דברים עומדים.'
+        },
+        after: {
+          title: 'קבלת תמונה כללית בשניות',
+          subtitle: 'בלי להמתין לאף אחד ושום דבר',
+          description: 'יוצרים את החיבורים והנהלים פעם אחת, ומקבלים תמונת מצב מדויקת ומרוכזת ישירות מחלון הצ\'אט שלכם. השליטה בעסק הופכת לפעולה של 3 שניות שמשאירה את מלוא תשומת הלב לצמיחה.'
+        }
+      }
+    ]
+  },
+
   problem: {
-    title: 'הבעיה: הפיצול והזיות ה-AI הגנרי',
-    description: 'שימוש ב-ChatGPT או Claude רגיל מנותק מנהלי העסק, המחירונים וה-CRM, וגורם להזיות ולבזבוז שעות עבודה.',
+    title: 'הבעיה: מודל כללי מנותק מנתוני העסק',
+    description: 'כי מודל שפה כללי יודע לענות יפה ולתת הרגשה טובה, אבל אם הוא לא מחובר למערכות שלכם — הוא מנחש ומחרטט אתכם, שורף שעות על חיפוש ידני וגוזל שליטה עסקית.',
   },
 
   solution: {
-    title: 'הפתרון: מוח עסקי ריבוני (Sovereign Brain)',
-    description: 'חיבור ישיר של Google Drive, Monday, Excel, ומערכות CRM למנועי שפה מתקדמים עם 100% נתוני אמת ואפס הזיות.',
+    title: 'הפתרון: מוח עסקי ריבוני מעוגן בנתוני אמת',
+    description: 'אפיון מעמיק של ה-DNA העסקי ועיגון ישיר במערכות נתוני האמת ונהלי העבודה המאושרים. הסוכן יודע מה נמצא איפה, מכין הצעות לפעולה ומחזיר את השליטה המלאה לידיים שלכם.',
   },
 
   bento: {
@@ -119,11 +219,35 @@ export const aiBrainContent = {
     ],
   },
 
+  realityCheck: {
+    title: 'אתם מביאים את הניסיון שלכם ואנחנו דואגים לכל השאר',
+    points: [
+      {
+        title: 'עובדים עם המידע והמערכות הקיימים',
+        description: 'אין צורך להכין קבצים מיוחדים מראש. נשענים ישירות על הדרייב, ה-CRM והמסמכים שכבר עובדים איתם היום.'
+      },
+      {
+        title: 'מדברים בגובה העיניים על העסק',
+        description: 'לא צריך להבין ב-AI או טכנולוגיה, מספיק שאתם מכירים את העסק שלכם. אתם תגידו מה אתם צריכים, או מה מפריע לכם, ואנחנו נציע פתרונות אפשריים.'
+      },
+      {
+        title: 'עם ליווי הנדסי שוטף לאורך כל הדרך',
+        description: 'כתובת מקצועית קבועה שמחזיקה את המערכת, קולטת נהלים חדשים ומתפתחת יחד עם צמיחת העסק.'
+      }
+    ]
+  },
+
   conversion: {
+    title: 'רוצים לבדוק איך זה עובד אצלכם בעסק?',
+    description: 'בשיחת מיפוי והיתכנות קצרה של חצי שעה נבין את תהליכי העבודה ומקורות המידע שלכם, ונבדוק יחד האם ואיך נכון לבנות עבורכם מוח AI.',
     cta: 'בואו נמפה את מוח ה-AI לעסק שלכם',
     mobileCta: 'מיפוי מוח AI לעסק',
-    calendlyUrl: 'https://calendly.com/idandavidaviv/discovery',
-    whatsappUrl: 'https://wa.me/972545585590',
-    whatsappPhone: '054-5585590',
+    calendlyUrl: 'https://calendly.com/idandavidaviv',
+    whatsappUrl: 'https://wa.me/972542475705',
+    whatsappPhone: '054-2475705',
+    trustAnchors: [
+      '30 דקות בזום ללא עלות',
+      '100% סודיות עסקית'
+    ]
   },
 };

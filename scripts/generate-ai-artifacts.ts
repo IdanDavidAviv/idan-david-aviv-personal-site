@@ -37,24 +37,25 @@ For complete technical specifications, architectural layers, and curriculum deta
 
 ## Contact & Engagement Funnel
 - Discovery Call (Calendly): https://calendly.com/idandavidaviv/discovery
-- WhatsApp Direct: https://wa.me/972545585590
+- WhatsApp Direct: https://wa.me/972542475705
 - GitHub: https://github.com/IdanDavidAviv
 - Official Website: https://idan-david-aviv.web.app
 `;
 
 // 2. Content for /ai-brain.md (Dynamically derived from SSOT: src/data/aiBrainContent.ts)
-const { hero, problem, solution, bento, stepper, conversion } = aiBrainContent;
+const { hero, contrast, bento, stepper, realityCheck, conversion } = aiBrainContent;
 
 const aiBrainMdContent = `# ${hero.title} — ${hero.subtitle}
 > פיתוח והטמעה: עידן דוד אביב | ארכיטקט מערכות בינה מלאכותית ומערכות סוכנים
 
 ${hero.lead}
 
-## ${problem.title}
-${problem.description}
+## ${contrast.title}
+${contrast.lead}
 
-## ${solution.title}
-${solution.description}
+${contrast.pairs.map((pair, idx) => `### ${idx + 1}. ${pair.category}
+- **לפני (AI כללי):** ${pair.before.title} (${pair.before.subtitle}) — ${pair.before.description}
+- **אחרי (מוח עסקי):** ${pair.after.title} (${pair.after.subtitle}) — ${pair.after.description}`).join('\n\n')}
 
 ## ${bento.headline.line1} ${bento.headline.line2}
 ${bento.subtitle.line1} ${bento.subtitle.line2}
@@ -64,6 +65,9 @@ ${card.items.map(item => `- **${item.title}:** ${item.desc}`).join('\n')}`).join
 
 ## ${stepper.title}
 ${stepper.stations.map(st => `- **שלב ${st.number} — ${st.tag}:** ${st.title} — ${st.description}`).join('\n')}
+
+## ${realityCheck.title}
+${realityCheck.points.map(pt => `- **${pt.title}:** ${pt.description}`).join('\n')}
 
 ## ${conversion.cta}
 - שיחת אפיון (Calendly): ${conversion.calendlyUrl}
@@ -85,7 +89,7 @@ const aboutMdContent = `# אודות עידן דוד אביב
 
 ## יצירת קשר
 - פגישת היכרות: https://calendly.com/idandavidaviv/discovery
-- WhatsApp: https://wa.me/972545585590
+- WhatsApp: https://wa.me/972542475705
 - GitHub: https://github.com/IdanDavidAviv
 `;
 

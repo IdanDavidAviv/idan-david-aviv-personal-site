@@ -12,5 +12,5 @@
 
 ## יצירת קשר
 - פגישת היכרות: https://calendly.com/idandavidaviv/discovery
-- WhatsApp: https://wa.me/972545585590
+- WhatsApp: https://wa.me/972542475705
 - GitHub: https://github.com/IdanDavidAviv
