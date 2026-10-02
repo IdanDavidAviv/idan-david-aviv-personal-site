@@ -43,7 +43,7 @@ For complete technical specifications, architectural layers, and curriculum deta
 `;
 
 // 2. Content for /ai-brain.md (Dynamically derived from SSOT: src/data/aiBrainContent.ts)
-const { hero, contrast, bento, stepper, realityCheck, conversion } = aiBrainContent;
+const { hero, contrast, bento, stepper, realityCheck, conversion, faq } = aiBrainContent;
 
 const aiBrainMdContent = `# ${hero.title} — ${hero.subtitle}
 > פיתוח והטמעה: עידן דוד אביב | ארכיטקט מערכות בינה מלאכותית ומערכות סוכנים
@@ -69,6 +69,10 @@ ${stepper.stations.map(st => `- **שלב ${st.number} — ${st.tag}:** ${st.titl
 ## ${realityCheck.title}
 ${realityCheck.subtitle ? `${realityCheck.subtitle}\n\n` : ''}${realityCheck.points.map(pt => `- **${pt.title}:** ${pt.description}`).join('\n')}
 
+${faq && faq.length > 0 ? `## שאלות ותשובות הנדסיות (Technical & Operational FAQ)
+${faq.map((item, idx) => `### ${idx + 1}. ${item.question}
+${item.answer}`).join('\n\n')}
+` : ''}
 ## ${conversion.cta}
 - שיחת אפיון (Calendly): ${conversion.calendlyUrl}
 - וואטסאפ ישיר: ${conversion.whatsappUrl} (${conversion.whatsappPhone})
