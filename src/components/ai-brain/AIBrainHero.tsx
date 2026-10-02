@@ -56,8 +56,11 @@ export default function AIBrainHero() {
         transition={{ duration: 0.6, delay: 0.2 }}
         className="text-base sm:text-lg md:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed mb-10 font-light"
       >
-        שכבת אינטליגנציה שמחברת את כל המידע והמערכות בעסק <br className="hidden sm:block" />
-        ומאפשרת לכם לפעול מהר יותר, על בסיס נתוני האמת שלכם ובשליטה מלאה.
+        מחברים את הידע, הנהלים והמערכות שכבר קיימים בעסק <br className="hidden sm:block" />
+        למערכת AI שמבינה את ההקשר העסקי, מנתחת מידע ומכינה פעולות לביצוע
+        <span className="hidden sm:inline"> — </span>
+        <br className="sm:hidden" />
+        בשליטה ובאישור שלכם.
       </motion.p>
 
       {/* Quick CTAs */}
@@ -99,9 +102,16 @@ export default function AIBrainHero() {
         <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight mb-2">
           רוצים לראות דוגמה?
         </h3>
-        <p className="text-sm sm:text-base md:text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan via-white to-idan-david-aviv-blue">
+        <p className="text-sm sm:text-base md:text-lg font-semibold text-transparent bg-clip-text bg-gradient-to-r from-idan-david-aviv-cyan via-white to-idan-david-aviv-blue mb-4">
           הנה צ&apos;אט עם סוכן AI עם המוח העסקי
         </p>
+        <div className="inline-flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-xs text-white/70 font-light">
+          <span>מבין את ההקשר</span>
+          <span className="text-idan-david-aviv-cyan font-bold">←</span>
+          <span>מצליב נתונים</span>
+          <span className="text-idan-david-aviv-cyan font-bold">←</span>
+          <span className="text-white/90 font-medium">מכין פעולה ומחכה לאישור</span>
+        </div>
       </motion.div>
 
       {/* Interactive Chat Mockup Window */}
@@ -209,9 +219,14 @@ export default function AIBrainHero() {
                     </ul>
                   </div>
 
-                  <p className="text-white/90 text-xs sm:text-sm pt-2.5 border-t border-white/10 font-medium">
-                    האם להכין טיוטות מענה מותאמות ללקוחות ולעדכן ב-CRM?
-                  </p>
+                  <div className="pt-2.5 sm:pt-3 border-t border-white/10 space-y-1">
+                    <p className="text-xs sm:text-sm font-semibold text-idan-david-aviv-cyan">
+                      הצעות להמשך:
+                    </p>
+                    <p className="text-white/95 text-sm sm:text-base font-medium">
+                      האם להכין טיוטות מענה מותאמות ללקוחות ולעדכן ב-CRM?
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             ) : (
@@ -269,9 +284,14 @@ export default function AIBrainHero() {
                     </ul>
                   </div>
 
-                  <p className="text-white/90 text-xs sm:text-sm pt-2.5 border-t border-white/10 font-medium">
-                    האם להפיק עבורך תקציר מנהלים ממוקד לנייד ולסנכרן את הדגשים לכרטיס הלקוח ב-CRM לפני הפגישה?
-                  </p>
+                  <div className="pt-2.5 sm:pt-3 border-t border-white/10 space-y-1">
+                    <p className="text-xs sm:text-sm font-semibold text-idan-david-aviv-cyan">
+                      הצעות להמשך:
+                    </p>
+                    <p className="text-white/95 text-sm sm:text-base font-medium">
+                      האם להפיק עבורך תקציר מנהלים ממוקד לנייד ולסנכרן את הדגשים לכרטיס הלקוח ב-CRM לפני הפגישה?
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             )}
