@@ -245,10 +245,10 @@ export function runPrerender() {
 
     routeHtml = routeHtml.replace('</head>', metaTags);
 
-    // 2. Inject Semantic Stripped HTML into <div id="root"></div>
+    // 2. Inject Semantic Stripped HTML into <div id="root"></div> (Hidden from human visual DOM to prevent FOUC)
     routeHtml = routeHtml.replace(
       '<div id="root"></div>',
-      `<div id="root">${route.semanticHtml}</div>`
+      `<div id="root"><div style="display:none" aria-hidden="true">${route.semanticHtml}</div></div>`
     );
 
     // 3. Determine Target Directory
