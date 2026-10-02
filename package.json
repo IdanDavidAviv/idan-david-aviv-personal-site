@@ -9,6 +9,7 @@
     "ai:audit": "tsx scripts/ai-audit.ts",
     "ai:generate": "tsx scripts/generate-ai-artifacts.ts",
     "ai:prerender": "tsx scripts/prerender.ts",
+    "audio:generate": "node .agent/skills/audio_narrative_engine/scripts/generate-audio.cjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
