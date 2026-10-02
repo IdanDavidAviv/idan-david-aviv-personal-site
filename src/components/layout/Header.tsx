@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
-import { Brain, Dna, FlaskConical, Sparkles } from 'lucide-react'
+import { Brain, BrainCircuit, Dna, FlaskConical } from 'lucide-react'
 
 /**
  * Global Header - Minimalist, floating navigation.
@@ -37,7 +37,7 @@ export default function Header() {
                         "whitespace-nowrap snap-center active:scale-95 touch-manipulation"
                     )}
                 >
-                    <Sparkles className="w-4 h-4 text-white group-hover:rotate-12 transition-transform" />
+                    <BrainCircuit className="w-4 h-4 text-white -scale-x-100 group-hover:rotate-12 transition-transform" />
                     AI Brain
                 </Link>
                 {!isAIBrain && (
