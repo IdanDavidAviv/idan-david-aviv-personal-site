@@ -3,6 +3,7 @@
 
 User-agent: *
 Allow: /
+Sitemap: https://idan-david-aviv.web.app/sitemap.xml
 
 # Dedicated AI Inference & Answer Engine Crawlers
 User-agent: GPTBot

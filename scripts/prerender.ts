@@ -20,6 +20,7 @@ interface RoutePrerenderConfig {
   description: string;
   markdownTwinUrl: string;
   semanticHtml: string;
+  ogImage?: string;
 }
 
 function getAiBrainSemanticHtml(): string {
@@ -109,6 +110,7 @@ const routesConfig: RoutePrerenderConfig[] = [
     title: 'עידן דוד אביב — ארכיטקט בינה מלאכותית ומערכות סוכנים',
     description: 'אתר אישי של עידן דוד אביב — ארכיטקטורת מוח AI לעסקים, סוכנים אוטונומיים, תוסף השמע Virgo ומעבדת החדשנות Spirit Research Lab.',
     markdownTwinUrl: '/llms.txt',
+    ogImage: 'https://idan-david-aviv.web.app/assets/og-cover.jpg',
     semanticHtml: `
       <main id="main-content" class="semantic-prerender">
         <header>
@@ -118,7 +120,7 @@ const routesConfig: RoutePrerenderConfig[] = [
         
         <section id="services-overview">
           <h2>מוח AI מותאם אישית לעסק (Business AI Brain)</h2>
-          <p>חיבור מסמכים, נהלים, מערכות CRM ו-Monday למנועי AI מתקדמים עם 100% נתוני אמת, אפס הזיות ומשילות אנושית מלאה.</p>
+          <p>חיבור מסמכים, נהלים ומערכות קיימות למנועי AI מתקדמים עם נתוני אמת ומשילות אנושית מלאה.</p>
           <a href="/ai-brain">מידע מלא על שירות מוח ה-AI</a>
         </section>
 
@@ -145,8 +147,8 @@ const routesConfig: RoutePrerenderConfig[] = [
 
         <section id="contact-funnel">
           <h2>יצירת קשר ותיאום שיחת אפיון</h2>
-          <p>פגישת היכרות ואפיון: <a href="https://calendly.com/idandavidaviv/discovery">Calendly Discovery Call</a></p>
-          <p>וואטסאפ ישיר: <a href="https://wa.me/972545585590">WhatsApp 054-5585590</a></p>
+          <p>פגישת היכרות ואפיון: <a href="https://calendly.com/idandavidaviv">Calendly Discovery Call</a></p>
+          <p>וואטסאפ ישיר: <a href="https://wa.me/972542475705">WhatsApp 054-2475705</a></p>
         </section>
       </main>
     `,
@@ -156,6 +158,7 @@ const routesConfig: RoutePrerenderConfig[] = [
     title: aiBrainContent.meta.title,
     description: aiBrainContent.meta.description,
     markdownTwinUrl: '/ai-brain.md',
+    ogImage: 'https://idan-david-aviv.web.app/assets/og-ai-brain.jpg',
     semanticHtml: getAiBrainSemanticHtml(),
   },
   {
@@ -163,6 +166,7 @@ const routesConfig: RoutePrerenderConfig[] = [
     title: 'Spirit Research Lab (SRL) — מעבדת מיקרו-SaaS | עידן דוד אביב',
     description: 'מעבדת החדשנות SRL לפיתוח כלי מיקרו-SaaS מודולריים ומערכות אוטונומיות ליוצרים.',
     markdownTwinUrl: '/projects.md',
+    ogImage: 'https://idan-david-aviv.web.app/assets/og-cover.jpg',
     semanticHtml: `
       <main id="main-content" class="semantic-prerender">
         <header>
@@ -181,6 +185,7 @@ const routesConfig: RoutePrerenderConfig[] = [
     title: 'Virgo Audio Extension — תוסף שמע סביבתי לסוכני AI | עידן דוד אביב',
     description: 'תוסף שמע וקול אנושי טבעי לסוכני בינה מלאכותית בסביבת הפיתוח VS Code ו-Antigravity IDE.',
     markdownTwinUrl: '/projects.md',
+    ogImage: 'https://idan-david-aviv.web.app/assets/og-cover.jpg',
     semanticHtml: `
       <main id="main-content" class="semantic-prerender">
         <header>
@@ -199,6 +204,7 @@ const routesConfig: RoutePrerenderConfig[] = [
     title: 'Virgo DNA — תשתית זיכרון ורשת מבוזרת לסוכנים | עידן דוד אביב',
     description: 'ספר חשבונות זמני (Temporal Ledger) ומשילות מתמשכת בין סשנים של סוכני AI ללא אובדן הקשר.',
     markdownTwinUrl: '/projects.md',
+    ogImage: 'https://idan-david-aviv.web.app/assets/og-cover.jpg',
     semanticHtml: `
       <main id="main-content" class="semantic-prerender">
         <header>
@@ -227,20 +233,89 @@ export function runPrerender() {
   for (const route of routesConfig) {
     let routeHtml = baseHtml;
 
-    // 1. Update Title & Meta
+    // 1. Clean out existing meta tags to prevent duplication
     routeHtml = routeHtml.replace(/<title>.*?<\/title>/, `<title>${route.title}</title>`);
-    
-    // Inject Meta Description and Canonical if not present
+    routeHtml = routeHtml.replace(/<meta name="description"[^>]*>/gi, '');
+    routeHtml = routeHtml.replace(/<link rel="canonical"[^>]*>/gi, '');
+    routeHtml = routeHtml.replace(/<meta property="og:[^>]*>/gi, '');
+    routeHtml = routeHtml.replace(/<meta name="twitter:[^>]*>/gi, '');
+    routeHtml = routeHtml.replace(/<link rel="alternate" type="text\/markdown"[^>]*>/gi, '');
+    routeHtml = routeHtml.replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/gi, '');
+
+    const ogImg = route.ogImage || 'https://idan-david-aviv.web.app/assets/og-cover.jpg';
+    const canonicalUrl = `https://idan-david-aviv.web.app${route.path === '/' ? '' : route.path}`;
+
+    // Generate JSON-LD Schemas (Schema.org)
+    const schemaGraph: Record<string, unknown>[] = [
+      {
+        '@type': 'WebSite',
+        '@id': 'https://idan-david-aviv.web.app/#website',
+        'url': 'https://idan-david-aviv.web.app/',
+        'name': 'עידן דוד אביב — ארכיטקט בינה מלאכותית ומערכות סוכנים',
+        'description': 'ארכיטקטורת Business AI Brain ריבונית, מערכות סוכנים אוטונומיים ו-Ambient AI.',
+      },
+      {
+        '@type': 'Person',
+        '@id': 'https://idan-david-aviv.web.app/#person',
+        'name': 'עידן דוד אביב',
+        'alternateName': 'Idan David Aviv',
+        'url': 'https://idan-david-aviv.web.app/',
+        'jobTitle': 'AI Architect & Autonomous Systems Innovator',
+        'knowsAbout': [
+          'Artificial Intelligence',
+          'Autonomous Agents',
+          'Multi-Agent Systems',
+          'Business AI Architecture',
+          'Neural Networks',
+        ],
+        'sameAs': [
+          'https://github.com/IdanDavidAviv',
+        ],
+      },
+    ];
+
+    if (route.path === '/ai-brain') {
+      schemaGraph.push({
+        '@type': 'ProfessionalService',
+        '@id': 'https://idan-david-aviv.web.app/ai-brain#service',
+        'name': 'Business AI Brain — מוח AI מותאם אישית לעסק',
+        'url': 'https://idan-david-aviv.web.app/ai-brain',
+        'description': 'ארכיטקטורת Business AI Brain ריבונית המחברת את כל הידע והמערכות של העסק למנועי AI עם נתוני אמת ובשליטה מלאה.',
+        'provider': {
+          '@id': 'https://idan-david-aviv.web.app/#person',
+        },
+        'telephone': '+972542475705',
+        'areaServed': 'IL',
+      });
+    }
+
+    const jsonLdScript = `\n  <script type="application/ld+json">\n${JSON.stringify({ '@context': 'https://schema.org', '@graph': schemaGraph }, null, 2)}\n  </script>`;
+
+    // Inject Meta Description, OpenGraph, Twitter and Canonical
     const metaTags = `
+  <!-- SEO & Canonical -->
   <meta name="description" content="${route.description}" />
-  <link rel="canonical" href="https://idan-david-aviv.web.app${route.path === '/' ? '' : route.path}" />
+  <link rel="canonical" href="${canonicalUrl}" />
+
+  <!-- OpenGraph / Social Sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="${canonicalUrl}" />
   <meta property="og:title" content="${route.title}" />
   <meta property="og:description" content="${route.description}" />
-  <meta property="og:url" content="https://idan-david-aviv.web.app${route.path === '/' ? '' : route.path}" />
-  <meta property="og:type" content="website" />
+  <meta property="og:image" content="${ogImg}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="he_IL" />
+
+  <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="alternate" type="text/markdown" href="${route.markdownTwinUrl}" title="LLM Markdown Twin" />
+  <meta name="twitter:url" content="${canonicalUrl}" />
+  <meta name="twitter:title" content="${route.title}" />
+  <meta name="twitter:description" content="${route.description}" />
+  <meta name="twitter:image" content="${ogImg}" />
+
+  <!-- AI Markdown Twin -->
+  <link rel="alternate" type="text/markdown" href="${route.markdownTwinUrl}" title="LLM Markdown Twin" />${jsonLdScript}
 </head>`;
 
     routeHtml = routeHtml.replace('</head>', metaTags);
