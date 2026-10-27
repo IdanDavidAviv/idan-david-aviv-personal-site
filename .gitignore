@@ -49,3 +49,8 @@ pnpm-debug.log*
 
 # cv-extractor
 cv-extractor/*
+
+# RuthHub Local Sanctuary (Station storage, focus & memory)
+.ruth/
+.ruth*
+scratch/
